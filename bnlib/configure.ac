@@ -18,5 +18,6 @@ AM_PATH_GSL(1.5)
 
 AC_OUTPUT(Makefile 
           src/Makefile
+	  cbind/Makefile
 	  )
 	  

@@ -1,6 +1,6 @@
-/*
+/* 
   Bojan Nikolic
-  $Id: interpolate.cxx,v 1.1 2005/05/04 21:07:55 bnikolic Exp $
+  $Id: interpolate.cxx,v 1.2 2005/05/05 12:52:08 bnikolic Exp $
 
 */
 
