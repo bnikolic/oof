@@ -1,4 +1,4 @@
-BNLIB-0.01.tar.gz
+*.tar.gz
 Makefile
 Makefile.in
 aclocal.m4
