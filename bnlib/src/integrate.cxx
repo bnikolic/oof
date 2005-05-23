@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: integrate.cxx,v 1.1 2005/05/14 20:02:03 bnikolic Exp $
+  $Id: integrate.cxx,v 1.2 2005/05/23 13:46:54 bnikolic Exp $
 
 */
 #include "integrate.hxx"
@@ -8,11 +8,34 @@
 #include "unaryfn.hxx"
 
 #include <gsl/gsl_integration.h>
+#include <gsl/gsl_errno.h>
+
 
 
 namespace BNLib
 {
 
+  /*! 
+   * This is a little helper class which turns of the dump-core gsl error checking mechanism
+   */
+  class GSLCheck {
+  
+    gsl_error_handler_t * h;
+    
+  public:
+
+    GSLCheck(void) 
+    { 
+      h=gsl_set_error_handler_off () ;
+    }
+    
+    ~GSLCheck() 
+    { 
+      gsl_set_error_handler (h); 
+    }
+    
+  };
+  
   Integrator::Integrator  ( UnaryDD &fn, double epsabs, double epsrel ) : 
     fn(fn), 
     epsabs(epsabs) , 
@@ -59,8 +82,8 @@ namespace BNLib
     double Eval(double xmin, double xmax) {
 
       double result;
-      int status;
-      //GSLCheck _handleoff;
+      int status=0;
+      GSLCheck _handleoff;
 
       status =
 	gsl_integration_qags (&gslF, 
