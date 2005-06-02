@@ -1,0 +1,3 @@
+Build with something like
+
+./configure --prefix=/home/bnikolic/p/bnmin1 
