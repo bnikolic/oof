@@ -1,8 +1,11 @@
 
+SUBDIRS = wcs
+
 
 lib_LTLIBRARIES = libastromap.la 
 
-libastromap_la_SOURCES= astromap.cxx astromap.hxx
+libastromap_la_SOURCES= astromap.cxx astromap.hxx \
+			fft.cxx fft.hxx
 
 libastromap_la_CFLAGS = -Wall
 libastromap_la_CPPFLAGS = -Wall

@@ -14,7 +14,17 @@ AC_PROG_CXX
 
 AC_CHECK_LIB( [fftw] , [fftw2d_create_plan] )
 
+AC_LANG_PUSH(C++)
+
+AC_CHECK_HEADERS( bndebug.hxx , 
+		  [echo "found bnlib"],
+		  [echo "Error: No bnlib" ]  
+		  )
+
+AC_LANG_POP(C++)
+
 
 AC_OUTPUT(Makefile 
-          src/Makefile)
+          src/Makefile
+	  src/wcs/Makefile)
 
