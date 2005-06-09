@@ -26,5 +26,6 @@ AC_LANG_POP(C++)
 
 AC_OUTPUT(Makefile 
           src/Makefile
+	  src/coordsys/Makefile	
 	  src/wcs/Makefile)
 

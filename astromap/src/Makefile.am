@@ -1,5 +1,5 @@
 
-SUBDIRS = wcs
+SUBDIRS = wcs coordsys
 
 
 lib_LTLIBRARIES = libastromap.la 
