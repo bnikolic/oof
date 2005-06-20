@@ -1,2 +1,3 @@
 
-SUBDIRS =  src 
+SUBDIRS =  src plot
+ 

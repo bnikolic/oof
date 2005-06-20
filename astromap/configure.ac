@@ -1,4 +1,4 @@
-AC_INIT()
+AC_INIT() 
 
 AC_CONFIG_AUX_DIR(config)
 
@@ -22,6 +22,8 @@ AC_CHECK_HEADERS( bndebug.hxx ,
 		  )
 
 AC_LANG_POP(C++)
+
+AC_CONFIG_SUBDIRS([plot])	
 
 
 AC_OUTPUT(Makefile 
