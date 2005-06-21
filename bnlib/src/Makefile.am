@@ -9,7 +9,9 @@ libbnlib_la_SOURCES= interpolate.hxx interpolate.cxx \
 			phyfunc.hxx phyfunc.cxx\
 			linraster.hxx linraster.cxx \
 			onedmin.hxx onedmin.cxx \
-			bndebug.hxx
+			bndebug.hxx \
+			bnrandom.hxx bnrandom.cxx \
+			binaryfn.hxx
 
 libbnlib_la_CFLAGS = -Wall
 libbnlib_la_CPPFLAGS = -Wall
@@ -25,4 +27,6 @@ include_HEADERS = 	unaryfn.hxx \
 			phyfunc.hxx \
 			linraster.hxx \
 			onedmin.hxx \
-			bndebug.hxx
+			bndebug.hxx \
+			bnrandom.hxx \
+			binaryfn.hxx	

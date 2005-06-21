@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: bndebug.hxx,v 1.1 2005/06/09 13:38:17 bnikolic Exp $
+  $Id: bndebug.hxx,v 1.2 2005/06/21 11:42:12 bnikolic Exp $
 
   Some utilities for debugging
 */
@@ -9,6 +9,8 @@
 #define _BNLib_DEBUG_HXX__
 
 #include <string>
+
+#include <stdexcept>
 
 struct DefaultPredicate
 {
