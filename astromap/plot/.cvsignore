@@ -1,0 +1,17 @@
+.deps
+.libs
+Makefile
+Makefile.in
+_pyplot.la
+_pyplot_la-pyplot.lo
+aclocal.m4
+autom4te.cache
+config.log
+config.status
+configure
+libastromapplot.la
+libastromapplot_la-phelpers.lo
+libastromapplot_la-plot.lo
+libtool
+pyplot.cxx
+pyplot.py
