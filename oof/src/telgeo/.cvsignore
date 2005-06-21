@@ -4,3 +4,4 @@ Makefile
 Makefile.in
 cassegrain.lo
 libtelgeo.la
+libtelgeo_la-cassegrain.lo

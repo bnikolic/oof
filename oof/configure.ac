@@ -13,6 +13,8 @@ AC_PROG_LIBTOOL
 AC_PROG_CC
 AC_PROG_CXX
 
+AC_CONFIG_SUBDIRS([pybind])	
+
 AC_OUTPUT(Makefile
 	  src/Makefile
 	  src/telgeo/Makefile )

@@ -1,0 +1,2 @@
+
+./configure CPPFLAGS="-I/home/bnikolic/p/astromap/include -I/home/bnikolic/p/bnlib/include -I/home/bnikolic/s/include -g" CFLAGS="-I/home/bnikolic/p/astromap/include -I/home/bnikolic/p/bnlib/include -I/home/bnikolic/s/include -g" LDFLAGS="-L/home/bnikolic/p/astromap/lib -L/home/bnikolic/p/bnlib/lib -L/home/bnikolic/s/lib"  --prefix=/home/bnikolic/p/oof 
