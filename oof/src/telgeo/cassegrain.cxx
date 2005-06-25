@@ -1,6 +1,6 @@
 /*!
   Bojan Nikolic
-  $Id: cassegrain.cxx,v 1.2 2005/06/21 14:27:43 bnikolic Exp $
+  $Id: cassegrain.cxx,v 1.3 2005/06/25 12:08:57 bnikolic Exp $
 
 */
 
@@ -10,10 +10,26 @@
 #include <cmath>
 
 #include <bndebug.hxx>
+#include <astromap.hxx>
+#include <mapset.hxx>
 
-
+#include "tdzhelper.hxx"
 
 namespace OOF {
+
+
+
+  void CassegrainGeo::MkDefocus( double dz , AstroMap::Map & Phase) const  
+  {
+    DzHelper<CassegrainGeo> dzfn (*this, dz);
+    WorldSet( Phase, dzfn );
+  }
+
+  void CassegrainGeo::DishMask (AstroMap::Map &Dish) const 
+  {
+    // not implemented yet
+    ENFORCE(0);
+  }
 
   double SecDeltaPath (double x, double y,
 		       double dX, double dY , double dZ,

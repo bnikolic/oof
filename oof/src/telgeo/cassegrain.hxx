@@ -1,16 +1,22 @@
 /*!
   Bojan Nikolic
-  $Id: cassegrain.hxx,v 1.2 2005/06/21 14:27:43 bnikolic Exp $
+  $Id: cassegrain.hxx,v 1.3 2005/06/25 12:08:57 bnikolic Exp $
 
 */
 #ifndef _OOF_TELGEO_CASSEGRAIN_HXX__
 #define _OOF_TELGEO_CASSEGRAIN_HXX__
 
+#include "telgeo.hxx"
+
 namespace OOF {
 
   /*! Describes the geometry when using a cassegrain focus */
-  struct CassegrainGeo {
-    
+  class  CassegrainGeo :  public  TelGeometry {
+
+  public:
+
+    /* ----------- Data members ------------*/
+
     /*! Radius of the primary reflector */
     double PrimRadius;
     
@@ -22,6 +28,13 @@ namespace OOF {
 
     /*! Effective focal length at cassegrain focus*/
     double CasF;
+
+    /* ------------ Inherited functions -------------*/
+
+    virtual void MkDefocus( double dz , AstroMap::Map & Phase) const  ;
+
+    virtual void DishMask (AstroMap::Map &Dish) const ;
+    
   };
 
   /*! Calculate path change due to movement of the secondary mirror
