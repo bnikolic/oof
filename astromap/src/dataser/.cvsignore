@@ -2,5 +2,6 @@
 .libs
 Makefile
 Makefile.in
-libdataser.la
-libdataser_la-dataseries.lo
+*.la
+*.lo
+*.loT
