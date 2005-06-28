@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: lincordsys.hxx,v 1.1 2005/06/21 00:44:47 bnikolic Exp $
+  $Id: lincordsys.hxx,v 1.2 2005/06/28 13:19:14 bnikolic Exp $
 
   Linear 2-D coordinate system implementation
 */
@@ -37,7 +37,7 @@ namespace AstroMap {
       return new LinCS(*this) ;
     }
 
-    const void pxtoworld(double px , double py , double &wx , double &wy) ;
+    void pxtoworld(double px , double py , double &wx , double &wy) const ;
 
   };
   

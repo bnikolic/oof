@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: lincordsys.cxx,v 1.1 2005/06/21 00:44:47 bnikolic Exp $
+  $Id: lincordsys.cxx,v 1.2 2005/06/28 13:19:14 bnikolic Exp $
 
 */
 
@@ -26,7 +26,7 @@ namespace AstroMap {
 
   }
 
-  const void LinCS::pxtoworld(double px , double py , double &wx , double &wy) 
+  void LinCS::pxtoworld(double px , double py , double &wx , double &wy) const 
   {
     const unsigned naxis = 2;
 
