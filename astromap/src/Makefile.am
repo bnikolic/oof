@@ -1,5 +1,5 @@
 
-SUBDIRS = wcs coordsys
+SUBDIRS = wcs coordsys dataser
 
 
 lib_LTLIBRARIES = libastromap.la 

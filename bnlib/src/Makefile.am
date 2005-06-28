@@ -12,7 +12,8 @@ libbnlib_la_SOURCES= interpolate.hxx interpolate.cxx \
 			bndebug.hxx \
 			bnrandom.hxx bnrandom.cxx \
 			binaryfn.hxx \
-			zernikepoly.hxx zernikepoly.cxx
+			zernikepoly.hxx zernikepoly.cxx \
+			gaussian.cxx gaussian.hxx
 
 libbnlib_la_CFLAGS = -Wall
 libbnlib_la_CPPFLAGS = -Wall
@@ -31,4 +32,5 @@ include_HEADERS = 	unaryfn.hxx \
 			bndebug.hxx \
 			bnrandom.hxx \
 			binaryfn.hxx	\
-			zernikepoly.hxx
+			zernikepoly.hxx \
+			gaussian.hxx
