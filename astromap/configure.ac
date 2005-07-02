@@ -21,6 +21,11 @@ AC_CHECK_HEADERS( bndebug.hxx ,
 		  [echo "Error: No bnlib" ]  
 		  )
 
+AC_CHECK_HEADERS( fitswrap.hxx , 
+		  [echo "found bnfits"],
+		  [echo "Error: No bnfits" ]  
+		  )
+
 AC_LANG_POP(C++)
 
 AC_CONFIG_SUBDIRS([plot])	
