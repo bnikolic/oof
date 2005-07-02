@@ -29,5 +29,6 @@ AC_CONFIG_SUBDIRS([plot])
 AC_OUTPUT(Makefile 
           src/Makefile
 	  src/coordsys/Makefile	
+	  src/dataser/Makefile	
 	  src/wcs/Makefile)
 
