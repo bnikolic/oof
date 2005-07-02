@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: dataseries.cxx,v 1.1 2005/06/28 13:41:06 bnikolic Exp $
+  $Id: dataseries.cxx,v 1.2 2005/07/02 20:38:09 bnikolic Exp $
 
   Data series support
 */
@@ -10,6 +10,13 @@
 namespace AstroMap {
 
 
+  DataSeries::DataSeries( size_t len):
+    DSBase( len)
+  {
+
+  }
+
+  
 
 }
 
