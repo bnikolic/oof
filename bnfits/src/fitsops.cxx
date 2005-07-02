@@ -19,7 +19,18 @@ namespace BNFits {
     return std::string(filename);
 
   }
-  
+
+  unsigned long NRows (FitsF & file, unsigned extno)
+  {
+    file.HDUseek (extno);
+
+    long nrows = 0;
+    int status = 0;
+    fits_get_num_rows(file, &nrows, &status);
+
+    return nrows;
+
+  }
 
 
 }

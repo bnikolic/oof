@@ -17,6 +17,9 @@ namespace BNFits {
   /*! Returns the name of the file associated with this FITS object */
   std::string  FName (FitsF & file);
 
+  /*! Returns the number of rows in this table extension */
+  unsigned long NRows (FitsF & file, unsigned extno);
+
 
   
 

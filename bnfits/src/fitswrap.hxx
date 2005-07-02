@@ -1,5 +1,5 @@
 /* Bojan Nikolic
-   $Id: fitswrap.hxx,v 1.1 2005/06/09 12:30:23 bnikolic Exp $
+   $Id: fitswrap.hxx,v 1.2 2005/07/02 21:06:27 bnikolic Exp $
    
    Simple wrapper for cfitsio
 */
@@ -18,6 +18,9 @@ namespace BNFits {
 
     fitsfile *file;
 
+    /*! After a seek the extension type will be placed here */
+    int hdutype;
+
   public:
     
     enum openmode {read ,write } ;
@@ -29,8 +32,20 @@ namespace BNFits {
     operator fitsfile* ();
 
     void HDUseek( unsigned dataextno ) ;
+    
+    /*! Is extno a table? */
+    bool TableP ( unsigned dataextno );
+
+    /*! If not a table throw an exception */
+    void TableChk (unsigned dataextno) ;
 
   };
+
+  /* Some helpful functions */
+  
+
+
+
 
 
 }

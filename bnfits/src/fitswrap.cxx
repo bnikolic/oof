@@ -1,5 +1,5 @@
 /* Bojan Nikolic
-   $Id: fitswrap.cxx,v 1.1 2005/06/09 12:30:23 bnikolic Exp $
+   $Id: fitswrap.cxx,v 1.2 2005/07/02 21:06:27 bnikolic Exp $
 */
 
 #include "fitswrap.hxx"
@@ -33,9 +33,26 @@ namespace BNFits {
   void FitsF::HDUseek( unsigned dataextno ) 
   {
     int status = 0;
-    int scratch;
-    if (fits_movabs_hdu(file, dataextno, &scratch, &status) )
+    if (fits_movabs_hdu(file, dataextno, &hdutype, &status) )
       throw ( NoSuchHdr(FName(*this), dataextno, status));
+  }
+
+  bool FitsF::TableP (  unsigned extno)
+  {
+    HDUseek( extno);        
+
+    return hdutype == ASCII_TBL || hdutype == BINARY_TBL ;
+    
+  }
+
+  void FitsF::TableChk (unsigned dataextno) 
+  {
+
+    if ( not TableP(dataextno) )
+      throw ( FIOExc ( FName (*this) , 
+		       "Tried a table operation on a non-table HDU",
+		       99));
+
   }
 
 
