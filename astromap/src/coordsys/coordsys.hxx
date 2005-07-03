@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: coordsys.hxx,v 1.3 2005/06/28 13:19:14 bnikolic Exp $
+  $Id: coordsys.hxx,v 1.4 2005/07/03 16:15:06 bnikolic Exp $
 
   
 */
@@ -23,6 +23,9 @@ namespace AstroMap {
 
     /*! Converts pixel to world coordinates */
     virtual   void pxtoworld(double px , double py , double &wx , double &wy) const = 0;
+
+    /*! Convert world to pixel coordinates */
+    virtual void worldtopx(double wx, double wy , double &px , double &py ) const = 0;
 
 
   };
