@@ -7,6 +7,12 @@
 #include "../src/coordsys/coordsys.hxx"
 #include "../src/coordsys/lincordsys.hxx"
 
+#include "../src/dataser/datapoint.hxx"
+#include "../src/dataser/dataseries.hxx"
+#include "../src/dataser/dsfileops.hxx"
+
+
+
 #include "plot.hxx"
 #include "phelpers.hxx"
 
@@ -21,6 +27,11 @@
 
 %include "../src/coordsys/coordsys.hxx"
 %include "../src/coordsys/lincordsys.hxx"
+
+%include "../src/dataser/datapoint.hxx"
+%include "../src/dataser/dataseries.hxx"
+%include "../src/dataser/dsfileops.hxx"
+
 
 %include "plot.hxx"
 %include "phelpers.hxx"

@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: dataseries.hxx,v 1.2 2005/07/02 20:38:09 bnikolic Exp $
+  $Id: dataseries.hxx,v 1.3 2005/07/03 14:37:34 bnikolic Exp $
 
   Data series support
 */
@@ -27,6 +27,8 @@ namespace AstroMap {
      * Create a dataseries of length len 
      */
     DataSeries( size_t len);
+
+    DataSeries( void);
 
 
   };
