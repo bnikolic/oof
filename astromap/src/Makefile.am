@@ -7,7 +7,8 @@ lib_LTLIBRARIES = libastromap.la
 libastromap_la_SOURCES= astromap.cxx astromap.hxx \
 			fft.cxx fft.hxx \
 			mapops.hxx mapops.cxx \
-			mapset.cxx mapset.hxx tmapset.hxx
+			mapset.cxx mapset.hxx tmapset.hxx \
+			pixextract.hxx pixextract.cxx
 
 libastromap_la_CFLAGS = -Wall
 libastromap_la_CPPFLAGS = -Wall
@@ -16,6 +17,7 @@ libastromap_la_LIBADD = -lfftw -lbnlib coordsys/libcoordsys.la \
 			dataser/libdataser.la -lbnfits
 
 include_HEADERS = 	astromap.hxx mapops.hxx \
-			mapset.hxx tmapset.hxx	
+			mapset.hxx tmapset.hxx	 \
+			pixextract.hxx
 
 
