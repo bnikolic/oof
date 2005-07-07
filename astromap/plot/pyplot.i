@@ -3,6 +3,7 @@
 
 #include "../src/astromap.hxx"
 #include "../src/mapops.hxx"
+#include "../src/pixextract.hxx"
 
 #include "../src/coordsys/coordsys.hxx"
 #include "../src/coordsys/lincordsys.hxx"
@@ -24,6 +25,7 @@
 
 %include "../src/astromap.hxx"
 %include "../src/mapops.hxx"
+%include "../src/pixextract.hxx"
 
 %include "../src/coordsys/coordsys.hxx"
 %include "../src/coordsys/lincordsys.hxx"
