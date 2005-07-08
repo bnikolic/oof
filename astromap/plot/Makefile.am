@@ -1,7 +1,7 @@
 include $(top_srcdir)/config/swig.am
 EXTRA_DIST = config/swig.am
 
-SUBDIRS = colmaps
+SUBDIRS = colmaps py
 
 lib_LTLIBRARIES = libastromapplot.la  _pyplot.la
 
