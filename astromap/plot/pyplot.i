@@ -48,6 +48,26 @@
 	return (*self).min();
 	}
 
+    double max() {
+	return (*self).max();
+	}
+
+}
+
+%extend AstroMap::CoordSys {
+
+  double  x_pxtoworld(double px , double py ) {
+	double wx; double wy;
+	(*self).pxtoworld(px, py , wx , wy);
+	return wx;
+	}
+
+  double  y_pxtoworld(double px , double py ) {
+	double wx; double wy;
+	(*self).pxtoworld(px, py , wx , wy);
+	return wy;
+	}
+
 }
 
 
