@@ -1,6 +1,6 @@
 
 AC_COPYRIGHT(Bojan Nikolic)
-AC_REVISION($Id: configure.ac,v 1.2 2005/07/08 22:27:43 bnikolic Exp $)
+AC_REVISION($Id: configure.ac,v 1.3 2005/07/09 10:21:29 bnikolic Exp $)
 
 AC_INIT()
 
@@ -23,6 +23,7 @@ AC_PATH_XTRA()
 
 AM_CHECK_PYTHON_HEADERS()
 AC_PATH_PROGS([SWIG],[swig])
+
 
 AC_OUTPUT(Makefile
 	  colmaps/Makefile

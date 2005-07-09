@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: phelpers.cxx,v 1.1 2005/06/21 14:21:58 bnikolic Exp $
+  $Id: phelpers.cxx,v 1.2 2005/07/09 10:21:29 bnikolic Exp $
 */
 
 #include "phelpers.hxx"
@@ -56,6 +56,21 @@ namespace AstroMap {
 
     SetColourTable( lum, cval, cval , cval, 1, 0.5);
     
+
+  }
+
+  std::string ColourTFName( const char * name)
+  {
+    std::string shareprefix( "CMAPDATADIR" );
+    std::string sname(name);
+    std::string fname;
+
+    if ( sname == "heat")
+      fname = "heat.lasc";
+    else
+      fname = name;
+
+    return shareprefix+"/ASTROMAPPLOT/" + fname;
 
   }
 

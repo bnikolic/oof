@@ -12,7 +12,7 @@ bin_SCRIPTS =   pyplot.py
 libastromapplot_la_SOURCES=   plot.hxx plot.cxx \
 				phelpers.hxx phelpers.cxx
 
-libastromapplot_la_CPPFLAGS = -Wall
+libastromapplot_la_CPPFLAGS = -Wall -DCMAPDATADIR="$(datadir)"
 
 _pyplot_la_LDFLAGS = -module @X_LIBS@
 _pyplot_la_LIBADD  = ../src/libastromap.la \
