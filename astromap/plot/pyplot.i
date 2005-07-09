@@ -1,4 +1,4 @@
-%module pyplot
+%module pyplot 
 %{
 
 #include "../src/astromap.hxx"

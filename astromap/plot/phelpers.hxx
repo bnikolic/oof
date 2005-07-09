@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: phelpers.hxx,v 1.2 2005/07/09 10:21:29 bnikolic Exp $
+  $Id: phelpers.hxx,v 1.3 2005/07/09 12:59:09 bnikolic Exp $
 
   Some routines to help out with plotting using pgplot
 */
@@ -32,7 +32,15 @@ namespace AstroMap {
    * that name is the filename of the map.
    */
   std::string ColourTFName( const char * name);
-    
+
+  /*! Parse a colour table file */
+  void ParseCTFile(const char *fname , 
+		   std::vector<double> &r,
+		   std::vector<double> &g,
+		   std::vector<double> &b);
+
+  /*! Set a colour table in PGPlot from a file */
+  void  SetFileColourTab (const char * name, double locut=0 , double hicut=1.0);
     
 
 }

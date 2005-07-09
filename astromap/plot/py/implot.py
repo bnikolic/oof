@@ -1,5 +1,5 @@
 # Bojan Nikolic
-# $Id: implot.py,v 1.2 2005/07/08 22:47:02 bnikolic Exp $
+# $Id: implot.py,v 1.3 2005/07/09 12:59:09 bnikolic Exp $
 #
 # Routines for plotting maps
 
@@ -15,7 +15,8 @@ def plotmap(mapp,
             bbox=None ,
             plotbox=1 ,
             title=None,
-            width=0):
+            width=0,
+            colmap=None):
 
     "Plots a general map"
 
@@ -38,7 +39,10 @@ def plotmap(mapp,
 
     pyplot.cpgsitf(transf)
 
-    pyplot.SetPrintCT( 0,1)
+    if colmap == None :
+        pyplot.SetPrintCT( 0,1)
+    else:
+        pyplot.SetFileColourTab(colmap)
 
     if plotwedge:
         pyplot.cpgwedg("RI",1,2, mapp.min(), mapp.max(), " ")
