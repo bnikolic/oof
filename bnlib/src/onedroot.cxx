@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: onedroot.cxx,v 1.2 2005/07/15 21:04:56 bnikolic Exp $
+  $Id: onedroot.cxx,v 1.3 2005/07/15 22:09:35 bnikolic Exp $
 
 */
 
@@ -10,6 +10,8 @@
 #include <gsl/gsl_errno.h>
 
 #include "unaryfn.hxx"
+
+#include <iostream>
 
 namespace BNLib {
 
@@ -90,6 +92,7 @@ namespace BNLib {
 
     if (status == GSL_SUCCESS ) 
       {
+	std::cerr<<"Found root: "<<r<<std::endl;
 	return r;
       }
     else 
