@@ -9,6 +9,7 @@ libbnlib_la_SOURCES= interpolate.hxx interpolate.cxx \
 			phyfunc.hxx phyfunc.cxx\
 			linraster.hxx linraster.cxx \
 			onedmin.hxx onedmin.cxx \
+			onedroot.cxx onedroot.hxx	 \
 			bndebug.hxx \
 			bnrandom.hxx bnrandom.cxx \
 			binaryfn.hxx \
@@ -29,6 +30,7 @@ include_HEADERS = 	unaryfn.hxx \
 			phyfunc.hxx \
 			linraster.hxx \
 			onedmin.hxx \
+			onedroot.hxx \
 			bndebug.hxx \
 			bnrandom.hxx \
 			binaryfn.hxx	\
