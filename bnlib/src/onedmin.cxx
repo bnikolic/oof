@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: onedmin.cxx,v 1.2 2005/07/17 20:03:50 bnikolic Exp $
+  $Id: onedmin.cxx,v 1.3 2005/07/17 20:13:38 bnikolic Exp $
 
 
 */
@@ -56,7 +56,8 @@ namespace BNLib {
 		 double epsabs,
 		 unsigned maxiter)
   {
-    
+
+    // This turns off the crazy gsl error handler which aborts the program
     GSLCheck gslcheck;
 
     GSLMinim gslm( &fn);
@@ -77,7 +78,7 @@ namespace BNLib {
 	a = gsl_min_fminimizer_x_lower (gslm.s);
 	b = gsl_min_fminimizer_x_upper (gslm.s);
 
-	std::cerr<<"a: " << a << " b: " << b << std::endl;
+	//std::cerr<<"a: " << a << " b: " << b << std::endl;
      
 	status 
 	  = gsl_min_test_interval (a, b, 0.001, 0.0);
@@ -92,7 +93,7 @@ namespace BNLib {
     else 
       {
 	///no convergance
-	std::cerr<<status;
+	//std::cerr<<status;
 	throw (status);
       }
   }
