@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: onedroot.cxx,v 1.3 2005/07/15 22:09:35 bnikolic Exp $
+  $Id: onedroot.cxx,v 1.4 2005/07/17 19:25:58 bnikolic Exp $
 
 */
 
@@ -103,6 +103,17 @@ namespace BNLib {
 
     
 
+  }
+
+  
+  
+  double Root1D(  UnaryDD & fn ,  UnaryDD & dfn , 
+		  double xguess,
+		  double xmin, double xmax,
+		  double epsabs, double epsrel,
+		  unsigned maxiter)
+  {
+    return 0;
   }
 
   

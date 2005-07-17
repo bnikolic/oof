@@ -1,11 +1,13 @@
 /*
   Bojan Nikolic
-  $Id: onedmin.hxx,v 1.1 2005/05/14 20:02:03 bnikolic Exp $
+  $Id: onedmin.hxx,v 1.2 2005/07/17 19:25:58 bnikolic Exp $
 
   One dimensional minimisation
 */
 #ifndef _BNLIB_OEDMIN_HXX__
 #define _BNLIB_OEDMIN_HXX__
+
+#include <stdexcept>
 
 namespace BNLib {
 
@@ -18,6 +20,21 @@ namespace BNLib {
 		 double epsrel,
 		 double epsabs,
 		 unsigned maxiter);
+
+  /*! 
+   * This is the class thrown if the mimiser fails 
+   */
+  class NoMinFound  : std::runtime_error 
+  {
+
+  public:
+
+    NoMinFound(void) :
+      std::runtime_error("No Minimum found")
+    {
+    }
+    
+  };
 
 
 }
