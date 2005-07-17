@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: onedmin.cxx,v 1.1 2005/05/14 20:02:03 bnikolic Exp $
+  $Id: onedmin.cxx,v 1.2 2005/07/17 20:03:50 bnikolic Exp $
 
 
 */
@@ -9,7 +9,10 @@
 #include <gsl/gsl_min.h>
 #include <gsl/gsl_errno.h>
 
+#include <iostream>
+
 #include "unaryfn.hxx"
+#include "gsl_utils.hxx"
 
 namespace BNLib {
 
@@ -54,6 +57,8 @@ namespace BNLib {
 		 unsigned maxiter)
   {
     
+    GSLCheck gslcheck;
+
     GSLMinim gslm( &fn);
     
     gsl_min_fminimizer_set (gslm.s, &gslm.GSLF, 
@@ -71,6 +76,8 @@ namespace BNLib {
 	m = gsl_min_fminimizer_x_minimum (gslm.s);
 	a = gsl_min_fminimizer_x_lower (gslm.s);
 	b = gsl_min_fminimizer_x_upper (gslm.s);
+
+	std::cerr<<"a: " << a << " b: " << b << std::endl;
      
 	status 
 	  = gsl_min_test_interval (a, b, 0.001, 0.0);
@@ -85,6 +92,7 @@ namespace BNLib {
     else 
       {
 	///no convergance
+	std::cerr<<status;
 	throw (status);
       }
   }
