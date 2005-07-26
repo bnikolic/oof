@@ -72,6 +72,16 @@
 
 }
 
+%extend AstroMap::DataSeries {
+
+     DataPoint & getp (unsigned i ) 
+	{
+	 	return (*self)[i];
+	}
+
+
+}
+
 
 void cpgldev(void);
 int cpgbeg(int unit, const char *file, int nxsub, int nysub);
