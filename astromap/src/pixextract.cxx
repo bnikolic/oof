@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: pixextract.cxx,v 1.1 2005/07/04 22:23:09 bnikolic Exp $
+  $Id: pixextract.cxx,v 1.2 2005/07/26 21:18:47 bnikolic Exp $
 
 */
 
@@ -25,16 +25,16 @@ namespace AstroMap {
   
   PixListInt ExSquare( int cx, int cy , int halflen_px, Map &m)
   {
-    
+
     int xmin = cx - halflen_px;
     if ( xmin < 0)
       xmin =0;
     if ( xmin >= (signed) m.nx ) 
-      xmin = m.nx -1 ;
+      return PixListInt(0);
 
     int xmax = cx + halflen_px;
     if ( xmax < 0)
-      xmax =0;
+      return PixListInt(0);
     if ( xmax >= (signed) m.nx ) 
       xmax = m.nx -1 ;
 
@@ -42,11 +42,11 @@ namespace AstroMap {
     if ( ymin < 0)
       ymin =0;
     if ( ymin >= (signed) m.ny ) 
-      ymin = m.ny -1 ;
+      return PixListInt(0);
 
     int ymax = cy + halflen_px;
     if ( ymax < 0)
-      ymax =0;
+      return PixListInt(0);
     if ( ymax >= (signed) m.ny ) 
       ymax = m.ny -1 ;
 

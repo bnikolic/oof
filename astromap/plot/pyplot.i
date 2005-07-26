@@ -13,6 +13,7 @@
 #include "../src/dataser/datapoint.hxx"
 #include "../src/dataser/dataseries.hxx"
 #include "../src/dataser/dsfileops.hxx"
+#include "../src/dataser/dstomap.hxx"
 
 
 
@@ -37,6 +38,7 @@
 %include "../src/dataser/datapoint.hxx"
 %include "../src/dataser/dataseries.hxx"
 %include "../src/dataser/dsfileops.hxx"
+%include "../src/dataser/dstomap.hxx"
 
 
 %include "plot.hxx"
