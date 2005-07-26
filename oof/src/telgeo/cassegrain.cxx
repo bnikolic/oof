@@ -1,6 +1,6 @@
 /*!
   Bojan Nikolic
-  $Id: cassegrain.cxx,v 1.3 2005/06/25 12:08:57 bnikolic Exp $
+  $Id: cassegrain.cxx,v 1.4 2005/07/26 21:12:33 bnikolic Exp $
 
 */
 
@@ -27,8 +27,36 @@ namespace OOF {
 
   void CassegrainGeo::DishMask (AstroMap::Map &Dish) const 
   {
-    // not implemented yet
-    ENFORCE(0);
+    // private classes?
+    class DMaskFN  :  public BNLib::BinaryDD
+    {
+      double innerrad;
+      double outerrad;
+      
+    public:
+      
+      DMaskFN ( double innerrad , double outerrad ):
+	innerrad(innerrad),
+	outerrad(outerrad)
+      {
+      }
+
+      double operator() (double x , double y )
+      {
+	double r2  = sqrt( x*x + y*y ) ;
+
+	if ( r2  < innerrad ||
+	     r2  > outerrad )
+	  return 0;
+	else
+	  return 1.0;
+      }
+    
+    } ;
+    
+    DMaskFN fn ( SecRadius , PrimRadius );
+    WorldSet( Dish , fn );    
+    
   }
 
   double SecDeltaPath (double x, double y,
