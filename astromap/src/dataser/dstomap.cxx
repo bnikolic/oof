@@ -1,12 +1,11 @@
 /*
   Bojan Nikolic
-  $Id: dstomap.cxx,v 1.3 2005/07/26 22:15:37 bnikolic Exp $
+  $Id: dstomap.cxx,v 1.4 2005/07/26 22:20:14 bnikolic Exp $
 */
 
 #include "dstomap.hxx"
 
 #include <gaussian.hxx>
-#include <iostream>
 
 #include "dataseries.hxx"
 #include "../astromap.hxx"
@@ -41,30 +40,30 @@ namespace AstroMap {
 	  {
 	    totc += gfn ((*pxl.px)[j],(*pxl.py)[j]);
 	  }
-	//std::cerr<<px<<" "<<py<<" "<<totc << std::endl;
 	
 	if ( totc > 0 )
 	  {
+	    // Iterate of the pixels in the pixel list
 	    for (unsigned j (0) ; j < pxl.px->size() ; j++ ) 
 	      {
-		double currweight = gfn ((*pxl.px)[j],(*pxl.py)[j]) * ds[i].ufnu / totc;
+		int currpx = (*pxl.px)[j];
+		int currpy = (*pxl.py)[j];
 
-		//std::cerr<<px<<" "<<py<<" "<<totc << std::endl;
-		//std::cerr<<(*pxl.px)[i]<<" "<<(*pxl.py)[i]<<" "<<currweight<<" " << ds[i].fnu<<std::endl << std::endl;
+		double currweight = gfn (currpx,currpy ) * ds[i].ufnu / totc;
 
 		if ( currweight > 0 ) 
 		  {
-		    double newweight  = currweight + weight->get((*pxl.px)[j],(*pxl.py)[j]);
+		    double newweight  = (currweight + 
+					 weight->get( currpx, currpy)) ; 
 		    
 		    double newpixvalue = (ds[i].fnu * currweight   + 
-					  (m1.get((*pxl.px)[j],(*pxl.py)[j])  * 
-					   weight->get((*pxl.px)[j],(*pxl.py)[j] ))) 
+					  (m1.get(currpx,currpy)  * 
+					   weight->get(currpx,currpy))) 
 		      / newweight;
 		    
-		    m1.get((*pxl.px)[j],(*pxl.py)[j] ) =newpixvalue;
-		    weight->get((*pxl.px)[j],(*pxl.py)[j])=newweight;
+		    m1.get(currpx,currpy ) =newpixvalue;
+		    weight->get(currpx,currpy)=newweight;
 
-		    //std::cerr<<ds[i].fnu<<" "<<newweight<<" " <<newpixvalue<<" "<<currweight<<std::endl;
 		  }
 		
 	      }
