@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: dstomap.cxx,v 1.2 2005/07/26 21:18:47 bnikolic Exp $
+  $Id: dstomap.cxx,v 1.3 2005/07/26 22:15:37 bnikolic Exp $
 */
 
 #include "dstomap.hxx"
@@ -37,25 +37,35 @@ namespace AstroMap {
 	
 	double totc(0);
 
-	for (unsigned i (0) ; i < pxl.px->size() ; ++i ) 
+	for (unsigned j (0) ; j < pxl.px->size() ; ++j ) 
 	  {
-	    totc += gfn ((*pxl.px)[i],(*pxl.py)[i]);
+	    totc += gfn ((*pxl.px)[j],(*pxl.py)[j]);
 	  }
+	//std::cerr<<px<<" "<<py<<" "<<totc << std::endl;
 	
 	if ( totc > 0 )
 	  {
-	    for (unsigned i (0) ; i < pxl.px->size() ; ++i ) 
+	    for (unsigned j (0) ; j < pxl.px->size() ; j++ ) 
 	      {
-		double currweight = gfn ((*pxl.px)[i],(*pxl.py)[i]) * ds[i].ufnu / totc;
-		
-		double newweight  = currweight + weight->get((*pxl.px)[i],(*pxl.py)[i]);
-		double newpixvalue = (ds[i].fnu * currweight   + 
-				      (m1.get((*pxl.px)[i],(*pxl.py)[i])  * 
-				       weight->get((*pxl.px)[i],(*pxl.py)[i] ))) 
-		  / newweight;
+		double currweight = gfn ((*pxl.px)[j],(*pxl.py)[j]) * ds[i].ufnu / totc;
 
-		m1.get((*pxl.px)[i],(*pxl.py)[i] ) =newpixvalue;
-		weight->get((*pxl.px)[i],(*pxl.py)[i])=newweight;
+		//std::cerr<<px<<" "<<py<<" "<<totc << std::endl;
+		//std::cerr<<(*pxl.px)[i]<<" "<<(*pxl.py)[i]<<" "<<currweight<<" " << ds[i].fnu<<std::endl << std::endl;
+
+		if ( currweight > 0 ) 
+		  {
+		    double newweight  = currweight + weight->get((*pxl.px)[j],(*pxl.py)[j]);
+		    
+		    double newpixvalue = (ds[i].fnu * currweight   + 
+					  (m1.get((*pxl.px)[j],(*pxl.py)[j])  * 
+					   weight->get((*pxl.px)[j],(*pxl.py)[j] ))) 
+		      / newweight;
+		    
+		    m1.get((*pxl.px)[j],(*pxl.py)[j] ) =newpixvalue;
+		    weight->get((*pxl.px)[j],(*pxl.py)[j])=newweight;
+
+		    //std::cerr<<ds[i].fnu<<" "<<newweight<<" " <<newpixvalue<<" "<<currweight<<std::endl;
+		  }
 		
 	      }
 	  }

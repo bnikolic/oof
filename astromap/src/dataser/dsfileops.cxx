@@ -1,6 +1,6 @@
 /*!
   Bojan Nikolic
-  $Id: dsfileops.cxx,v 1.3 2005/07/03 14:37:34 bnikolic Exp $
+  $Id: dsfileops.cxx,v 1.4 2005/07/26 22:15:37 bnikolic Exp $
 
 */
 
@@ -48,7 +48,7 @@ namespace AstroMap {
       
       LoadCol( fin , extno , "FNU" , scratch);
       for (unsigned long  i =0 ; i < nrows  ; ++i )
-	(*res)[i].fnu = scratch[i] ;
+	  (*res)[i].fnu = scratch[i] ;
       
       LoadCol( fin , extno , "UFNU" , scratch);
       for (unsigned long  i =0 ; i < nrows  ; ++i )
