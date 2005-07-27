@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: pixextract.hxx,v 1.1 2005/07/04 22:23:09 bnikolic Exp $
+  $Id: pixextract.hxx,v 1.2 2005/07/27 20:00:55 bnikolic Exp $
 
   Extract ranges of pixels from a map
 */
@@ -34,7 +34,7 @@ namespace AstroMap {
   };
 
   /*! Extract a sqaure of pixels around cx, cy */
-  PixListInt ExSquare( int cx, int cy , int halflen_px, Map &m);
+  PixListInt ExSquare( int cx, int cy , int halflen_px, Map const &m);
 
 
 }

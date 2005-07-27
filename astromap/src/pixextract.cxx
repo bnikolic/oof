@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: pixextract.cxx,v 1.2 2005/07/26 21:18:47 bnikolic Exp $
+  $Id: pixextract.cxx,v 1.3 2005/07/27 20:00:41 bnikolic Exp $
 
 */
 
@@ -23,7 +23,7 @@ namespace AstroMap {
   }
 
   
-  PixListInt ExSquare( int cx, int cy , int halflen_px, Map &m)
+  PixListInt ExSquare( int cx, int cy , int halflen_px, Map  const &m)
   {
 
     int xmin = cx - halflen_px;
