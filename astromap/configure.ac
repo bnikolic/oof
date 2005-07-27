@@ -1,10 +1,10 @@
-AC_INIT(ASTROMAP, 0.01, bnikolic@nrao.edu) 
+AC_INIT(ASTROMAP, 0.02, bnikolic@nrao.edu) 
 
 AC_CONFIG_AUX_DIR(config)
 
-AC_REVISION($Revision: 1.7 $)
+AC_REVISION($Revision: 1.8 $)
 
-AM_INIT_AUTOMAKE(ASTROMAP, 0.01, bnikolic@nrao.edu)
+AM_INIT_AUTOMAKE(ASTROMAP, 0.02, bnikolic@nrao.edu)
 
 AC_LIBTOOL_DLOPEN
 AC_DISABLE_STATIC
