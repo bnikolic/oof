@@ -14,6 +14,7 @@
 #include "../src/dataser/dataseries.hxx"
 #include "../src/dataser/dsfileops.hxx"
 #include "../src/dataser/dstomap.hxx"
+#include "../src/dataser/mapdseval.hxx"
 
 
 
@@ -39,6 +40,7 @@
 %include "../src/dataser/dataseries.hxx"
 %include "../src/dataser/dsfileops.hxx"
 %include "../src/dataser/dstomap.hxx"
+%include "../src/dataser/mapdseval.hxx"
 
 
 %include "plot.hxx"
