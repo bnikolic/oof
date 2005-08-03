@@ -1,5 +1,5 @@
 
-SUBDIRS = telgeo 
+SUBDIRS = telgeo aperture
 
 lib_LTLIBRARIES = liboof.la 
 

@@ -17,6 +17,7 @@ AC_CONFIG_SUBDIRS([pybind])
 
 AC_OUTPUT(Makefile
 	  src/Makefile
+	  src/aperture/Makefile 
 	  src/telgeo/Makefile )
 
 
