@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: pixextract.cxx,v 1.3 2005/07/27 20:00:41 bnikolic Exp $
+  $Id: pixextract.cxx,v 1.4 2005/08/03 12:00:37 bnikolic Exp $
 
 */
 
@@ -67,6 +67,10 @@ namespace AstroMap {
 
   }
 
+  size_t PixListInt::size(void) 
+  {
+    return px->size();
+  }
 
 }
 

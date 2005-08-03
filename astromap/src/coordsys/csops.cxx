@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: csops.cxx,v 1.2 2005/07/08 22:04:57 bnikolic Exp $
+  $Id: csops.cxx,v 1.3 2005/08/03 12:00:37 bnikolic Exp $
 
   Coordinate system operations
 */
@@ -33,6 +33,11 @@ namespace AstroMap {
     lcs->TM[5] = -1.0 *  halflen  ;
 
 
+  }
+
+  void ShrinkCS(Map &m , double cf )
+  {
+    
   }
 
 }

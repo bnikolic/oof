@@ -5,6 +5,7 @@
 #include "../src/mapops.hxx"
 #include "../src/pixextract.hxx"
 #include "../src/fft.hxx"
+#include "../src/lcmaps.hxx"
 
 #include "../src/coordsys/coordsys.hxx"
 #include "../src/coordsys/lincordsys.hxx"
@@ -31,6 +32,7 @@
 %include "../src/mapops.hxx"
 %include "../src/pixextract.hxx"
 %include "../src/fft.hxx"
+%include "../src/lcmaps.hxx"
 
 %include "../src/coordsys/coordsys.hxx"
 %include "../src/coordsys/lincordsys.hxx"
@@ -82,6 +84,14 @@
 	}
 
 
+}
+
+%extend AstroMap::LCMaps {
+
+	void setc(unsigned i , double c) 
+	{
+		self->coeffs[i]=c;
+	}
 }
 
 

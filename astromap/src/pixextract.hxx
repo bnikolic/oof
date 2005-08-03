@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: pixextract.hxx,v 1.2 2005/07/27 20:00:55 bnikolic Exp $
+  $Id: pixextract.hxx,v 1.3 2005/08/03 12:00:37 bnikolic Exp $
 
   Extract ranges of pixels from a map
 */
@@ -30,6 +30,9 @@ namespace AstroMap {
 
     /*! copy constructor needed for swig */
     PixListInt(const PixListInt &p);
+
+    /*! Return the number of pixels in the pixel list */
+    size_t size(void);
     
   };
 
