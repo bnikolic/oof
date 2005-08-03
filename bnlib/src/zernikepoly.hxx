@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: zernikepoly.hxx,v 1.1 2005/06/25 15:07:31 bnikolic Exp $
+  $Id: zernikepoly.hxx,v 1.2 2005/08/03 12:00:52 bnikolic Exp $
 
   Zernike Polynomial functions
 */
@@ -40,9 +40,11 @@ namespace BNLib {
     /* ---------- Inherited             ----------------*/  
     double operator()( double x, double y );
 
-};
+  };
 
-
+  /*! Return the sequential zernike polynomil number i from the radial
+   * order n and angular order l*/
+  size_t ZernIFromNL(int n, int l);
 
 }
 

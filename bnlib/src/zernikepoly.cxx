@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: zernikepoly.cxx,v 1.1 2005/06/25 15:07:31 bnikolic Exp $
+  $Id: zernikepoly.cxx,v 1.2 2005/08/03 12:00:52 bnikolic Exp $
 
 */
 
@@ -82,7 +82,11 @@ namespace BNLib {
     return v;
   }
 
-
+  
+  size_t ZernIFromNL(int n, int l)
+  {
+    return ( n*(n+1) + n+ l)/2 ; 
+  }
 
 
 }
