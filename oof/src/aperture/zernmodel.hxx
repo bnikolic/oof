@@ -1,6 +1,6 @@
 /*!
   Bojan Nikolic
-  $Id: zernmodel.hxx,v 1.1 2005/08/03 12:01:42 bnikolic Exp $
+  $Id: zernmodel.hxx,v 1.2 2005/08/04 20:17:44 bnikolic Exp $
 
   Zernike model for the aperture phase distribution
 */
@@ -39,7 +39,7 @@ namespace OOF {
    *  polys. For circular apertures (ie., all cases so far?) this
    *  means normalising at to unit value at edge.
    */
-  void ZernCSSetup(Map &m , double dishradius);
+  void ZernCSSetup(AstroMap::Map &m , double dishradius);
   
   
 

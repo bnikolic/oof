@@ -1,11 +1,12 @@
 /*!
   Bojan Nikolic
-  $Id: zernmodel.cxx,v 1.1 2005/08/03 12:01:42 bnikolic Exp $
+  $Id: zernmodel.cxx,v 1.2 2005/08/04 20:17:44 bnikolic Exp $
 */
 
 #include "zernmodel.hxx"
 
 #include <astromap.hxx>
+#include <csops.hxx>
 
 
 
@@ -22,6 +23,10 @@ namespace OOF {
     m.cs=csorig;
   }
 
+  void ZernCSSetup(AstroMap::Map &m , double dishradius)
+  {
+    AstroMap::ShrinkCS(m , dishradius );
+  }
 
 
 }
