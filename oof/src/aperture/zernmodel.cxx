@@ -1,11 +1,12 @@
 /*!
   Bojan Nikolic
-  $Id: zernmodel.cxx,v 1.5 2005/08/05 17:29:48 bnikolic Exp $
+  $Id: zernmodel.cxx,v 1.6 2005/08/05 17:34:26 bnikolic Exp $
 */
 
 #include "zernmodel.hxx"
 
 #include <astromap.hxx>
+#include <coordsys.hxx>
 #include <csops.hxx>
 #include <lcmaps.hxx>
 #include <bndebug.hxx>
@@ -23,12 +24,14 @@ namespace OOF {
 
   CSSave::CSSave(AstroMap::Map & m ) :
     m(m),
-    csorig( m.cs)
+    csorig( m.cs )
   {
+    m.cs=(*m.cs).Clone();
   }
 
   CSSave::~CSSave()
   {
+    delete m.cs;
     m.cs=csorig;
   }
 
@@ -43,7 +46,6 @@ namespace OOF {
   {
     // Save the msample coordinate system
     CSSave csorig (msample);
-
 
     if ( dynamic_cast<CassegrainGeo *> (telgeo) ) 
       {
