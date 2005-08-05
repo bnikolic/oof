@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: zernikepoly.cxx,v 1.2 2005/08/03 12:00:52 bnikolic Exp $
+  $Id: zernikepoly.cxx,v 1.3 2005/08/05 14:10:54 bnikolic Exp $
 
 */
 
@@ -21,20 +21,19 @@ namespace BNLib {
   ZernPoly::ZernPoly( int n, int l  ):
     n(n),
     l(l),
-    m( l >= 0 ? l : -l)
+    m( l >= 0 ? l : -l),
+    nradterm ( 1 + ( ( n - m ) / 2 ) ),
+    radcoeffs(0.0, nradterm),
+    radpowers(0 , nradterm )
   {
 
-    ENFORCE( n > 0);
+    ENFORCE( n >= 0);
 
     ENFORCE( m <= n );
 
-    ENFORCE( ( n-m) & 0 );
-    
-    nradterm = 1 + ( ( n - m ) / 2 );
+    // Make sure n-m is not odd
+    ENFORCE( ( ( n-m) & 1 ) == 0 );
 
-      
-    radcoeffs  = std::valarray<double>(0.0 , nradterm  );
-    radpowers  = std::valarray<int>   (0   , nradterm );
   
     int sign = -1;
   
@@ -43,16 +42,16 @@ namespace BNLib {
       sign *= -1;      
       
       radpowers[s] = n - 2 * s;
-      
+
       radcoeffs[s]  = sign * factorial( n - s ) / 
 	( factorial( s ) * factorial( ( n + m ) / 2 - s ) * factorial( ( n - m ) / 2 - s ) );
+
       }
 
   }
   
   ZernPoly::~ZernPoly()
   {
-
   }
 
   double ZernPoly::operator()( double x, double y )

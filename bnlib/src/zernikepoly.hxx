@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: zernikepoly.hxx,v 1.2 2005/08/03 12:00:52 bnikolic Exp $
+  $Id: zernikepoly.hxx,v 1.3 2005/08/05 14:10:54 bnikolic Exp $
 
   Zernike Polynomial functions
 */
@@ -26,7 +26,7 @@ namespace BNLib {
   private:
   
     const int    m;
-    int    nradterm;
+    const int    nradterm;
 
     std::valarray<double>  radcoeffs;
     std::valarray<int>     radpowers;
