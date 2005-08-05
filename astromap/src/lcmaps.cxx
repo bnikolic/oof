@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: lcmaps.cxx,v 1.1 2005/08/03 12:00:37 bnikolic Exp $
+  $Id: lcmaps.cxx,v 1.2 2005/08/05 17:34:40 bnikolic Exp $
   
 */
 
@@ -20,6 +20,11 @@ namespace AstroMap {
     CLCMaps( coeffs ,
 	     maps,
 	     res);
+  }
+
+  size_t LCMaps::size(void) const
+  {
+    return coeffs.size();
   }
 
   void CLCMaps( std::vector<double> const & coeffs,

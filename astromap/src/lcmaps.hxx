@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: lcmaps.hxx,v 1.1 2005/08/03 12:00:37 bnikolic Exp $
+  $Id: lcmaps.hxx,v 1.2 2005/08/05 17:34:40 bnikolic Exp $
   
   Linear combinations of maps
 */
@@ -34,6 +34,9 @@ namespace AstroMap {
     /*! Calculate the linear combination and store the results in the
       supplied map res. */
     void   Calc(Map &res) const;
+
+    /*! Return the number of maps in the lc */
+    size_t size(void) const;
 
   };
 
