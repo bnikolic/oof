@@ -1,6 +1,6 @@
 /*!
   Bojan Nikolic
-  $Id: zernmodel.hxx,v 1.3 2005/08/05 13:01:26 bnikolic Exp $
+  $Id: zernmodel.hxx,v 1.4 2005/08/05 13:40:55 bnikolic Exp $
 
   Zernike model for the aperture phase distribution
 */
@@ -19,6 +19,7 @@ namespace AstroMap {
 }
 
 namespace OOF {
+
 
   // forwards
   class CassegrainGeo;
@@ -49,13 +50,18 @@ namespace OOF {
    */
   void ZernCSSetup(AstroMap::Map &m , double dishradius);
 
+
   /*! 
    * An aperture phase model using rasterized zernike polynomials
    */
   class RZernModel  : public PhaseMod {
 
+    /*! The higherst radial order of zernikes that is present */
+    unsigned maxzorder;
+
     /*!  Rasterised  zernike polys are stored here */
     AstroMap::LCMaps * lcm;
+
     
   public:
     

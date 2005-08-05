@@ -8,5 +8,5 @@ liboof_la_SOURCES =
 liboof_la_CFLAGS = -Wall
 liboof_la_CPPFLAGS = -Wall 
 
-liboof_la_LIBADD = -lastromap telgeo/libtelgeo.la
+liboof_la_LIBADD = -lastromap -lbnmin1 telgeo/libtelgeo.la aperture/liboofaperture.la
 

@@ -1,6 +1,6 @@
 /*!
   Bojan Nikolic
-  $Id: zernmodel.cxx,v 1.3 2005/08/05 13:01:26 bnikolic Exp $
+  $Id: zernmodel.cxx,v 1.4 2005/08/05 13:40:55 bnikolic Exp $
 */
 
 #include "zernmodel.hxx"
@@ -11,6 +11,8 @@
 #include <bndebug.hxx>
 #include <zernikepoly.hxx>
 #include <mapset.hxx>
+
+#include <boost/format.hpp>
 
 #include "../telgeo/cassegrain.hxx"
 
@@ -34,9 +36,11 @@ namespace OOF {
     AstroMap::ShrinkCS(m , dishradius );
   }
 
+
   RZernModel::RZernModel ( unsigned n , 
 			   AstroMap::Map & msample,
 			   CassegrainGeo & telgeo):
+    maxzorder(n),
     lcm( ENFORCE( new AstroMap::LCMaps() ))
   {
 
@@ -62,8 +66,6 @@ namespace OOF {
       {
 	for(int l= -n; l<=n ; l += 2)
 	  {
-	    //unsigned seqno = BNLib::ZernIFromNL(n,l);
-
 	    BNLib::ZernPoly zp ( n, l);
 	    AstroMap::WorldSet( msample , zp);
 	    
@@ -77,6 +79,24 @@ namespace OOF {
   void RZernModel::Calc( AstroMap::Map &m)  const 
   {
     lcm->Calc(m);
+  }
+
+  void     RZernModel::AddParams ( std::vector< Minim::DParamCtr > &pars )
+  {
+
+    using boost::format;
+    using boost::io::str;
+    
+    for(int n=0; n <= (int)maxzorder; ++n)
+      for(int l= -n; l<=n ; l += 2)
+	{
+	  unsigned seqno = BNLib::ZernIFromNL(n,l);
+	  pars.push_back(Minim::DParamCtr ( & lcm->coeffs[ seqno ] ,      
+					    str(format("z%i") % seqno ) , 
+					    seqno ? true : false ,                       
+					    str(format("coeff. of Zernike n=%i , l=%i") % n % l )
+					    )); 
+	}
   }
 
 }

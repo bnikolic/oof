@@ -1,6 +1,6 @@
 /*!
   Bojan Nikolic
-  $Id: phasemod.hxx,v 1.1 2005/08/05 13:01:26 bnikolic Exp $
+  $Id: phasemod.hxx,v 1.2 2005/08/05 13:40:55 bnikolic Exp $
 
   Phase model
 */
@@ -21,13 +21,11 @@ namespace OOF {
   
   class PhaseMod : public Minim::Model  {
 
-
   public:
 
-    
     // ------ Member functions ----------------------------
     
-    void Calc( AstroMap::Map &m);
+    virtual void Calc( AstroMap::Map &m) const = 0 ;
     
     // ------ Inherited functions rom Minim::Model ---------
 
