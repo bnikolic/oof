@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: minimmodel.hxx,v 1.1 2005/06/02 13:43:18 bnikolic Exp $
+  $Id: minimmodel.hxx,v 1.2 2005/08/05 13:01:39 bnikolic Exp $
 
   Models to be minimised
 
@@ -22,13 +22,20 @@ namespace Minim {
   class Model {
     
   public:
+    
 
-    Model(void) {} ; 
+    // --- Constructors & Destructors -----
+
+    Model(void) ; 
+
+    // ---- Member functions  -------
+
     virtual    void     AddParams ( std::vector< Minim::DParamCtr > &pars );
     
-    /// Adds a prefix to all parameters -- use to resolve clashes.
-    virtual    void     AddParams ( std::vector< Minim::DParamCtr > &pars , std::string prefix);
-
+    /*!  Adds a prefix to all parameters -- use to resolve clashes.
+     */
+    virtual    void     AddParams ( std::vector< Minim::DParamCtr > &pars , 
+				    std::string prefix);
   }; 
 
   /*! This also defines the residuals 

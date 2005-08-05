@@ -2,5 +2,6 @@
 .libs
 Makefile
 Makefile.in
-liboofaperture.la
-liboofaperture_la-zernmodel.lo
+*.la
+*.lo
+

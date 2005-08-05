@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: csops.cxx,v 1.3 2005/08/03 12:00:37 bnikolic Exp $
+  $Id: csops.cxx,v 1.4 2005/08/05 12:59:41 bnikolic Exp $
 
   Coordinate system operations
 */
@@ -37,6 +37,17 @@ namespace AstroMap {
 
   void ShrinkCS(Map &m , double cf )
   {
+
+    // For the time being assumed we have a linear coordinate system;
+    LinCS * lcs = dynamic_cast<LinCS *>( m.cs );
+    // This will cause an abort if dynamic cast failed
+    ENFORCE(lcs);
+
+    lcs->TM[0] /= cf;
+    lcs->TM[2] /= cf;
+
+    lcs->TM[4] /= cf;
+    lcs->TM[5] /= cf;
     
   }
 
