@@ -13,6 +13,7 @@ AC_PROG_CC
 AC_PROG_CXX
 AC_PROG_F77
 
+AC_CONFIG_SUBDIRS([pybind])	
 
 
 AC_OUTPUT(Makefile 
