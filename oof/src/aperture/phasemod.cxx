@@ -1,6 +1,6 @@
 /*!
   Bojan Nikolic
-  $Id: phasemod.cxx,v 1.1 2005/08/05 13:01:26 bnikolic Exp $
+  $Id: phasemod.cxx,v 1.2 2005/08/05 17:29:48 bnikolic Exp $
 
 */
 
@@ -8,7 +8,10 @@
 
 namespace OOF {
 
-
+  Minim::Model * PhaseMod::downcast(void)
+  {
+    return this;
+  }
 
 
 }

@@ -12,7 +12,7 @@
 
 %}
   
-#include "minimmodel.hxx"
+%include "minimmodel.hxx"
 #include "astromap.hxx"
 
 

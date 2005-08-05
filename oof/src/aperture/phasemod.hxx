@@ -1,6 +1,6 @@
 /*!
   Bojan Nikolic
-  $Id: phasemod.hxx,v 1.2 2005/08/05 13:40:55 bnikolic Exp $
+  $Id: phasemod.hxx,v 1.3 2005/08/05 17:29:48 bnikolic Exp $
 
   Phase model
 */
@@ -32,7 +32,7 @@ namespace OOF {
     /*! Don't know yet how this will be parameterised */
     virtual    void     AddParams ( std::vector< Minim::DParamCtr > &pars ) =0;
 
-      
+    Minim::Model * downcast(void);
 
   };
 

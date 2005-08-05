@@ -1,6 +1,6 @@
 /*!
   Bojan Nikolic
-  $Id: zernmodel.cxx,v 1.4 2005/08/05 13:40:55 bnikolic Exp $
+  $Id: zernmodel.cxx,v 1.5 2005/08/05 17:29:48 bnikolic Exp $
 */
 
 #include "zernmodel.hxx"
@@ -13,6 +13,7 @@
 #include <mapset.hxx>
 
 #include <boost/format.hpp>
+#include <iostream>
 
 #include "../telgeo/cassegrain.hxx"
 
@@ -36,7 +37,26 @@ namespace OOF {
     AstroMap::ShrinkCS(m , dishradius );
   }
 
+  RZernModel::RZernModel ( unsigned n , AstroMap::Map & msample, TelGeometry * telgeo ) :
+    maxzorder(n),
+    lcm( ENFORCE( new AstroMap::LCMaps() ))
+  {
+    // Save the msample coordinate system
+    CSSave csorig (msample);
 
+
+    if ( dynamic_cast<CassegrainGeo *> (telgeo) ) 
+      {
+	// Normalise the coordinate system
+	ZernCSSetup( msample , 
+		     dynamic_cast<CassegrainGeo *> (telgeo)->PrimRadius);
+      }
+
+    // Rasterise the zernikes
+    RastZerns (  n , msample);
+
+  }
+    
   RZernModel::RZernModel ( unsigned n , 
 			   AstroMap::Map & msample,
 			   CassegrainGeo & telgeo):
@@ -66,9 +86,9 @@ namespace OOF {
       {
 	for(int l= -n; l<=n ; l += 2)
 	  {
+
 	    BNLib::ZernPoly zp ( n, l);
 	    AstroMap::WorldSet( msample , zp);
-	    
 	    lcm->AddMap(msample);
 
 	  }

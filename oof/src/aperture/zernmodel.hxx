@@ -1,6 +1,6 @@
 /*!
   Bojan Nikolic
-  $Id: zernmodel.hxx,v 1.4 2005/08/05 13:40:55 bnikolic Exp $
+  $Id: zernmodel.hxx,v 1.5 2005/08/05 17:29:48 bnikolic Exp $
 
   Zernike model for the aperture phase distribution
 */
@@ -23,6 +23,7 @@ namespace OOF {
 
   // forwards
   class CassegrainGeo;
+  class TelGeometry;
 
   /*! Saves the coordinate system of a map and automatically restores
    *   at object destructin
@@ -71,6 +72,8 @@ namespace OOF {
      * n is the maximum zernike polynomial order 
      */
     RZernModel ( unsigned n , AstroMap::Map & msample, CassegrainGeo & telgeo );
+
+    RZernModel ( unsigned n , AstroMap::Map & msample, TelGeometry * telgeo );
 
     virtual ~RZernModel();
 
