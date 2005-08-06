@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: gaussampmod.hxx,v 1.1 2005/08/05 22:01:11 bnikolic Exp $
+  $Id: gaussampmod.hxx,v 1.2 2005/08/06 14:12:21 bnikolic Exp $
 
   Gaussian amplitude model
 */
@@ -8,9 +8,15 @@
 #define __OOF_GAUSSAMPMOD_HXX__
 
 #include "amplimod.hxx"
+#include <valarray>
+
 
 namespace AstroMap {
   class Map;
+}
+
+namespace BNLib {
+  class GaussianDD;
 }
 
 namespace OOF {
@@ -24,8 +30,13 @@ namespace OOF {
   class GaussAmpMod : public AmpliMod {
 
     /*! This defines the physical extent of the aperture */
-
     AstroMap::Map * ApMask;
+    
+    /*! This is similar to ApMask but is a bool valarray */
+    std::valarray<bool> BoolApMask;
+
+    /*! Store here the actuall gaussian used */
+    BNLib::GaussianDD * gfn;
     
   public:
     
