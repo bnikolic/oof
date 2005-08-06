@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: gaussampmod.cxx,v 1.2 2005/08/06 14:12:21 bnikolic Exp $
+  $Id: gaussampmod.cxx,v 1.3 2005/08/06 14:46:38 bnikolic Exp $
 
 */
 
@@ -26,6 +26,7 @@ namespace OOF {
     gfn( ENFORCE(new BNLib::GaussianDD() ))
   {
     telgeo->DishMask(*ApMask);
+    BoolApMask = (*ApMask != 0.0) ;
   }
 
   GaussAmpMod::~GaussAmpMod()
@@ -39,10 +40,26 @@ namespace OOF {
   {
     m *= 0;
     
+    WorldSet( m , *gfn, BoolApMask );    
+    //WorldSet( m , *gfn );    
     
-    
-    
+  }
 
+  void     GaussAmpMod::AddParams ( std::vector< Minim::DParamCtr > &pars ) 
+  {
+
+    pars.push_back(Minim::DParamCtr ( & gfn->amp ,      
+				      "amp", 
+				      true     ,                       
+				      "Illumination amplitude "
+				      ));
+
+    pars.push_back(Minim::DParamCtr ( & gfn->sigma ,      
+				      "sigma", 
+				      true     ,                       
+				      "Illumination taper"
+				      ));
+    
   }
 
 
