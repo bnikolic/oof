@@ -1,14 +1,17 @@
 /*!
   Bojan Nikolic
-  $Id: cssave.cxx,v 1.1 2005/08/06 16:18:27 bnikolic Exp $
+  $Id: cssave.cxx,v 1.2 2005/08/06 16:19:54 bnikolic Exp $
 
 */
 
 #include "cssave.hxx"
 
+#include "../astromap.hxx"
+#include "coordsys.hxx"
+
 namespace AstroMap {
 
-  CSSave::CSSave(AstroMap::Map & m ) :
+  CSSave::CSSave(Map & m ) :
     m(m),
     csorig( m.cs )
   {
