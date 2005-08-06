@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: mapset.hxx,v 1.1 2005/06/21 00:44:46 bnikolic Exp $
+  $Id: mapset.hxx,v 1.2 2005/08/06 14:12:11 bnikolic Exp $
 
 */
 
@@ -8,6 +8,7 @@
 #define _ASTROMAP_MAPSET_HXX__
 
 #include <binaryfn.hxx>
+#include <valarray>
 
 namespace AstroMap {
 
@@ -18,6 +19,11 @@ namespace AstroMap {
    *  coordinates of each pixel 
    */
   void WorldSet(Map &m , BNLib::BinaryDD &fn );
+
+  /*! Additionally, must supplied of pixels to actually set.
+   */
+  void WorldSet(Map &m , BNLib::BinaryDD &fn, 
+		std::valarray<bool>  &mask );
 
 }
 

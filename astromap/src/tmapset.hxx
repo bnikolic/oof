@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: tmapset.hxx,v 1.1 2005/06/21 00:44:46 bnikolic Exp $
+  $Id: tmapset.hxx,v 1.2 2005/08/06 14:12:11 bnikolic Exp $
 
   Templated functions to set maps
 */
@@ -33,6 +33,29 @@ namespace AstroMap {
       }
 
   }
+
+
+  template<class FnT> void TWorldSet(Map &m , FnT &fn , std::valarray<bool> & mask )
+  {
+    double wx;
+    double wy;
+    
+    size_t i = 0;
+    for (unsigned px (0) ; px < m.nx ; ++px)
+      {
+	for (unsigned py(0) ; py < m.ny ; ++py )
+	  {
+	    if (mask[i] ) 
+	      {
+		// Get the world coordinates of this pixel
+		m.cs->pxtoworld(px , py , wx, wy );
+		m.get(px, py ) = fn(wx, wy);
+	      }
+	    ++i;
+	  }
+      }
+  }
+
 
 }
 
