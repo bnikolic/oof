@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: mapset.cxx,v 1.2 2005/08/06 14:12:11 bnikolic Exp $
+  $Id: mapset.cxx,v 1.3 2005/08/06 14:46:55 bnikolic Exp $
 
 */
 
@@ -17,7 +17,7 @@ namespace AstroMap {
     TWorldSet( m  , fn);
   }
 
-  void WorldSet(Map &m , BNLib::BinaryDD &fn, std::valarray<bool> &mask )
+  void WorldSet(Map &m , BNLib::BinaryDD &fn, std::valarray<bool> const &mask )
   {
     TWorldSet( m  , fn, mask);
   }

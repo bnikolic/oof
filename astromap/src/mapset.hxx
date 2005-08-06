@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: mapset.hxx,v 1.2 2005/08/06 14:12:11 bnikolic Exp $
+  $Id: mapset.hxx,v 1.3 2005/08/06 14:46:55 bnikolic Exp $
 
 */
 
@@ -23,7 +23,7 @@ namespace AstroMap {
   /*! Additionally, must supplied of pixels to actually set.
    */
   void WorldSet(Map &m , BNLib::BinaryDD &fn, 
-		std::valarray<bool>  &mask );
+		std::valarray<bool> const  &mask );
 
 }
 

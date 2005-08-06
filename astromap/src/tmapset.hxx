@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: tmapset.hxx,v 1.2 2005/08/06 14:12:11 bnikolic Exp $
+  $Id: tmapset.hxx,v 1.3 2005/08/06 14:46:55 bnikolic Exp $
 
   Templated functions to set maps
 */
@@ -35,7 +35,7 @@ namespace AstroMap {
   }
 
 
-  template<class FnT> void TWorldSet(Map &m , FnT &fn , std::valarray<bool> & mask )
+  template<class FnT> void TWorldSet(Map &m , FnT &fn , const std::valarray<bool> &  mask )
   {
     double wx;
     double wy;
