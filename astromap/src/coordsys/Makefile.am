@@ -4,7 +4,8 @@ lib_LTLIBRARIES = libcoordsys.la
 
 libcoordsys_la_SOURCES= coordsys.cxx coordsys.hxx \
 			lincordsys.hxx lincordsys.cxx \
-			csops.hxx csops.cxx
+			csops.hxx csops.cxx \
+			cssave.cxx cssave.hxx
 
 
 libcoordsys_la_CFLAGS = -Wall
@@ -13,4 +14,4 @@ libcoordsys_la_CPPFLAGS = -Wall
 libcoordsys_la_LIBADD = 
 
 include_HEADERS = 	coordsys.hxx lincordsys.hxx \
-			csops.hxx
+			csops.hxx cssave.hxx
