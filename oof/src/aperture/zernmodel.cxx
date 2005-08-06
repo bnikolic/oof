@@ -1,6 +1,6 @@
 /*!
   Bojan Nikolic
-  $Id: zernmodel.cxx,v 1.6 2005/08/05 17:34:26 bnikolic Exp $
+  $Id: zernmodel.cxx,v 1.7 2005/08/06 16:20:29 bnikolic Exp $
 */
 
 #include "zernmodel.hxx"
@@ -12,6 +12,7 @@
 #include <bndebug.hxx>
 #include <zernikepoly.hxx>
 #include <mapset.hxx>
+#include <cssave.hxx>
 
 #include <boost/format.hpp>
 #include <iostream>
@@ -22,18 +23,7 @@
 
 namespace OOF {
 
-  CSSave::CSSave(AstroMap::Map & m ) :
-    m(m),
-    csorig( m.cs )
-  {
-    m.cs=(*m.cs).Clone();
-  }
 
-  CSSave::~CSSave()
-  {
-    delete m.cs;
-    m.cs=csorig;
-  }
 
   void ZernCSSetup(AstroMap::Map &m , double dishradius)
   {
@@ -45,7 +35,7 @@ namespace OOF {
     lcm( ENFORCE( new AstroMap::LCMaps() ))
   {
     // Save the msample coordinate system
-    CSSave csorig (msample);
+    AstroMap::CSSave csorig (msample);
 
     if ( dynamic_cast<CassegrainGeo *> (telgeo) ) 
       {
@@ -67,7 +57,7 @@ namespace OOF {
   {
 
     // Save the msample coordinate system
-    CSSave csorig (msample);
+    AstroMap::CSSave csorig (msample);
     
     // Normalise the coordinate system
     ZernCSSetup( msample , telgeo.PrimRadius);

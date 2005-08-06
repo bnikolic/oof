@@ -1,6 +1,6 @@
 /*!
   Bojan Nikolic
-  $Id: zernmodel.hxx,v 1.5 2005/08/05 17:29:48 bnikolic Exp $
+  $Id: zernmodel.hxx,v 1.6 2005/08/06 16:20:29 bnikolic Exp $
 
   Zernike model for the aperture phase distribution
 */
@@ -24,25 +24,6 @@ namespace OOF {
   // forwards
   class CassegrainGeo;
   class TelGeometry;
-
-  /*! Saves the coordinate system of a map and automatically restores
-   *   at object destructin
-   */
-  class CSSave {
-
-    AstroMap::Map & m;
-    AstroMap::CoordSys * csorig;
-
-  public:
-    
-    CSSave(AstroMap::Map & m );
-
-    /*! At destruction, restore the saved coordinate system */
-    ~CSSave();
-    
-
-  };
-  
 
 
   /*! Set up a coordinate system suitable for calculating zernike
