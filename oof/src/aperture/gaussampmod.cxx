@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: gaussampmod.cxx,v 1.3 2005/08/06 14:46:38 bnikolic Exp $
+  $Id: gaussampmod.cxx,v 1.4 2005/08/09 00:54:35 bnikolic Exp $
 
 */
 
@@ -12,6 +12,7 @@
 #include <astromap.hxx>
 #include <gaussian.hxx>
 #include <mapset.hxx>
+#include <cssave.hxx>
 
 
 #include "../telgeo/telgeo.hxx"
@@ -39,8 +40,10 @@ namespace OOF {
   void GaussAmpMod::Calc( AstroMap::Map &m)   const
   {
     m *= 0;
-    
+
+    // Ought to normalise the coordinate system here.
     WorldSet( m , *gfn, BoolApMask );    
+
     //WorldSet( m , *gfn );    
     
   }
