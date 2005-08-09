@@ -1,5 +1,5 @@
 
-SUBDIRS = telgeo aperture
+SUBDIRS = telgeo aperture farfield
 
 lib_LTLIBRARIES = liboof.la 
 
@@ -8,5 +8,6 @@ liboof_la_SOURCES =
 liboof_la_CFLAGS = -Wall
 liboof_la_CPPFLAGS = -Wall 
 
-liboof_la_LIBADD = -lastromap -lbnmin1 telgeo/libtelgeo.la aperture/liboofaperture.la
+liboof_la_LIBADD = -lastromap -lbnmin1 telgeo/libtelgeo.la aperture/liboofaperture.la \
+			farfield/libooffarfield.la
 

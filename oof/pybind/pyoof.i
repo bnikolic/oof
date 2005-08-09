@@ -9,6 +9,7 @@
 
 #include "../src/aperture/phasemod.hxx"
 #include "../src/aperture/zernmodel.hxx"
+#include "../src/aperture/aperturemod.hxx"
 
 #include "../src/aperture/amplimod.hxx"
 #include "../src/aperture/gaussampmod.hxx"
@@ -24,6 +25,7 @@
 
 %include "../src/aperture/phasemod.hxx"
 %include "../src/aperture/zernmodel.hxx"
+%include "../src/aperture/aperturemod.hxx"
 
 %include "../src/aperture/amplimod.hxx"
 %include "../src/aperture/gaussampmod.hxx"

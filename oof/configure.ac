@@ -32,7 +32,8 @@ AC_LANG_POP(C++)
 AC_OUTPUT(Makefile
 	  src/Makefile
 	  src/aperture/Makefile 
-	  src/telgeo/Makefile )
+	  src/telgeo/Makefile
+	  src/farfield/Makefile	 )
 
 
 

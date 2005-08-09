@@ -1,6 +1,6 @@
 /*!
   Bojan Nikolic
-  $Id: aperturemod.hxx,v 1.1 2005/08/05 13:01:26 bnikolic Exp $
+  $Id: aperturemod.hxx,v 1.2 2005/08/09 02:15:24 bnikolic Exp $
 
   Aperture model
 */
@@ -27,12 +27,12 @@ namespace OOF {
     double wavel;
 
     /*! 
-     * Pointer to the current phase model
+     * Pointer to the current phase model. Take ownership.
      */
     PhaseMod * phasemodel;
 
     /*! 
-     * Pointer to the current amplitude model
+     * Pointer to the current amplitude model. Take ownership.
      */
     AmpliMod * amplimodel;
 
@@ -41,6 +41,8 @@ namespace OOF {
     // ------ Constructors & Destructors   -----------------
     
     ApertureMod( double wavel);
+
+    virtual ~ApertureMod();
 
     // ------ Member Functions  ----------------------------
     
