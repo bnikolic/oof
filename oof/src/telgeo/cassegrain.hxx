@@ -1,6 +1,6 @@
 /*!
   Bojan Nikolic
-  $Id: cassegrain.hxx,v 1.3 2005/06/25 12:08:57 bnikolic Exp $
+  $Id: cassegrain.hxx,v 1.4 2005/08/09 01:09:19 bnikolic Exp $
 
 */
 #ifndef _OOF_TELGEO_CASSEGRAIN_HXX__
@@ -34,6 +34,8 @@ namespace OOF {
     virtual void MkDefocus( double dz , AstroMap::Map & Phase) const  ;
 
     virtual void DishMask (AstroMap::Map &Dish) const ;
+
+    virtual double DishEffRadius(void) const ;
     
   };
 

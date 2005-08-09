@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: telgeo.hxx,v 1.1 2005/06/25 12:08:57 bnikolic Exp $
+  $Id: telgeo.hxx,v 1.2 2005/08/09 01:09:19 bnikolic Exp $
 
   Classes to describe relevant parameters of telescope geometry
 */
@@ -32,6 +32,12 @@ namespace OOF {
      * exists a reflecting surface and 0 where there doesn't exist a
      * reflecting surface*/
     virtual void DishMask (AstroMap::Map &Dish) const =0;
+
+    /*! Returns an effective radius for use when it is necessary to
+     * normalise quantaties to unity at dish-edge
+     */
+    virtual double DishEffRadius(void) const = 0;
+
 
   };
 

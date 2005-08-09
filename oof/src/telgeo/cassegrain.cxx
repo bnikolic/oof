@@ -1,6 +1,6 @@
 /*!
   Bojan Nikolic
-  $Id: cassegrain.cxx,v 1.4 2005/07/26 21:12:33 bnikolic Exp $
+  $Id: cassegrain.cxx,v 1.5 2005/08/09 01:09:19 bnikolic Exp $
 
 */
 
@@ -57,6 +57,11 @@ namespace OOF {
     DMaskFN fn ( SecRadius , PrimRadius );
     WorldSet( Dish , fn );    
     
+  }
+
+  double CassegrainGeo::DishEffRadius(void) const 
+  {
+    return PrimRadius;
   }
 
   double SecDeltaPath (double x, double y,

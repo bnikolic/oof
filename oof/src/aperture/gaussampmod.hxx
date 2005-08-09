@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: gaussampmod.hxx,v 1.2 2005/08/06 14:12:21 bnikolic Exp $
+  $Id: gaussampmod.hxx,v 1.3 2005/08/09 01:09:19 bnikolic Exp $
 
   Gaussian amplitude model
 */
@@ -37,6 +37,10 @@ namespace OOF {
 
     /*! Store here the actuall gaussian used */
     BNLib::GaussianDD * gfn;
+
+    /*! Effective radius to use when evaluating the gaussian a so dish
+      edge is at unit disance */
+    double EffRadius;
     
   public:
     

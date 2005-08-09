@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: gaussampmod.cxx,v 1.4 2005/08/09 00:54:35 bnikolic Exp $
+  $Id: gaussampmod.cxx,v 1.5 2005/08/09 01:09:19 bnikolic Exp $
 
 */
 
@@ -17,6 +17,8 @@
 
 #include "../telgeo/telgeo.hxx"
 
+#include  "zernmodel.hxx"
+
 
 namespace OOF {
 
@@ -24,7 +26,8 @@ namespace OOF {
 			    AstroMap::Map & msample ):
     ApMask( ENFORCE(AstroMap::Clone(msample) ) ),
     BoolApMask( (*ApMask) != 0.0 ) , 
-    gfn( ENFORCE(new BNLib::GaussianDD() ))
+    gfn( ENFORCE(new BNLib::GaussianDD() )),
+    EffRadius( telgeo->DishEffRadius() )
   {
     telgeo->DishMask(*ApMask);
     BoolApMask = (*ApMask != 0.0) ;
@@ -39,12 +42,20 @@ namespace OOF {
 
   void GaussAmpMod::Calc( AstroMap::Map &m)   const
   {
+    
+    // Save the coordinate system
+    AstroMap::CSSave csorig (m);
+
+    ZernCSSetup( m , EffRadius);
+
+    // Reset map to zero
     m *= 0;
+
 
     // Ought to normalise the coordinate system here.
     WorldSet( m , *gfn, BoolApMask );    
 
-    //WorldSet( m , *gfn );    
+
     
   }
 
