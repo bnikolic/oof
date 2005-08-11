@@ -20,6 +20,7 @@ libastromap_la_LIBADD = -lfftw -lbnlib coordsys/libcoordsys.la \
 include_HEADERS = 	astromap.hxx mapops.hxx \
 			mapset.hxx tmapset.hxx	 \
 			pixextract.hxx \
-			lcmaps.hxx
+			lcmaps.hxx \
+			fft.hxx
 
 
