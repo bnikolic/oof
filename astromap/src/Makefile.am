@@ -21,6 +21,7 @@ include_HEADERS = 	astromap.hxx mapops.hxx \
 			mapset.hxx tmapset.hxx	 \
 			pixextract.hxx \
 			lcmaps.hxx \
-			fft.hxx
+			fft.hxx \
+			astromap_fwd.hxx
 
 
