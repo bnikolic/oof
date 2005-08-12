@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: farf.hxx,v 1.1 2005/08/11 21:17:41 bnikolic Exp $
+  $Id: farf.hxx,v 1.2 2005/08/12 17:09:15 bnikolic Exp $
 
   A class that transforms from the aperture plane to the far field.
 */
@@ -19,16 +19,33 @@ namespace OOF {
 
   class FarF {
 
-    // This will do the actuall far-field calculation
+    /*! This will do the actuall far-field calculation
+     */
     AstroMap::FFTFact * ff;
     
-    // If this is true then this class will delete ff;
+    /*! If this is true then this class will delete ff;
+     */
     bool   ffown;
+
+    /*! The wavelength of radiation ( allows correct setting of
+     *  coordinate systems on the results maps */
+    const double wavel;
 
   public:
 
-    /* Construct the FFTFactory using the sample map */
-    FarF ( AstroMap::Map & apmapsample );
+    // ------------ Constructors/Destructors ---------------
+
+    /*! Construct the FFTFactory using the sample map */
+    FarF ( AstroMap::Map & apmapsample, double wavel );
+
+
+    // ------------ Member functions -----------------------
+
+    /*! Calculate the far-field power from the supplied aperture
+      amplitude and phase distributions */
+    void Power ( AstroMap::Map & amp, AstroMap::Map & phase, AstroMap::Map & res);
+
+    
     
 
   };
