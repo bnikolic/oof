@@ -6,7 +6,8 @@ lib_LTLIBRARIES = liboof.la
 liboof_la_SOURCES = obsphasescreen.cxx obsphasescreen.hxx \
 			obsdefocus.cxx obsdefocus.hxx \
 			obscompare.cxx obscompare.hxx \
-			maptoresidual.cxx maptoresidual.hxx
+			maptoresidual.cxx maptoresidual.hxx\
+			maptoresidual_ds.cxx maptoresidual_ds.hxx
 
 liboof_la_CFLAGS = -Wall
 liboof_la_CPPFLAGS = -Wall 
