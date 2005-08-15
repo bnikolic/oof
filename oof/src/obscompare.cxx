@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: obscompare.cxx,v 1.3 2005/08/15 18:43:40 bnikolic Exp $
+  $Id: obscompare.cxx,v 1.4 2005/08/15 18:43:58 bnikolic Exp $
 */
 
 #include "obscompare.hxx"
@@ -32,6 +32,7 @@ namespace OOF {
     
     delete ApScratch; 
     delete ApScratchDephase;
+    delete SkyScratch;
 
     for (size_t i =0 ; i < phasescreens.size() ; ++i )
       {
