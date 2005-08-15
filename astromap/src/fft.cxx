@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: fft.cxx,v 1.1 2005/06/06 13:37:05 bnikolic Exp $
+  $Id: fft.cxx,v 1.2 2005/08/15 18:34:09 bnikolic Exp $
 
   still need to rename fftScratch to just Scratch...
 */
@@ -57,8 +57,7 @@ namespace AstroMap {
     // now the functions that do the work
 
     /// Does the actuall tranform, leaves result in the fftScratch buffer
-    void Transform(Map &Amp, Map &Phi ) {
-
+    void Transform(const Map &Amp, const Map &Phi ) {
             int mul = ( docenter == FFTFact::center ? -1 : 1 ) ;
 
 	    int nx=Amp.nx;
@@ -110,7 +109,7 @@ namespace AstroMap {
     }
     
     /// As AmpPhi, but result stored in map ResPower.
-    void AmpPhiPower( Map &Amp, Map &Phi , Map &ResPower) {
+    void AmpPhiPower( const Map &Amp, const Map &Phi , Map &ResPower) {
       Transform (Amp, Phi);
 
       unsigned  nx=Amp.nx;    
@@ -148,7 +147,7 @@ namespace AstroMap {
     ip->AmpPhi(Amp, Phi);
   }
 
-  void FFTFact::FFTAmpPh_Power( Map  &Amp, Map &Ph , Map &ResPower) {
+  void FFTFact::FFTAmpPh_Power( const Map  &Amp, const Map &Ph , Map &ResPower) {
     ip->AmpPhiPower( Amp, Ph , ResPower);
   }
 

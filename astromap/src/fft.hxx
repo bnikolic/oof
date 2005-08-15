@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: fft.hxx,v 1.1 2005/06/06 13:37:05 bnikolic Exp $
+  $Id: fft.hxx,v 1.2 2005/08/15 18:34:09 bnikolic Exp $
 
   Support for FFT's
 
@@ -57,7 +57,7 @@ namespace AstroMap {
 
     /// Do the complex 2d fourier transform on a Amp, Phase pair and
     /// return the power. \calgraph
-    void FFTAmpPh_Power( Map  &Amp, Map &Ph , Map &ResPower);
+    void FFTAmpPh_Power( const Map  &Amp, const Map &Ph , Map &ResPower);
 
   };
 

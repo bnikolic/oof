@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: astromap_fwd.hxx,v 1.1 2005/08/12 18:15:43 bnikolic Exp $
+  $Id: astromap_fwd.hxx,v 1.2 2005/08/15 18:34:09 bnikolic Exp $
 
   Collected useful astromap forwards 
 */
@@ -11,7 +11,9 @@
 namespace AstroMap {
 
   class Map;
-  
+  class DataSeries;
+
+  class MapDSEval;
 
 }
 
