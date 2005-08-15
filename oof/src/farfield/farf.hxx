@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: farf.hxx,v 1.2 2005/08/12 17:09:15 bnikolic Exp $
+  $Id: farf.hxx,v 1.3 2005/08/15 18:43:40 bnikolic Exp $
 
   A class that transforms from the aperture plane to the far field.
 */
@@ -43,7 +43,7 @@ namespace OOF {
 
     /*! Calculate the far-field power from the supplied aperture
       amplitude and phase distributions */
-    void Power ( AstroMap::Map & amp, AstroMap::Map & phase, AstroMap::Map & res);
+    void Power ( const AstroMap::Map & amp, AstroMap::Map & phase, AstroMap::Map & res);
 
     
     

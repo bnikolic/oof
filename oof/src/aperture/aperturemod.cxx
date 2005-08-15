@@ -1,10 +1,12 @@
 /*!
   Bojan Nikolic
-  $Id: aperturemod.cxx,v 1.2 2005/08/09 02:15:24 bnikolic Exp $
+  $Id: aperturemod.cxx,v 1.3 2005/08/15 18:43:40 bnikolic Exp $
 
 */
 
 #include "aperturemod.hxx"
+
+#include <astromap.hxx>
 
 #include "amplimod.hxx"
 #include "phasemod.hxx"
@@ -12,12 +14,18 @@
 
 namespace OOF {
 
-  ApertureMod::ApertureMod( double wavel):
+
+  ApertureMod::ApertureMod( PhaseMod * phasemodel,
+			    AmpliMod * amplimodel,
+			    double wavel,
+			    AstroMap::Map &mapsample):
     wavel(wavel),
-    phasemodel(NULL),
-    amplimodel(NULL)
+    phasemodel(phasemodel),
+    amplimodel(amplimodel),
+    mphase( AstroMap::Clone(mapsample) ),
+    mamp( AstroMap::Clone(mapsample) )
   {
-    
+
   }
 
   ApertureMod::~ApertureMod()
@@ -28,6 +36,28 @@ namespace OOF {
     if (amplimodel)
       delete amplimodel;
 
+    delete mphase;
+    delete mamp;
+
+
+  }
+
+  const AstroMap::Map * ApertureMod::getphase(void)
+  {
+    // in principle could check at this point if the parameters
+    // changed and avoid re-calculation.
+
+    phasemodel->Calc(*mphase);
+    
+    return mphase;
+  }
+
+  const AstroMap::Map * ApertureMod::getamp(void)
+  {
+    
+    amplimodel->Calc(*mamp);
+
+    return mamp;
   }
 
   void ApertureMod::AddParams ( std::vector< Minim::DParamCtr > &pars )

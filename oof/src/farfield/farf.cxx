@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: farf.cxx,v 1.2 2005/08/12 17:09:15 bnikolic Exp $
+  $Id: farf.cxx,v 1.3 2005/08/15 18:43:40 bnikolic Exp $
 
 
 */
@@ -25,7 +25,7 @@ namespace OOF {
   }
 
 
-  void FarF::Power ( AstroMap::Map & amp, AstroMap::Map & phase, 
+  void FarF::Power ( const AstroMap::Map & amp, AstroMap::Map & phase, 
 		     AstroMap::Map & res)
   {
     ff->FFTAmpPh_Power(amp, phase , res);

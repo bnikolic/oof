@@ -18,6 +18,9 @@
 #include "../src/farfield/farffunctions.hxx"
 #include "../src/farfield/farf.hxx"
 
+#include "../src/maptoresidual.hxx"
+#include "../src/maptoresidual_ds.hxx"
+
 %}
   
 %include "minimmodel.hxx"
@@ -36,3 +39,6 @@
 %include "../src/aperture/gaussampmod.hxx"
 %include "../src/farfield/farffunctions.hxx"
 %include "../src/farfield/farf.hxx"
+
+%include "../src/maptoresidual.hxx"
+%include "../src/maptoresidual_ds.hxx"

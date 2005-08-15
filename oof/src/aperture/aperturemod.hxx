@@ -1,6 +1,6 @@
 /*!
   Bojan Nikolic
-  $Id: aperturemod.hxx,v 1.2 2005/08/09 02:15:24 bnikolic Exp $
+  $Id: aperturemod.hxx,v 1.3 2005/08/15 18:43:40 bnikolic Exp $
 
   Aperture model
 */
@@ -8,6 +8,9 @@
 #define __OOF_APERTUREMOD_HXX__
 
 #include <minimmodel.hxx>
+
+#include <astromap_fwd.hxx>
+
 
 namespace OOF {
 
@@ -21,10 +24,13 @@ namespace OOF {
    */
   class ApertureMod : public Minim::Model  {
 
+  public:
     /*! The wavelength of the EM field ... in the same units as the
      * coordinate system of the maps in order for the FFT coordinate
      * system to work OK*/ 
-    double wavel;
+    const double wavel;
+
+  private:
 
     /*! 
      * Pointer to the current phase model. Take ownership.
@@ -36,16 +42,35 @@ namespace OOF {
      */
     AmpliMod * amplimodel;
 
+    /*!
+     * Scratch to keep the aperture phase in 
+     */
+    AstroMap::Map * mphase;
+
+    /*!
+     * Scratch to keep the aperture amplitude in 
+     */
+    AstroMap::Map * mamp;
+
+    
+
   public:
 
     // ------ Constructors & Destructors   -----------------
     
-    ApertureMod( double wavel);
+    ApertureMod( PhaseMod * phasemodel,
+		 AmpliMod * amplimodel,
+		 double wavel,
+		 AstroMap::Map &mapsample);
+
 
     virtual ~ApertureMod();
 
     // ------ Member Functions  ----------------------------
     
+    const AstroMap::Map * getphase(void);
+
+    const AstroMap::Map * getamp(void);
     
 
     // ------ Inherited functions rom Minim::Model ---------

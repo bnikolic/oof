@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: obscompare.hxx,v 1.3 2005/08/15 15:45:45 bnikolic Exp $
+  $Id: obscompare.hxx,v 1.4 2005/08/15 18:43:40 bnikolic Exp $
 
   Compare models to observations!
 */
@@ -19,6 +19,7 @@ namespace OOF {
   class ApertureMod;
   class ObsPhaseScreen;
   class MapToResidual;
+  class FarF;
 
   /*! This class compares a set of observations against predictions of
    *  an aperture model and returns the residuals.  It also enumerates
@@ -46,9 +47,22 @@ namespace OOF {
     /// A scratch map for calculating dephased apertures
     AstroMap::Map * ApScratchDephase;
 
+    /// A scratch map for the far-field power
+    AstroMap::Map * SkyScratch;    
+
+    /*! This will be used to turn aperture distributions in far field
+     * distributions
+     */
+    FarF * farf;
+
   public:
     
     // ------- Constructors / Destructors    -----------
+
+    /*! The simplest constructor, make our own farfield class so there
+     *  can beq nothing fancy about observations, i.e., just a simple
+     *  beam measurement.
+     */
     ObsCompare( ApertureMod * aperture,
 		AstroMap::Map &apsample );		
 
@@ -66,8 +80,8 @@ namespace OOF {
 
     // ------- Methods inherited from minimisable
 
-    virtual void  residuals ( std::vector< double > & res ) ;
     virtual unsigned   nres (void)   ; 
+    virtual void  residuals ( std::vector< double > & res ) ;
     virtual    void     AddParams ( std::vector< Minim::DParamCtr > &pars ) ;
 
 
