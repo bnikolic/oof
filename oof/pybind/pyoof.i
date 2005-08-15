@@ -20,6 +20,9 @@
 
 #include "../src/maptoresidual.hxx"
 #include "../src/maptoresidual_ds.hxx"
+#include "../src/obsphasescreen.hxx"
+#include "../src/obscompare.hxx"
+
 
 %}
   
@@ -42,3 +45,5 @@
 
 %include "../src/maptoresidual.hxx"
 %include "../src/maptoresidual_ds.hxx"
+%include "../src/obsphasescreen.hxx"
+%include "../src/obscompare.hxx"
