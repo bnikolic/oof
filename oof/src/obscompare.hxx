@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: obscompare.hxx,v 1.1 2005/08/12 19:32:16 bnikolic Exp $
+  $Id: obscompare.hxx,v 1.2 2005/08/15 14:11:39 bnikolic Exp $
 
   Compare models to observations!
 */
@@ -17,7 +17,7 @@ namespace OOF {
 
   public:
     
-    // ------- Construcotrs / Destructors    -----------
+    // ------- Constructors / Destructors    -----------
 
 
     // ------- Member functions -----------------------
@@ -25,7 +25,7 @@ namespace OOF {
 
     // ------- Methods inherited from minimisable
 
-    virtual void  residuals ( std::vector< double > & res ) 0;
+    virtual void  residuals ( std::vector< double > & res ) ;
     virtual unsigned   nres (void)   ; 
     virtual    void     AddParams ( std::vector< Minim::DParamCtr > &pars ) ;
 
