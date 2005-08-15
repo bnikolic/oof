@@ -1,6 +1,6 @@
 /*!
   Bojan Nikolic
-  $Id: aperturemod.hxx,v 1.3 2005/08/15 18:43:40 bnikolic Exp $
+  $Id: aperturemod.hxx,v 1.4 2005/08/15 22:14:16 bnikolic Exp $
 
   Aperture model
 */
@@ -76,6 +76,9 @@ namespace OOF {
     // ------ Inherited functions rom Minim::Model ---------
     
     virtual    void     AddParams ( std::vector< Minim::DParamCtr > &pars );
+
+    //  ------ Utility functons to help with python
+    Minim::Model * downcast(void);
     
 
 

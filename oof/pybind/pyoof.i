@@ -15,6 +15,8 @@
 #include "../src/aperture/amplimod.hxx"
 #include "../src/aperture/gaussampmod.hxx"
 
+#include "../src/aperture/mkapertures.hxx"
+
 #include "../src/farfield/farffunctions.hxx"
 #include "../src/farfield/farf.hxx"
 
@@ -40,6 +42,9 @@
 
 %include "../src/aperture/amplimod.hxx"
 %include "../src/aperture/gaussampmod.hxx"
+
+%include "../src/aperture/mkapertures.hxx"
+
 %include "../src/farfield/farffunctions.hxx"
 %include "../src/farfield/farf.hxx"
 
