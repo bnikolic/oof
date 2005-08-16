@@ -1,5 +1,5 @@
 
-SUBDIRS = telgeo aperture farfield
+SUBDIRS = telgeo aperture farfield 
 
 lib_LTLIBRARIES = liboof.la 
 
