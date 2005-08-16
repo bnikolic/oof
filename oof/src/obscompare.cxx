@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: obscompare.cxx,v 1.5 2005/08/15 22:14:16 bnikolic Exp $
+  $Id: obscompare.cxx,v 1.6 2005/08/16 18:00:58 bnikolic Exp $
 */
 
 #include "obscompare.hxx"
@@ -85,6 +85,16 @@ namespace OOF {
 
     return res;
 
+  }
+
+  AstroMap::Map *  ObsCompare::Beam (void  )
+  {
+    AstroMap::Map * res = AstroMap::Clone(*SkyScratch) ;
+
+    (*ApScratch) = ( *aperture->getphase()) ;
+    farf->Power( *aperture->getamp() , *ApScratch, * res );
+
+    return res;
   }
 
   void  ObsCompare::residuals ( std::vector< double > & res ) 

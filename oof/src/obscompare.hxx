@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: obscompare.hxx,v 1.5 2005/08/15 22:14:16 bnikolic Exp $
+  $Id: obscompare.hxx,v 1.6 2005/08/16 18:00:58 bnikolic Exp $
 
   Compare models to observations!
 */
@@ -82,6 +82,9 @@ namespace OOF {
 
     /*! Return the model beam for the ith observation */
     AstroMap::Map *  Beam (unsigned i  );
+
+    /*! Return just the plain beam  */
+    AstroMap::Map *  Beam (void  );
 
 
     // ------- Methods inherited from minimisable

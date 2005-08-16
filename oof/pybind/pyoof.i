@@ -4,6 +4,7 @@
 #include <minimmodel.hxx>
 #include <astromap.hxx>
 #include <fft.hxx>
+#include "coordsys.hxx"
 
 #include "../src/telgeo/telgeo.hxx"
 #include "../src/telgeo/telswitch.hxx"
@@ -23,6 +24,7 @@
 #include "../src/maptoresidual.hxx"
 #include "../src/maptoresidual_ds.hxx"
 #include "../src/obsphasescreen.hxx"
+#include "../src/obsdefocus.hxx"
 #include "../src/obscompare.hxx"
 
 
@@ -30,7 +32,8 @@
   
 %include "minimmodel.hxx"
 %include <fft.hxx>
-#include "astromap.hxx"
+%include "astromap.hxx"
+%include "coordsys.hxx"
 
 
 %include "../src/telgeo/telgeo.hxx"
@@ -51,4 +54,5 @@
 %include "../src/maptoresidual.hxx"
 %include "../src/maptoresidual_ds.hxx"
 %include "../src/obsphasescreen.hxx"
+%include "../src/obsdefocus.hxx"
 %include "../src/obscompare.hxx"
