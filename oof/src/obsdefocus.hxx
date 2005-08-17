@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: obsdefocus.hxx,v 1.1 2005/08/12 18:43:15 bnikolic Exp $
+  $Id: obsdefocus.hxx,v 1.2 2005/08/17 15:57:16 bnikolic Exp $
 
 */
 
@@ -33,7 +33,8 @@ namespace OOF {
      * actual phase screen. Even if dz is adjustable, so far have only
      * encountered linear relations in defocus anyway.
      */
-    ObsDefocus ( TelGeometry * telgeo , AstroMap::Map  & apmapsample, double dz );
+    ObsDefocus ( TelGeometry * telgeo , AstroMap::Map  & apmapsample, double dz,
+		 double wavel);
 
     virtual ~ObsDefocus();
 

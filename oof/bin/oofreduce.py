@@ -1,9 +1,9 @@
 # Bojan Nikolic
-# $Id: oofreduce.py,v 1.3 2005/08/16 18:00:58 bnikolic Exp $
+# $Id: oofreduce.py,v 1.4 2005/08/17 15:57:16 bnikolic Exp $
 #
 # Main OOF reduction script
 
-oofreducever = r"$Revision: 1.3 $"
+oofreducever = r"$Revision: 1.4 $"
 
 import pyfits
 
@@ -49,7 +49,9 @@ def MkPhaseScreen(fnamein, i, apmapsample):
 
     dz  = float(fin[i].header["dz"])
 
-    ps  = pyoof.ObsDefocus( tel, apmapsample , dz)
+    wavel = GetObsWaveL(fnamein)
+
+    ps  = pyoof.ObsDefocus( tel, apmapsample , dz, wavel)
 
     return ps
 

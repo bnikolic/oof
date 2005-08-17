@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: obsdefocus.cxx,v 1.1 2005/08/12 18:43:15 bnikolic Exp $
+  $Id: obsdefocus.cxx,v 1.2 2005/08/17 15:57:16 bnikolic Exp $
 
 */
 
@@ -15,11 +15,17 @@ namespace OOF {
   
   ObsDefocus::ObsDefocus ( TelGeometry * telgeo , 
 			   AstroMap::Map  & apmapsample, 
-			   double dz ):
+			   double dz,
+			   double wavel):
     screen(AstroMap::Clone(apmapsample) ),
     dz(dz)
   {
+    // this is in terms of geometric path
     telgeo->MkDefocus( dz, *screen) ;
+
+    // convert to radians
+    (*screen) *= 2 * M_PI /  wavel;
+    
   }
 
   ObsDefocus::~ObsDefocus()
