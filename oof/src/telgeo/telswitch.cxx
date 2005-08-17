@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: telswitch.cxx,v 1.1 2005/06/25 13:39:40 bnikolic Exp $
+  $Id: telswitch.cxx,v 1.2 2005/08/17 20:43:37 bnikolic Exp $
 
 */
 
@@ -11,6 +11,7 @@
 
 #include "telgeo.hxx"
 #include "cassegrain.hxx"
+#include "gbtgeo.hxx"
 
 namespace OOF {
 
@@ -37,6 +38,10 @@ namespace OOF {
     else if ( !strcmp (telname, "APEX") ) 
       {
 	return MkALMA() ;
+      }
+    else if ( !strcmp (telname, "GBT") ) 
+      {
+	return new GBTGeo();
       }
     else
       {

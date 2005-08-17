@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: obscompare.cxx,v 1.6 2005/08/16 18:00:58 bnikolic Exp $
+  $Id: obscompare.cxx,v 1.7 2005/08/17 20:43:36 bnikolic Exp $
 */
 
 #include "obscompare.hxx"
@@ -24,6 +24,18 @@ namespace OOF {
     farf( new FarF( apsample, aperture->wavel))
   {
   }
+
+  ObsCompare::ObsCompare( ApertureMod * aperture,
+	      AstroMap::Map &apsample,
+	      FarF * customff):
+    aperture(aperture),
+    ApScratch( AstroMap::Clone(apsample)),
+    ApScratchDephase( AstroMap::Clone(apsample)),
+    SkyScratch(AstroMap::Clone(apsample) ),
+    farf( customff)
+  {
+  }
+	
 
   ObsCompare::~ObsCompare(void)
   {

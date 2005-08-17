@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: obsdefocus.cxx,v 1.2 2005/08/17 15:57:16 bnikolic Exp $
+  $Id: obsdefocus.cxx,v 1.3 2005/08/17 20:43:36 bnikolic Exp $
 
 */
 
@@ -24,7 +24,7 @@ namespace OOF {
     telgeo->MkDefocus( dz, *screen) ;
 
     // convert to radians
-    (*screen) *= 2 * M_PI /  wavel;
+    (*screen) *=  -2 * M_PI /  wavel;
     
   }
 

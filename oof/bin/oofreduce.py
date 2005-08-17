@@ -1,9 +1,9 @@
 # Bojan Nikolic
-# $Id: oofreduce.py,v 1.4 2005/08/17 15:57:16 bnikolic Exp $
+# $Id: oofreduce.py,v 1.5 2005/08/17 20:43:36 bnikolic Exp $
 #
 # Main OOF reduction script
 
-oofreducever = r"$Revision: 1.4 $"
+oofreducever = r"$Revision: 1.5 $"
 
 import pyfits
 
@@ -17,7 +17,12 @@ def MkTel(fnamein):
 
     telname= pyfits.open(fnamein)[0].header["telesc"]
 
-    return pyoof.TelSwitch(telname)
+    tel = pyoof.TelSwitch(telname)
+
+    if tel == None:
+        raise "Uknown telescope : " + telname
+
+    return tel
 
 
 def GetObsWaveL(fnamein):
@@ -73,6 +78,29 @@ def LoadOCData( fnamein,
         ps.thisown=0
         oc.AddObs(mapres, ps)
                 
+
+def MkFF ( fnamein,
+           apphase):
+
+    wavel = GetObsWaveL(fnamein)
+
+    telname= pyfits.open(fnamein)[0].header["telesc"]
+
+    if telname == "GBT":
+
+        recvname= pyfits.open(fnamein)[0].header["recv"]
+        if recvname == "qunbal":
+            ff = pyoof.ChoppedFF( apphase , wavel)
+            ff.hchop = -60 * 5e-6
+        else:
+            raise "Unknown receiver/GBT"
+    else:
+        ff = pyoof.FarF(apphase, wavel)
+
+    ff.thisown=0        
+    return  ff
+
+    
     
 def MkObsCompare(fnamein,
                  npix=128,
@@ -93,9 +121,12 @@ def MkObsCompare(fnamein,
                                   oversample)
 
     aperture.thisown=0
+
+    obsff  = MkFF (fnamein, aperture.getphase())
     
     oc= pyoof.ObsCompare( aperture,
-                          aperture.getphase() );
+                          aperture.getphase() ,
+                          obsff);
 
     skymapsample=oc.Beam();
 

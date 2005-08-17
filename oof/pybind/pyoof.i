@@ -7,6 +7,7 @@
 #include "coordsys.hxx"
 
 #include "../src/telgeo/telgeo.hxx"
+#include "../src/telgeo/gbtgeo.hxx"
 #include "../src/telgeo/telswitch.hxx"
 
 #include "../src/aperture/phasemod.hxx"
@@ -20,6 +21,7 @@
 
 #include "../src/farfield/farffunctions.hxx"
 #include "../src/farfield/farf.hxx"
+#include "../src/farfield/choppedff.hxx"
 
 #include "../src/maptoresidual.hxx"
 #include "../src/maptoresidual_ds.hxx"
@@ -37,6 +39,7 @@
 
 
 %include "../src/telgeo/telgeo.hxx"
+%include "../src/telgeo/gbtgeo.hxx"
 %include "../src/telgeo/telswitch.hxx"
 
 %include "../src/aperture/phasemod.hxx"
@@ -50,6 +53,7 @@
 
 %include "../src/farfield/farffunctions.hxx"
 %include "../src/farfield/farf.hxx"
+%include "../src/farfield/choppedff.hxx"
 
 %include "../src/maptoresidual.hxx"
 %include "../src/maptoresidual_ds.hxx"

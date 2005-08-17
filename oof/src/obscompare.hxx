@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: obscompare.hxx,v 1.6 2005/08/16 18:00:58 bnikolic Exp $
+  $Id: obscompare.hxx,v 1.7 2005/08/17 20:43:36 bnikolic Exp $
 
   Compare models to observations!
 */
@@ -55,6 +55,7 @@ namespace OOF {
      */
     FarF * farf;
 
+
   public:
     
     // ------- Constructors / Destructors    -----------
@@ -65,6 +66,10 @@ namespace OOF {
      */
     ObsCompare( ApertureMod * aperture,
 		AstroMap::Map &apsample );		
+
+    ObsCompare( ApertureMod * aperture,
+		AstroMap::Map &apsample,
+		FarF * customff);		
 
     virtual ~ObsCompare(void) ;
 
