@@ -1,11 +1,13 @@
 /*
   Bojan Nikolic
-  $Id: farf.hxx,v 1.3 2005/08/15 18:43:40 bnikolic Exp $
+  $Id: farf.hxx,v 1.4 2005/08/17 17:28:45 bnikolic Exp $
 
   A class that transforms from the aperture plane to the far field.
 */
 #ifndef _OOF_FARF_HXX__
 #define _OOF_FARF_HXX__
+
+#include <minimmodel.hxx>
 
 // Forwards
 namespace AstroMap {
@@ -15,9 +17,11 @@ namespace AstroMap {
 
 namespace OOF {
 
-  /*! Calculates the far field from an aperture representation */
-
-  class FarF {
+  /*! Calculates the far field from an aperture
+   *  representation. Subclasses can add observation-depemdant
+   *  features like chopping or convolution for a known source extent.
+   */
+  class FarF : public Minim::Model {
 
     /*! This will do the actuall far-field calculation
      */
@@ -45,7 +49,8 @@ namespace OOF {
       amplitude and phase distributions */
     void Power ( const AstroMap::Map & amp, AstroMap::Map & phase, AstroMap::Map & res);
 
-    
+    // ------ Inherited functions rom Minim::Model ---------
+    virtual    void     AddParams ( std::vector< Minim::DParamCtr > &pars );    
     
 
   };

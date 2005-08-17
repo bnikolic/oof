@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: farf.cxx,v 1.3 2005/08/15 18:43:40 bnikolic Exp $
+  $Id: farf.cxx,v 1.4 2005/08/17 17:28:45 bnikolic Exp $
 
 
 */
@@ -47,7 +47,9 @@ namespace OOF {
 
   }
   
-
+  void     FarF::AddParams ( std::vector< Minim::DParamCtr > &pars )
+  {
+  }
 
 }
 

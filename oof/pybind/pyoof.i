@@ -56,3 +56,11 @@
 %include "../src/obsphasescreen.hxx"
 %include "../src/obsdefocus.hxx"
 %include "../src/obscompare.hxx"
+
+%extend OOF::ObsCompare {
+	
+	Minim::Minimisable *downcast(void) 
+	{
+	return self;
+	}
+}
