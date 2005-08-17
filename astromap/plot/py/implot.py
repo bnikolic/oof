@@ -1,5 +1,5 @@
 # Bojan Nikolic
-# $Id: implot.py,v 1.3 2005/07/09 12:59:09 bnikolic Exp $
+# $Id: implot.py,v 1.4 2005/08/17 20:47:15 bnikolic Exp $
 #
 # Routines for plotting maps
 
@@ -63,7 +63,8 @@ def finishplot(foutname):
     fout=foutname
     if (string.find(fout, "/CPS") != -1 or
         string.find(fout, "/GIF") != -1 or
-        string.find(fout, "/PNG") != -1 ) : 
+        string.find(fout, "/PNG") != -1 or
+        string.find(fout, "/png") != -1 ) : 
 
         ## we are doing a hard copy...
         pyplot.cpgclos()
