@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: farf.hxx,v 1.4 2005/08/17 17:28:45 bnikolic Exp $
+  $Id: farf.hxx,v 1.5 2005/08/17 19:28:56 bnikolic Exp $
 
   A class that transforms from the aperture plane to the far field.
 */
@@ -47,7 +47,7 @@ namespace OOF {
 
     /*! Calculate the far-field power from the supplied aperture
       amplitude and phase distributions */
-    void Power ( const AstroMap::Map & amp, AstroMap::Map & phase, AstroMap::Map & res);
+    virtual void Power ( const AstroMap::Map & amp, AstroMap::Map & phase, AstroMap::Map & res);
 
     // ------ Inherited functions rom Minim::Model ---------
     virtual    void     AddParams ( std::vector< Minim::DParamCtr > &pars );    
