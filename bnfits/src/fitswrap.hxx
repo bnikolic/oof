@@ -1,5 +1,5 @@
 /* Bojan Nikolic
-   $Id: fitswrap.hxx,v 1.3 2005/07/03 14:38:12 bnikolic Exp $
+   $Id: fitswrap.hxx,v 1.4 2005/08/18 04:56:37 bnikolic Exp $
    
    Simple wrapper for cfitsio
 */
@@ -7,6 +7,7 @@
 #define BNFITS_FITSWRAP_HXX__
 
 #include <fitsio.h>
+#include <vector>
 
 
 namespace BNFits {
@@ -23,7 +24,7 @@ namespace BNFits {
 
   public:
     
-    enum openmode {read ,write } ;
+    enum openmode {read ,readwrite, create } ;
 
     FitsF( const char * fname, openmode mode  );
 
@@ -43,6 +44,12 @@ namespace BNFits {
     int ColNo (unsigned extno, char * colname );
 
     int ColNo (unsigned extno, const char * colname );
+
+    /* ---------- Writing Images -------------- */
+    
+    /*! Create an image extension. For now assume all are double type. */
+    void MkImage ( std::vector<long> axes , int bitpix );
+    
 
   };
 

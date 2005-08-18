@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: tfitsops.hxx,v 1.1 2005/07/03 14:38:12 bnikolic Exp $
+  $Id: tfitsops.hxx,v 1.2 2005/08/18 04:56:37 bnikolic Exp $
 
   Templated fits file operations 
 */
@@ -13,12 +13,57 @@
 
 #include "fitswrap.hxx"
 #include "fitserr.hxx"
-
+#include "fitsops.hxx"
 
 #include <valarray>
 
 namespace BNFits {
 
+  /*! Write an array into the current image extension */
+  template<class T> void WriteImg (FitsF &file,
+				   std::valarray<T> &data )
+  {
+
+    int datatype ;
+    if (typeid(T) == typeid(double)  ) 
+      {
+	datatype=TDOUBLE;
+      } 
+    else 
+      {
+	throw ( FIOExc( FName(file),
+			"Do not know how to write supplied data type",
+			-99));
+      }
+
+    int status =0;
+
+    std::vector<long> imgdims = ImgDims( file);
+
+    long firstpix[2];
+    firstpix[0]=1;
+    firstpix[1]=1;
+
+    std::valarray<long> fpixel(  imgdims.size() );
+    fpixel = 1;
+
+    for ( unsigned i = 0 ; i < imgdims.size() ; ++i )
+      imgdims[i] -= 1;
+    
+    
+    if ( fits_write_pix( file,
+			 datatype,
+			 &fpixel[0],
+			 //firstpix,
+			 data.size(),
+			 &data[0],
+			 &status ) )
+      throw ( FIOExc( FName(file),
+		      "Data not written successfully",
+		      status));
+
+
+  }
 
 
   /*! Loads a column from a table */

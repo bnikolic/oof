@@ -6,6 +6,8 @@
 #include "fitsops.hxx"
 
 #include "fitswrap.hxx"
+#include "fitserr.hxx"
+
 
 namespace BNFits {
 
@@ -30,6 +32,34 @@ namespace BNFits {
 
     return nrows;
 
+  }
+
+  unsigned NAxis(FitsF & file)
+  {
+    int status =0 ;
+    int naxis  =0;
+    
+    if ( fits_get_img_dim( file, &naxis, &status))
+      throw (FIOExc(FName(file) ,
+		    "Could not determine number of axes (maybe not an image?) ",
+		    status ));
+    
+    return (unsigned) naxis;
+  }
+
+  std::vector<long> ImgDims(FitsF & file)
+  {
+    int status;
+    unsigned naxis = NAxis(file);
+
+    std::vector<long> res(naxis);
+
+    fits_get_img_size( file, 
+		       naxis,
+		       &res[0],
+		       &status);
+    
+    return res;
   }
 
 

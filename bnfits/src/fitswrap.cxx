@@ -1,5 +1,5 @@
 /* Bojan Nikolic
-   $Id: fitswrap.cxx,v 1.3 2005/07/03 14:38:12 bnikolic Exp $
+   $Id: fitswrap.cxx,v 1.4 2005/08/18 04:56:37 bnikolic Exp $
 */
 
 #include "fitswrap.hxx"
@@ -15,8 +15,21 @@ namespace BNFits {
   FitsF::FitsF( const char * fname, openmode mode  )
   {
     int status = 0;
-    if ( fits_open_file(&file, fname , READONLY, &status))
-      throw ( FIOExc(fname ,"Error opening FITS file", status) ); 
+
+    int iomode ;
+    if ( mode == read ) 
+      {
+      iomode = READONLY;
+
+      if ( fits_open_file(&file, fname , iomode, &status))
+	throw ( FIOExc(fname ,"Error opening FITS file", status) ); 
+      }
+    else if ( mode == create )
+      {
+	fits_create_file( &file, fname , &status ) ;
+	  
+      }
+
   }
 
   FitsF::~FitsF()
@@ -85,6 +98,19 @@ namespace BNFits {
     temp.get()[scname.size()] = 0;
 
     return ColNo(extno, temp.get() );
+
+  }
+
+  void FitsF::MkImage ( std::vector<long> axes , int bitpix )
+  {
+    int status= 0;
+    int naxis = axes.size();
+
+    if ( fits_create_img( (*this) , bitpix , naxis , & axes[0] , & status ) )
+
+      throw ( FIOExc(FName(*this) ,
+		     "Could not create image extension",
+		     status ));
 
   }
 

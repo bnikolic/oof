@@ -7,7 +7,7 @@
 #define _BNFITS_FITSOPS_HXX__
 
 #include <string>
-
+#include <vector>
 
 
 namespace BNFits {
@@ -19,6 +19,12 @@ namespace BNFits {
 
   /*! Returns the number of rows in this table extension */
   unsigned long NRows (FitsF & file, unsigned extno);
+
+  /*! Return the number of dimensions */
+  unsigned NAxis(FitsF & file);
+
+  /*! Return the dimension of the image */
+  std::vector<long> ImgDims(FitsF & file);
 
 
   
