@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: tfitsops.hxx,v 1.5 2005/08/18 17:56:27 bnikolic Exp $
+  $Id: tfitsops.hxx,v 1.6 2005/08/18 18:33:34 bnikolic Exp $
 
   Templated fits file operations 
 */
@@ -114,6 +114,44 @@ namespace BNFits {
 
   }
 
+  template<class T> T ReadKeywrd (FitsF &file,
+				     char * keywrd)
+  {
+    int datatype ;
+    if (typeid(T) == typeid(double)  ) 
+      {
+	datatype=TDOUBLE;
+      } 
+    else if ( typeid(T) == typeid(int)   )
+      {
+	datatype=TINT;
+      }
+    else 
+      {
+	throw ( FIOExc( FName(file),
+			"Do not know how to write supplied data type",
+			-99));
+      }
+    
+    int status=0;
+
+    T value;
+
+    if ( fits_read_key    (file, 
+			   datatype, 
+			   keywrd, 
+			   &value,
+			   NULL,
+			   &status))
+      {
+	throw ( FIOExc( FName(file),
+			std::string("Failed to read keyword ") + keywrd,
+			status));
+      }    
+
+    return value;
+    
+  }
 
   /*! Update header keywords in current header */
   template<class T> void UpdateKeywrd (FitsF &file,
