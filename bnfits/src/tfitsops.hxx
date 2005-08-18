@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: tfitsops.hxx,v 1.4 2005/08/18 14:33:37 bnikolic Exp $
+  $Id: tfitsops.hxx,v 1.5 2005/08/18 17:56:27 bnikolic Exp $
 
   Templated fits file operations 
 */
@@ -64,6 +64,56 @@ namespace BNFits {
 
 
   }
+
+  /*! Load the current image extension */
+  template<class T> void LoadImg (FitsF &file,
+				  std::valarray<T> &res )
+  {
+
+    int datatype ;
+    void *nullval(0); 
+
+    double Dnullval =0;
+    
+    if (typeid(T) == typeid(double)  ) 
+      {
+	datatype=TDOUBLE;
+	nullval = &Dnullval;
+      } 
+    else 
+      {
+	throw ( FIOExc( FName(file),
+			"Do not know how to write supplied data type",
+			-99));
+      }
+    
+    std::vector<long> imgdims = ImgDims(file);
+    
+    std::valarray<long> fpixel(  imgdims.size() );
+    fpixel = 1;
+
+    int anynul =0;
+    int status =0;
+
+
+    if (  fits_read_pix ( file,
+			  datatype, 
+			  &fpixel[0], 
+			  res.size(),
+			  nullval,
+			  &res[0], 
+			  &anynul, 
+			  &status))
+      {
+	throw ( FIOExc( FName(file),
+			"Could not load img data",
+			status));	
+      }
+	  
+
+
+  }
+
 
   /*! Update header keywords in current header */
   template<class T> void UpdateKeywrd (FitsF &file,
