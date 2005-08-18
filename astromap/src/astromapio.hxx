@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: astromapio.hxx,v 1.2 2005/08/18 15:09:46 bnikolic Exp $
+  $Id: astromapio.hxx,v 1.3 2005/08/18 17:56:07 bnikolic Exp $
 
   Input/Output routines for astromap
 */
@@ -15,6 +15,14 @@ namespace AstroMap {
 
   // forwards
   class Map;
+
+  // Reading routines
+
+  Map * FitsMapLoad ( BNFits::FitsF &fout );
+
+  Map * FitsMapLoad ( const char * fnamein, int extno);
+
+  // Writing routines
 
   void FitsWrite ( Map & m,
 		   BNFits::FitsF &fout);

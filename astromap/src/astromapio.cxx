@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: astromapio.cxx,v 1.3 2005/08/18 15:09:46 bnikolic Exp $
+  $Id: astromapio.cxx,v 1.4 2005/08/18 17:56:07 bnikolic Exp $
 */
 
 #include "astromapio.hxx"
@@ -16,6 +16,41 @@
 #include "coordsys/csfileio.hxx"
 
 namespace AstroMap {
+
+  Map * FitsMapLoad ( BNFits::FitsF &fin ) 
+  {
+    using namespace BNFits;
+
+    try {
+      // Get the dimensions of the map;
+      std::vector<long> imgdims = ImgDims(fin);
+
+      Map * res = new Map(imgdims[0],imgdims[1]);
+      
+      LoadImg(fin, *res);
+      
+      return res;
+    } 
+    catch ( FIOExc exc ) 
+      {
+	std::cerr<<"\n ERROR: Loading image failed with following error:\n";
+	std::cerr<<exc.what();
+	std::cerr<<"Re-throwing exception";
+	throw;
+      }
+  }
+
+  Map * FitsMapLoad ( const char * fnamein, int extno) 
+  {
+    using namespace BNFits;
+    
+    FitsF fin ( fnamein, FitsF::read);
+
+    fin.HDUseek(extno);
+
+    return FitsMapLoad(fin);
+
+  }
 
 
   void FitsWrite ( Map & m,
