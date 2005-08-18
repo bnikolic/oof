@@ -1,6 +1,6 @@
 /*!
   Bojan Nikolic
-  $Id: maptoresidual_ds.hxx,v 1.1 2005/08/15 15:02:07 bnikolic Exp $
+  $Id: maptoresidual_ds.hxx,v 1.2 2005/08/18 04:57:43 bnikolic Exp $
 
 */
 
@@ -44,7 +44,10 @@ namespace OOF {
     virtual ~MapToResidualDS() ;
 
     /* ----- Member Functions ---------------------------*/
-
+    
+    /*! Returns a dataseries which would have been observed if the
+      modelmap was the true beam*/
+    AstroMap::DataSeries * MkModelDS( AstroMap::Map & modelmap);
 
     /* ----- Functions inherited from MApToResidual ------ */
 

@@ -1,6 +1,6 @@
 /*!
   Bojan Nikolic
-  $Id: maptoresidual_ds.cxx,v 1.1 2005/08/15 15:02:07 bnikolic Exp $
+  $Id: maptoresidual_ds.cxx,v 1.2 2005/08/18 04:57:43 bnikolic Exp $
 
 */
 
@@ -33,6 +33,19 @@ namespace OOF {
   unsigned   MapToResidualDS::nres (void)  
   {
     return obsds->size();
+  }
+
+  AstroMap::DataSeries * MapToResidualDS::MkModelDS( AstroMap::Map & modelmap)
+  {
+
+    mapinterp->Calc( modelmap, modelds );
+
+    AstroMap::DataSeries * res  ( new AstroMap::DataSeries(*obsds));
+
+    for (size_t i =0 ; i < obsds->size() ; ++i )
+      (*res)[i].fnu = modelds[i];
+
+    return res;
   }
 
   size_t MapToResidualDS::residuals ( AstroMap::Map & model, 

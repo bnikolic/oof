@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: farffunctions.hxx,v 1.2 2005/08/11 21:17:41 bnikolic Exp $
+  $Id: farffunctions.hxx,v 1.3 2005/08/18 04:57:43 bnikolic Exp $
 
   Far-field support functions 
 */
@@ -19,6 +19,10 @@ namespace OOF {
   /*! Create an FFT factory suitable for transforming aperture field
     distributions to far field distributions */
   AstroMap::FFTFact * MkFFFact( AstroMap::Map & apmapsample  );
+
+  /*! Set the correct coordinate system on  farfield map */
+  void SetFarFCS(const AstroMap::Map & apmap, double wavel,
+		 AstroMap::Map & res );
 
 
 }

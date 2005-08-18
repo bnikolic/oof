@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: farf.cxx,v 1.4 2005/08/17 17:28:45 bnikolic Exp $
+  $Id: farf.cxx,v 1.5 2005/08/18 04:57:43 bnikolic Exp $
 
 
 */
@@ -31,19 +31,7 @@ namespace OOF {
     ff->FFTAmpPh_Power(amp, phase , res);
 
     // now set the coordinate system!
-    
-    // Assume square for the time being
-    double scratchx;  double scratchy ;
-    double ap_x  ;
-    
-    amp.cs->pxtoworld(1 , 0 ,  ap_x , scratchy);
-    amp.cs->pxtoworld(0 , 0 ,  scratchx , scratchy);
-    ap_x -= scratchx ;
-
-    // this is half of the total field view on the sky.
-    double halfsky = wavel / ap_x  / 2;
-
-    MkApCS( res , halfsky );
+    SetFarFCS( amp , wavel , res);
 
   }
   

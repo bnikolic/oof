@@ -1,9 +1,11 @@
 # Bojan Nikolic
-# $Id: oofreduce.py,v 1.5 2005/08/17 20:43:36 bnikolic Exp $
+# $Id: oofreduce.py,v 1.6 2005/08/18 04:57:43 bnikolic Exp $
 #
 # Main OOF reduction script
 
-oofreducever = r"$Revision: 1.5 $"
+oofreducever = r"$Revision: 1.6 $"
+
+import math
 
 import pyfits
 
@@ -53,6 +55,7 @@ def MkPhaseScreen(fnamein, i, apmapsample):
     tel = MkTel(fnamein)
 
     dz  = float(fin[i].header["dz"])
+    print dz
 
     wavel = GetObsWaveL(fnamein)
 
@@ -91,16 +94,29 @@ def MkFF ( fnamein,
         recvname= pyfits.open(fnamein)[0].header["recv"]
         if recvname == "qunbal":
             ff = pyoof.ChoppedFF( apphase , wavel)
-            ff.hchop = -60 * 5e-6
+            ff.hchop = -57.8 *  math.pi / 180.0 / 3600
         else:
-            raise "Unknown receiver/GBT"
+            raise "Unknown receiver/GBT: " + recvnema
     else:
         ff = pyoof.FarF(apphase, wavel)
 
     ff.thisown=0        
     return  ff
 
+
+def MkSampleAp(fnamein,
+               npix=128,
+               oversample=2.0):
     
+    tel = MkTel(fnamein)
+
+    wavel= GetObsWaveL(fnamein)
+
+    return pyoof.MkSimpleAp ( tel,
+                              wavel,
+                              npix,
+                              0,
+                              oversample)    
     
 def MkObsCompare(fnamein,
                  npix=128,
