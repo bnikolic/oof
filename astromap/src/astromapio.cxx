@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: astromapio.cxx,v 1.1 2005/08/18 04:56:18 bnikolic Exp $
+  $Id: astromapio.cxx,v 1.2 2005/08/18 14:33:55 bnikolic Exp $
 */
 
 #include "astromapio.hxx"
@@ -13,6 +13,7 @@
 
 
 #include "astromap.hxx"
+#include "coordsys/csfileio.hxx"
 
 namespace AstroMap {
 
@@ -31,10 +32,13 @@ namespace AstroMap {
 
       WriteImg( fout,
 		m);
+
+      FitsWrite( *(m.cs), fout,
+		 m.nx, m.ny);
     }     
     catch (FIOExc exc ) 
       {
-	std::cerr<<"\n ERROR: Loading image failed with following error:\n";
+	std::cerr<<"\n ERROR: Writing image failed with following error:\n";
 	std::cerr<<exc.what();
 	std::cerr<<"\n Unkown results writen";
       }
