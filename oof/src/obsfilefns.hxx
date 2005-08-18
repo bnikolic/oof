@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: obsfilefns.hxx,v 1.1 2005/08/16 14:46:10 bnikolic Exp $
+  $Id: obsfilefns.hxx,v 1.2 2005/08/18 15:25:47 bnikolic Exp $
 
   Input/output support functions for observations 
 */
@@ -10,12 +10,14 @@
 
 namespace OOF {
 
-  // Forwards
-  class MapToResidualDS;
+  class ObsCompare;
 
-  // ------------ Functions --------------
+  /*! Write out the model beams to the specified file */
+  void WriteBeams( ObsCompare &oc, 
+		   const char * fname);
 
-  //MapToResidualDS * LoadObsDS( const char 
+  
+  
 
 
 

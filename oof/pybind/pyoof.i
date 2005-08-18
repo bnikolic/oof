@@ -28,6 +28,7 @@
 #include "../src/obsphasescreen.hxx"
 #include "../src/obsdefocus.hxx"
 #include "../src/obscompare.hxx"
+#include "../src/obsfilefns.hxx"
 
 
 %}
@@ -60,6 +61,8 @@
 %include "../src/obsphasescreen.hxx"
 %include "../src/obsdefocus.hxx"
 %include "../src/obscompare.hxx"
+%include "../src/obsfilefns.hxx"
+
 
 %extend OOF::ObsCompare {
 	
