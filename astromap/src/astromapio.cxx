@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: astromapio.cxx,v 1.4 2005/08/18 17:56:07 bnikolic Exp $
+  $Id: astromapio.cxx,v 1.5 2005/08/18 18:33:23 bnikolic Exp $
 */
 
 #include "astromapio.hxx"
@@ -25,10 +25,15 @@ namespace AstroMap {
       // Get the dimensions of the map;
       std::vector<long> imgdims = ImgDims(fin);
 
-      Map * res = new Map(imgdims[0],imgdims[1]);
+      // Load the coordinate system
+      CoordSys * cs = FitsCSLoad( fin );
+
+      // Create a map with correct cs
+      Map * res = new Map(imgdims[0],imgdims[1],cs);
       
+      // And finally load image data
       LoadImg(fin, *res);
-      
+
       return res;
     } 
     catch ( FIOExc exc ) 

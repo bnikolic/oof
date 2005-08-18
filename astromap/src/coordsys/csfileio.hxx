@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: csfileio.hxx,v 1.1 2005/08/18 14:33:55 bnikolic Exp $
+  $Id: csfileio.hxx,v 1.2 2005/08/18 18:33:23 bnikolic Exp $
 
   File input / output for coordinate systems.
 */
@@ -18,6 +18,8 @@ namespace AstroMap {
     of the supplied fits file*/
   void FitsWrite(  CoordSys & cs, BNFits::FitsF & fout,
 		   int nx, int ny);
+
+  CoordSys * FitsCSLoad( BNFits::FitsF & fin );
   
 
 

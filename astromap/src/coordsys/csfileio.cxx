@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: csfileio.cxx,v 1.1 2005/08/18 14:33:55 bnikolic Exp $
+  $Id: csfileio.cxx,v 1.2 2005/08/18 18:33:23 bnikolic Exp $
 
 */
 
@@ -13,6 +13,7 @@
 #include <fitserr.hxx>
 
 #include "coordsys.hxx"
+#include "lincordsys.hxx"
 
 namespace AstroMap {
 
@@ -72,8 +73,31 @@ namespace AstroMap {
 	std::cerr<<"Undefined coordsystem is attached to this image";
       }
     
+  }
 
-    
+  CoordSys * FitsCSLoad( BNFits::FitsF & fin )
+  {
+
+    double crpixx = BNFits::ReadKeywrd<double> (fin, "CRPIX1");
+    double crpixy = BNFits::ReadKeywrd<double> (fin, "CRPIX2");
+
+    double crvalx = BNFits::ReadKeywrd<double> (fin, "CRVAL1");
+    double crvaly = BNFits::ReadKeywrd<double> (fin, "CRVAL2");
+
+    double crdeltx = BNFits::ReadKeywrd<double> (fin, "CDELT1");
+    double crdelty = BNFits::ReadKeywrd<double> (fin, "CDELT2");
+
+    LinCS * res  = new LinCS();
+
+    res->TM[0] = crdeltx ;
+    res->TM[1] = 0 ;
+    res->TM[2] = crvalx - crdeltx * crpixx ;
+
+    res->TM[3] =0;
+    res->TM[4] =crdelty;
+    res->TM[5] = crvaly - crdelty * crpixy ;    
+
+    return res;
 
   }
 
