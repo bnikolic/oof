@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: tfitsops.hxx,v 1.3 2005/08/18 14:19:20 bnikolic Exp $
+  $Id: tfitsops.hxx,v 1.4 2005/08/18 14:33:37 bnikolic Exp $
 
   Templated fits file operations 
 */
@@ -67,9 +67,9 @@ namespace BNFits {
 
   /*! Update header keywords in current header */
   template<class T> void UpdateKeywrd (FitsF &file,
-				       const char * keywrd,
+				       char * keywrd,
 				       T value,
-				       const char * comment)
+				       char * comment)
   {
 
     int datatype ;
@@ -88,7 +88,7 @@ namespace BNFits {
 			-99));
       }
 
-    int status;
+    int status=0;
 
     if ( fits_update_key    (file, 
 			     datatype, 
