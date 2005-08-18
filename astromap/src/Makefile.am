@@ -9,12 +9,13 @@ libastromap_la_SOURCES= astromap.cxx astromap.hxx \
 			mapops.hxx mapops.cxx \
 			mapset.cxx mapset.hxx tmapset.hxx \
 			pixextract.hxx pixextract.cxx \
-			lcmaps.hxx lcmaps.cxx
+			lcmaps.hxx lcmaps.cxx \
+			astromapio.cxx astromapio.hxx
 
 libastromap_la_CFLAGS = -Wall
 libastromap_la_CPPFLAGS = -Wall
 
-libastromap_la_LIBADD = -lfftw -lbnlib coordsys/libcoordsys.la \
+libastromap_la_LIBADD = -lfftw -lbnlib -lbnfits coordsys/libcoordsys.la \
 			dataser/libdataser.la -lbnfits
 
 include_HEADERS = 	astromap.hxx mapops.hxx \
@@ -22,6 +23,7 @@ include_HEADERS = 	astromap.hxx mapops.hxx \
 			pixextract.hxx \
 			lcmaps.hxx \
 			fft.hxx \
-			astromap_fwd.hxx
+			astromap_fwd.hxx \
+			astromapio.hxx
 
 

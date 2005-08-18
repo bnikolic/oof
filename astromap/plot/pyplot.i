@@ -2,6 +2,7 @@
 %{
 
 #include "../src/astromap.hxx"
+#include "../src/astromapio.hxx"
 #include "../src/mapops.hxx"
 #include "../src/pixextract.hxx"
 #include "../src/fft.hxx"
@@ -29,6 +30,7 @@
 %include "typemaps.i"
 
 %include "../src/astromap.hxx"
+%include "../src/astromapio.hxx"
 %include "../src/mapops.hxx"
 %include "../src/pixextract.hxx"
 %include "../src/fft.hxx"
