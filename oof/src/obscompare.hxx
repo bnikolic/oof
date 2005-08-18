@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: obscompare.hxx,v 1.7 2005/08/17 20:43:36 bnikolic Exp $
+  $Id: obscompare.hxx,v 1.8 2005/08/18 23:52:32 bnikolic Exp $
 
   Compare models to observations!
 */
@@ -90,6 +90,9 @@ namespace OOF {
 
     /*! Return just the plain beam  */
     AstroMap::Map *  Beam (void  );
+
+    /*! Return the aperture */
+    ApertureMod * GetAperture(void);
 
 
     // ------- Methods inherited from minimisable

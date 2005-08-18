@@ -1,5 +1,5 @@
 # Bojan Nikolic
-# $Id: oofplot.py,v 1.1 2005/08/18 04:57:43 bnikolic Exp $
+# $Id: oofplot.py,v 1.2 2005/08/18 23:52:32 bnikolic Exp $
 #
 # Various utilities for plotting OOF data
 
@@ -16,7 +16,7 @@ import oofreduce
 def PlotDSFile( fnamein,
                 dirout,
                 prefix="beam",
-                npix=64,
+                npix=128,
                 oversample=2.0,
                 fwhm=2.0,
                 extent=4.0
@@ -48,6 +48,25 @@ def PlotDSFile( fnamein,
                                           prefix + "-%i.png/PNG" % i ),
                         colmap="heat")
                                           
-        
+
+def PlotSimDrizzleBeams(obsfilename, beamfilename,
+                        dirout,
+                        prefix="simdrizbeam",
+                        fwhm=2, extent=4):
+
+    ds = oofreduce.SimBeamDS(obsfilename, beamfilename)
+    print ds
+
+    for i in range(len(ds)):
+        skym=pyplot.FitsMapLoad(beamfilename, i+1)
+        pyplot.SimpleDrizzle( ds[i], skym, fwhm , extent)
+        print i
+        implot.plotmap(skym,
+                       fout=os.path.join(dirout,
+                                         prefix + "-%i.png/PNG" % i ),
+                       colmap="heat"  )
+
+
+
         
 

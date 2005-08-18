@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: obsfilefns.cxx,v 1.2 2005/08/18 15:25:47 bnikolic Exp $
+  $Id: obsfilefns.cxx,v 1.3 2005/08/18 23:52:32 bnikolic Exp $
 
 */
 
@@ -11,6 +11,7 @@
 #include <vector>
 
 #include "obscompare.hxx"
+#include "aperture/aperturemod.hxx"
 
 
 
@@ -31,7 +32,19 @@ namespace OOF {
 
   }
 
+  void WriteAperture(ObsCompare &oc, 
+		     const char * fname)
+  {
+    std::vector<AstroMap::Map *> aps;
 
+    aps.push_back( new AstroMap::Map( * (oc.GetAperture()->getamp()) ));
+    aps.push_back( new AstroMap::Map( * (oc.GetAperture()->getphase()) ));
+
+    FitsWrite( aps, fname);
+    
+    for ( unsigned i = 0 ; i < aps.size() ; ++i )
+      delete(aps[i]);
+  }
 
 
 }

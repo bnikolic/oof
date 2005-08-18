@@ -1,3 +1,3 @@
 SUBDIRS = src pybind
 
-bin_SCRIPTS = bin/oofreduce.py
+bin_SCRIPTS = bin/oofreduce.py bin/oofplot.py

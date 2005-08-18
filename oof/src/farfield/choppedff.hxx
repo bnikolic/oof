@@ -1,6 +1,6 @@
 /*! 
   Bojan Nikolic
-  $Id: choppedff.hxx,v 1.1 2005/08/17 19:28:56 bnikolic Exp $
+  $Id: choppedff.hxx,v 1.2 2005/08/18 23:52:32 bnikolic Exp $
 
   Support for chopped observations
 */
@@ -20,7 +20,7 @@ namespace OOF {
     
     /*! An aperutre phase map representing a horizontal tilt */
     AstroMap::Map * haptilt ;
-
+    
     /*! Also need an phase scratch */
     AstroMap::Map * phasescratch ;
 
@@ -35,6 +35,12 @@ namespace OOF {
 
     // Horizontal chop in radians
     double  hchop;
+
+    /*! The relative strengths of positive and negative beams ( neg =
+     *  pos * -1 *beamgainf). Oft required for dual/multi receiver
+     *  systems that arent properly flatfielded.
+     */
+    double beamgainf;
 
     // ---------- Constructors / destructors    -------------
     

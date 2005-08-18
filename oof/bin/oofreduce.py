@@ -1,9 +1,9 @@
 # Bojan Nikolic
-# $Id: oofreduce.py,v 1.6 2005/08/18 04:57:43 bnikolic Exp $
+# $Id: oofreduce.py,v 1.7 2005/08/18 23:52:32 bnikolic Exp $
 #
 # Main OOF reduction script
 
-oofreducever = r"$Revision: 1.6 $"
+oofreducever = r"$Revision: 1.7 $"
 
 import math
 
@@ -43,6 +43,8 @@ def MkMapResDS(fnamein,
                extent=4):
 
     ds=pyplot.LoadFITSDS(fnamein, extno+1)
+
+    ds.thisown=0
 
     mapds= pyoof.MapToResidualDS( ds, skymapsample, fwhm, extent)
 
@@ -152,6 +154,25 @@ def MkObsCompare(fnamein,
     LoadOCData( fnamein, tel, skymapsample, aperture.getphase(), oc)
 
     return oc
+
+def SimBeamDS(obsfilename, beamfilename):
+
+    "Return the data series corresponding the simulated beams"
+              
+
+    obsfile=pyfits.open(obsfilename)
+
+    res=[]
+
+    for i in range(1, len(obsfile)):
+
+        skym=pyplot.FitsMapLoad(beamfilename, i)
+        mkds=MkMapResDS( obsfilename, i , skym)
+        res.append(mkds.MkModelDS(skym))
+
+    return res
+
+        
     
 
 

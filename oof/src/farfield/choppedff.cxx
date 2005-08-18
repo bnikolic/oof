@@ -1,6 +1,6 @@
 /*! 
   Bojan Nikolic
-  $Id: choppedff.cxx,v 1.1 2005/08/17 19:28:56 bnikolic Exp $
+  $Id: choppedff.cxx,v 1.2 2005/08/18 23:52:32 bnikolic Exp $
 */
 
 #include "choppedff.hxx"
@@ -19,8 +19,10 @@ namespace OOF {
     phasescratch(AstroMap::Clone(apmapsample)),
     skyscratch  (AstroMap::Clone(apmapsample)),
     vchop (0 ),
-    hchop (30 * 5e-6 )  // a random sensible value to avoid very
-			// confusing results
+    hchop (30 * 5e-6 ),  // a random sensible value to avoid very
+                         // confusing results,
+    beamgainf(1.0)
+    
   {
     BNLib::ZernPoly zvertical   ( 1, -1);    
     BNLib::ZernPoly zhorizontal ( 1, 1);    
@@ -28,8 +30,8 @@ namespace OOF {
     AstroMap::WorldSet( *vaptilt , zvertical);
     AstroMap::WorldSet( *haptilt , zhorizontal);
 
-    (*vaptilt) *= 4 * M_PI / wavel;
-    (*haptilt) *= 4 * M_PI / wavel;
+    (*vaptilt) *= 2 * M_PI / wavel;
+    (*haptilt) *= 2 * M_PI / wavel;
   }
 
   ChoppedFF::~ChoppedFF()
@@ -65,7 +67,7 @@ namespace OOF {
 
     FarF::Power( amp, *phasescratch , *skyscratch);    
 
-    res -= *skyscratch;
+    res -= (*skyscratch) * beamgainf;
 
   }
 
@@ -82,6 +84,12 @@ namespace OOF {
 				      "vchop", 
 				      false     ,                       
 				      "Vertical chop magnitude"
+				      ));
+
+    pars.push_back(Minim::DParamCtr ( & beamgainf ,      
+				      "beamgainf", 
+				      false     ,                       
+				      "Difference in gains of two beams"
 				      ));
 
   }

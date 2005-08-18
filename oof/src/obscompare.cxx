@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: obscompare.cxx,v 1.7 2005/08/17 20:43:36 bnikolic Exp $
+  $Id: obscompare.cxx,v 1.8 2005/08/18 23:52:32 bnikolic Exp $
 */
 
 #include "obscompare.hxx"
@@ -79,6 +79,7 @@ namespace OOF {
   void     ObsCompare::AddParams ( std::vector< Minim::DParamCtr > &pars ) 
   {
     aperture->AddParams(pars);
+    farf->AddParams(pars);
   }
 
   void ObsCompare::Beam (unsigned i , AstroMap::Map & res )
@@ -127,5 +128,9 @@ namespace OOF {
     
   }
 
+  ApertureMod * ObsCompare::GetAperture(void)
+  {
+    return aperture;
+  }
 }
 
