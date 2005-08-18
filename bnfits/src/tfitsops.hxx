@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: tfitsops.hxx,v 1.2 2005/08/18 04:56:37 bnikolic Exp $
+  $Id: tfitsops.hxx,v 1.3 2005/08/18 14:19:20 bnikolic Exp $
 
   Templated fits file operations 
 */
@@ -64,6 +64,46 @@ namespace BNFits {
 
 
   }
+
+  /*! Update header keywords in current header */
+  template<class T> void UpdateKeywrd (FitsF &file,
+				       const char * keywrd,
+				       T value,
+				       const char * comment)
+  {
+
+    int datatype ;
+    if (typeid(T) == typeid(double)  ) 
+      {
+	datatype=TDOUBLE;
+      } 
+    else if ( typeid(T) == typeid(int)   )
+      {
+	datatype=TINT;
+      }
+    else 
+      {
+	throw ( FIOExc( FName(file),
+			"Do not know how to write supplied data type",
+			-99));
+      }
+
+    int status;
+
+    if ( fits_update_key    (file, 
+			     datatype, 
+			     keywrd, 
+			     &value,
+			     comment,
+			     &status))
+      {
+	throw ( FIOExc( FName(file),
+			std::string("Failed to write keyword ") + keywrd,
+			status));
+      }
+    
+  }
+				       
 
 
   /*! Loads a column from a table */
