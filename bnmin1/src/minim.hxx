@@ -1,5 +1,5 @@
 // Bojan Nikolic
-// $Id: minim.hxx,v 1.1 2005/06/02 13:43:18 bnikolic Exp $
+// $Id: minim.hxx,v 1.2 2005/08/18 04:57:08 bnikolic Exp $
 #ifndef __BNMIN__ALGO__MINIM_HXX
 #define __BNMIN__ALGO__MINIM_HXX
 
@@ -11,6 +11,9 @@
 #include "minimmodel.hxx"
 
 namespace Minim {
+
+  // Forward declarations
+  class Monitor;
 
   
   /*!
@@ -46,6 +49,7 @@ namespace Minim {
 
 
   class Minimiser : public ModelDesc {
+
   private:
     unsigned iter;
     Minimisable &m;
@@ -56,6 +60,11 @@ namespace Minim {
     int  MonitorChi_cno;
 
   public:
+
+    // Monitor class is called every iteration
+    Monitor * mon;
+
+    // --------- Constructors / Desctructors -------------------
     
     Minimiser (Minimisable &pm) ;
     virtual ~Minimiser(void ) {} ;
@@ -91,14 +100,6 @@ namespace Minim {
 
     void copyres (double *x) { std::copy( res.begin() , res.end(), x) ; }
 
-
-    /// Print Chi Squared values as the minimisation proceeds
-    void Monitor(bool t) ;
-
-    /// If true, the function PrintPars is called after every iteration
-    bool MonitorPars;
-
-    bool TotallyQuiet;
 
   };
 

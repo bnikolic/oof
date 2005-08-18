@@ -3,6 +3,7 @@
 
 #include "../src/paramctr.hxx"
 #include "../src/minimmodel.hxx"
+#include "../src/monitor.hxx"
 #include "../src/minim.hxx"
 #include "../src/lmmin.hxx"
 
@@ -18,6 +19,7 @@ namespace Minim {
 } 
 
 %include "../src/minimmodel.hxx"
+%include "../src/monitor.hxx"
 %include "../src/minim.hxx"
 %include "../src/lmmin.hxx"
 
