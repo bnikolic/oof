@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: monitor.hxx,v 1.1 2005/08/18 04:57:08 bnikolic Exp $
+  $Id: monitor.hxx,v 1.2 2005/08/21 02:42:03 bnikolic Exp $
 
   A base class for monitoring the progress of minimisation
 */
@@ -28,6 +28,15 @@ namespace Minim {
 
     virtual void Iter ( Minimiser * m);    
     
+
+  };
+
+  /*! Print out the parameters */
+  class ParsMonitor : public Monitor {
+
+  public:
+
+    virtual void Iter ( Minimiser * m);    
 
   };
 

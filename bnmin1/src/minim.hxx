@@ -1,5 +1,5 @@
 // Bojan Nikolic
-// $Id: minim.hxx,v 1.2 2005/08/18 04:57:08 bnikolic Exp $
+// $Id: minim.hxx,v 1.3 2005/08/21 02:42:03 bnikolic Exp $
 #ifndef __BNMIN__ALGO__MINIM_HXX
 #define __BNMIN__ALGO__MINIM_HXX
 
@@ -27,10 +27,9 @@ namespace Minim {
     
     Model & mod;
 
-    std::vector <DParamCtr> pars ;
-
-
   public:
+
+    std::vector <DParamCtr> pars ;
     
     ModelDesc( Model &mod );
 
@@ -42,8 +41,12 @@ namespace Minim {
     DParamCtr * operator[] (unsigned i) { return &pars[i]; }
     DParamCtr * getbynumb  (unsigned i) {  return this->operator[](i); };
 
-    /// Returns the total number of params, both fitted and not fitted
+    /*! Returns the total number of params, both fitted and not
+     *  fitted */
     unsigned NTotParam(void) const { return pars.size() ; }
+
+    /*! Copies the parameter values from the supplied ModelDesc */
+    void CopyParsFrom ( ModelDesc & mod2 );
 
   };
 
@@ -62,7 +65,8 @@ namespace Minim {
   public:
 
     // Monitor class is called every iteration
-    Monitor * mon;
+    std::vector<Monitor *>  mons;
+    void AddMon (Monitor * mon);
 
     // --------- Constructors / Desctructors -------------------
     

@@ -13,6 +13,12 @@ AC_PROG_CC
 AC_PROG_CXX
 AC_PROG_F77
 
+AC_LANG_PUSH(C++)
+
+AC_PATH_BOOST(1.30.0,	     [echo "GOOD: You have BOOST ... we will be using that!" ],  	     AC_MSG_ERROR(["ERROR: No BOOST  ... ; you can find it at  http://www.boost.org/ "]) 	     )
+
+AC_LANG_POP(C++)
+
 AC_CONFIG_SUBDIRS([pybind])	
 
 

@@ -1,5 +1,5 @@
 /* Bojan Nikolic
- * $Id: minim.cxx,v 1.2 2005/08/18 04:57:08 bnikolic Exp $
+ * $Id: minim.cxx,v 1.3 2005/08/21 02:42:03 bnikolic Exp $
  */
 
 #include "minim.hxx"
@@ -7,6 +7,8 @@
 #include <cmath>
 
 #include "monitor.hxx"
+
+#include <iostream>
 
 
 namespace Minim {
@@ -16,6 +18,7 @@ namespace Minim {
   {
     mod.AddParams(pars);
   }
+
 
   DParamCtr * ModelDesc::operator[] (std::string name) 
   {
@@ -27,17 +30,34 @@ namespace Minim {
     return NULL;
   }
 
+  void ModelDesc::CopyParsFrom ( ModelDesc & mod2 )
+  {
+    for ( size_t i =0 ; i < mod2.NTotParam() ; ++ i )
+      {
+	DParamCtr * cpar = (*this)[ mod2[i]->getname() ] ;
+	if ( cpar != NULL )
+	  {
+	    cpar->setp( mod2[i]->getp() );
+	    std::cerr<< mod2[i]->getp()  << std::endl;
+	  }
+	
+      }
+  }
 
 
-Minimiser::Minimiser (Minim::Minimisable &pm) : 
-  ModelDesc(pm),
-  iter(0) , m(pm) ,
-  MonitorChi_stride(1) , 
-  MonitorChi_cno(0),
-  mon(NULL)
-{
-  
-}
+  Minimiser::Minimiser (Minim::Minimisable &pm) : 
+    ModelDesc(pm),
+    iter(0) , m(pm) ,
+    MonitorChi_stride(1) , 
+    MonitorChi_cno(0)
+  {
+    
+  }
+  void Minimiser::AddMon (Monitor * mon)
+  {
+    mons.push_back(mon);
+  }
+
 
   void Minim::Minimiser::ResEval       (void ) 
   { 
@@ -46,8 +66,8 @@ Minimiser::Minimiser (Minim::Minimisable &pm) :
     
     if ( MonitorChi_cno % MonitorChi_stride == 0 ) 
       {
-	if (mon)
-	  mon->Iter(this);
+	for ( unsigned i =0 ; i < mons.size() ; ++ i )
+	  mons[i]->Iter(this);
       }
     
     MonitorChi_cno++;
@@ -110,6 +130,7 @@ Minimiser::Minimiser (Minim::Minimisable &pm) :
     for (unsigned i (0) ; i < res.size() ; ++i) total += pow(res[i],2);
     return total;
   }
+
 
 
 

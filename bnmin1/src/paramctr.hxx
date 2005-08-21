@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: paramctr.hxx,v 1.1 2005/06/02 13:43:18 bnikolic Exp $
+  $Id: paramctr.hxx,v 1.2 2005/08/21 02:42:03 bnikolic Exp $
 
   Control of parameters
 */
@@ -35,6 +35,11 @@ namespace Minim {
 
     /// Returns the name as a c-type string
     const char * getname(void) { return name.c_str() ; }
+
+    /*! Returns the comment as a c-type string */
+    const char * getcomment(void) { 
+      return comment.c_str() ; 
+    }
 
 
 
