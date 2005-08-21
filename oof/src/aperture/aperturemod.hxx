@@ -1,6 +1,6 @@
 /*!
   Bojan Nikolic
-  $Id: aperturemod.hxx,v 1.4 2005/08/15 22:14:16 bnikolic Exp $
+  $Id: aperturemod.hxx,v 1.5 2005/08/21 21:46:53 bnikolic Exp $
 
   Aperture model
 */
@@ -71,7 +71,8 @@ namespace OOF {
     const AstroMap::Map * getphase(void);
 
     const AstroMap::Map * getamp(void);
-    
+
+    void ZeroTilt(void);
 
     // ------ Inherited functions rom Minim::Model ---------
     

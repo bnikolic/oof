@@ -1,6 +1,6 @@
 /*!
   Bojan Nikolic
-  $Id: zernmodel.hxx,v 1.7 2005/08/21 02:43:39 bnikolic Exp $
+  $Id: zernmodel.hxx,v 1.8 2005/08/21 21:46:53 bnikolic Exp $
 
   Zernike model for the aperture phase distribution
 */
@@ -66,6 +66,7 @@ namespace OOF {
     // ------ Inherited functions from PhaseMod    ---------
 
     void Calc( AstroMap::Map &m) const;
+    void ZeroTilt(void) ;
 
     // ------ Inherited functions rom Minim::Model ---------
     virtual    void     AddParams ( std::vector< Minim::DParamCtr > &pars );

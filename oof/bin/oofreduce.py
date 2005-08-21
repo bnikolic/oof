@@ -1,16 +1,22 @@
 # Bojan Nikolic
-# $Id: oofreduce.py,v 1.7 2005/08/18 23:52:32 bnikolic Exp $
+# $Id: oofreduce.py,v 1.8 2005/08/21 21:46:53 bnikolic Exp $
 #
 # Main OOF reduction script
 
-oofreducever = r"$Revision: 1.7 $"
+oofreducever = r"$Revision: 1.8 $"
 
 import math
+import os
 
 import pyfits
 
+import pybnmin1
+import bnmin1io
+
 import pyplot
 import pyoof
+import iofits4
+import oofcol
 
 
 def MkTel(fnamein):
@@ -171,6 +177,70 @@ def SimBeamDS(obsfilename, beamfilename):
         res.append(mkds.MkModelDS(skym))
 
     return res
+
+def Red(obsfilename,
+        prefdirout="oofout",
+        extrafit= [],
+        nzmax=7):
+
+    "A general reduction script"
+
+    """
+    nzmax:  the maximum zernike order to go to.
+    extrafit: list of parameter names to turn fitting on for
+    """
+
+    ptable=iofits4.FnParTable(locals(),
+                              r"$Id: oofreduce.py,v 1.8 2005/08/21 21:46:53 bnikolic Exp $")
+
+    dirout = oofcol.mkodir( prefdirout ,
+                            oofcol.basename(obsfilename))
+
+    #The last recorded fit file goes into this variable to restart the
+    #minimisation with higher number of Zernike from that point
+    lastfitf= None
+    
+    for nzern in range(1, nzmax+1):
+
+        print "Nzern = %i " % nzern
+
+        cdirout = os.path.join(dirout, "z%i" % nzern )
+
+        oc=MkObsCompare(obsfilename, nzern=nzern)
+
+        lmm=pybnmin1.LMMin(oc.downcast())
+
+        m1 = pybnmin1.ChiSqMonitor()
+        m1.thisown = 0
+        lmm.AddMon( m1)
+
+        for pname in extrafit :
+            lmm.getbyname(pname).dofit=1
+
+        if lastfitf:
+            bnmin1io.FLoad(lmm, lastfitf)
+
+        lmm.solve()
+
+        fitname = os.path.join(cdirout, "fitpars.fits")
+        bnmin1io.FSave(lmm, fitname)
+
+        pyoof.WriteAperture(oc,
+                            "!"+os.path.join(cdirout, "aperture.fits"))
+
+        oc.GetAperture().ZeroTilt();
+        pyoof.WriteAperture(oc,
+                            "!"+os.path.join(cdirout, "aperture-notilt.fits"))
+
+
+        lastfitf=fitname
+
+        
+
+        
+
+
+    
 
         
     

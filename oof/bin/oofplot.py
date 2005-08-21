@@ -1,5 +1,5 @@
 # Bojan Nikolic
-# $Id: oofplot.py,v 1.2 2005/08/18 23:52:32 bnikolic Exp $
+# $Id: oofplot.py,v 1.3 2005/08/21 21:46:53 bnikolic Exp $
 #
 # Various utilities for plotting OOF data
 
@@ -26,7 +26,7 @@ def PlotDSFile( fnamein,
     fin=pyfits.open(fnamein)
 
 
-    # Make a map with the coorect coordinate system
+    # Make a map with the correct coordinate system
     wavel= oofreduce.GetObsWaveL(fnamein)
     ap =oofreduce.MkSampleAp(fnamein)
     m=pyplot.Map(npix,npix)

@@ -1,6 +1,6 @@
 /*!
   Bojan Nikolic
-  $Id: aperturemod.cxx,v 1.3 2005/08/15 18:43:40 bnikolic Exp $
+  $Id: aperturemod.cxx,v 1.4 2005/08/21 21:46:53 bnikolic Exp $
 
 */
 
@@ -67,6 +67,10 @@ namespace OOF {
   }
 
 
+  void ApertureMod::ZeroTilt(void)
+  {
+    phasemodel->ZeroTilt();
+  }
 }
 
 

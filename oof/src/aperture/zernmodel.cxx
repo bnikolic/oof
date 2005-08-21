@@ -1,6 +1,6 @@
 /*!
   Bojan Nikolic
-  $Id: zernmodel.cxx,v 1.8 2005/08/21 02:43:39 bnikolic Exp $
+  $Id: zernmodel.cxx,v 1.9 2005/08/21 21:46:53 bnikolic Exp $
 */
 
 #include "zernmodel.hxx"
@@ -108,6 +108,12 @@ namespace OOF {
 					    str(format("coeff. of Zernike n=%i , l=%i") % n % l )
 					    )); 
 	}
+  }
+
+  void RZernModel::ZeroTilt(void) 
+  {
+    lcm->coeffs[1] = 0;
+    lcm->coeffs[2] = 0;
   }
 
 }

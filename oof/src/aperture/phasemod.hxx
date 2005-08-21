@@ -1,6 +1,6 @@
 /*!
   Bojan Nikolic
-  $Id: phasemod.hxx,v 1.3 2005/08/05 17:29:48 bnikolic Exp $
+  $Id: phasemod.hxx,v 1.4 2005/08/21 21:46:53 bnikolic Exp $
 
   Phase model
 */
@@ -26,6 +26,9 @@ namespace OOF {
     // ------ Member functions ----------------------------
     
     virtual void Calc( AstroMap::Map &m) const = 0 ;
+
+    /*! Remove the tilt from the aperture */
+    virtual void ZeroTilt(void) =0;
     
     // ------ Inherited functions rom Minim::Model ---------
 
