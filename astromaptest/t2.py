@@ -22,9 +22,8 @@ if 0:
 
 #implot.plotmap(m3, colmap="heat", transf=1)
 
-if 0:
-    ds1=pyplot.LoadFITSDS("/home/bnikolic/m/v/prog/cpp/adas/oof/analysis/apex/temp/mars1-db-029/model-ds.fits" , 2)
-    #ds1=pyplot.LoadFITSDS("/home/bnikolic/m/v/prog/cpp/adas/oof/analysis/apex/temp/mars1-db-029/tt.fits" , 2)
+if 1:
+    ds1=pyplot.LoadFITSDS("/home/bnikolic/temp/s114-l-db.fits",3)
     m4 = pyplot.Map(128,128)
     pyplot.MkApCS(m4, 4.8e-6*100)
     pyplot.SimpleDrizzle( ds1, m4, 5 , 3)
@@ -43,26 +42,6 @@ if 0:
     mlc.Calc(m)
     implot.plotmap( m, colmap="heat")
 
-if 0:
-
-    oversamp  =3
-    mamp = pyoof.MkApMap( tel1, 128, oversamp )
-    mphase = pyoof.MkApMap( tel1, 128, oversamp )
-
-    farf= pyoof.FarF ( mamp, 1.1e-3) 
-
-
-    zm=pyoof.RZernModel( 5, mphase , tel1)
-    zmm=pybnmin1.ModelDesc( zm.downcast() )
-    zmm.getbyname("z3").setp(2)
-    zmm.getbyname("z5").setp(1)
-    zm.Calc(mphase)
-
-    im=pyoof.GaussAmpMod(tel1, mphase)
-    im.Calc(mamp)
-
-    farf.Power( mamp, mphase, m)
-    implot.plotmap( m, colmap="heat")
 
 if 0:
 

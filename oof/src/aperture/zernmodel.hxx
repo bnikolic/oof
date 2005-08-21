@@ -1,6 +1,6 @@
 /*!
   Bojan Nikolic
-  $Id: zernmodel.hxx,v 1.6 2005/08/06 16:20:29 bnikolic Exp $
+  $Id: zernmodel.hxx,v 1.7 2005/08/21 02:43:39 bnikolic Exp $
 
   Zernike model for the aperture phase distribution
 */
@@ -52,14 +52,16 @@ namespace OOF {
     /*!
      * n is the maximum zernike polynomial order 
      */
-    RZernModel ( unsigned n , AstroMap::Map & msample, CassegrainGeo & telgeo );
-
     RZernModel ( unsigned n , AstroMap::Map & msample, TelGeometry * telgeo );
 
     virtual ~RZernModel();
 
     // ------ Member functions ----------------------------
-    void RastZerns (  unsigned n , AstroMap::Map &msample);
+
+    /*! Make a rasterised version of the required zernike
+     *  polynomials. Phase values where mask ==0.0 are set to zero. */
+    void RastZerns (  unsigned n , AstroMap::Map &msample, 
+		      AstroMap::Map & mask );
 
     // ------ Inherited functions from PhaseMod    ---------
 

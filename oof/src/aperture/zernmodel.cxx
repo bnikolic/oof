@@ -1,6 +1,6 @@
 /*!
   Bojan Nikolic
-  $Id: zernmodel.cxx,v 1.7 2005/08/06 16:20:29 bnikolic Exp $
+  $Id: zernmodel.cxx,v 1.8 2005/08/21 02:43:39 bnikolic Exp $
 */
 
 #include "zernmodel.hxx"
@@ -16,6 +16,7 @@
 
 #include <boost/format.hpp>
 #include <iostream>
+#include <memory>
 
 #include "../telgeo/cassegrain.hxx"
 
@@ -34,6 +35,11 @@ namespace OOF {
     maxzorder(n),
     lcm( ENFORCE( new AstroMap::LCMaps() ))
   {
+
+    // Calculate the dish mask
+    std::auto_ptr<AstroMap::Map> mask ( AstroMap::Clone(msample)) ;
+    telgeo->DishMask(*mask);
+
     // Save the msample coordinate system
     AstroMap::CSSave csorig (msample);
 
@@ -43,44 +49,37 @@ namespace OOF {
 	ZernCSSetup( msample , 
 		     dynamic_cast<CassegrainGeo *> (telgeo)->PrimRadius);
       }
+    else 
+      {
+	// Normalise the coordinate system
+	ZernCSSetup( msample , 
+		     telgeo->DishEffRadius() );
+      }
+
 
     // Rasterise the zernikes
-    RastZerns (  n , msample);
+    RastZerns (  n , msample, *mask);
 
   }
     
-  RZernModel::RZernModel ( unsigned n , 
-			   AstroMap::Map & msample,
-			   CassegrainGeo & telgeo):
-    maxzorder(n),
-    lcm( ENFORCE( new AstroMap::LCMaps() ))
-  {
-
-    // Save the msample coordinate system
-    AstroMap::CSSave csorig (msample);
-    
-    // Normalise the coordinate system
-    ZernCSSetup( msample , telgeo.PrimRadius);
-
-    // Rasterise the zernikes
-    RastZerns (  n , msample);
-
-  }
-
   RZernModel::~RZernModel()
   {
     delete lcm;
   }
 
-  void RZernModel::RastZerns (  unsigned maxorder , AstroMap::Map &msample)
+  void RZernModel::RastZerns (  unsigned maxorder , 
+				AstroMap::Map &msample,
+				AstroMap::Map & mask )
   {
+
     for (int  n =0 ; n <= (int)maxorder ; ++n )
       {
 	for(int l= -n; l<=n ; l += 2)
 	  {
-
+	    
+	    // Apply the zernike poly to the map
 	    BNLib::ZernPoly zp ( n, l);
-	    AstroMap::WorldSet( msample , zp);
+	    AstroMap::WorldSet( msample , zp , mask != 0.0 );
 	    lcm->AddMap(msample);
 
 	  }
