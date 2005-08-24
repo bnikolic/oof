@@ -1,6 +1,6 @@
 /*!
   Bojan Nikolic
-  $Id: phasemod.hxx,v 1.4 2005/08/21 21:46:53 bnikolic Exp $
+  $Id: phasemod.hxx,v 1.5 2005/08/24 21:21:14 bnikolic Exp $
 
   Phase model
 */
@@ -22,6 +22,9 @@ namespace OOF {
   class PhaseMod : public Minim::Model  {
 
   public:
+
+    // ------ Constructor / Destructor ---------------
+    virtual ~PhaseMod(void);
 
     // ------ Member functions ----------------------------
     

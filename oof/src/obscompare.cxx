@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: obscompare.cxx,v 1.9 2005/08/24 18:51:26 bnikolic Exp $
+  $Id: obscompare.cxx,v 1.10 2005/08/24 21:21:13 bnikolic Exp $
 */
 
 #include "obscompare.hxx"
@@ -11,7 +11,7 @@
 #include "maptoresidual.hxx"
 #include "aperture/aperturemod.hxx"
 #include "farfield/farf.hxx"
-#include <iostream>
+
 
 
 namespace OOF {
@@ -51,11 +51,9 @@ namespace OOF {
       {
 	delete phasescreens[i];
 	delete rescalculators[i];
-	std::cerr<<"Destroyed "<< i<<"th obs data\n";
-
       }
     delete farf;
-    std::cerr<<"Destroyed this oc\n";
+
   }
 
   

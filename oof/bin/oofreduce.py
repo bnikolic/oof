@@ -1,9 +1,9 @@
 # Bojan Nikolic
-# $Id: oofreduce.py,v 1.8 2005/08/21 21:46:53 bnikolic Exp $
+# $Id: oofreduce.py,v 1.9 2005/08/24 21:21:13 bnikolic Exp $
 #
 # Main OOF reduction script
 
-oofreducever = r"$Revision: 1.8 $"
+oofreducever = r"$Revision: 1.9 $"
 
 import math
 import os
@@ -45,8 +45,8 @@ def GetObsWaveL(fnamein):
 def MkMapResDS(fnamein,
                extno,
                skymapsample,
-               fwhm=2.0,
-               extent=4):
+               fwhm=1.0,
+               extent=2):
 
     ds=pyplot.LoadFITSDS(fnamein, extno+1)
 
@@ -99,7 +99,13 @@ def MkFF ( fnamein,
 
     if telname == "GBT":
 
-        recvname= pyfits.open(fnamein)[0].header["recv"]
+        recvname=None 
+        try:
+            recvname= pyfits.open(fnamein)[0].header["recv"]
+        except:
+            print "No recv keyword... assuming Q band!!"
+            recvname= "qunbal"
+            
         if recvname == "qunbal":
             ff = pyoof.ChoppedFF( apphase , wavel)
             ff.hchop = -57.8 *  math.pi / 180.0 / 3600
@@ -191,7 +197,7 @@ def Red(obsfilename,
     """
 
     ptable=iofits4.FnParTable(locals(),
-                              r"$Id: oofreduce.py,v 1.8 2005/08/21 21:46:53 bnikolic Exp $")
+                              r"$Id: oofreduce.py,v 1.9 2005/08/24 21:21:13 bnikolic Exp $")
 
     dirout = oofcol.mkodir( prefdirout ,
                             oofcol.basename(obsfilename))
@@ -209,7 +215,8 @@ def Red(obsfilename,
         oc=MkObsCompare(obsfilename, nzern=nzern)
 
         lmm=pybnmin1.LMMin(oc.downcast())
-
+        lmm.ftol=1e-4
+        
         m1 = pybnmin1.ChiSqMonitor()
         m1.thisown = 0
         lmm.AddMon( m1)
@@ -225,8 +232,16 @@ def Red(obsfilename,
         fitname = os.path.join(cdirout, "fitpars.fits")
         bnmin1io.FSave(lmm, fitname)
 
+        #Save the covariance matrix
+        bnmin1io.CVSave(lmm,
+                        os.path.join(cdirout, "cvmatrix")
+                        )        
+
         pyoof.WriteAperture(oc,
                             "!"+os.path.join(cdirout, "aperture.fits"))
+
+        pyoof.WriteBeams(oc,
+                         "!"+os.path.join(cdirout, "fitbeams.fits"))
 
         oc.GetAperture().ZeroTilt();
         pyoof.WriteAperture(oc,
