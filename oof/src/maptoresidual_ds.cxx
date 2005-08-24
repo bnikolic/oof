@@ -1,6 +1,6 @@
 /*!
   Bojan Nikolic
-  $Id: maptoresidual_ds.cxx,v 1.4 2005/08/24 18:54:22 bnikolic Exp $
+  $Id: maptoresidual_ds.cxx,v 1.5 2005/08/24 18:54:33 bnikolic Exp $
 
 */
 
@@ -9,7 +9,6 @@
 #include <astromap.hxx>
 #include <dataseries.hxx>
 #include <mapdseval.hxx>
-#include <iostream>
 
 
 namespace OOF {
