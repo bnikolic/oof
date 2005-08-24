@@ -1,6 +1,6 @@
 /*!
   Bojan Nikolic
-  $Id: maptoresidual.cxx,v 1.1 2005/08/15 14:11:39 bnikolic Exp $
+  $Id: maptoresidual.cxx,v 1.2 2005/08/24 18:51:26 bnikolic Exp $
 
 */
 
@@ -9,6 +9,10 @@
 
 namespace OOF {
 
+  MapToResidual::~MapToResidual()
+  {
+
+  }
 
 }
 

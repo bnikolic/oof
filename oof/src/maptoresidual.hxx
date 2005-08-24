@@ -1,6 +1,6 @@
 /*!
   Bojan Nikolic
-  $Id: maptoresidual.hxx,v 1.2 2005/08/15 15:02:07 bnikolic Exp $
+  $Id: maptoresidual.hxx,v 1.3 2005/08/24 18:51:26 bnikolic Exp $
 
 */
 
@@ -28,6 +28,8 @@ namespace OOF {
     /* We have to know what sorts of maps we are dealing with so
        probably all actuall implementations will have constructors
        with take a msample as an arguemnt. */
+
+    virtual ~MapToResidual();
 
     /* ----- Member Functions ---------------------------*/
 
