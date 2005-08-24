@@ -1,5 +1,5 @@
 /* Bojan Nikolic
- * $Id: minim.cxx,v 1.3 2005/08/21 02:42:03 bnikolic Exp $
+ * $Id: minim.cxx,v 1.4 2005/08/24 21:20:36 bnikolic Exp $
  */
 
 #include "minim.hxx"
@@ -17,6 +17,11 @@ namespace Minim {
     mod(mod)
   {
     mod.AddParams(pars);
+  }
+
+  ModelDesc::~ModelDesc(void)
+  {
+
   }
 
 

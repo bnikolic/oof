@@ -1,5 +1,5 @@
 // Bojan Nikolic
-// $Id: minim.hxx,v 1.3 2005/08/21 02:42:03 bnikolic Exp $
+// $Id: minim.hxx,v 1.4 2005/08/24 21:20:36 bnikolic Exp $
 #ifndef __BNMIN__ALGO__MINIM_HXX
 #define __BNMIN__ALGO__MINIM_HXX
 
@@ -29,9 +29,14 @@ namespace Minim {
 
   public:
 
+    /* --------- Public data ---------------------- */
     std::vector <DParamCtr> pars ;
     
+    /* --------- Constructors / Desctructors ------- */
+
     ModelDesc( Model &mod );
+
+    virtual ~ModelDesc(void);
 
     // Routines to access the model parameters
     DParamCtr * operator[] (std::string name);

@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: minimmodel.hxx,v 1.2 2005/08/05 13:01:39 bnikolic Exp $
+  $Id: minimmodel.hxx,v 1.3 2005/08/24 21:20:36 bnikolic Exp $
 
   Models to be minimised
 
@@ -27,6 +27,10 @@ namespace Minim {
     // --- Constructors & Destructors -----
 
     Model(void) ; 
+
+    /*! Should have a virtual destructor so that derived classes get
+      properly destroyed*/
+    virtual ~Model(void);
 
     // ---- Member functions  -------
 
