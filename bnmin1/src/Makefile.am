@@ -12,7 +12,7 @@ libbnmin1_la_SOURCES = minimmodel.hxx minimmodel.cxx \
 			minimio.cxx minimio.hxx \
 			lmminutils.cxx lmminutils.hxx
 
-libbnmin1_la_LIBADD = f77/libminpda.la
+libbnmin1_la_LIBADD = f77/libminpda.la -lgsl  -lgslcblas
 
 libbnmin1_la_CFLAGS = -Wall
 libbnmin1_la_CPPFLAGS = -Wall
