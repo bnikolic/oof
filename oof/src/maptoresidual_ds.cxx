@@ -1,6 +1,6 @@
 /*!
   Bojan Nikolic
-  $Id: maptoresidual_ds.cxx,v 1.3 2005/08/24 18:51:26 bnikolic Exp $
+  $Id: maptoresidual_ds.cxx,v 1.4 2005/08/24 18:54:22 bnikolic Exp $
 
 */
 
@@ -28,8 +28,6 @@ namespace OOF {
   {
     delete obsds;
     delete mapinterp;
-    std::cerr<<"Destroyed this mapds\n";
-
   }
 
   unsigned   MapToResidualDS::nres (void)  
