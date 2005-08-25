@@ -1,6 +1,6 @@
 
 AC_COPYRIGHT(Bojan Nikolic)
-AC_REVISION($Id: configure.ac,v 1.3 2005/07/09 10:21:29 bnikolic Exp $)
+AC_REVISION($Id: configure.ac,v 1.4 2005/08/25 17:03:29 bnikolic Exp $)
 
 AC_INIT()
 
@@ -16,7 +16,7 @@ AC_PROG_LIBTOOL
 AC_PROG_CC
 AC_PROG_CXX
 
-AM_PATH_PYTHON(2.4)
+AM_PATH_PYTHON(2.3)
 
 AC_PATH_X()
 AC_PATH_XTRA()
