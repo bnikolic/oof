@@ -1,2 +1,9 @@
 
 ./configure CPPFLAGS="-I/home/bnikolic/p/bnlib/include -g" CFLAGS="-I/home/bnikolic/p/bnlib/include -g" LDFLAGS=-L/home/bnikolic/p/bnlib/lib  --prefix=/home/bnikolic/p/astromap 
+
+
+NB:
+  Parent should configure this directory, just need to make sure
+aclocal, automake, autoconf have been reun
+
+  
