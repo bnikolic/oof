@@ -1,9 +1,9 @@
 # Bojan Nikolic
-# $Id: oofreduce.py,v 1.10 2005/08/25 15:03:11 bnikolic Exp $
+# $Id: oofreduce.py,v 1.11 2005/08/25 15:21:33 bnikolic Exp $
 #
 # Main OOF reduction script
 
-oofreducever = r"$Revision: 1.10 $"
+oofreducever = r"$Revision: 1.11 $"
 
 import math
 import os
@@ -191,10 +191,10 @@ def FitStatTab(m):
 
     "Creat a fits table with fits details "
 
-    chisquaredfinal = (pybnmin1.ChiSqMonitor()).iter(m)
+    chisquaredfinal = m.ChiSquared()
 
     ftable=iofits4.FnParTable(locals(),
-                              r"$Id: oofreduce.py,v 1.10 2005/08/25 15:03:11 bnikolic Exp $")
+                              r"$Id: oofreduce.py,v 1.11 2005/08/25 15:21:33 bnikolic Exp $")
     return ftable
 
 def Red(obsfilename,
@@ -214,7 +214,7 @@ def Red(obsfilename,
     """
 
     ptable=iofits4.FnParTable(locals(),
-                              r"$Id: oofreduce.py,v 1.10 2005/08/25 15:03:11 bnikolic Exp $")
+                              r"$Id: oofreduce.py,v 1.11 2005/08/25 15:21:33 bnikolic Exp $")
 
     dirout = oofcol.mkodir( prefdirout ,
                             oofcol.basename(obsfilename))
@@ -251,6 +251,7 @@ def Red(obsfilename,
 
         fitname = os.path.join(cdirout, "fitpars.fits")
         bnmin1io.FSave(lmm, fitname)
+        fstattab= FitStatTab(lmm)        
 
         #Save the covariance matrix
         bnmin1io.CVSave(lmm,
@@ -266,6 +267,14 @@ def Red(obsfilename,
         oc.GetAperture().ZeroTilt();
         pyoof.WriteAperture(oc,
                             "!"+os.path.join(cdirout, "aperture-notilt.fits"))
+
+        # Save the fits file with information about the fit
+        iofits4.Write( [pyfits.PrimaryHDU() ,
+                        ptable,
+                        fstattab,
+                        ],
+                       os.path.join(cdirout, "fitinfo.fits") ,
+                       overwrite=1)
 
 
         lastfitf=fitname
