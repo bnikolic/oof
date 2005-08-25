@@ -1,9 +1,9 @@
 # Bojan Nikolic
-# $Id: oofreduce.py,v 1.9 2005/08/24 21:21:13 bnikolic Exp $
+# $Id: oofreduce.py,v 1.10 2005/08/25 15:03:11 bnikolic Exp $
 #
 # Main OOF reduction script
 
-oofreducever = r"$Revision: 1.9 $"
+oofreducever = r"$Revision: 1.10 $"
 
 import math
 import os
@@ -77,12 +77,12 @@ def LoadOCData( fnamein,
                 skymapsample,
                 apmapsample,
                 oc,
-                *args):
+                fwhm=1.0, extent=2.0):
 
     fin = pyfits.open(fnamein)
     
     for i in range(1, len(fin) ):
-        mapres= MkMapResDS( fnamein, i , skymapsample)
+        mapres= MkMapResDS( fnamein, i , skymapsample, fwhm=fwhm, extent=extent)
         ps    = MkPhaseScreen( fnamein, i, apmapsample)
 
         mapres.thisown=0
@@ -135,7 +135,9 @@ def MkSampleAp(fnamein,
 def MkObsCompare(fnamein,
                  npix=128,
                  nzern=6,
-                 oversample=2.0
+                 oversample=2.0,
+                 ds_fwhm=1.0,
+                 ds_extent=2.0
                  ):
 
     "Make an ObsCompare object from the given file"
@@ -163,7 +165,8 @@ def MkObsCompare(fnamein,
     
     # now just load the observations and done...
     #
-    LoadOCData( fnamein, tel, skymapsample, aperture.getphase(), oc)
+    LoadOCData( fnamein, tel, skymapsample, aperture.getphase(), oc,
+                fwhm=ds_fwhm, extent=ds_extent)
 
     return oc
 
@@ -184,10 +187,24 @@ def SimBeamDS(obsfilename, beamfilename):
 
     return res
 
+def FitStatTab(m):
+
+    "Creat a fits table with fits details "
+
+    chisquaredfinal = (pybnmin1.ChiSqMonitor()).iter(m)
+
+    ftable=iofits4.FnParTable(locals(),
+                              r"$Id: oofreduce.py,v 1.10 2005/08/25 15:03:11 bnikolic Exp $")
+    return ftable
+
 def Red(obsfilename,
         prefdirout="oofout",
         extrafit= [],
-        nzmax=7):
+        nzmax=7,
+        npix=128,
+        oversample=2.0,
+        ds_fwhm=1.0,
+        ds_extent =2.0):
 
     "A general reduction script"
 
@@ -197,7 +214,7 @@ def Red(obsfilename,
     """
 
     ptable=iofits4.FnParTable(locals(),
-                              r"$Id: oofreduce.py,v 1.9 2005/08/24 21:21:13 bnikolic Exp $")
+                              r"$Id: oofreduce.py,v 1.10 2005/08/25 15:03:11 bnikolic Exp $")
 
     dirout = oofcol.mkodir( prefdirout ,
                             oofcol.basename(obsfilename))
@@ -212,7 +229,10 @@ def Red(obsfilename,
 
         cdirout = os.path.join(dirout, "z%i" % nzern )
 
-        oc=MkObsCompare(obsfilename, nzern=nzern)
+        oc=MkObsCompare(obsfilename, nzern=nzern,
+                        npix=npix, oversample=oversample,
+                        ds_fwhm=ds_fwhm,
+                        ds_extent=ds_extent)
 
         lmm=pybnmin1.LMMin(oc.downcast())
         lmm.ftol=1e-4
