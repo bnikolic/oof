@@ -1,0 +1,2 @@
+%.cxx %.py:  %.i 
+	@SWIG@  -o $@ ${SWIGFLAGS} -c++ -python $<
