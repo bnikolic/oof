@@ -1,2 +1,7 @@
 
 ./configure CPPFLAGS="-I/home/bnikolic/p/bnlib/include -g" CFLAGS="-I/home/bnikolic/p/bnlib/include -g" LDFLAGS=-L/home/bnikolic/p/bnlib/lib  --prefix=/home/bnikolic/p/bnfits 
+
+
+on hathor:
+    
+  ./configure CPPFLAGS="-I${HOME}/p/bnlib/include -g" CFLAGS="-I${HOME}/p/bnlib/include -g" LDFLAGS=-L${HOME}/p/bnlib/lib  --prefix=${HOME}/p/bnfits 
