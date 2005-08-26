@@ -1,5 +1,5 @@
 # Bojan Nikolic
-# $Id: implot.py,v 1.4 2005/08/17 20:47:15 bnikolic Exp $
+# $Id: implot.py,v 1.5 2005/08/26 21:27:50 bnikolic Exp $
 #
 # Routines for plotting maps
 
@@ -19,6 +19,11 @@ def plotmap(mapp,
             colmap=None):
 
     "Plots a general map"
+
+    """
+    bbox: a list definig the part of the map that should be plotted.
+
+    """
 
     if pgbeg:
         pyplot.cpgbeg(0,fout,0,0)
