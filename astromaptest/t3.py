@@ -21,7 +21,7 @@ def pb(oc,i):
 
 
 oldlmm = []
-for nzern in range(1,5):
+for nzern in range(1,2):
 
     print "Nzern = %i " % nzern
 
