@@ -1,11 +1,28 @@
 # Bojan Nikolic
-# $Id: implot.py,v 1.5 2005/08/26 21:27:50 bnikolic Exp $
+# $Id: implot.py,v 1.6 2005/08/28 04:25:35 bnikolic Exp $
 #
 # Routines for plotting maps
 
 import string
 
 import pyplot
+
+def GetMapBBox( mapp ):
+
+    "Return the full box of the map"
+
+    return ( mapp.cs.x_pxtoworld(0,0),
+             mapp.cs.x_pxtoworld(mapp.nx,0),
+             mapp.cs.y_pxtoworld(0,0),
+             mapp.cs.y_pxtoworld(0,mapp.ny ) )
+
+def SetupBBox( mapp, bbox=None):
+
+    "Sets up the view which is actually plotted"
+
+    if bbox == None: bbox= GetMapBBox( mapp)
+    pyplot.cpgswin( bbox[0], bbox[1], bbox[2], bbox[3])
+
 
 def plotmap(mapp,
             fout="/xserve" ,
@@ -28,16 +45,9 @@ def plotmap(mapp,
     if pgbeg:
         pyplot.cpgbeg(0,fout,0,0)
         pyplot.cpgpap(width,1.0)
-        
-    if bbox :
-        pyplot.cpgswin( bbox[0], bbox[1], bbox[2], bbox[3])
-    else:
-        pyplot.cpgswin( mapp.cs.x_pxtoworld(0,0),
-                        mapp.cs.x_pxtoworld(mapp.nx,0),
 
-                        mapp.cs.y_pxtoworld(0,0),
-                        mapp.cs.y_pxtoworld(0,mapp.ny )
-                        )
+    SetupBBox( mapp, bbox=bbox)        
+
 
     if plotbox:
         pyplot.cpgtbox("DYFOBCNS",0,0,"DYFOBCNS",0,0)
