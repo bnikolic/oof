@@ -16,6 +16,8 @@ AC_PROG_F77
 
 AM_PATH_GSL(1.5)
 
+AC_CONFIG_SUBDIRS([pybind])	
+
 AC_OUTPUT(Makefile 
           src/Makefile
 	  cbind/Makefile

@@ -1,0 +1,16 @@
+*.la
+*.lo
+.deps
+.libs
+Makefile
+Makefile.in
+aclocal.m4
+autom4te.cache
+config.log
+config.status
+configure
+libtool
+pybnlib.cxx
+pybnlib.py
+pybnmin1.cxx
+pybnmin1.py

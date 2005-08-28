@@ -1,2 +1,6 @@
- xk
-g
+
+
+configure as:
+
+ 	./configure --prefix=${HOME}/p/bnlib
+

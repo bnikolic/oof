@@ -1,1 +1,1 @@
-SUBDIRS = src cbind
+SUBDIRS = src cbind pybind
