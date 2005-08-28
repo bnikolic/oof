@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: gaussampmod.cxx,v 1.5 2005/08/09 01:09:19 bnikolic Exp $
+  $Id: gaussampmod.cxx,v 1.6 2005/08/28 04:26:03 bnikolic Exp $
 
 */
 
@@ -70,7 +70,7 @@ namespace OOF {
 
     pars.push_back(Minim::DParamCtr ( & gfn->sigma ,      
 				      "sigma", 
-				      true     ,                       
+				      false     ,                       
 				      "Illumination taper"
 				      ));
     

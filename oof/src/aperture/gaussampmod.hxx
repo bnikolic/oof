@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: gaussampmod.hxx,v 1.3 2005/08/09 01:09:19 bnikolic Exp $
+  $Id: gaussampmod.hxx,v 1.4 2005/08/28 04:26:03 bnikolic Exp $
 
   Gaussian amplitude model
 */
@@ -24,7 +24,10 @@ namespace OOF {
   class TelGeometry;
 
   /*!
-   * Represents an illumination model with a gaussian taper.
+   * Represents an illumination model with a gaussian taper. The taper
+   * is controlled with the sigma parameter so that amplitude at dish
+   * edge is: exp( -1.0 / ( 2* sigma) ) the value at centre of the
+   * illumination.
    *
    */
   class GaussAmpMod : public AmpliMod {
