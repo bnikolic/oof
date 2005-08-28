@@ -1,9 +1,9 @@
 # Bojan Nikolic
-# $Id: oofreduce.py,v 1.11 2005/08/25 15:21:33 bnikolic Exp $
+# $Id: oofreduce.py,v 1.12 2005/08/28 04:26:36 bnikolic Exp $
 #
 # Main OOF reduction script
 
-oofreducever = r"$Revision: 1.11 $"
+oofreducever = r"$Revision: 1.12 $"
 
 import math
 import os
@@ -194,12 +194,13 @@ def FitStatTab(m):
     chisquaredfinal = m.ChiSquared()
 
     ftable=iofits4.FnParTable(locals(),
-                              r"$Id: oofreduce.py,v 1.11 2005/08/25 15:21:33 bnikolic Exp $")
+                              r"$Id: oofreduce.py,v 1.12 2005/08/28 04:26:36 bnikolic Exp $")
     return ftable
 
 def Red(obsfilename,
         prefdirout="oofout",
         extrafit= [],
+        extraic = [],
         nzmax=7,
         npix=128,
         oversample=2.0,
@@ -211,10 +212,11 @@ def Red(obsfilename,
     """
     nzmax:  the maximum zernike order to go to.
     extrafit: list of parameter names to turn fitting on for
+    extraic : a list of extra inititial conditions in format (parname, parvalue)
     """
 
     ptable=iofits4.FnParTable(locals(),
-                              r"$Id: oofreduce.py,v 1.11 2005/08/25 15:21:33 bnikolic Exp $")
+                              r"$Id: oofreduce.py,v 1.12 2005/08/28 04:26:36 bnikolic Exp $")
 
     dirout = oofcol.mkodir( prefdirout ,
                             oofcol.basename(obsfilename))
@@ -246,7 +248,10 @@ def Red(obsfilename,
 
         if lastfitf:
             bnmin1io.FLoad(lmm, lastfitf)
-
+        else:
+            for parname, parvalue in extraic:
+                lmm.getbyname(parname).setp(parvalue)
+            
         lmm.solve()
 
         fitname = os.path.join(cdirout, "fitpars.fits")
@@ -275,6 +280,17 @@ def Red(obsfilename,
                         ],
                        os.path.join(cdirout, "fitinfo.fits") ,
                        overwrite=1)
+
+        # Write out perfect beams:
+        oc=MkObsCompare(obsfilename, nzern=1,
+                        npix=npix, oversample=oversample,
+                        ds_fwhm=ds_fwhm,
+                        ds_extent=ds_extent)
+        lmm=pybnmin1.LMMin(oc.downcast())
+        bnmin1io.FLoad(lmm, fitname,
+                       silent=True)
+        pyoof.WriteBeams(oc,
+                         "!"+os.path.join(cdirout, "perfectbeams.fits"))        
 
 
         lastfitf=fitname
