@@ -1,6 +1,6 @@
 /*! 
   Bojan Nikolic
-  $Id: choppedff.cxx,v 1.2 2005/08/18 23:52:32 bnikolic Exp $
+  $Id: choppedff.cxx,v 1.3 2005/08/28 04:26:25 bnikolic Exp $
 */
 
 #include "choppedff.hxx"
@@ -47,6 +47,11 @@ namespace OOF {
 			  AstroMap::Map & res) 
   {
 
+    // Want to divide one beam and multiply the other beam with same
+    // factor to make total power uncorrelated with beamgainf.
+
+    const double mfact= sqrt(beamgainf);
+
     (*phasescratch) = phase;
     
     if ( vchop != 0.0 )
@@ -56,6 +61,8 @@ namespace OOF {
       (*phasescratch) += (*haptilt) * hchop /2 ;
 
     FarF::Power( amp, *phasescratch , res);
+    
+    res /= mfact;
 
     (*phasescratch) = phase;
     
@@ -67,7 +74,7 @@ namespace OOF {
 
     FarF::Power( amp, *phasescratch , *skyscratch);    
 
-    res -= (*skyscratch) * beamgainf;
+    res -= (*skyscratch) * mfact;
 
   }
 
