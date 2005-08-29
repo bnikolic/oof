@@ -4,7 +4,7 @@ EXTRA_DIST = config/swig.am
 
 
 BUILT_SOURCES = pybnlib.py pybnlib.cxx 
-bin_SCRIPTS = 
+bin_SCRIPTS =  pybnlib.py
 
 lib_LTLIBRARIES = _pybnlib.la 
 
