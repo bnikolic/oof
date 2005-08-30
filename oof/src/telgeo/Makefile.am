@@ -5,7 +5,8 @@ libtelgeo_la_SOURCES = telgeo.cxx telgeo.hxx \
 			cassegrain.hxx cassegrain.cxx \
 			tdzhelper.hxx \
 			gbtgeo.cxx gbtgeo.hxx\
-			telswitch.cxx telswitch.hxx
+			telswitch.cxx telswitch.hxx \
+			primefoc.cxx primefoc.hxx
 
 libtelgeo_la_CFLAGS = -Wall
 libtelgeo_la_CPPFLAGS = -Wall 

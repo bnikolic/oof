@@ -1,6 +1,6 @@
 /*!
   Bojan Nikolic
-  $Id: gbtgeo.cxx,v 1.1 2005/08/17 20:43:31 bnikolic Exp $
+  $Id: gbtgeo.cxx,v 1.2 2005/08/31 00:55:56 bnikolic Exp $
 */
 
 #include "gbtgeo.hxx"
@@ -64,7 +64,9 @@ namespace OOF {
     return PrimRadius;
   }
   
-
+  
+  // Note , these directions are not the directons used in GBT
+  // engineering!!!
   double SecDeltaPath (double x, double y,
 		       double dX, double dY , double dZ,
 		       const GBTGeo & geo)
