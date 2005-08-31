@@ -1,6 +1,6 @@
 /*
   Bojan Nikoic
-  $Id: primefoc.cxx,v 1.2 2005/08/31 14:07:32 bnikolic Exp $
+  $Id: primefoc.cxx,v 1.3 2005/08/31 14:08:31 bnikolic Exp $
 */
 
 #include "primefoc.hxx"
@@ -95,8 +95,8 @@ namespace OOF {
     // This is the dimensionless radius
     const double r_norm = r / geo.PrimF ;
 
-    return (dXproj + dYproj) *  r_norm / ( 1 + pow(r_norm, 2) )  + 
-      dZ * ( 1 - pow(r_norm, 2) ) / (1 + pow(r_norm,2 ) );
+    return (dXproj + dYproj) *  r_norm / ( 1 + pow(r_norm/2, 2) )  + 
+      dZ * ( 1 - pow(r_norm/2, 2) ) / (1 + pow(r_norm/2,2 ) );
 
 
 
