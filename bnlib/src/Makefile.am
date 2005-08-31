@@ -17,7 +17,8 @@ libbnlib_la_SOURCES= interpolate.hxx interpolate.cxx \
 			zernikepoly.hxx zernikepoly.cxx \
 			gaussian.cxx gaussian.hxx \
 			gsl_utils.cxx gsl_utils.hxx \
-			interpolatelog.cxx interpolatelog.hxx
+			interpolatelog.cxx interpolatelog.hxx \
+			tophat.cxx tophat.hxx
 
 libbnlib_la_CFLAGS = -Wall
 libbnlib_la_CPPFLAGS = -Wall
@@ -41,4 +42,5 @@ include_HEADERS = 	unaryfn.hxx \
 			zernikepoly.hxx \
 			gaussian.hxx \
 			gsl_utils.hxx \
-			interpolatelog.hxx
+			interpolatelog.hxx\
+			tophat.hxx
