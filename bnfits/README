@@ -4,4 +4,4 @@
 
 on hathor:
     
-  ./configure CPPFLAGS="-I${HOME}/p/bnlib/include -g" CFLAGS="-I${HOME}/p/bnlib/include -g" LDFLAGS=-L${HOME}/p/bnlib/lib  --prefix=${HOME}/p/bnfits 
+  ./configure CPPFLAGS="${CPPFLAGS} -I${HOME}/p/bnlib/include -g" CFLAGS="${CFLAGS} -I${HOME}/p/bnlib/include -g" LDFLAGS=-L${HOME}/p/bnlib/lib  --prefix=${HOME}/p/bnfits 
