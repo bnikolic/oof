@@ -2,7 +2,7 @@ AC_INIT(ASTROMAP, 0.02, bnikolic@nrao.edu)
 
 AC_CONFIG_AUX_DIR(config)
 
-AC_REVISION($Revision: 1.8 $)
+AC_REVISION($Revision: 1.9 $)
 
 AM_INIT_AUTOMAKE(ASTROMAP, 0.02, bnikolic@nrao.edu)
 
@@ -14,7 +14,10 @@ AC_PROG_LIBTOOL
 AC_PROG_CC
 AC_PROG_CXX
 
-AC_CHECK_LIB( [fftw] , [fftw2d_create_plan] )
+
+AC_CHECK_HEADER( fftw.h,
+		 [echo "found fftw version 2" ],
+		 [AC_MSG_ERROR([Requires FFTW version 2] ) ] )
 
 AC_LANG_PUSH(C++)
 

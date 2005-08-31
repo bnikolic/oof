@@ -12,3 +12,9 @@ on hathor:
  	CFLAGS="-I${HOME}/p/bnlib/include  -I${HOME}/p/bnfits/include -g" \
 	LDFLAGS="-L${HOME}/p/bnlib/lib -L${HOME}/p/bnfits/lib"  \
 	--prefix=${HOME}/p/astromap 
+
+
+./configure CPPFLAGS="${CPPFLAGS} -I${HOME}/p/bnlib/include -I${HOME}/p/bnfits/include  -g" \
+ 	CFLAGS="${CFLAGS}  -I${HOME}/p/bnlib/include  -I${HOME}/p/bnfits/include -g" \
+	LDFLAGS="${LDFLAGS} -L${HOME}/p/bnlib/lib -L${HOME}/p/bnfits/lib"  \
+	--prefix=${HOME}/p/astromap 
