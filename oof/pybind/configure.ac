@@ -1,7 +1,7 @@
 AC_PREREQ(2.59)
 
 AC_COPYRIGHT(Bojan Nikolic)
-AC_REVISION($Id: configure.ac,v 1.1 2005/06/21 14:05:17 bnikolic Exp $)
+AC_REVISION($Id: configure.ac,v 1.2 2005/08/31 16:47:33 bnikolic Exp $)
 
 AC_INIT([pyoof] , [0.01])
 
@@ -16,7 +16,7 @@ AC_PROG_LIBTOOL
 AC_PROG_CC
 AC_PROG_CXX
 
-AM_PATH_PYTHON(2.4)
+AM_PATH_PYTHON(2.3)
 
 AM_CHECK_PYTHON_HEADERS()
 AC_PATH_PROGS([SWIG],[swig])

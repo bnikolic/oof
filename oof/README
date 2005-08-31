@@ -1,2 +1,12 @@
 
-./configure CPPFLAGS="-I/home/bnikolic/p/bnfits/include -I/home/bnikolic/p/astromap/include -I/home/bnikolic/p/bnmin1/include -I/home/bnikolic/p/bnlib/include -I/home/bnikolic/s/include -g" CFLAGS="-I/home/bnikolic/p/bnfits/include -I/home/bnikolic/p/astromap/include -I/home/bnikolic/p/bnmin1/include -I/home/bnikolic/p/bnlib/include -I/home/bnikolic/s/include -g" LDFLAGS="-L/home/bnikolic/p/astromap/lib -L/home/bnikolic/p/bnmin1/lib -L/home/bnikolic/p/bnlib/lib -L/home/bnikolic/s/lib"  --prefix=/home/bnikolic/p/oof 
+aclocal-1.9
+libtoolize
+automake-1.9 -a
+autoconf
+
+
+
+./configure CPPFLAGS="${CPPFLAGS} -I${HOME}/p/bnfits/include -I${HOME}/p/astromap/include -I${HOME}/p/bnmin1/include -I${HOME}/p/bnlib/include  -g" \
+	CFLAGS="${CFLAGS} -I${HOME}/p/bnfits/include -I${HOME}/p/astromap/include -I${HOME}/p/bnmin1/include -I${HOME}/p/bnlib/include  -g" \
+	LDFLAGS="${LDFLAGS} -L${HOME}/p/astromap/lib -L${HOME}/p/bnmin1/lib -L${HOME}/p/bnlib/lib" \
+	 --prefix=${HOME}/p/oof 
