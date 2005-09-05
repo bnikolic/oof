@@ -1,6 +1,6 @@
 /*!
   Bojan Nikolic
-  $Id: gbtgeo.cxx,v 1.3 2005/09/05 01:12:36 bnikolic Exp $
+  $Id: gbtgeo.cxx,v 1.4 2005/09/06 00:00:35 bnikolic Exp $
 */
 
 #include "gbtgeo.hxx"
@@ -178,7 +178,14 @@ namespace OOF {
       // Now calculate the coordinates of the point in the parent
       // parraboloid coordinate system.
       double r_x=x;
-      double r_y=54.0 - y;
+
+
+      
+      // This reverses the y axis : should need this!
+      // double r_y= 54.0 - y;
+
+      // This is the better convention to adopt
+      double r_y=y + 54.0;
 		
       double r_r= sqrt ( r_x*r_x + r_y*r_y);
 
@@ -193,7 +200,35 @@ namespace OOF {
 
     // now go into the gregorian frame
     {
+      
+      const double xi = phi - 12.33 * M_PI / 180;
 
+      double XOOF = ZGBT;
+
+      double ZOOF = YGBT * cos(xi ) + XGBT * sin(xi );
+      double YOOF = -1.0 * YGBT * sin(xi) + XGBT * cos(xi );
+
+      double r_x=x;
+      double r_y=  y;
+
+      double r_r= sqrt ( r_x*r_x + r_y*r_y);
+
+      double rn2= r_r / geo.GregF / 2;
+      
+      delta += -1 * ZOOF * ( 1 - pow(rn2 , 2) ) / ( 1 + pow(rn2 , 2) );
+
+      if (r_r != 0.0 )
+	{
+	  delta += -1 * YOOF * 2 * rn2 / ( 1 + pow(rn2 ,2 ) )  * r_y/r_r;
+	  delta += -1 * XOOF * 2 * rn2 / ( 1 + pow(rn2 ,2 ) )  * r_x/r_r;
+	}
+      else
+	{
+	  // no extra path is introduced on-axis
+	}
+
+      
+      
 
     }
 
