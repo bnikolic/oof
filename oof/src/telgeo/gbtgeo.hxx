@@ -1,6 +1,6 @@
 /*!
   Bojan Nikolic
-  $Id: gbtgeo.hxx,v 1.1 2005/08/17 20:43:31 bnikolic Exp $
+  $Id: gbtgeo.hxx,v 1.2 2005/09/05 01:12:36 bnikolic Exp $
 
 */
 #ifndef _OOF_TELGEO_GBTGEO_HXX__
@@ -31,6 +31,16 @@ namespace OOF {
     /*! Default constructor sets up for the real GBT */
     GBTGeo(void);
 
+    /* -----------  Member functions --------- */
+
+    /*! Set the provided aperture map to the path change introduced by
+     *  movement of the secondary by the given amount. 
+     *
+     * dX, dY, dZ are in the GBT frame; so, dY is the defocus
+     * direction.
+     **/
+    void MkSubMove ( double dX , double dY, double dZ, AstroMap::Map & Path ) const ;
+
     /* ------------ Inherited functions -------------*/
 
     virtual void MkDefocus( double dz , AstroMap::Map & Phase) const  ;
@@ -51,6 +61,15 @@ namespace OOF {
   double SecDeltaPath (double x, double y,
 		       double dX, double dY , double dZ,
 		       const GBTGeo & geo);
+
+  /*! A revised version of secdeltapath.
+   *
+   * Subreflector motions are in the GBT reference system.
+   */
+  double SecDeltaPathV2 (double x, double y,
+			 double XGBT, double YGBT , double ZGBT,
+			 const GBTGeo & geo);
+
 
   
 }

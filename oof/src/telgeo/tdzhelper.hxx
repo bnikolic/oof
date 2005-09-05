@@ -1,6 +1,6 @@
 /*!
   Bojan Nikolic
-  $Id: tdzhelper.hxx,v 1.1 2005/06/25 12:08:57 bnikolic Exp $
+  $Id: tdzhelper.hxx,v 1.2 2005/09/05 01:12:36 bnikolic Exp $
 
   Simple template class to use when calculating defocus phase 
 */
@@ -27,6 +27,35 @@ namespace OOF {
     double operator() (double x , double y )
     {
       return SecDeltaPath( x, y , 0, 0, dz, geo);
+    }
+  };
+
+  /*! Provide a choice of functions to use to calculate the path and
+   *  allow calculation of deflections in any direction.
+   */
+  template<class TGeo,   
+	   double (*SecFn) (double, double, 
+			    double, double, double, 
+			    const TGeo &)
+    >  class DzHelperFull : public BNLib::BinaryDD {
+
+    const TGeo &geo;
+    double dx;
+    double dy;
+    double dz;
+    
+  public:
+    
+    DzHelperFull(    const TGeo &geo,  double dx, double dy, double dz ):
+      geo(geo),
+      dx(dx),      dy(dy),
+      dz(dz)
+    {
+    }
+
+    double operator() (double x , double y )
+    {
+      return SecFn( x, y , dx, dy, dz, geo);
     }
   };
 

@@ -1,6 +1,6 @@
 /*!
   Bojan Nikolic
-  $Id: gbtgeo.cxx,v 1.2 2005/08/31 00:55:56 bnikolic Exp $
+  $Id: gbtgeo.cxx,v 1.3 2005/09/05 01:12:36 bnikolic Exp $
 */
 
 #include "gbtgeo.hxx"
@@ -108,7 +108,9 @@ namespace OOF {
       if ( r_r != 0.0 ) 
 	{
 	  r_th1 = 2*atan2(r_r, 2*r_fp);
+
 	  dp1 = dz1 * cos (r_th1) +  dy1 * sin (r_th1) * r_y / r_r ;
+	  
 	}
       else
 	{
@@ -141,6 +143,62 @@ namespace OOF {
 		
     
     return delta;
+  }
+
+  void GBTGeo::MkSubMove ( double dX , double dY, double dZ, 
+			   AstroMap::Map & Path ) const 
+  {
+    DzHelperFull<GBTGeo, &SecDeltaPathV2 >
+      helper ( *this,  dX, dY , dZ);
+    WorldSet( Path, helper );
+  }
+
+  double SecDeltaPathV2 (double x, double y,
+			 double XGBT, double YGBT , double ZGBT,
+			 const GBTGeo & geo)
+  {
+    // phi is the angle of the GBT defocus directon (+ve YGBT) to the
+    // axis of the parent parraboloid.
+    double phi = 36.7 * M_PI / 180 ;
+
+    // delta holds the total path
+    double delta= 0;
+
+    // Primary frame:
+    {
+      // resolve the motion of the subreflector into the principal
+      // directions of the parent parraboloid (these are the XOOF,
+      // YOOF and ZOOF).
+
+      double XOOF = ZGBT;
+
+      double ZOOF = YGBT * cos(phi ) + XGBT * sin(phi );
+      double YOOF = -1.0 * YGBT * sin(phi) + XGBT * cos(phi );
+
+      // Now calculate the coordinates of the point in the parent
+      // parraboloid coordinate system.
+      double r_x=x;
+      double r_y=54.0 - y;
+		
+      double r_r= sqrt ( r_x*r_x + r_y*r_y);
+
+      double rn2= r_r / geo.PrimF / 2;
+      
+      delta += ZOOF * ( 1 - pow(rn2 , 2) ) / ( 1 + pow(rn2 , 2) );
+
+      delta += -1 * YOOF * 2 * rn2 / ( 1 + pow(rn2 ,2 ) )  * r_y/r_r;
+      delta += -1 * XOOF * 2 * rn2 / ( 1 + pow(rn2 ,2 ) )  * r_x/r_r;
+      
+    }
+
+    // now go into the gregorian frame
+    {
+
+
+    }
+
+    return delta;
+
   }
 
 
