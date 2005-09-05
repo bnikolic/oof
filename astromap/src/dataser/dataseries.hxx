@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: dataseries.hxx,v 1.4 2005/07/26 21:18:47 bnikolic Exp $
+  $Id: dataseries.hxx,v 1.5 2005/09/06 00:18:28 bnikolic Exp $
 
   Data series support
 */
@@ -32,6 +32,10 @@ namespace AstroMap {
 
 
   };
+
+  /*! Invert the data series through the origin, i.e., reverse the
+   *  signs of both dX and dY */
+  void InvertDS ( DataSeries &ds);
 
 
 }

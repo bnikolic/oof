@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: dataseries.cxx,v 1.3 2005/07/03 14:37:34 bnikolic Exp $
+  $Id: dataseries.cxx,v 1.4 2005/09/06 00:18:28 bnikolic Exp $
 
   Data series support
 */
@@ -22,7 +22,14 @@ namespace AstroMap {
 
   }
 
-  
+  void InvertDS ( DataSeries &ds)
+  {
+    for (size_t i =0 ; i < ds.size() ; ++i )
+      {
+	ds[i].dX *= -1.0;
+	ds[i].dY *= -1.0;
+      }
+  }
 
 }
 
