@@ -1,5 +1,5 @@
 # Bojan Nikolic
-# $Id: implot.py,v 1.6 2005/08/28 04:25:35 bnikolic Exp $
+# $Id: implot.py,v 1.7 2005/09/05 01:30:31 bnikolic Exp $
 #
 # Routines for plotting maps
 
@@ -33,12 +33,17 @@ def plotmap(mapp,
             plotbox=1 ,
             title=None,
             width=0,
-            colmap=None):
+            colmap=None,
+            valrange=None):
 
     "Plots a general map"
 
     """
     bbox: a list definig the part of the map that should be plotted.
+
+    valrange: if range is defined, restrict the range of values plotted
+           to the that specified. Othervise cover the whole range of
+           the data from the minimum to maximum value.
 
     """
 
@@ -59,11 +64,17 @@ def plotmap(mapp,
     else:
         pyplot.SetFileColourTab(colmap)
 
+    if valrange == None:
+        valrange = (mapp.min() , mapp.max() )
+    if valrange[0] == None:valrange[0]= mapp.min()         
+    if valrange[1] == None:valrange[1]= mapp.max() 
+        
+        
     if plotwedge:
-        pyplot.cpgwedg("RI",1,2, mapp.min(), mapp.max(), " ")
+        pyplot.cpgwedg("RI",1,2, valrange[0] , valrange[1], " ")
         
 
-    pyplot.Plot(mapp)
+    pyplot.Plot(mapp, valrange[0] , valrange[1])
     
     if title != None :
         pyplot.cpglab("","", title )

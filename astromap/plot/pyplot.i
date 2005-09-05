@@ -18,6 +18,11 @@
 #include "../src/dataser/dstomap.hxx"
 #include "../src/dataser/mapdseval.hxx"
 
+#include "binaryfn.hxx"
+#include "tophat.hxx"
+#include "zernikepoly.hxx"
+#include "../src/mapset.hxx"
+
 
 
 #include "plot.hxx"
@@ -46,6 +51,11 @@
 %include "../src/dataser/dstomap.hxx"
 %include "../src/dataser/mapdseval.hxx"
 
+%include "binaryfn.hxx"
+%include "tophat.hxx"
+%include "zernikepoly.hxx"
+%include "../src/mapset.hxx"
+
 
 %include "plot.hxx"
 %include "phelpers.hxx"
@@ -59,6 +69,19 @@
     double max() {
 	return (*self).max();
 	}
+
+     void mult ( Map const & m ) {
+	(*self) *= m;
+     }
+
+     void mult ( double m ) {
+	(*self) *= m;
+     }
+
+     void add ( Map const & m ) {
+	(*self) += m;
+     }
+	
 
 }
 

@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: plot.hxx,v 1.1 2005/06/21 14:21:58 bnikolic Exp $
+  $Id: plot.hxx,v 1.2 2005/09/05 01:30:31 bnikolic Exp $
 
   Main routines for plotting maps
 */
@@ -14,6 +14,8 @@ namespace AstroMap {
 
   /*! Plots the supplied map as a grayscale */
   void Plot ( Map & m );
+
+  void Plot ( Map & m, double minval, double maxval );
 
 
 

@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: plot.cxx,v 1.1 2005/06/21 14:21:58 bnikolic Exp $
+  $Id: plot.cxx,v 1.2 2005/09/05 01:30:31 bnikolic Exp $
 
 */
 
@@ -14,7 +14,13 @@
 
 namespace AstroMap {
 
+
   void Plot ( Map & m )
+  {
+    Plot( m , m.min(),    m.max());
+  }
+
+  void Plot ( Map & m, double minval, double maxval )
   {
 
     // Make a float array to pass to pgplot
@@ -31,7 +37,6 @@ namespace AstroMap {
     // This is just a shortcut
     const std::valarray<double> &TM ( lcs->TM);
     
-    // For the time being fill up with unit transform
     trmatrix[0]=TM[2];
     trmatrix[1]=TM[0];
     trmatrix[2]=TM[1];
@@ -47,8 +52,7 @@ namespace AstroMap {
 	     m.nx, 
 	     1, 
 	     m.ny,
-	     m.min(), 
-	     m.max(), 
+	     minval, maxval,
 	     trmatrix);
     
 
