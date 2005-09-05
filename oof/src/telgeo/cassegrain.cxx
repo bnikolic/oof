@@ -1,6 +1,6 @@
 /*!
   Bojan Nikolic
-  $Id: cassegrain.cxx,v 1.6 2005/08/17 20:43:37 bnikolic Exp $
+  $Id: cassegrain.cxx,v 1.7 2005/09/06 00:01:06 bnikolic Exp $
 
 */
 
@@ -80,6 +80,7 @@ namespace OOF {
     const double a = r / 2.0 / geo.PrimF;
     const double b = r / 2.0 / geo.CasF ;
 
+    // Sign of second term is uncertain!! -- check this
     delta += dZ * ( (1 - a*a)/(1 + a*a) + (1 - b*b)/(1 + b*b) );
 
     return delta;
