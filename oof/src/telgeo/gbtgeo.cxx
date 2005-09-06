@@ -1,6 +1,6 @@
 /*!
   Bojan Nikolic
-  $Id: gbtgeo.cxx,v 1.4 2005/09/06 00:00:35 bnikolic Exp $
+  $Id: gbtgeo.cxx,v 1.5 2005/09/06 01:19:27 bnikolic Exp $
 */
 
 #include "gbtgeo.hxx"
@@ -27,6 +27,10 @@ namespace OOF {
   {
     DzHelper<GBTGeo> dzfn (*this, dz);
     WorldSet( Phase, dzfn );
+
+    //    DzHelperFull<GBTGeo, &SecDeltaPathV2 >
+    //helper ( *this,  0 , dz , 0);
+    //WorldSet( Phase, helper );
   }
 
   void GBTGeo::DishMask (AstroMap::Map &Dish) const 
@@ -209,18 +213,18 @@ namespace OOF {
       double YOOF = -1.0 * YGBT * sin(xi) + XGBT * cos(xi );
 
       double r_x=x;
-      double r_y=  y;
+      double r_y=  -1.0 * y;
 
       double r_r= sqrt ( r_x*r_x + r_y*r_y);
 
       double rn2= r_r / geo.GregF / 2;
       
-      delta += -1 * ZOOF * ( 1 - pow(rn2 , 2) ) / ( 1 + pow(rn2 , 2) );
+      delta +=  ZOOF * ( 1 - pow(rn2 , 2) ) / ( 1 + pow(rn2 , 2) );
 
       if (r_r != 0.0 )
 	{
-	  delta += -1 * YOOF * 2 * rn2 / ( 1 + pow(rn2 ,2 ) )  * r_y/r_r;
-	  delta += -1 * XOOF * 2 * rn2 / ( 1 + pow(rn2 ,2 ) )  * r_x/r_r;
+	  delta +=  YOOF * 2 * rn2 / ( 1 + pow(rn2 ,2 ) )  * r_y/r_r;
+	  delta +=  XOOF * 2 * rn2 / ( 1 + pow(rn2 ,2 ) )  * r_x/r_r;
 	}
       else
 	{
