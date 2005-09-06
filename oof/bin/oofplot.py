@@ -1,5 +1,5 @@
 # Bojan Nikolic
-# $Id: oofplot.py,v 1.5 2005/08/28 04:26:36 bnikolic Exp $
+# $Id: oofplot.py,v 1.6 2005/09/06 01:24:52 bnikolic Exp $
 #
 # Various utilities for plotting OOF data
 
@@ -87,6 +87,7 @@ def PlotDSFile( fnamein,
 
     for i in range(1,len(fin)):
         ds1=pyplot.LoadFITSDS(fnamein,i+1)
+
         pyplot.SimpleDrizzle( ds1, m, fwhm , extent)    
 
         implot.plotmap( m,

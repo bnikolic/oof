@@ -1,9 +1,9 @@
 # Bojan Nikolic
-# $Id: oofreduce.py,v 1.13 2005/09/06 00:55:38 bnikolic Exp $
+# $Id: oofreduce.py,v 1.14 2005/09/06 01:24:52 bnikolic Exp $
 #
 # Main OOF reduction script
 
-oofreducever = r"$Revision: 1.13 $"
+oofreducever = r"$Revision: 1.14 $"
 
 import math
 import os
@@ -46,17 +46,12 @@ def MkMapResDS(fnamein,
                extno,
                skymapsample,
                fwhm=1.0,
-               extent=2,
-               dsreverse=False):
+               extent=2):
 
     ds=pyplot.LoadFITSDS(fnamein, extno+1)
 
     ds.thisown=0
 
-    if  dsreverse:
-        print "Reversing !"
-        #pyplot.InvertDS(ds)
-        
     mapds= pyoof.MapToResidualDS( ds, skymapsample, fwhm, extent)
 
     return mapds
@@ -82,15 +77,15 @@ def LoadOCData( fnamein,
                 skymapsample,
                 apmapsample,
                 oc,
-                fwhm=1.0, extent=2.0,
-                dsreverse=False):
+                fwhm=1.0,
+                extent=2.0):
 
     fin = pyfits.open(fnamein)
     
     for i in range(1, len(fin) ):
         mapres= MkMapResDS( fnamein, i , skymapsample,
-                            fwhm=fwhm, extent=extent,
-                            dsreverse=dsreverse)
+                            fwhm=fwhm, extent=extent)
+        
         ps    = MkPhaseScreen( fnamein, i, apmapsample)
 
         mapres.thisown=0
@@ -145,8 +140,7 @@ def MkObsCompare(fnamein,
                  nzern=6,
                  oversample=2.0,
                  ds_fwhm=1.0,
-                 ds_extent=2.0,
-                 dsreverse=False
+                 ds_extent=2.0
                  ):
 
     "Make an ObsCompare object from the given file"
@@ -175,7 +169,7 @@ def MkObsCompare(fnamein,
     # now just load the observations and done...
     #
     LoadOCData( fnamein, tel, skymapsample, aperture.getphase(), oc,
-                fwhm=ds_fwhm, extent=ds_extent, dsreverse=dsreverse)
+                fwhm=ds_fwhm, extent=ds_extent)
 
     return oc
 
@@ -203,7 +197,7 @@ def FitStatTab(m):
     chisquaredfinal = m.ChiSquared()
 
     ftable=iofits4.FnParTable(locals(),
-                              r"$Id: oofreduce.py,v 1.13 2005/09/06 00:55:38 bnikolic Exp $")
+                              r"$Id: oofreduce.py,v 1.14 2005/09/06 01:24:52 bnikolic Exp $")
     return ftable
 
 def Red(obsfilename,
@@ -214,8 +208,7 @@ def Red(obsfilename,
         npix=128,
         oversample=2.0,
         ds_fwhm=1.0,
-        ds_extent =2.0,
-        dsreverse=False):
+        ds_extent =2.0):
 
     "A general reduction script"
 
@@ -226,7 +219,7 @@ def Red(obsfilename,
     """
 
     ptable=iofits4.FnParTable(locals(),
-                              r"$Id: oofreduce.py,v 1.13 2005/09/06 00:55:38 bnikolic Exp $")
+                              r"$Id: oofreduce.py,v 1.14 2005/09/06 01:24:52 bnikolic Exp $")
 
     dirout = oofcol.mkodir( prefdirout ,
                             oofcol.basename(obsfilename))
@@ -244,8 +237,7 @@ def Red(obsfilename,
         oc=MkObsCompare(obsfilename, nzern=nzern,
                         npix=npix, oversample=oversample,
                         ds_fwhm=ds_fwhm,
-                        ds_extent=ds_extent,
-                        dsreverse=dsreverse)
+                        ds_extent=ds_extent)
 
         lmm=pybnmin1.LMMin(oc.downcast())
         lmm.ftol=1e-4
@@ -296,8 +288,7 @@ def Red(obsfilename,
         oc=MkObsCompare(obsfilename, nzern=1,
                         npix=npix, oversample=oversample,
                         ds_fwhm=ds_fwhm,
-                        ds_extent=ds_extent,
-                        dsreverse=dsreverse)
+                        ds_extent=ds_extent)
         
         lmm=pybnmin1.LMMin(oc.downcast())
         bnmin1io.FLoad(lmm, fitname,
@@ -310,7 +301,11 @@ def Red(obsfilename,
 
         
 
-        
+def InvertDSFile (fnamein, fnameout ):
+
+    "Invert the data series contained in fnamein through the origin"
+
+    pass
 
 
     
