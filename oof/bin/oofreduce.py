@@ -1,9 +1,9 @@
 # Bojan Nikolic
-# $Id: oofreduce.py,v 1.14 2005/09/06 01:24:52 bnikolic Exp $
+# $Id: oofreduce.py,v 1.15 2005/09/06 01:34:06 bnikolic Exp $
 #
 # Main OOF reduction script
 
-oofreducever = r"$Revision: 1.14 $"
+oofreducever = r"$Revision: 1.15 $"
 
 import math
 import os
@@ -197,7 +197,7 @@ def FitStatTab(m):
     chisquaredfinal = m.ChiSquared()
 
     ftable=iofits4.FnParTable(locals(),
-                              r"$Id: oofreduce.py,v 1.14 2005/09/06 01:24:52 bnikolic Exp $")
+                              r"$Id: oofreduce.py,v 1.15 2005/09/06 01:34:06 bnikolic Exp $")
     return ftable
 
 def Red(obsfilename,
@@ -219,7 +219,7 @@ def Red(obsfilename,
     """
 
     ptable=iofits4.FnParTable(locals(),
-                              r"$Id: oofreduce.py,v 1.14 2005/09/06 01:24:52 bnikolic Exp $")
+                              r"$Id: oofreduce.py,v 1.15 2005/09/06 01:34:06 bnikolic Exp $")
 
     dirout = oofcol.mkodir( prefdirout ,
                             oofcol.basename(obsfilename))
@@ -305,6 +305,16 @@ def InvertDSFile (fnamein, fnameout ):
 
     "Invert the data series contained in fnamein through the origin"
 
+    fin = pyfits.open(fnamein)
+
+    for i in range(1, len(fin) ):
+        dx=fin[i].data.field("dx")
+        dx *= -1
+
+        dy=fin[i].data.field("dy")
+        dy *= -1
+
+    iofits4.Write(fin , fnameout , overwrite=1)
     pass
 
 

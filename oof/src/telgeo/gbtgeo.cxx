@@ -1,6 +1,6 @@
 /*!
   Bojan Nikolic
-  $Id: gbtgeo.cxx,v 1.5 2005/09/06 01:19:27 bnikolic Exp $
+  $Id: gbtgeo.cxx,v 1.6 2005/09/06 01:34:07 bnikolic Exp $
 */
 
 #include "gbtgeo.hxx"
@@ -25,12 +25,18 @@ namespace OOF {
   
   void GBTGeo::MkDefocus( double dz , AstroMap::Map & Phase) const  
   {
-    DzHelper<GBTGeo> dzfn (*this, dz);
-    WorldSet( Phase, dzfn );
+    if ( true )
+      {
+	DzHelper<GBTGeo> dzfn (*this, dz);
+	WorldSet( Phase, dzfn );
+      }
+    else
+      {
 
-    //    DzHelperFull<GBTGeo, &SecDeltaPathV2 >
-    //helper ( *this,  0 , dz , 0);
-    //WorldSet( Phase, helper );
+	DzHelperFull<GBTGeo, &SecDeltaPathV2 >
+	  helper ( *this,  0 , dz , 0);
+	WorldSet( Phase, helper );
+      }
   }
 
   void GBTGeo::DishMask (AstroMap::Map &Dish) const 
