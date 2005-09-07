@@ -1,5 +1,5 @@
 # Bojan Nikolic
-# $Id: gbtastigmil.py,v 1.1 2005/09/01 19:21:46 bnikolic Exp $
+# $Id: gbtastigmil.py,v 1.2 2005/09/07 18:46:51 bnikolic Exp $
 #
 # Illustrate where astigmatism comes in from at the gbt
 
@@ -28,8 +28,13 @@ def mkfocmove():
     mask = pyoof.Clone(m)
     tel1.DishMask(mask)
 
-    dX = 0.01 * math.cos( 36.7 * math.pi / 180 )
-    dY = 0.01 * math.sin( 36.7 * math.pi / 180 )
+
+    #dX = 0.01 * math.cos( 36.7 * math.pi / 180 )
+    #dY = 0.01 * math.sin( 36.7 * math.pi / 180 )
+    
+    dX = 0.01 * math.sin( 36.7 * math.pi / 180 )
+    dY = 0.01 * math.cos( 36.7 * math.pi / 180 )
+    
     tel1.MkFocMove(dX,0,dY,m)
     m.mult( mask)
 
@@ -55,7 +60,7 @@ mask1 = pyoof.Clone(m)
 pyplot.WorldSet( mask1 , th1)
 m.mult(mask1)
 
-implot.plotmap(m, colmap="heat", fout="gbtil/apX.png/PNG")
+implot.plotmap(m, colmap="heat", fout="gbtil/apX.png/PNG", valrange=[8e-3, None ])
 
 tel1.MkFocMove(0.01,0,0,m)
 m.add(scratch)
