@@ -1,6 +1,6 @@
 /*!
   Bojan Nikolic
-  $Id: gbtgeo.cxx,v 1.6 2005/09/06 01:34:07 bnikolic Exp $
+  $Id: gbtgeo.cxx,v 1.7 2005/09/09 17:46:24 bnikolic Exp $
 */
 
 #include "gbtgeo.hxx"
@@ -27,6 +27,7 @@ namespace OOF {
   {
     if ( true )
       {
+	// This is the old convention...
 	DzHelper<GBTGeo> dzfn (*this, dz);
 	WorldSet( Phase, dzfn );
       }

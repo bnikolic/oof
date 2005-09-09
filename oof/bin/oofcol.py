@@ -1,5 +1,5 @@
 # Bojan Nikolic
-# $Id: oofcol.py,v 1.2 2005/08/26 20:49:56 bnikolic Exp $
+# $Id: oofcol.py,v 1.3 2005/09/09 17:46:24 bnikolic Exp $
 #
 # Various routines to help with collating oof data
 
@@ -48,4 +48,20 @@ def getpar(dirin, parfile , parname, extno=1):
     parindex = sres[0][0]
 
     return dat.field("value")[parindex]
+
+def direlev(dirin):
+
+    "Get mean elevation of observations from an oof output directory"
+
+    """
+    Currently mean elevation is not coppied accros so the original
+    observations file must still exist
+    """
+
+    obsdsfname=  getpar(dirin,  "fitinfo.fits", "obsfilename")
+
+    return float( pyfits.open(obsdsfname)[0].header["meanel"])
+
+                  
+    
     
