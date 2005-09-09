@@ -1,5 +1,5 @@
 # Bojan Nikolic
-# $Id: bnmin1io.py,v 1.1 2005/08/21 02:42:02 bnikolic Exp $
+# $Id: bnmin1io.py,v 1.2 2005/09/09 19:49:52 bnikolic Exp $
 #
 # Input / output support for the minimiser routines
 
@@ -13,7 +13,7 @@ import pybnmin1
 
 import iofits4
 
-modcvs = r"$Id: bnmin1io.py,v 1.1 2005/08/21 02:42:02 bnikolic Exp $"
+modcvs = r"$Id: bnmin1io.py,v 1.2 2005/09/09 19:49:52 bnikolic Exp $"
 
 def FSave(modeldesc , fnameout ):
 
@@ -65,6 +65,19 @@ def FLoad( modeldsc, fnamein, ext=1, silent=False):
             cpar.setp( rowin.field("ParValue") )
         else:
             if not silent : print "%s doesn't exist in model" % rowin.field("ParName")
+
+def FGetPar( fnamein , parname):
+    "Retrieve the value of a single parameter from a fit saved to a file"
+
+    dat=pyfits.open(fnamein)[1].data
+
+    sres = dat.field("ParName").search(parname)
+    if len( sres[0] ) == 0:
+        raise "Parameter %s not found" % parname
+
+    parindex = sres[0][0]
+
+    return dat.field("ParValue")[parindex]
 
 
 def FittedPars( m ):
