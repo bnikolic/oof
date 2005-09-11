@@ -1,7 +1,7 @@
 #
 # Bojan Nikolic
 #
-# $Id: ooffitconv.py,v 1.1 2005/09/09 18:39:55 bnikolic Exp $
+# $Id: ooffitconv.py,v 1.2 2005/09/12 00:22:36 bnikolic Exp $
 #
 # Routines to convert OOF fits between various formats
 
@@ -28,7 +28,13 @@ def SchwabnltoSchwabk(n,l):
     return n*(n+1)/2 + (n+l)/2 +1
 
 def OOFktoSchwabk(k):
-    "Converts the sequential zernike number as output by the oof software to the k numbering shown in F. Schwab & M. Mello's memo"
+
+    """
+
+    Converts the sequential zernike number as output by the oof
+    software to the k numbering shown in F. Schwab & M. Mello's memo
+
+    """
 
     oof_n , oof_l =  OOFktoOOFnl(k)
 
