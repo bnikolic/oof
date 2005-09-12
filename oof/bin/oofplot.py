@@ -1,5 +1,5 @@
 # Bojan Nikolic
-# $Id: oofplot.py,v 1.6 2005/09/06 01:24:52 bnikolic Exp $
+# $Id: oofplot.py,v 1.7 2005/09/12 02:59:58 bnikolic Exp $
 #
 # Various utilities for plotting OOF data
 
@@ -52,6 +52,22 @@ def PlotDir(dirnamein, bbox=None):
     PlotAperture( os.path.join(dirnamein, "aperture-notilt.fits"),
                   os.path.join(dirnamein, "plots"),
                   oversample=oversample)
+
+    if os.access( os.path.join(dirnamein, "offsetbeams.fits"),
+                  os.F_OK):
+        PlotSimDrizzleBeams( obsdsfname,
+                             os.path.join(dirnamein, "offsetbeams.fits"),
+                             os.path.join(dirnamein, "plots"),
+                             prefix="offsetbeams",
+                             bbox=bbox,
+                             fwhm=fwhm,
+                             extent=extent)
+
+        PlotAperture( os.path.join(dirnamein, "aperture-offset.fits"),
+                      os.path.join(dirnamein, "plots"),
+                      oversample=oversample,
+                      prefix="offsetaperture")
+        
                          
 
     
