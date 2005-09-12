@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: plot.cxx,v 1.2 2005/09/05 01:30:31 bnikolic Exp $
+  $Id: plot.cxx,v 1.3 2005/09/12 18:26:50 bnikolic Exp $
 
 */
 
@@ -20,17 +20,22 @@ namespace AstroMap {
     Plot( m , m.min(),    m.max());
   }
 
-  void Plot ( Map & m, double minval, double maxval )
+  /*
+   * Convert the data to format used by pgplot. I.E., convert the main
+   * array to be ploted to float precision and extract and convert the
+   * transition matrix.
+   */
+  void PGData( Map &m, std::valarray<float> & data , float *trmatrix )
   {
 
-    // Make a float array to pass to pgplot
-    std::valarray<float> data( m.size() );
-    // And copy the data
+    // Convert main array to floats.
+    data.resize( m.size() );
+    
     for( unsigned i =0 ; i < m.size() ; ++i )
       data[i] = m[i];
 
-    // Make a float array to hold the transformation matrix
-    float trmatrix[6];
+
+    // Get the transition matrix
 
     // Assume that a linear system is being used...
     const LinCS * lcs = ENFORCE(dynamic_cast<const LinCS *>(m.cs));
@@ -43,6 +48,22 @@ namespace AstroMap {
     trmatrix[3]=TM[5];
     trmatrix[4]=TM[3];
     trmatrix[5]=TM[4];
+    
+  }
+
+
+  void Plot ( Map & m, double minval, double maxval )
+  {
+
+
+    // Make a float array to pass to pgplot
+    std::valarray<float> data( m.size() );
+
+    // Make a float array to hold the transformation matrix
+    float trmatrix[6];
+    
+    // Convert the data
+    PGData( m, data , trmatrix);
 
     
     cpgimag( &data[0], 
@@ -54,8 +75,30 @@ namespace AstroMap {
 	     m.ny,
 	     minval, maxval,
 	     trmatrix);
+  }
+
+  void Contour ( Map &m , std::vector<double> &contlevels )
+  {
+
+    std::valarray<float> data( m.size() );
+    float trmatrix[6];
+
+    PGData( m, data , trmatrix);
+
+    // Now convert the contour levels
+    std::valarray<float> cl( contlevels.size()) ;
+    std::copy(contlevels.begin() , contlevels.end() , &cl[0] );
+
+    cpgcont( &data[0], 
+	     m.nx, m.ny, 
+	     1 , m.nx, 
+	     1 , m.ny,
+	     &cl[0], 
+	     cl.size(), 
+	     trmatrix);
     
 
+    
   }
 
 

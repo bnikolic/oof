@@ -33,6 +33,12 @@
 %}
 
 %include "typemaps.i"
+%include "std_vector.i"
+
+
+namespace std {
+   %template(DoubleVector) vector<double>; 
+}
 
 %include "../src/astromap.hxx"
 %include "../src/astromapio.hxx"
