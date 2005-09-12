@@ -1,7 +1,7 @@
 #
 # Bojan Nikolic
 #
-# $Id: ooffitconv.py,v 1.3 2005/09/12 02:59:58 bnikolic Exp $
+# $Id: ooffitconv.py,v 1.4 2005/09/12 05:44:32 bnikolic Exp $
 #
 # Routines to convert OOF fits between various formats
 
@@ -17,7 +17,7 @@ import iofits4
 import oofreduce
 import oofcol
 
-modcvs = r"$Id: ooffitconv.py,v 1.3 2005/09/12 02:59:58 bnikolic Exp $"
+modcvs = r"$Id: ooffitconv.py,v 1.4 2005/09/12 05:44:32 bnikolic Exp $"
 
 def OOFktoOOFnl(k):
     "Converts between the sequential and n,l numbering used in the OOF software"
@@ -106,7 +106,7 @@ def LoadFITS(fnamein):
         res[rowin.field("parname")] = float( rowin.field("parvalue") )
     return res
 
-def SaveFITS(d , fnameout):
+def SaveFITS(d , fnameout , keys={}):
 
     "Save the dictionary to a fits file"
 
@@ -120,6 +120,9 @@ def SaveFITS(d , fnameout):
     for k,rowout in izip(d,tabout.data) :
         rowout.setfield("parname", k)
         rowout.setfield("parvalue", d[k] )
+
+    for k in keys:
+        tabout.header.update(k , keys[k] )        
 
     fout.append(tabout)
     iofits4.Write( fout, fnameout , overwrite=1)
@@ -157,7 +160,8 @@ def MkGBTSfcFile(dirin, fnameout):
 
     Scale(gbtdict, wavel)
 
-    SaveFITS(gbtdict, fnameout)
+    SaveFITS(gbtdict, fnameout,
+             keys=  {"freq":  3e8/wavel } )
 
 
     
