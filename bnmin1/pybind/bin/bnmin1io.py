@@ -1,5 +1,5 @@
 # Bojan Nikolic
-# $Id: bnmin1io.py,v 1.2 2005/09/09 19:49:52 bnikolic Exp $
+# $Id: bnmin1io.py,v 1.3 2005/09/12 01:18:26 bnikolic Exp $
 #
 # Input / output support for the minimiser routines
 
@@ -13,7 +13,7 @@ import pybnmin1
 
 import iofits4
 
-modcvs = r"$Id: bnmin1io.py,v 1.2 2005/09/09 19:49:52 bnikolic Exp $"
+modcvs = r"$Id: bnmin1io.py,v 1.3 2005/09/12 01:18:26 bnikolic Exp $"
 
 def FSave(modeldesc , fnameout ):
 
@@ -65,6 +65,25 @@ def FLoad( modeldsc, fnamein, ext=1, silent=False):
             cpar.setp( rowin.field("ParValue") )
         else:
             if not silent : print "%s doesn't exist in model" % rowin.field("ParName")
+
+def FAdd( modeldsc, fnamein, ext=1 , silent=False):
+
+    "Add a fit from a file to the current fit"
+
+    """
+     This basically offsets the current fit by the value of a previous fit
+    """
+
+    fin=pyfits.open(fnamein)
+
+    for rowin in fin[ext].data:
+
+        cpar = modeldsc.getbyname( rowin.field("ParName"))
+
+        if  cpar:
+            cpar.setp( cpar.getp() + rowin.field("ParValue") )
+        else:
+            if not silent : print "%s doesn't exist in model" % rowin.field("ParName")    
 
 def FGetPar( fnamein , parname):
     "Retrieve the value of a single parameter from a fit saved to a file"
