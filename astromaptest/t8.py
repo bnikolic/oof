@@ -1,7 +1,7 @@
 # Bojan Nikolic
 # Tests of the OOF system
 #
-# $Id: t8.py,v 1.1 2005/09/12 04:29:00 bnikolic Exp $
+# $Id: t8.py,v 1.2 2005/09/12 05:58:26 bnikolic Exp $
 #
 
 datadir="/home/bnikolic/data/gbtoof/ver001/0911"
@@ -10,10 +10,12 @@ import os
 import oofreduce
 import pyfits
 import oofplot
+import ooffitconv
 
 
 
-clist= [6] 
+#clist= [6 , 15]
+clist= [29] 
 
 scanfiles = [ "s%i-l-db.fits" % sno for sno in clist] 
 
@@ -52,6 +54,26 @@ def printel():
 
 
 #Plot example
-#PlotDir("oofout/s114-l-db-005/z2", bbox=[ -1e-3, 1e-3, -1e-3, 1e-3])
+#oofplot.PlotDir("oofout/s6-l-db-000/z5", bbox=[ -1e-3, 1e-3, -1e-3, 1e-3])
 
-#InvertDSFile ("/home/bnikolic/data/gbtoof/TPTCSOOF_050411/s141-l-db.fits" , "/home/bnikolic/data/gbtoof/TPTCSOOF_050411/s141-l-db-rev.fits")
+#ooffitconv.MkGBTSfcFile("oofout/s6-l-db-000/z5", "Fall05Exp1/surfacepars-el60.fits")
+#MkGBTSfcFile("oofout/s6-l-db-000/z5", "Fall05Exp1/surfacepars-el60.fits")
+
+# here is a good one -- see if the difference in apertures in scans 6
+# and 29 consistent with what was dialed in?
+
+if 0:
+    import pyplot
+
+    fname1="oofout/s6-l-db-000/z5/aperture-offset.fits"
+    fname2="oofout/s29-l-db-001/z5/aperture-offset.fits"
+
+    f1=pyplot.FitsMapLoad(fname1,2)
+    f2=pyplot.FitsMapLoad(fname2,2)
+
+    f1.mult(-1)
+    f2.add(f1)
+    implot.plotmap(f2, bbox=[-60,60,-60,60], colmap="heat")
+    #Works out OK.
+
+
