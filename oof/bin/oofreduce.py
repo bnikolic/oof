@@ -1,9 +1,9 @@
 # Bojan Nikolic
-# $Id: oofreduce.py,v 1.15 2005/09/06 01:34:06 bnikolic Exp $
+# $Id: oofreduce.py,v 1.16 2005/09/12 01:07:35 bnikolic Exp $
 #
 # Main OOF reduction script
 
-oofreducever = r"$Revision: 1.15 $"
+oofreducever = r"$Revision: 1.16 $"
 
 import math
 import os
@@ -197,9 +197,24 @@ def FitStatTab(m):
     chisquaredfinal = m.ChiSquared()
 
     ftable=iofits4.FnParTable(locals(),
-                              r"$Id: oofreduce.py,v 1.15 2005/09/06 01:34:06 bnikolic Exp $")
+                              r"$Id: oofreduce.py,v 1.16 2005/09/12 01:07:35 bnikolic Exp $")
     return ftable
 
+def OffsetFname(fnamein):
+
+    "Return the name of the offset file if it exists"
+
+    """
+    The telescope may already have a surface correction dialed
+    in... take that into account here.
+    """
+
+    fbasename=fnamein[:-5]
+
+    try1 = fbasename+"-offset.fits"
+    if os.access(try1, os.F_OK) : return try1
+    else: return None
+    
 def Red(obsfilename,
         prefdirout="oofout",
         extrafit= [],
@@ -219,7 +234,7 @@ def Red(obsfilename,
     """
 
     ptable=iofits4.FnParTable(locals(),
-                              r"$Id: oofreduce.py,v 1.15 2005/09/06 01:34:06 bnikolic Exp $")
+                              r"$Id: oofreduce.py,v 1.16 2005/09/12 01:07:35 bnikolic Exp $")
 
     dirout = oofcol.mkodir( prefdirout ,
                             oofcol.basename(obsfilename))
@@ -284,6 +299,17 @@ def Red(obsfilename,
                        os.path.join(cdirout, "fitinfo.fits") ,
                        overwrite=1)
 
+        # Write out offset aperture and beams if exist
+        if OffsetFname(obsfilename):
+            bnmin1io.FAdd(lmm, OffsetFname(obsfilename), silent=True)
+            bnmin1io.FSave(lmm,
+                           os.path.join(cdirout, "offsetpars.fits"))
+            pyoof.WriteAperture(oc,
+                                "!"+os.path.join(cdirout, "aperture-offset.fits"))
+            pyoof.WriteBeams(oc,
+                         "!"+os.path.join(cdirout, "offsetbeams.fits"))
+            
+        
         # Write out perfect beams:
         oc=MkObsCompare(obsfilename, nzern=1,
                         npix=npix, oversample=oversample,
