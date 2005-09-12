@@ -1,7 +1,7 @@
 # Bojan Nikolic
 # Tests of the OOF system
 #
-# $Id: t8.py,v 1.3 2005/09/12 06:57:00 bnikolic Exp $
+# $Id: t8.py,v 1.4 2005/09/12 20:40:21 bnikolic Exp $
 #
 
 datadir="/home/bnikolic/data/gbtoof/ver001/0911"
@@ -14,11 +14,13 @@ import ooffitconv
 
 
 
+fulllist = [6 , 14 , 29,  37 , 45, 53 ,69, 77, 85, 93, 101 ]
 #clist= [6 , 14 , 29]
 
-clist= [14, 37, 45, 53] 
+#clist= [14, 37, 45, 53]
+clist= [ 85, 93, 101 ] 
 
-scanfiles = [ "s%i-l-db.fits" % sno for sno in clist] 
+scanfiles = [ "s%i-l-db.fits" % sno for sno in fulllist] 
 
 
 def red():
@@ -55,7 +57,8 @@ def printel():
 
 def doplot():
     for sno in clist:
-        oofplot.PlotDir("oofout/s%i-l-db-000/z5" %sno, bbox=[ -1e-3, 1e-3, -1e-3, 1e-3])
+        oofplot.PlotDir("oofout/s%i-l-db-000/z5" %sno, bbox=[ -1e-3, 1e-3, -1e-3, 1e-3],
+                        hardcopy=True)
 
 
 #Plot example
