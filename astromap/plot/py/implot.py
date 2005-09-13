@@ -1,5 +1,5 @@
 # Bojan Nikolic
-# $Id: implot.py,v 1.8 2005/09/12 18:26:50 bnikolic Exp $
+# $Id: implot.py,v 1.9 2005/09/13 19:06:38 bnikolic Exp $
 #
 # Routines for plotting maps
 
@@ -35,7 +35,8 @@ def plotmap(mapp,
             width=0,
             colmap=None,
             valrange=None,
-            contours=None):
+            contours=None,
+            contcolour=None):
 
     "Plots a general map"
 
@@ -79,6 +80,9 @@ def plotmap(mapp,
     
     if title != None :
         pyplot.cpglab("","", title )
+
+    if contcolour != None:
+        pyplot.cpgsci(contcolour)
 
     if contours != None:
         pyplot.Contour( mapp , ConvVect(contours) )
