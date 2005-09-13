@@ -15,7 +15,6 @@ tel1.DishMask(m)
 
 if 0:
     fftf=pyplot.FFTFact( m.nx , m.ny  , pyplot.FFTFact.forward , pyplot.FFTFact.center)
-
     m2 = pyplot.Map(128,128)
     m3 = pyplot.Map(128,128)
     fftf.FFTAmpPh_Power(m, m2 , m3)

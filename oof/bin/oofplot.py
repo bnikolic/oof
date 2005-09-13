@@ -1,5 +1,5 @@
 # Bojan Nikolic
-# $Id: oofplot.py,v 1.7 2005/09/12 02:59:58 bnikolic Exp $
+# $Id: oofplot.py,v 1.8 2005/09/13 19:08:50 bnikolic Exp $
 #
 # Various utilities for plotting OOF data
 
@@ -14,9 +14,15 @@ import pyoof
 import oofreduce
 import oofcol
 
-def PlotDir(dirnamein, bbox=None):
+def PlotDir(dirnamein, bbox=None, hardcopy=False):
 
     "Make all the relevant plots"
+
+    """
+
+    If( hardcopy) make hardcopy friendly plots
+
+    """
 
     obsdsfname=  oofcol.getpar(dirnamein,  "fitinfo.fits", "obsfilename")
     npix= int(oofcol.getpar(dirnamein,  "fitinfo.fits", "npix") )
@@ -51,7 +57,8 @@ def PlotDir(dirnamein, bbox=None):
 
     PlotAperture( os.path.join(dirnamein, "aperture-notilt.fits"),
                   os.path.join(dirnamein, "plots"),
-                  oversample=oversample)
+                  oversample=oversample,
+                  hardcopy=hardcopy)
 
     if os.access( os.path.join(dirnamein, "offsetbeams.fits"),
                   os.F_OK):
@@ -66,7 +73,8 @@ def PlotDir(dirnamein, bbox=None):
         PlotAperture( os.path.join(dirnamein, "aperture-offset.fits"),
                       os.path.join(dirnamein, "plots"),
                       oversample=oversample,
-                      prefix="offsetaperture")
+                      prefix="offsetaperture",
+                      hardcopy=hardcopy)
         
                          
 
@@ -135,7 +143,8 @@ def PlotSimDrizzleBeams(obsfilename, beamfilename,
 def PlotAperture(apfname,
                  dirout,
                  prefix="aperture",
-                 oversample=2.0):
+                 oversample=2.0,
+                 hardcopy=False):
 
     "Plot aperture phase and amplitude"
 
@@ -145,17 +154,29 @@ def PlotAperture(apfname,
     bbox = implot.GetMapBBox(phasemap)
     bbox = [ x/oversample *1.05 for x in bbox]
 
+    if hardcopy:
+        end=".eps/PS"
+        contours=[-2,-1.5,-1,-0.5,0,0.5,1,1.5,2]
+        colmap=None
+    else:
+        end=".png/PNG"
+        contours=[-2,-1.5,-1,-0.5,0,0.5,1,1.5,2]
+        colmap="heat"
+
     implot.plotmap( phasemap,
                     fout=os.path.join(dirout,
-                                      prefix+"-phase.png/PNG"),
+                                      prefix+"-phase"+end),
                     bbox=bbox,
-                    colmap="heat")
+                    colmap=colmap,
+                    contours=contours,
+                    contcolour=0)
 
     implot.plotmap( ampmap,
                     fout=os.path.join(dirout,
-                                      prefix+"-amplitude.png/PNG"),
+                                      prefix+"-amplitude"+end),
                     bbox=bbox,
-                    colmap="heat")
+                    colmap=colmap)
+
     
 
     

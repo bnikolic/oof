@@ -1,7 +1,7 @@
 # Bojan Nikolic
 # Analyse OOF data from 0317
 #
-# $Id: t7.py,v 1.1 2005/09/07 19:13:39 bnikolic Exp $
+# $Id: t7.py,v 1.2 2005/09/13 19:07:01 bnikolic Exp $
 
 
 datadir="/home/bnikolic/data/gbtoof/TPTCSOOF_050317"
@@ -10,6 +10,9 @@ import os
 import oofreduce
 import pyfits
 import oofplot
+import oofcol
+import bnmin1io
+
 
 scannos   = [ 110 , 143, 167, 192, 215, 258 ]
 
@@ -20,7 +23,7 @@ def mkfname(sno):
                          "s%i-l-db.fits" % sno )
 
 
-def reduce():
+def Red():
     for sno in scannos:
 
         oofreduce.Red(mkfname(sno),
@@ -39,4 +42,20 @@ def plot(nz=5):
     for sno in scannos:
         oofplot.PlotDir("oofout/s%i-l-db-000/z%i" % ( sno , nz ),
                         bbox=[ -1e-3, 1e-3, -1e-3, 1e-3])
+
+
+def cmppars( parname , nz=5 ):
+
+    "Figure out how parameters are changing with elevation"
+    
+    for sno in scannos:
+        dirin="oofout/s%i-l-db-000/z%i" % ( sno , nz ) 
+        print ( sno,
+                oofcol.direlev(dirin) ,
+                bnmin1io.FGetPar(os.path.join(dirin,  "fitpars.fits"),
+                                 parname))
+        
+        
+
+        
         

@@ -1,7 +1,7 @@
 # Bojan Nikolic
 # Tests of the OOF system
 #
-# $Id: t5.py,v 1.2 2005/09/12 01:12:31 bnikolic Exp $
+# $Id: t5.py,v 1.3 2005/09/13 19:07:01 bnikolic Exp $
 #
 
 #datadir="/home/bnikolic/data/gbtoof/TPTCSOOF_050411"
@@ -12,30 +12,18 @@ import oofreduce
 import pyfits
 import oofplot
 
-scanfiles = [ "s114-l-db.fits" ,
-              "s141-l-db.fits" ,
-              "s156-l-db.fits" ,
-              "s183-l-db.fits",
-              "s198-l-db.fits" ,
-              "s225-l-db.fits" ,
-              "s240-l-db.fits",
-              "s30-l-db.fits" ,
-              "s348-l-db.fits",
-              "s375-l-db.fits",
-              "s456-l-db.fits",
-              "s471-l-db.fits",
-              "s492-l-db.fits",
-              "s57-l-db.fits",
-              "s72-l-db.fits",
-              "s99-l-db.fits"]
 
 scannos= [  30, 57, 72, 99, 114, 141, 156, 183,
             198, 225, 240, 348, 375, 456, 471 , 492]
 
+clist= [114, 141, 156, 183,
+        198, 225, 240, 348, 375]
+
+scanfiles = [ "s%i-l-db.fits" % sno for sno in clist] 
+
 
 def red():
-    for sno in [114, 141, 156, 183,
-                198, 225, 240, 348, 375]  :
+    for sno in clist:
         oofreduce.Red(os.path.join(datadir, "s%i-l-db.fits" % sno),
                       extrafit=[ "beamgainf" ],
                       extraic =[ ("z2" , -6.2),
