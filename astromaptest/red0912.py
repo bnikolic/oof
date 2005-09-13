@@ -1,7 +1,7 @@
 #
 # Bojan Nikolic
 #
-# $Id: red0912.py,v 1.1 2005/09/13 01:59:13 bnikolic Exp $
+# $Id: red0912.py,v 1.2 2005/09/13 02:13:00 bnikolic Exp $
 
 import os
 
@@ -10,7 +10,8 @@ import oofreduce
 
 datadir="/home/bnikolic/data/gbtoof/ver001/0912"
 
-scanlist= [11]
+# scanlist= [11]
+scanlist= [19]
 
 def red():
     for sno in scanlist:
