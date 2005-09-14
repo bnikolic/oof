@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: interpolatelog.hxx,v 1.2 2005/08/29 21:02:05 bnikolic Exp $
+  $Id: interpolatelog.hxx,v 1.3 2005/09/14 18:12:51 bnikolic Exp $
 
   Routines to interpolate in log-space
 */
@@ -9,18 +9,28 @@
 
 #include "interpolate.hxx"
 
+#include <memory>
+
+
 namespace BNLib {
 
   /*! Does the interpolation in log space. Currently implemented using
    *  InterpolatorGSL.
    */
-  class InterpolateLog : public InterpolatorBase {
-    
-    InterpolatorBase * logspace;
+  class InterpolatorLog : public InterpolatorBase {
+
+    /*! Already pulled in interpolate.hxx so use auto_ptr. Note for
+     *  Dominic: I often don't use auto_ptr in class definitions when
+     *  it would involve pulling in extra header files. They are most
+     *  useful in functions to make sure everything gets deleted if
+     *  the logic of the function is changed and/or exceptions thrown.
+     */
+    std::auto_ptr<InterpolatorBase> logspace;
 
     /*! realspace has the real space data -- use this to do the
-     * integration */
-    InterpolatorBase * realspace;
+     * integration .
+     */
+    std::auto_ptr<InterpolatorBase> realspace;
 
   public:
 
@@ -35,10 +45,10 @@ namespace BNLib {
      *  numerical problems.
      * 
      **/
-    InterpolateLog( double * xvals , double * yvals , size_t size ,
-		    imethod logmethod, imethod realmethod);
+    InterpolatorLog( double * xvals , double * yvals , size_t size ,
+		     imethod logmethod, imethod realmethod);
 
-    virtual ~InterpolateLog();
+    virtual ~InterpolatorLog();
 
     /* ----------- Inherited from InterpolatorBase -------------*/
 

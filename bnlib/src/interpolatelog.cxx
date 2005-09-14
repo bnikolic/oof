@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: interpolatelog.cxx,v 1.2 2005/08/29 21:02:05 bnikolic Exp $
+  $Id: interpolatelog.cxx,v 1.3 2005/09/14 18:12:51 bnikolic Exp $
 */
 
 #include "interpolatelog.hxx"
@@ -13,36 +13,40 @@
 
 namespace BNLib {
 
-  InterpolateLog::InterpolateLog( double * xvals , double * yvals , size_t size ,
-				  imethod logmethod, imethod realmethod):
+  InterpolatorLog::InterpolatorLog( double * xvals , double * yvals , size_t size ,
+				    imethod logmethod, imethod realmethod):
     InterpolatorBase( xvals, yvals, size, logmethod)
   {
-
-    realspace = new InterpolatorGSL( xvals, yvals, size , realmethod);
     
-    std::valarray<double> dcopy ( yvals, size);
+    realspace.reset( new InterpolatorGSL( xvals, yvals, 
+					  size , 
+					  realmethod) );
 
-    std::valarray<double> dlog = std::log(dcopy);
+    std::valarray<double> dcopy_x ( xvals, size);    
+    std::valarray<double> dcopy_y ( yvals, size);
 
-    logspace =  new InterpolatorGSL( xvals, 
-				     &dlog[0], size , 
-				     logmethod);
+    std::valarray<double> dylog = std::log(dcopy_y);
+    std::valarray<double> dxlog = std::log(dcopy_x);
+
+
+    logspace.reset(  new InterpolatorGSL( &dxlog[0], 
+					  &dylog[0], 
+					  size , 
+					  logmethod));
 
 
   }
 
-  InterpolateLog::~InterpolateLog()
+  InterpolatorLog::~InterpolatorLog()
   {
-    delete logspace;
-    delete realspace;
   }
 
-  double InterpolateLog::operator() (double x) 
+  double InterpolatorLog::operator() (double x) 
   {
-    return exp(  (*logspace)(x) );
+    return exp(  (*logspace)( log(x) ) );
   }
 
-  double InterpolateLog::Idx(double xmin, double xmax) 
+  double InterpolatorLog::Idx(double xmin, double xmax) 
   {
     return realspace->Idx(xmin, xmax);
   }
