@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: integrate.hxx,v 1.1 2005/05/14 20:02:03 bnikolic Exp $
+  $Id: integrate.hxx,v 1.2 2005/09/14 15:50:51 bnikolic Exp $
   
   Numerical integration
 
@@ -35,21 +35,32 @@ namespace BNLib {
   };
 
 
-  /// Forward for implementation of AdaptiveInt
+  /* Forward for implementation of AdaptiveInt */
   class iAdaptiveInt;
 
-  /// Performs adaptive integration of a function
+  /*! Performs adaptive integration of a function */
   class AdaptiveInt : public Integrator {
     iAdaptiveInt *ip;
 
   public:
-    AdaptiveInt(  UnaryDD &fn , double epsabs, double epsrel, unsigned maxsteps ) ;
+    
+    /*! Type of integration to employ. If type==normal will use normal
+     *  gaussian integration. If type==singularity will use qags whic
+     *  can integrate singlularities
+     */
+    enum itype { normal , singularity } type;
+  
+  
+    AdaptiveInt(  UnaryDD &fn , 
+		  double epsabs, double epsrel, 
+		  unsigned maxsteps, 
+		  itype type=normal) ;
+
     ~AdaptiveInt();
     
     virtual double Eval(double xmin, double xmax);
 
   };
-
 }
 
 #endif
