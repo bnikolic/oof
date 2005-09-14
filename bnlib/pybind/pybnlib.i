@@ -8,6 +8,7 @@
 #include "../src/interpolate.hxx"
 #include "../src/interpolategsl.hxx"
 #include "../src/interpolatelog.hxx"
+#include "../src/integrateutils.hxx"
 
 %}
 
@@ -22,3 +23,4 @@
 %include "../src/interpolate.hxx"
 %include "../src/interpolategsl.hxx"
 %include "../src/interpolatelog.hxx"
+%include "../src/integrateutils.hxx"
