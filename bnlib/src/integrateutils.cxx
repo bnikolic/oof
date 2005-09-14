@@ -1,7 +1,7 @@
 /*
  * Bojan Nikolic
  *
- * $Id: integrateutils.cxx,v 1.2 2005/09/14 17:40:16 bnikolic Exp $
+ * $Id: integrateutils.cxx,v 1.3 2005/09/14 17:55:42 bnikolic Exp $
  */
 
 #include "integrateutils.hxx"
@@ -37,9 +37,11 @@ namespace BNLib {
 		       double epsrel, unsigned maxsteps )
   {
     
-    std::vector<double> bounds ( (int)(log(xmax/xmin) / log(step) ) +1 );
-    LogRaster( bounds.begin() , bounds.begin() -1 , 
+    std::vector<double> bounds ( (int)( log(xmax/xmin) / log(step) ) +2 );
+
+    LogRaster( bounds.begin() , bounds.end() -1 , 
 	       xmin, xmax);
+
     bounds[bounds.size() -1 ] = xmax;
 
     return SectionInteg( fn  , epsabs, epsrel, maxsteps, bounds);
