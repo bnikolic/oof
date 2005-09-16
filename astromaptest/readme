@@ -1,0 +1,4 @@
+
+#pull in reduced data from vir
+
+rsync -a vir:/users/bnikolic/d/n/prog/astromaptest/oofout0912 ./
