@@ -1,7 +1,7 @@
 #
 # Bojan Nikolic
 #
-# $Id: red0912.py,v 1.3 2005/09/13 19:07:00 bnikolic Exp $
+# $Id: red0912.py,v 1.4 2005/09/16 14:59:10 bnikolic Exp $
 
 import os
 
@@ -10,8 +10,8 @@ import oofreduce
 
 datadir="/home/bnikolic/data/gbtoof/ver001/0912"
 
-# scanlist= [11 , 19, 27]
-scanlist= [ 35, 43, 51, 59 , 67]
+scanlist= [ 11, 19 , 27 , 35, 43, 51, 59, 67, 75,  83,  91 ,  99 , 107 , 115,  123,  131 ,  139,
+            147, 155]
 
 def red():
     for sno in scanlist:
