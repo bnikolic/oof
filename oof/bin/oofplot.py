@@ -1,5 +1,5 @@
 # Bojan Nikolic
-# $Id: oofplot.py,v 1.8 2005/09/13 19:08:50 bnikolic Exp $
+# $Id: oofplot.py,v 1.9 2005/09/17 23:38:26 bnikolic Exp $
 #
 # Various utilities for plotting OOF data
 
@@ -10,6 +10,9 @@ import pyfits
 import implot
 import pyplot
 import pyoof
+import pybnmin1
+import bnmin1io
+
 
 import oofreduce
 import oofcol
@@ -179,7 +182,32 @@ def PlotAperture(apfname,
 
     
 
+def PlotZernFile( fnamein,
+                  fnameout,
+                  npix=256,
+                  telgeo=pyoof.GBTGeo()):
+
+    m = pyplot.Map(npix,npix)
+    pyplot.MkApCS(m, telgeo.DishEffRadius() * 1.05)
+
+    zm = pyoof.RZernModel ( 5 , m , telgeo )
+
+    md=pybnmin1.ModelDesc(zm.downcast())
+
+    bnmin1io.FLoad( md, fnamein, silent=True)
+
+    for zn in ["z1" ,"z2"  ] :
+        md.getbyname(zn).setp(0)
+
+    zm.Calc(m)
+
+    implot.plotmap( m,
+                    fnameout,
+                    colmap="heat",
+                    contours=[-2,-1.5,-1,-0.5,0,0.5,1,1.5,2])
+
     
+                  
     
 
 
