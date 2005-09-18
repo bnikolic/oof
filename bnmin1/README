@@ -1,3 +1,9 @@
+aclocal-1.9
+libtoolize
+automake-1.9 -a
+autoconf
+
+
 Build with something like
 
-./configure --prefix=/home/bnikolic/p/bnmin1 
+./configure --prefix=${HOME}/p/bnmin1 

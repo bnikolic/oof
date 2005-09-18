@@ -14,10 +14,13 @@ libastromapplot_la_SOURCES=   plot.hxx plot.cxx \
 
 libastromapplot_la_CPPFLAGS = -Wall -DCMAPDATADIR="$(datadir)"
 
+#libastromapplot_la_LIBADD = ~/s/lib/libcpgplot.so
+
 _pyplot_la_LDFLAGS = -module @X_LIBS@
 _pyplot_la_LIBADD  = ../src/libastromap.la \
 			libastromapplot.la \
-			-lcpgplot -lpgplot -lX11 -lg2c -lpng
+			-lpgplot -lcpgplot  -lX11 -lg2c -lpng
+
 
 _pyplot_la_SOURCES = pyplot.cxx pyplot.i
 _pyplot_la_CPPFLAGS = @PYTHON_INCLUDES@

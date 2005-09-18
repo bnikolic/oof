@@ -1,14 +1,15 @@
 #
 # Bojan Nikolic
 #
-# $Id: red0912.py,v 1.4 2005/09/16 14:59:10 bnikolic Exp $
+# $Id: red0912.py,v 1.5 2005/09/18 17:05:00 bnikolic Exp $
 
 import os
 
 import oofreduce
+import oofplot
 
 
-datadir="/home/bnikolic/data/gbtoof/ver001/0912"
+datadir="/users/bnikolic/d/astrodata/gbtoof/2005/ver001/0912"
 
 scanlist= [ 11, 19 , 27 , 35, 43, 51, 59, 67, 75,  83,  91 ,  99 , 107 , 115,  123,  131 ,  139,
             147, 155]
@@ -29,6 +30,7 @@ def red():
 def doplot():
     for sno in scanlist:
         oofplot.PlotDir("oofout0912/s%i-l-db-000/z5" %sno,
-                        bbox=[ -1e-3, 1e-3, -1e-3, 1e-3])
+                        bbox=[ -1e-3, 1e-3, -1e-3, 1e-3],
+                        hardcopy=False)
 
 

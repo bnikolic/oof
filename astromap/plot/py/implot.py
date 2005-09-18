@@ -1,5 +1,5 @@
 # Bojan Nikolic
-# $Id: implot.py,v 1.9 2005/09/13 19:06:38 bnikolic Exp $
+# $Id: implot.py,v 1.10 2005/09/18 17:05:00 bnikolic Exp $
 #
 # Routines for plotting maps
 
@@ -38,6 +38,7 @@ def plotmap(mapp,
             contours=None,
             contcolour=None):
 
+
     "Plots a general map"
 
     """
@@ -46,6 +47,7 @@ def plotmap(mapp,
     valrange: if range is defined, restrict the range of values plotted
            to the that specified. Othervise cover the whole range of
            the data from the minimum to maximum value.
+
 
     """
 
