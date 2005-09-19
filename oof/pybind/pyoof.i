@@ -73,3 +73,11 @@
 	return self;
 	}
 }
+
+%extend OOF::RZernModel {
+	
+	Minim::Model *downcast(void) 
+	{
+	return self;
+	}
+}

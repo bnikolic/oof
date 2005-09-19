@@ -1,5 +1,5 @@
 # Bojan Nikolic
-# $Id: bnmin1io.py,v 1.3 2005/09/12 01:18:26 bnikolic Exp $
+# $Id: bnmin1io.py,v 1.4 2005/09/19 15:21:30 bnikolic Exp $
 #
 # Input / output support for the minimiser routines
 
@@ -13,7 +13,7 @@ import pybnmin1
 
 import iofits4
 
-modcvs = r"$Id: bnmin1io.py,v 1.3 2005/09/12 01:18:26 bnikolic Exp $"
+modcvs = r"$Id: bnmin1io.py,v 1.4 2005/09/19 15:21:30 bnikolic Exp $"
 
 def FSave(modeldesc , fnameout ):
 
@@ -173,8 +173,7 @@ def CVSave( m , fnameout, tol=1e-10):
                norm=1, wikiform=0 )
     
         
-    
-    
+
         
         
         

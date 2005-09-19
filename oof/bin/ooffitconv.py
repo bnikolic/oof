@@ -1,7 +1,7 @@
 #
 # Bojan Nikolic
 #
-# $Id: ooffitconv.py,v 1.4 2005/09/12 05:44:32 bnikolic Exp $
+# $Id: ooffitconv.py,v 1.5 2005/09/19 15:17:05 bnikolic Exp $
 #
 # Routines to convert OOF fits between various formats
 
@@ -17,7 +17,7 @@ import iofits4
 import oofreduce
 import oofcol
 
-modcvs = r"$Id: ooffitconv.py,v 1.4 2005/09/12 05:44:32 bnikolic Exp $"
+modcvs = r"$Id: ooffitconv.py,v 1.5 2005/09/19 15:17:05 bnikolic Exp $"
 
 def OOFktoOOFnl(k):
     "Converts between the sequential and n,l numbering used in the OOF software"
@@ -138,8 +138,23 @@ def Scale( d , wavel , inv=0):
     for k in d:
         if zrex.match(k):
             d[k] = d[k] * c
-            
-def MkGBTSfcFile(dirin, fnameout):
+
+
+def MkGBTSfcFile(fnamein, fnameout, wavel ):
+
+    oofdict = LoadFITS(fnamein)
+
+    gbtdict = ConvertOOFtoGBT (oofdict )
+
+    Scale(gbtdict, wavel)
+
+    SaveFITS(gbtdict, fnameout,
+             keys=  {"freq":  3e8/wavel } )
+    
+
+    
+
+def MkGBTSfcDir(dirin, fnameout):
 
     "Make a GBT surface correction file"
 
@@ -153,15 +168,8 @@ def MkGBTSfcFile(dirin, fnameout):
     obsdsfname=  oofcol.getpar(dirin,  "fitinfo.fits", "obsfilename")
     wavel=oofreduce.GetObsWaveL(obsdsfname)
 
+    MkGBTSfcFile( fnamein, fnameout, wavel)
     
-    oofdict = LoadFITS(fnamein)
-
-    gbtdict = ConvertOOFtoGBT (oofdict )
-
-    Scale(gbtdict, wavel)
-
-    SaveFITS(gbtdict, fnameout,
-             keys=  {"freq":  3e8/wavel } )
 
 
     
