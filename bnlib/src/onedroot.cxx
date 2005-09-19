@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: onedroot.cxx,v 1.4 2005/07/17 19:25:58 bnikolic Exp $
+  $Id: onedroot.cxx,v 1.5 2005/09/19 18:47:41 bnikolic Exp $
 
 */
 
@@ -8,8 +8,10 @@
 
 #include <gsl/gsl_roots.h>
 #include <gsl/gsl_errno.h>
+#include <gsl/gsl_math.h>
 
 #include "unaryfn.hxx"
+#include "gsl_utils.hxx"
 
 #include <iostream>
 
@@ -66,15 +68,25 @@ namespace BNLib {
 		  )
   {
 
+    // turn off  gsl exception throwing
+    GSLCheck gslcheck;
+
     GSL1DRoot gslrf( & fn );
 
     gsl_root_fsolver_set (gslrf.s, & gslrf.GSLF, xmin, xmax);
 
     unsigned iter(0);
-    int status;
+    int status(0);
 
     // r is the best guess result
     double r;
+
+    if ( GSL_SIGN( fn(xmin)) == GSL_SIGN( fn(xmax))  )
+      {
+	std::cerr<<"Interval: "<<xmin<< "," <<xmax<<" does not stradle zero";
+	throw(status);
+      }
+
 
     do
          {
@@ -92,7 +104,6 @@ namespace BNLib {
 
     if (status == GSL_SUCCESS ) 
       {
-	std::cerr<<"Found root: "<<r<<std::endl;
 	return r;
       }
     else 
