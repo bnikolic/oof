@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: onedroot.cxx,v 1.5 2005/09/19 18:47:41 bnikolic Exp $
+  $Id: onedroot.cxx,v 1.6 2005/09/19 21:25:55 bnikolic Exp $
 
 */
 
@@ -13,7 +13,6 @@
 #include "unaryfn.hxx"
 #include "gsl_utils.hxx"
 
-#include <iostream>
 
 namespace BNLib {
 
@@ -83,7 +82,6 @@ namespace BNLib {
 
     if ( GSL_SIGN( fn(xmin)) == GSL_SIGN( fn(xmax))  )
       {
-	std::cerr<<"Interval: "<<xmin<< "," <<xmax<<" does not stradle zero";
 	throw(status);
       }
 
