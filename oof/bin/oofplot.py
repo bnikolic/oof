@@ -1,5 +1,5 @@
 # Bojan Nikolic
-# $Id: oofplot.py,v 1.9 2005/09/17 23:38:26 bnikolic Exp $
+# $Id: oofplot.py,v 1.10 2005/09/19 21:36:13 bnikolic Exp $
 #
 # Various utilities for plotting OOF data
 
@@ -172,13 +172,14 @@ def PlotAperture(apfname,
                     bbox=bbox,
                     colmap=colmap,
                     contours=contours,
-                    contcolour=0)
+                    contcolour=0,
+                    title=apfname)
 
     implot.plotmap( ampmap,
                     fout=os.path.join(dirout,
                                       prefix+"-amplitude"+end),
                     bbox=bbox,
-                    colmap=colmap)
+                    colmap=colmap   )
 
     
 
