@@ -1,7 +1,7 @@
 /*
  * Bojan Nikolic
  *
- * $Id: integrateutils.cxx,v 1.3 2005/09/14 17:55:42 bnikolic Exp $
+ * $Id: integrateutils.cxx,v 1.4 2005/09/20 01:31:24 bnikolic Exp $
  */
 
 #include "integrateutils.hxx"
@@ -45,6 +45,37 @@ namespace BNLib {
     bounds[bounds.size() -1 ] = xmax;
 
     return SectionInteg( fn  , epsabs, epsrel, maxsteps, bounds);
+    
+  }
+
+  double ProdInteg ( UnaryDD &fn1 , UnaryDD &fn2 , double xmin, double xmax, 
+		     double epsrel, 
+		     unsigned  maxsteps)
+  {
+
+    class ProdClass : public UnaryDD {
+      
+      UnaryDD & fn1 ;
+      UnaryDD & fn2 ;
+
+    public:
+      
+      ProdClass( UnaryDD & fn1,   UnaryDD & fn2) :
+	fn1(fn1) , fn2(fn2)
+      {
+      }
+      
+      double operator() (double x)
+      {
+	return fn1(x)  * fn2(x);
+      }
+
+    };
+    
+    ProdClass pd (fn1, fn2);
+    AdaptiveInt integrator (  pd,  0, epsrel,  maxsteps );
+
+    return integrator.Eval(xmin, xmax);
     
   }
 

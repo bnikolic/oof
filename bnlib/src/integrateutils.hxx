@@ -3,7 +3,7 @@
  *
  * Some utilities to deal with difficult integrations.
  * 
- * $Id: integrateutils.hxx,v 1.2 2005/09/14 17:40:16 bnikolic Exp $
+ * $Id: integrateutils.hxx,v 1.3 2005/09/20 01:31:24 bnikolic Exp $
  */
 
 #ifndef _BNLIB_INTEGRATEUTILS_HXX__
@@ -33,6 +33,11 @@ namespace BNLib {
   double LogSecInteg ( UnaryDD &fn , double xmin, double xmax, double step , 
 		       double epsabs, 
 		       double epsrel, unsigned maxsteps );
+
+  /*! Evaluate the integral of the product of two functions */
+  double ProdInteg ( UnaryDD &fn1 , UnaryDD &fn2 , double xmin, double xmax, 
+		     double epsrel, unsigned  maxsteps);
+  
   
   
 
