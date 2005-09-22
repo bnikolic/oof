@@ -1,5 +1,5 @@
 # Bojan Nikolic
-# $Id: oofplot.py,v 1.10 2005/09/19 21:36:13 bnikolic Exp $
+# $Id: oofplot.py,v 1.11 2005/09/22 21:32:36 bnikolic Exp $
 #
 # Various utilities for plotting OOF data
 
@@ -17,7 +17,8 @@ import bnmin1io
 import oofreduce
 import oofcol
 
-def PlotDir(dirnamein, bbox=None, hardcopy=False):
+def PlotDir(dirnamein, bbox=None, hardcopy=False, odir="plots",
+            fwhm=None , extent = None, npix= None):
 
     "Make all the relevant plots"
 
@@ -28,13 +29,13 @@ def PlotDir(dirnamein, bbox=None, hardcopy=False):
     """
 
     obsdsfname=  oofcol.getpar(dirnamein,  "fitinfo.fits", "obsfilename")
-    npix= int(oofcol.getpar(dirnamein,  "fitinfo.fits", "npix") )
+    npix= npix or int(oofcol.getpar(dirnamein,  "fitinfo.fits", "npix") )
     oversample= float( oofcol.getpar(dirnamein,  "fitinfo.fits", "oversample") )
-    fwhm=float(oofcol.getpar(dirnamein,  "fitinfo.fits", "ds_fwhm") )
-    extent=float(oofcol.getpar(dirnamein,  "fitinfo.fits", "ds_extent") )
+    fwhm=fwhm or float(oofcol.getpar(dirnamein,  "fitinfo.fits", "ds_fwhm") )
+    extent=extent or float(oofcol.getpar(dirnamein,  "fitinfo.fits", "ds_extent") )
 
     PlotDSFile( obsdsfname,
-                os.path.join(dirnamein, "plots"),
+                os.path.join(dirnamein, odir),
                 prefix="obsbeam",
                 oversample= oversample,
                 npix=npix,
@@ -44,22 +45,26 @@ def PlotDir(dirnamein, bbox=None, hardcopy=False):
 
     PlotSimDrizzleBeams( obsdsfname,
                          os.path.join(dirnamein, "fitbeams.fits"),
-                         os.path.join(dirnamein, "plots"),
+                         os.path.join(dirnamein, odir),
                          prefix="bestfitbeams",
                          bbox=bbox,
                          fwhm=fwhm,
-                         extent=extent)
+                         extent=extent,
+                         npix=npix,
+                         oversample=oversample)
 
     PlotSimDrizzleBeams( obsdsfname,
                          os.path.join(dirnamein, "perfectbeams.fits"),
-                         os.path.join(dirnamein, "plots"),
+                         os.path.join(dirnamein, odir),
                          prefix="perfectbeams",
                          bbox=bbox,
                          fwhm=fwhm,
-                         extent=extent)
+                         extent=extent,
+                         npix=npix,
+                         oversample=oversample)
 
     PlotAperture( os.path.join(dirnamein, "aperture-notilt.fits"),
-                  os.path.join(dirnamein, "plots"),
+                  os.path.join(dirnamein, odir),
                   oversample=oversample,
                   hardcopy=hardcopy)
 
@@ -67,14 +72,16 @@ def PlotDir(dirnamein, bbox=None, hardcopy=False):
                   os.F_OK):
         PlotSimDrizzleBeams( obsdsfname,
                              os.path.join(dirnamein, "offsetbeams.fits"),
-                             os.path.join(dirnamein, "plots"),
+                             os.path.join(dirnamein, odir),
                              prefix="offsetbeams",
                              bbox=bbox,
                              fwhm=fwhm,
-                             extent=extent)
+                             extent=extent,
+                             npix=npix,
+                             oversample=oversample)
 
         PlotAperture( os.path.join(dirnamein, "aperture-offset.fits"),
-                      os.path.join(dirnamein, "plots"),
+                      os.path.join(dirnamein, odir),
                       oversample=oversample,
                       prefix="offsetaperture",
                       hardcopy=hardcopy)
@@ -82,7 +89,23 @@ def PlotDir(dirnamein, bbox=None, hardcopy=False):
                          
 
     
-                
+def MkFFMap (fnamein,
+             npix=128,
+             oversample=2.0):
+
+    "Create the far field map with correct coordinate system"
+
+    
+    wavel= oofreduce.GetObsWaveL(fnamein)
+    ap =oofreduce.MkSampleAp(fnamein)
+    m=pyplot.Map(npix,npix)
+    
+    pyoof.SetFarFCS( ap.getphase() ,
+                     wavel,
+                     m);
+    return m
+
+    
     
 
 def PlotDSFile( fnamein,
@@ -98,15 +121,7 @@ def PlotDSFile( fnamein,
 
     fin=pyfits.open(fnamein)
 
-
-    # Make a map with the correct coordinate system
-    wavel= oofreduce.GetObsWaveL(fnamein)
-    ap =oofreduce.MkSampleAp(fnamein)
-    m=pyplot.Map(npix,npix)
-    
-    pyoof.SetFarFCS( ap.getphase() ,
-                     wavel,
-                     m);
+    m= MkFFMap( fnamein, npix=npix, oversample=oversample)
 
     #Create the output directory if necessary
     if not os.path.exists(dirout):
@@ -128,6 +143,8 @@ def PlotSimDrizzleBeams(obsfilename, beamfilename,
                         dirout,
                         prefix="simdrizbeam",
                         fwhm=1.0, extent=2.0,
+                        oversample=2.0,
+                        npix=128,
                         bbox=None):
 
     "Create a simulated ds from model beams and then drizzle"
@@ -135,7 +152,7 @@ def PlotSimDrizzleBeams(obsfilename, beamfilename,
     ds = oofreduce.SimBeamDS(obsfilename, beamfilename)
 
     for i in range(len(ds)):
-        skym=pyplot.FitsMapLoad(beamfilename, i+1)
+        skym=MkFFMap(obsfilename, npix=npix, oversample=oversample)
         pyplot.SimpleDrizzle( ds[i], skym, fwhm , extent)
         implot.plotmap(skym,
                        fout=os.path.join(dirout,
