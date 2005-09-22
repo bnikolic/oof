@@ -1,5 +1,5 @@
 # Bojan Nikolic
-# $Id: plotmodel.py,v 1.1 2005/09/22 20:40:57 bnikolic Exp $
+# $Id: plotmodel.py,v 1.2 2005/09/22 21:16:09 bnikolic Exp $
 #
 # Make a reasonable plot of the hook model
 
@@ -30,5 +30,5 @@ def plot(pname, width=8):
 
 def doplot():
 
-    for i in range(3,20):
+    for i in range(3,21):
         plot("z%i" %i )
