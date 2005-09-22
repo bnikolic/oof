@@ -1,11 +1,12 @@
 # Bojan Nikolic
-# $Id: modelwint01.py,v 1.2 2005/09/19 15:16:52 bnikolic Exp $
+# $Id: modelwint01.py,v 1.3 2005/09/22 21:05:04 bnikolic Exp $
 #
 # Make the surface model for winter
 
 import os
 from itertools import izip
 import math
+import pickle
 
 import pyfits
 from  matplotlib import pylab
@@ -48,6 +49,18 @@ obsscans= [ os.path.join( dd11, "s%i-l-db.fits" %sno ) for sno in sl0911 ] +[ os
 # not the non-even sampling
 
 # Scan #0912//11 has pretty low signal to noise - exclude
+
+def printelevs():
+
+    res =  []
+    for scandir , obsds in izip(allscans , obsscans) :
+        el=pyfits.open(obsds)[0].header["meanel"]
+        res.append(  ( el, scandir ))
+    res.sort()
+
+    for x,y in res:
+        print x,y
+    
 
 def getpardata(pname):
 
@@ -102,6 +115,9 @@ def MkModel():
         oofplot.PlotZernFile( "models/Wint2005V1/surfacepars-el%i.fits" % el ,
                               "models/Wint2005V1/surfacepars-el%i.png/PNG" % el )
 
+        oofplot.PlotZernFile( "models/Wint2005V1/surfacepars-el%i.fits" % el ,
+                              "models/Wint2005V1/surfacepars-el%i.eps/CPS" % el )
+
         wavel=0.0069569925090132347
 
         ooffitconv.MkGBTSfcFile( "models/Wint2005V1/surfacepars-el%i.fits" % el ,
@@ -129,11 +145,32 @@ def fitfn( pname ):
     pylab.plot( elevs, HookModel( elevs, res[0][0] , res[0][1],res[0][2] ) )
     pylab.savefig("model/%s.png" % pname)
 
+    pickle.dump( [ elevs,
+                   vals,
+                   HookModel( elevs, res[0][0] , res[0][1],res[0][2] )],
+                 open( "model/%s.pickle" % pname , "w") )
+
     return res[0]
 
     
     
+def PlotSfcs():
 
+    def plot ( sdate, sno ):
+
+        zfin = "oofout%s/s%i-l-db-000/z5/offsetpars.fits" % ( sdate, sno )
+        oofplot.PlotZernFile( zfin,
+                              "plots/sfc%s-%i.eps/CPS" % (sdate, sno) )
+        oofplot.PlotZernFile( zfin,
+                              "plots/sfc%s-%i.png/PNG" % (sdate, sno) )
+
+        
+    plot( "0411" , 198)
+    plot( "0411" , 141)
+    plot( "0911" , 101)
+
+    plot( "0912" , 51)
+    plot( "0912" , 75)
     
     
 
