@@ -1,6 +1,6 @@
 /* 
   Bojan Nikolic
-  $Id: interpolate.cxx,v 1.2 2005/05/05 12:52:08 bnikolic Exp $
+  $Id: interpolate.cxx,v 1.3 2005/09/23 21:26:20 bnikolic Exp $
 
 */
 
@@ -8,7 +8,9 @@
 
 namespace BNLib {
   
-  InterpolatorBase::InterpolatorBase( double * xvals , double * yvals , size_t size ,
+  InterpolatorBase::InterpolatorBase( const double * xvals , 
+				      const double * yvals , 
+				      size_t size ,
 				      imethod method ):
     method(method)
     

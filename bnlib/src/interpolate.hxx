@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: interpolate.hxx,v 1.4 2005/05/14 20:02:03 bnikolic Exp $
+  $Id: interpolate.hxx,v 1.5 2005/09/23 21:26:20 bnikolic Exp $
 
   Routines for interpolation
 */
@@ -23,7 +23,9 @@ namespace BNLib {
     enum imethod { linear, poly, cspline, akima }  method;
 
     // --- Constructors ----
-    InterpolatorBase( double * xvals , double * yvals , size_t size ,
+    InterpolatorBase( const double * xvals , 
+		      const double * yvals , 
+		      size_t size ,
 		      imethod method );
     
     virtual ~InterpolatorBase() ;

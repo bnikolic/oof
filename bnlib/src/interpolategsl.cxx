@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: interpolategsl.cxx,v 1.1 2005/05/04 21:07:55 bnikolic Exp $
+  $Id: interpolategsl.cxx,v 1.2 2005/09/23 21:26:20 bnikolic Exp $
 
 */
 
@@ -31,8 +31,8 @@ namespace BNLib {
   }
 
 
-  InterpolatorGSL::InterpolatorGSL( double * xvals , 
-				    double * yvals , 
+  InterpolatorGSL::InterpolatorGSL( const double * xvals , 
+				    const double * yvals , 
 				    size_t size ,
 				    imethod method ):
     InterpolatorBase( xvals, yvals, size, method)
