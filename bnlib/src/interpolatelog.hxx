@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: interpolatelog.hxx,v 1.3 2005/09/14 18:12:51 bnikolic Exp $
+  $Id: interpolatelog.hxx,v 1.4 2005/09/23 21:29:26 bnikolic Exp $
 
   Routines to interpolate in log-space
 */
@@ -45,7 +45,9 @@ namespace BNLib {
      *  numerical problems.
      * 
      **/
-    InterpolatorLog( double * xvals , double * yvals , size_t size ,
+    InterpolatorLog( const double * xvals , 
+		     const double * yvals , 
+		     size_t size ,
 		     imethod logmethod, imethod realmethod);
 
     virtual ~InterpolatorLog();

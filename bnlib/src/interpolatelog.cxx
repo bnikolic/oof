@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: interpolatelog.cxx,v 1.3 2005/09/14 18:12:51 bnikolic Exp $
+  $Id: interpolatelog.cxx,v 1.4 2005/09/23 21:29:26 bnikolic Exp $
 */
 
 #include "interpolatelog.hxx"
@@ -13,7 +13,9 @@
 
 namespace BNLib {
 
-  InterpolatorLog::InterpolatorLog( double * xvals , double * yvals , size_t size ,
+  InterpolatorLog::InterpolatorLog( const double * xvals , 
+				    const double * yvals , 
+				    size_t size ,
 				    imethod logmethod, imethod realmethod):
     InterpolatorBase( xvals, yvals, size, logmethod)
   {
