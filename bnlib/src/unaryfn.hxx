@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: unaryfn.hxx,v 1.1 2005/05/04 21:07:55 bnikolic Exp $
+  $Id: unaryfn.hxx,v 1.2 2005/10/05 03:05:41 bnikolic Exp $
 
   Declares a simple unary function class 
 
@@ -16,7 +16,10 @@ namespace BNLib {
 
   public:
 
+    virtual ~UnaryDD() {} ;
+
     virtual double operator() (double x) =0 ;
+
 
   };
 
