@@ -19,7 +19,8 @@ libbnlib_la_SOURCES= interpolate.hxx interpolate.cxx \
 			gsl_utils.cxx gsl_utils.hxx \
 			interpolatelog.cxx interpolatelog.hxx \
 			tophat.cxx tophat.hxx \
-			integrateutils.cxx integrateutils.hxx
+			integrateutils.cxx integrateutils.hxx\
+			unaryfnutils.cxx unaryfnutils.hxx
 
 libbnlib_la_CFLAGS = -Wall
 libbnlib_la_CPPFLAGS = -Wall
@@ -45,4 +46,5 @@ include_HEADERS = 	unaryfn.hxx \
 			gsl_utils.hxx \
 			interpolatelog.hxx\
 			tophat.hxx\
-			integrateutils.hxx
+			integrateutils.hxx\
+			unaryfnutils.hxx
