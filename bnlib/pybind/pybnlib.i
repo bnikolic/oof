@@ -11,6 +11,7 @@
 #include "../src/interpolatelog.hxx"
 #include "../src/integrateutils.hxx"
 #include "../src/phyconstants.hxx"
+#include "../src/integrate.hxx"
 
 %}
 
@@ -26,6 +27,7 @@
 %include "../src/interpolate.hxx"
 %include "../src/interpolategsl.hxx"
 %include "../src/interpolatelog.hxx"
+%include "../src/integrate.hxx"
 %include "../src/integrateutils.hxx"
 %include "../src/phyconstants.hxx"
 

@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: integrate.cxx,v 1.3 2005/09/14 15:50:50 bnikolic Exp $
+  $Id: integrate.cxx,v 1.4 2005/10/17 13:49:57 bnikolic Exp $
 
 */
 #include "integrate.hxx"
@@ -9,6 +9,8 @@
 
 #include <gsl/gsl_integration.h>
 #include <gsl/gsl_errno.h>
+#include <iostream>
+
 
 
 
@@ -131,6 +133,7 @@ namespace BNLib
       
       if ( status ) // an error was reported
 	{  
+	  std::cerr<<"GSL integration failed";
 	  throw (status);
 	}
       
