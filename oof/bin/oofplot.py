@@ -1,5 +1,5 @@
 # Bojan Nikolic
-# $Id: oofplot.py,v 1.12 2005/10/20 21:51:49 bnikolic Exp $
+# $Id: oofplot.py,v 1.13 2005/10/20 21:55:57 bnikolic Exp $
 #
 # Various utilities for plotting OOF data
 
@@ -244,6 +244,31 @@ def PlotZernFile( fnamein,
                     fnameout,
                     colmap="heat",
                     contours=[-2,-1.5,-1,-0.5,0,0.5,1,1.5,2])
+
+    
+def PlotIllumFile( fnamein,
+                   fnameout,
+                   npix=256,
+                   telgeo=pyoof.GBTGeo()):
+
+    "Plot illumination from a paremeter file"
+
+    m = pyplot.Map(npix,npix)
+    pyplot.MkApCS(m, telgeo.DishEffRadius() * 1.05)
+
+    im = pyoof.GaussAmpMod ( telgeo , m  )
+
+    md=pybnmin1.ModelDesc(im.downcast())
+
+    bnmin1io.FLoad( md, fnamein, silent=True)
+
+    im.Calc(m)
+
+    implot.plotmap( m,
+                    fnameout,
+                    colmap="heat"                  )
+
+    
 
     
                   
