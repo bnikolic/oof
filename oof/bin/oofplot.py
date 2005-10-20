@@ -1,5 +1,5 @@
 # Bojan Nikolic
-# $Id: oofplot.py,v 1.11 2005/09/22 21:32:36 bnikolic Exp $
+# $Id: oofplot.py,v 1.12 2005/10/20 21:51:49 bnikolic Exp $
 #
 # Various utilities for plotting OOF data
 
@@ -18,7 +18,8 @@ import oofreduce
 import oofcol
 
 def PlotDir(dirnamein, bbox=None, hardcopy=False, odir="plots",
-            fwhm=None , extent = None, npix= None):
+            fwhm=None , extent = None, npix= None,
+            ncont=None):
 
     "Make all the relevant plots"
 
@@ -41,7 +42,9 @@ def PlotDir(dirnamein, bbox=None, hardcopy=False, odir="plots",
                 npix=npix,
                 fwhm=fwhm,
                 extent=extent,
-                bbox=bbox)
+                bbox=bbox,
+                ncont=ncont,
+                hardcopy=hardcopy)
 
     PlotSimDrizzleBeams( obsdsfname,
                          os.path.join(dirnamein, "fitbeams.fits"),
@@ -51,7 +54,9 @@ def PlotDir(dirnamein, bbox=None, hardcopy=False, odir="plots",
                          fwhm=fwhm,
                          extent=extent,
                          npix=npix,
-                         oversample=oversample)
+                         oversample=oversample,
+                         ncont=ncont,
+                         hardcopy=hardcopy)
 
     PlotSimDrizzleBeams( obsdsfname,
                          os.path.join(dirnamein, "perfectbeams.fits"),
@@ -61,7 +66,9 @@ def PlotDir(dirnamein, bbox=None, hardcopy=False, odir="plots",
                          fwhm=fwhm,
                          extent=extent,
                          npix=npix,
-                         oversample=oversample)
+                         oversample=oversample,
+                         ncont=ncont,
+                         hardcopy=hardcopy)
 
     PlotAperture( os.path.join(dirnamein, "aperture-notilt.fits"),
                   os.path.join(dirnamein, odir),
@@ -78,7 +85,9 @@ def PlotDir(dirnamein, bbox=None, hardcopy=False, odir="plots",
                              fwhm=fwhm,
                              extent=extent,
                              npix=npix,
-                             oversample=oversample)
+                             oversample=oversample,
+                             ncont=ncont,
+                             hardcopy=hardcopy)
 
         PlotAperture( os.path.join(dirnamein, "aperture-offset.fits"),
                       os.path.join(dirnamein, odir),
@@ -115,7 +124,9 @@ def PlotDSFile( fnamein,
                 oversample=2.0,
                 fwhm=2.0,
                 extent=4.0,
-                bbox=None
+                bbox=None,
+                ncont=None,
+                hardcopy=False
                ):
     "Plot beams contained in a dataseries file"
 
@@ -125,18 +136,21 @@ def PlotDSFile( fnamein,
 
     #Create the output directory if necessary
     if not os.path.exists(dirout):
-        os.makedirs(dirout)    
+        os.makedirs(dirout)
+
+    if hardcopy : end=".eps/CPS"
+    else:         end=".png/PNG"        
 
     for i in range(1,len(fin)):
         ds1=pyplot.LoadFITSDS(fnamein,i+1)
 
         pyplot.SimpleDrizzle( ds1, m, fwhm , extent)    
-
         implot.plotmap( m,
                         fout=os.path.join(dirout,
-                                          prefix + "-%i.png/PNG" % i ),
+                                          prefix + "-%i%s" % (i, end) ),
                         colmap="heat",
-                        bbox=bbox)
+                        bbox=bbox,
+                        contours=ncont and implot.MkChopContours(m, nlevels=ncont))
                                           
 
 def PlotSimDrizzleBeams(obsfilename, beamfilename,
@@ -145,20 +159,27 @@ def PlotSimDrizzleBeams(obsfilename, beamfilename,
                         fwhm=1.0, extent=2.0,
                         oversample=2.0,
                         npix=128,
-                        bbox=None):
+                        bbox=None,
+                        ncont=None,
+                        hardcopy=False):
 
     "Create a simulated ds from model beams and then drizzle"
 
     ds = oofreduce.SimBeamDS(obsfilename, beamfilename)
+
+    if hardcopy : end=".eps/CPS"
+    else:         end=".png/PNG"
 
     for i in range(len(ds)):
         skym=MkFFMap(obsfilename, npix=npix, oversample=oversample)
         pyplot.SimpleDrizzle( ds[i], skym, fwhm , extent)
         implot.plotmap(skym,
                        fout=os.path.join(dirout,
-                                         prefix + "-%i.png/PNG" % i ),
+                                         prefix + "-%i%s" % (i, end) ),
                        colmap="heat",
-                       bbox=bbox)
+                       bbox=bbox,
+                       contours=ncont and implot.MkChopContours(skym, nlevels=ncont)
+                       )
 
 def PlotAperture(apfname,
                  dirout,
