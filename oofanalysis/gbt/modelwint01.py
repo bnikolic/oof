@@ -1,5 +1,5 @@
 # Bojan Nikolic
-# $Id: modelwint01.py,v 1.3 2005/09/22 21:05:04 bnikolic Exp $
+# $Id: modelwint01.py,v 1.4 2005/10/24 17:57:53 bnikolic Exp $
 #
 # Make the surface model for winter
 
@@ -164,15 +164,32 @@ def PlotSfcs():
         oofplot.PlotZernFile( zfin,
                               "plots/sfc%s-%i.png/PNG" % (sdate, sno) )
 
+        oofplot.PlotIllumFile ( zfin,
+                                "plots/sfc%s-%i-amp.eps/CPS" % (sdate, sno) )
         
-    plot( "0411" , 198)
-    plot( "0411" , 141)
-    plot( "0911" , 101)
 
-    plot( "0912" , 51)
-    plot( "0912" , 75)
+
+    if 0:
+        plot( "0411" , 198)
+        plot( "0411" , 141)
+        plot( "0911" , 101)
+
+        plot( "0912" , 51)
+        plot( "0912" , 75)
+
+        plot( "0911" , 6)
+        plot( "0912" , 131)    
+
+    if 1:
+        plot( "0411" , 114)        
     
-    
 
+def PlotObs():
 
+    oofplot.PlotDir( "oofout0411/s114-l-db-000/z5",
+                     bbox=[-0.6e-3, 0.4e-3, -0.5e-3, 0.5e-3],
+                     npix=512,
+                     fwhm=4, extent=10,
+                     ncont=5,
+                     hardcopy=True)
 
