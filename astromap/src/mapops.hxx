@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: mapops.hxx,v 1.1 2005/06/21 00:44:45 bnikolic Exp $
+  $Id: mapops.hxx,v 1.2 2005/10/24 22:04:47 bnikolic Exp $
 
   Some operations on maps
 */
@@ -23,6 +23,16 @@ namespace AstroMap {
    *  
    */
   void NormDist(Map &m, double sigma);
+
+  /*!
+   * Calculate the RMS value of the map
+   */
+  double MapRMS( Map &m);
+
+  /*!
+   * Calculate the weighted RMS value of the map
+   */
+  double MapRMS( Map &m, Map & weight);
 
 }
 
