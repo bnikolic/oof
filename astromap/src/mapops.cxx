@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: mapops.cxx,v 1.2 2005/10/24 22:04:47 bnikolic Exp $
+  $Id: mapops.cxx,v 1.3 2005/10/24 22:37:37 bnikolic Exp $
 
 
 */
@@ -13,6 +13,8 @@
 #include "astromap.hxx"
 
 #include <bnrandom.hxx>
+
+#include <iostream>
 
 
 namespace AstroMap {
@@ -31,14 +33,22 @@ namespace AstroMap {
 
   double MapRMS( Map &m)
   {
-    double var = ( (m*m).sum() - pow((m.sum()),1) );
+    double var = ( (m*m).sum()/ m.size()  - pow( (m.sum()/ m.size() ),2) );
+
     return sqrt(var);
   }
 
   double MapRMS( Map &m, Map & weight)
   {
-    std::valarray<double> wmap ( m * weight / weight.sum() );
-    double var = ( (wmap*wmap).sum() - pow((wmap.sum()),1) );
+    std::valarray<double> goodmap ( m[weight>0.0] );
+    std::valarray<double> goodweight ( weight[weight>0.0] );
+
+    double mean = (goodmap * goodweight).sum() / goodweight.sum() ;
+
+    goodmap *= goodmap;
+
+    double var = (goodmap  * goodweight).sum() / goodweight.sum()  - pow(mean,2);
+
     return sqrt(var);
 
   }
