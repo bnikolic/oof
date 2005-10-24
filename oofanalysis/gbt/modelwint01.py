@@ -1,5 +1,5 @@
 # Bojan Nikolic
-# $Id: modelwint01.py,v 1.4 2005/10/24 17:57:53 bnikolic Exp $
+# $Id: modelwint01.py,v 1.5 2005/10/24 22:37:52 bnikolic Exp $
 #
 # Make the surface model for winter
 
@@ -18,6 +18,9 @@ import oofcol
 import oofplot
 import ooffitconv
 import bnmin1io
+
+import pyxplot
+import pyplot
 
 
 
@@ -60,6 +63,61 @@ def printelevs():
 
     for x,y in res:
         print x,y
+
+def OffsetEfficiency(dirin):
+
+    "calculate efficiency loss from offset beam and perfect beams"
+
+    perfbeam  = pyfits.open( os.path.join(dirin, "perfectbeams.fits"))[0].data.max()
+    offbeam   = pyfits.open( os.path.join(dirin, "offsetbeams.fits"))[0].data.max()
+
+    return offbeam/ perfbeam
+    
+def PrintEfficiencies():
+
+    "Print predicted loss of efficiency due to total deformations"
+
+    res =  []
+    for scandir , obsds in izip(allscans , obsscans) :
+        el=pyfits.open(obsds)[0].header["meanel"]
+        
+        res.append(  ( el,
+                       OffsetEfficiency( scandir) )
+                     )
+    res.sort()
+
+    for x,y in res:
+        print x,y
+
+    pyxplot.scatter( res,
+                     "plots/offseteff.eps",
+                     width=pyxplot.THESIS,
+                     xax=pyxplot.axis(r"$\theta\,$(deg)", xmin=0 , xmax=90),
+                     yax=pyxplot.axis(r"$\epsilon_{\rm LSS}$"),
+                     symbsize=0.05)
+
+def ElHist():
+
+    "Compute histogram of measured elevations"
+
+    res =  []
+    for scandir , obsds in izip(allscans , obsscans) :
+        el=pyfits.open(obsds)[0].header["meanel"]
+        
+        res.append(el)
+
+    res.sort()
+
+    pyxplot.histogram( [ ( res , "" ) ],
+                       "plots/el-hist.eps",
+                       width=pyxplot.THESIS ,
+                       key=None ,
+                       nbins=9,
+                       xax=pyxplot.axis(r"$\theta\,$(deg)", xmin=0 , xmax=90)
+                       )
+                  
+                  
+    
     
 
 def getpardata(pname):
@@ -153,6 +211,32 @@ def fitfn( pname ):
     return res[0]
 
     
+def PlotClosure():
+
+    "Illustrate the closure of the technique"
+
+    measuredir= "oofout0911/s6-l-db-000/z5"
+    corrdir   = "oofout0911/s29-l-db-000/z5"
+
+    phase1 = oofplot.PlotZernFile( os.path.join(measuredir ,
+                                       "fitpars.fits"),
+                                   "plots/measuresfc.eps/CPS")
+    i1    = oofplot.PlotIllumFile( os.path.join(measuredir ,
+                                                "fitpars.fits"),
+                                   "plots/measureamo.eps.eps/CPS")
+
+    print "Unweighted RMS  " , pyplot.MapRMS(phase1)
+    print "RMS measured : " , pyplot.MapRMS(phase1, i1)
+
+    phase2= oofplot.PlotZernFile( os.path.join(corrdir ,
+                                              "fitpars.fits"),
+                                 "plots/corrmeasuresfc.eps/CPS")
+    i2    = oofplot.PlotIllumFile( os.path.join(corrdir ,
+                                                "fitpars.fits"),
+                                   "plots/corrmeasureamp.eps/CPS")
+    print "RMS corrected : " , pyplot.MapRMS(phase2, i2)
+    
+    
     
 def PlotSfcs():
 
@@ -164,8 +248,8 @@ def PlotSfcs():
         oofplot.PlotZernFile( zfin,
                               "plots/sfc%s-%i.png/PNG" % (sdate, sno) )
 
-        oofplot.PlotIllumFile ( zfin,
-                                "plots/sfc%s-%i-amp.eps/CPS" % (sdate, sno) )
+        #oofplot.PlotIllumFile ( zfin,
+        #"plots/sfc%s-%i-amp.eps/CPS" % (sdate, sno) )
         
 
 
@@ -180,9 +264,28 @@ def PlotSfcs():
         plot( "0911" , 6)
         plot( "0912" , 131)    
 
-    if 1:
-        plot( "0411" , 114)        
-    
+    if 0:
+        plot( "0411" , 114)
+
+    if 0:
+        #illustrate each decade of elevation:
+        plot( "0912" , 27)
+        plot( "0912" , 91)
+
+        plot( "0912" , 75)
+        plot( "0912" , 51)
+
+        plot( "0911" , 93)
+        plot( "0411" , 156)
+
+        plot( "0911" , 69)
+        plot( "0912" , 115)
+
+        plot( "0911" , 6)
+        plot( "0912" , 131)
+
+
+
 
 def PlotObs():
 
