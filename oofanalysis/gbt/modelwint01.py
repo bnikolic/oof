@@ -1,5 +1,5 @@
 # Bojan Nikolic
-# $Id: modelwint01.py,v 1.8 2005/11/22 15:30:19 bnikolic Exp $
+# $Id: modelwint01.py,v 1.9 2005/11/22 20:53:37 bnikolic Exp $
 #
 # Make the surface model for winter
 
@@ -341,3 +341,9 @@ def PolyPrint():
     for i in range(3,21):
         n,l=ooffitconv.OOFktoOOFnl(i)
         print "($n=%i$, $l=%i$)," % ( n ,l)
+
+
+def Ruze ( rms , freq  ):
+
+    return math.exp(-1.0 * (4* math.pi * rms / (3e8/freq))**2)
+
