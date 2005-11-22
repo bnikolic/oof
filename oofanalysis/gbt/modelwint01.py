@@ -1,5 +1,5 @@
 # Bojan Nikolic
-# $Id: modelwint01.py,v 1.5 2005/10/24 22:37:52 bnikolic Exp $
+# $Id: modelwint01.py,v 1.6 2005/11/22 13:25:44 bnikolic Exp $
 #
 # Make the surface model for winter
 
@@ -115,8 +115,8 @@ def ElHist():
                        nbins=9,
                        xax=pyxplot.axis(r"$\theta\,$(deg)", xmin=0 , xmax=90)
                        )
-                  
-                  
+
+
     
     
 
