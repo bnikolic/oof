@@ -1,5 +1,5 @@
 # Bojan Nikolic
-# $Id: modelwint01.py,v 1.6 2005/11/22 13:25:44 bnikolic Exp $
+# $Id: modelwint01.py,v 1.7 2005/11/22 15:16:38 bnikolic Exp $
 #
 # Make the surface model for winter
 
@@ -151,36 +151,47 @@ def MkHFn(a , b ,c ):
 
     return lambda e : HookModel( e, a, b, c)
 
-def MkModel():
+def MkModel(outputmod=True,
+            printmod =True):
 
     resd = {}
     for i in range(3,21):
         pname="z%i" % i 
         res= fitfn(pname)
         resd[pname] = MkHFn(  res[0] , res[1],res[2] )
+        if printmod:
+            n,l=ooffitconv.OOFktoOOFnl(i)
+            print r"%i & %i & %2.1f & %2.1f & %2.1f & %3.2f & %3.2f \\" % (n , l ,
+                                                           res[0] ,
+                                                           res[1],
+                                                           res[2],
+                                                           ParRMS(pname),
+                                                           ParRMS(pname, resd[pname]))
+
 
     fsample = os.path.join(allscans[0], "offsetpars.fits" )
 
     f=pyfits.open(fsample)
 
-    for el in [ 10 + i*5 for i in range(14)]:
-        for row in f[1].data:
-            key=row.field("parname")
-            if  key in resd:
-                row.setfield("parvalue", resd[key](el))
-        iofits4.Write(f, "models/Wint2005V1/surfacepars-el%i.fits" % el ,
-                      overwrite=True)
-        oofplot.PlotZernFile( "models/Wint2005V1/surfacepars-el%i.fits" % el ,
-                              "models/Wint2005V1/surfacepars-el%i.png/PNG" % el )
+    if outputmod:
+        for el in [ 10 + i*5 for i in range(14)]:
+            for row in f[1].data:
+                key=row.field("parname")
+                if  key in resd:
+                    row.setfield("parvalue", resd[key](el))
+            iofits4.Write(f, "models/Wint2005V1/surfacepars-el%i.fits" % el ,
+                          overwrite=True)
+            oofplot.PlotZernFile( "models/Wint2005V1/surfacepars-el%i.fits" % el ,
+                                  "models/Wint2005V1/surfacepars-el%i.png/PNG" % el )
 
-        oofplot.PlotZernFile( "models/Wint2005V1/surfacepars-el%i.fits" % el ,
-                              "models/Wint2005V1/surfacepars-el%i.eps/CPS" % el )
+            oofplot.PlotZernFile( "models/Wint2005V1/surfacepars-el%i.fits" % el ,
+                                  "models/Wint2005V1/surfacepars-el%i.eps/CPS" % el )
 
-        wavel=0.0069569925090132347
+            wavel=0.0069569925090132347
 
-        ooffitconv.MkGBTSfcFile( "models/Wint2005V1/surfacepars-el%i.fits" % el ,
-                                 "models/Wint2005V1/gbt/surfacepars-el%i.fits" % el ,
-                                 wavel)
+            ooffitconv.MkGBTSfcFile( "models/Wint2005V1/surfacepars-el%i.fits" % el ,
+                                     "models/Wint2005V1/gbt/surfacepars-el%i.fits" % el ,
+                                     wavel)
             
         
         
@@ -196,7 +207,7 @@ def fitfn( pname ):
 
     res=leastsq( HookModelFit ,
                  (0.0 , 0.0 , 0.0 ) ,     (elevs, vals))
-    print res
+    #print res
 
     pylab.clf()
     pylab.plot( elevs, vals)
@@ -209,6 +220,23 @@ def fitfn( pname ):
                  open( "model/%s.pickle" % pname , "w") )
 
     return res[0]
+
+def ParRMS( pname , model=None ):
+
+    pdata=getpardata(pname)
+    pdata.sort()
+
+    elevs= numarray.array( [ x[0] for x in pdata ] )
+    vals = numarray.array( [ x[1] for x in pdata ] )
+
+    if model :
+        mvals = numarray.array( [ model(x) for x in elevs] )
+    else:
+        mvals = numarray.zeros( len (elevs) )
+
+    return (((vals-mvals)**2).mean())**0.5
+
+    
 
     
 def PlotClosure():
@@ -296,3 +324,14 @@ def PlotObs():
                      ncont=5,
                      hardcopy=True)
 
+
+def Report():
+
+    "Print a report on the observations and models"
+
+    scanlist=  [("050911", x ) for x in sl0911 ]+ [("050912", x ) for x in sl0912 ]+     [("050411", x ) for x in sl0411 ]
+
+    for sname, scandir, obsds in izip ( scanlist, allscans, obsscans):
+        el=pyfits.open(obsds)[0].header["meanel"]
+        print r"%s & %i & %i \\" % ( sname[0] , sname[1],el)
+                                     
