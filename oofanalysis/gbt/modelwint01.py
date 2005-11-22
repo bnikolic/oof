@@ -1,5 +1,5 @@
 # Bojan Nikolic
-# $Id: modelwint01.py,v 1.7 2005/11/22 15:16:38 bnikolic Exp $
+# $Id: modelwint01.py,v 1.8 2005/11/22 15:30:19 bnikolic Exp $
 #
 # Make the surface model for winter
 
@@ -335,3 +335,9 @@ def Report():
         el=pyfits.open(obsds)[0].header["meanel"]
         print r"%s & %i & %i \\" % ( sname[0] , sname[1],el)
                                      
+
+def PolyPrint():
+
+    for i in range(3,21):
+        n,l=ooffitconv.OOFktoOOFnl(i)
+        print "($n=%i$, $l=%i$)," % ( n ,l)
