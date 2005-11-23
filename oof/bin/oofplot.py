@@ -1,5 +1,5 @@
 # Bojan Nikolic
-# $Id: oofplot.py,v 1.13 2005/10/20 21:55:57 bnikolic Exp $
+# $Id: oofplot.py,v 1.14 2005/11/23 14:02:44 bnikolic Exp $
 #
 # Various utilities for plotting OOF data
 
@@ -244,6 +244,7 @@ def PlotZernFile( fnamein,
                     fnameout,
                     colmap="heat",
                     contours=[-2,-1.5,-1,-0.5,0,0.5,1,1.5,2])
+    return m
 
     
 def PlotIllumFile( fnamein,
@@ -267,6 +268,8 @@ def PlotIllumFile( fnamein,
     implot.plotmap( m,
                     fnameout,
                     colmap="heat"                  )
+
+    return m
 
     
 
