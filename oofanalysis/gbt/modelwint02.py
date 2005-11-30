@@ -1,5 +1,5 @@
 # Bojan Nikolic
-# $Id: modelwint02.py,v 1.1 2005/11/30 18:49:47 bnikolic Exp $
+# $Id: modelwint02.py,v 1.2 2005/11/30 18:59:04 bnikolic Exp $
 #
 # Make the surface model for winter
 
@@ -28,13 +28,14 @@ import pyplot
 # 0911/s37 0911/s45 0911/s77 oofout0911/s29 oofout0912/s155
 
 
-sl0911 = [6 , 14 , 29,  37 , 45, 53 ,69, 77, 85, 93, 101 ]
+#sl0911 = [6 , 14 , 29,  37 , 45, 53 ,69, 77, 85, 93, 101 ]
 
-#sl0912 = [ 11, 19 , 27 , 35, 43, 51, 59, 67, 75,  83,  91 ,  99 , 107 , 115,  123,  131 ,  139,
-#           147, 155]
+sl0911 = [6 , 14 ,53 ,69, 85, 93, 101 ]
+
+
 
 sl0912 = [ 19 , 27 , 35,  51, 59, 67, 75,  83,  91 ,  99 , 107 , 115,  123,  131 ,  139,
-           147, 155]
+           147]
 
 sl0411 = [114, 141, 156, 183, 198, 225, 240, 348, 375]
 
@@ -183,18 +184,18 @@ def MkModel(outputmod=True,
                 key=row.field("parname")
                 if  key in resd:
                     row.setfield("parvalue", resd[key](el))
-            iofits4.Write(f, "models/Wint2005V1/surfacepars-el%i.fits" % el ,
+            iofits4.Write(f, "models/Wint2005V2/surfacepars-el%i.fits" % el ,
                           overwrite=True)
-            oofplot.PlotZernFile( "models/Wint2005V1/surfacepars-el%i.fits" % el ,
-                                  "models/Wint2005V1/surfacepars-el%i.png/PNG" % el )
+            oofplot.PlotZernFile( "models/Wint2005V2/surfacepars-el%i.fits" % el ,
+                                  "models/Wint2005V2/surfacepars-el%i.png/PNG" % el )
 
-            oofplot.PlotZernFile( "models/Wint2005V1/surfacepars-el%i.fits" % el ,
-                                  "models/Wint2005V1/surfacepars-el%i.eps/CPS" % el )
+            oofplot.PlotZernFile( "models/Wint2005V2/surfacepars-el%i.fits" % el ,
+                                  "models/Wint2005V2/surfacepars-el%i.eps/CPS" % el )
 
             wavel=0.0069569925090132347
 
-            ooffitconv.MkGBTSfcFile( "models/Wint2005V1/surfacepars-el%i.fits" % el ,
-                                     "models/Wint2005V1/gbt/surfacepars-el%i.fits" % el ,
+            ooffitconv.MkGBTSfcFile( "models/Wint2005V2/surfacepars-el%i.fits" % el ,
+                                     "models/Wint2005V2/gbt/surfacepars-el%i.fits" % el ,
                                      wavel)
             
         
