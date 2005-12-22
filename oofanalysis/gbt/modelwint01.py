@@ -1,5 +1,5 @@
 # Bojan Nikolic
-# $Id: modelwint01.py,v 1.9 2005/11/22 20:53:37 bnikolic Exp $
+# $Id: modelwint01.py,v 1.10 2005/12/22 09:32:19 bnikolic Exp $
 #
 # Make the surface model for winter
 
@@ -23,6 +23,9 @@ import pyxplot
 import pyplot
 
 
+#Candidates for excission:
+#
+# 0911/s37 0911/s45 0911/s77 oofout0911/s29 oofout0912/s155
 
 
 sl0911 = [6 , 14 , 29,  37 , 45, 53 ,69, 77, 85, 93, 101 ]
@@ -82,12 +85,13 @@ def PrintEfficiencies():
         el=pyfits.open(obsds)[0].header["meanel"]
         
         res.append(  ( el,
-                       OffsetEfficiency( scandir) )
+                       OffsetEfficiency( scandir) ,
+                       scandir)
                      )
     res.sort()
 
-    for x,y in res:
-        print x,y
+    for x,y,z in res:
+        print x,y,z
 
     pyxplot.scatter( res,
                      "plots/offseteff.eps",
