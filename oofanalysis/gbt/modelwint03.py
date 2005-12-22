@@ -1,7 +1,9 @@
 # Bojan Nikolic
-# $Id: modelwint03.py,v 1.1 2005/12/22 10:41:45 bnikolic Exp $
+# $Id: modelwint03.py,v 1.2 2005/12/22 10:54:55 bnikolic Exp $
 #
 # Make the surface model for winter
+#
+# V3: Force model to be zero at the rigging angle 
 
 import os
 from itertools import izip
@@ -162,7 +164,8 @@ def MkModel(outputmod=True,
     resd = {}
     for i in range(3,21):
         pname="z%i" % i 
-        res= fitfn(pname)
+        res= fitfn(pname,
+                   rigangle=50.29)
         resd[pname] = MkHFn(  res[0] , res[1],res[2] )
         if printmod:
             n,l=ooffitconv.OOFktoOOFnl(i)
@@ -223,8 +226,8 @@ def fitfn( pname,
                  (0.0 , 0.0 , 0.0 ) ,     (elevs, vals))
 
     if rigangle :
-        res[0] = -1 *  ( res[1] * math.sin( rigangle  * math.pi/ 180 )+
-                         res[2] * math.cos( rigangle  * math.pi/ 180  ))
+        res[0][0] = -1 *  ( res[0][1] * math.sin( rigangle  * math.pi/ 180 )+
+                            res[0][2] * math.cos( rigangle  * math.pi/ 180  ))
     
         
     #print res

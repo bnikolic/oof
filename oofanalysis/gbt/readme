@@ -1,0 +1,4 @@
+
+upload models:
+
+rsync -r models/Wint2005V3/gbt/ hathor:/home/groups/ptcs/surfmodels/2005WinterV3
