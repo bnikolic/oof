@@ -1,5 +1,5 @@
 # Bojan Nikolic
-# $Id: oofplot.py,v 1.14 2005/11/23 14:02:44 bnikolic Exp $
+# $Id: oofplot.py,v 1.15 2005/12/28 16:52:53 bnikolic Exp $
 #
 # Various utilities for plotting OOF data
 
@@ -219,6 +219,40 @@ def PlotAperture(apfname,
                     bbox=bbox,
                     colmap=colmap   )
 
+
+def MkApFile(fnamein,
+             npix=256,
+             telgeo=pyoof.GBTGeo()):
+
+    "Make the aperture phase, illumination pair from a file"
+
+    mphase = pyplot.Map(npix,npix)
+    pyplot.MkApCS(mphase, telgeo.DishEffRadius() * 1.05)
+
+    zm = pyoof.RZernModel ( 5 , mphase , telgeo )
+
+    md=pybnmin1.ModelDesc(zm.downcast())
+
+    bnmin1io.FLoad( md, fnamein, silent=True)
+
+    for zn in ["z1" ,"z2"  ] :
+        md.getbyname(zn).setp(0)
+
+    zm.Calc(mphase)
+
+    mamp = pyplot.Map(npix,npix)
+    pyplot.MkApCS(mamp, telgeo.DishEffRadius() * 1.05)
+
+    im = pyoof.GaussAmpMod ( telgeo , mamp  )
+
+    md=pybnmin1.ModelDesc(im.downcast())
+    bnmin1io.FLoad( md, fnamein, silent=True)
+
+    im.Calc(mamp)
+
+    return mphase, mamp
+
+    
     
 
 def PlotZernFile( fnamein,
@@ -226,6 +260,7 @@ def PlotZernFile( fnamein,
                   npix=256,
                   telgeo=pyoof.GBTGeo()):
 
+    #Should convert this to use MkApFile
     m = pyplot.Map(npix,npix)
     pyplot.MkApCS(m, telgeo.DishEffRadius() * 1.05)
 
@@ -254,6 +289,7 @@ def PlotIllumFile( fnamein,
 
     "Plot illumination from a paremeter file"
 
+    #Should convert this to use MkApFile
     m = pyplot.Map(npix,npix)
     pyplot.MkApCS(m, telgeo.DishEffRadius() * 1.05)
 
