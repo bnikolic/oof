@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: phycosmo.hxx,v 1.2 2006/01/22 21:12:30 bnikolic Exp $
+  $Id: phycosmo.hxx,v 1.3 2006/01/22 21:21:36 bnikolic Exp $
 
   Some simple cosmology routines
 */
@@ -38,7 +38,9 @@ namespace BNLib{
       
       double comovingr( double z) ; 
       
-      
+      /*! The comoving radial distance in megaparsecs, _different_
+       *  from luminosity distance  
+       */
       double D_Mpc(double z);
       double D_m(double z) ;
       

@@ -12,6 +12,7 @@
 #include "../src/integrateutils.hxx"
 #include "../src/phyconstants.hxx"
 #include "../src/phyfunc.hxx"
+#include "../src/phycosmo.hxx"
 #include "../src/integrate.hxx"
 
 %}
@@ -32,6 +33,7 @@
 %include "../src/integrateutils.hxx"
 %include "../src/phyconstants.hxx"
 %include "../src/phyfunc.hxx"
+%include "../src/phycosmo.hxx"
 
 %extend BNLib::ConstUDD {
 	
