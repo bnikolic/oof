@@ -7,6 +7,7 @@ libbnlib_la_SOURCES= interpolate.hxx interpolate.cxx \
 			integrate.cxx integrate.hxx \
 			phyconstants.hxx phyconstants.cxx \
 			phyfunc.hxx phyfunc.cxx\
+			phycosmo.cxx phycosmo.hxx \
 			linraster.hxx linraster.cxx \
 			onedmin.hxx onedmin.cxx \
 			onedroot.cxx onedroot.hxx	 \
@@ -34,6 +35,7 @@ include_HEADERS = 	unaryfn.hxx \
 			integrate.hxx\
 			phyconstants.hxx\
 			phyfunc.hxx \
+			phycosmo.hxx \
 			linraster.hxx \
 			onedmin.hxx \
 			oneddiff.hxx \
