@@ -11,6 +11,7 @@
 #include "../src/interpolatelog.hxx"
 #include "../src/integrateutils.hxx"
 #include "../src/phyconstants.hxx"
+#include "../src/phyfunc.hxx"
 #include "../src/integrate.hxx"
 
 %}
@@ -30,6 +31,7 @@
 %include "../src/integrate.hxx"
 %include "../src/integrateutils.hxx"
 %include "../src/phyconstants.hxx"
+%include "../src/phyfunc.hxx"
 
 %extend BNLib::ConstUDD {
 	
