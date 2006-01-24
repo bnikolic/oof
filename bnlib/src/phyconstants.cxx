@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: phyconstants.cxx,v 1.1 2005/05/14 20:02:03 bnikolic Exp $
+  $Id: phyconstants.cxx,v 1.2 2006/01/24 02:05:51 bnikolic Exp $
 
 
 */
@@ -17,6 +17,7 @@ namespace BNLib{
 
   double const Phy::Mpc_m ( 3.08568025e22) ;
 
+  double const Phy::LSolar_W (3.827e26);
 
 }
 
