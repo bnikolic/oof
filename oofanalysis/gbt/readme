@@ -2,3 +2,8 @@
 upload models:
 
 rsync -r models/Wint2005V3/gbt/ hathor:/home/groups/ptcs/surfmodels/2005WinterV3
+
+get reduced sets:
+
+rsync -rC cv:/users/bnikolic/d/n/prog/oofanalysis/gbt/oofoutTPTCSOOF_060112/s70-l-db-000/z5 temp/
+

@@ -1,5 +1,5 @@
 # Bojan Nikolic
-# $Id: modelwint01.py,v 1.11 2005/12/28 16:53:32 bnikolic Exp $
+# $Id: modelwint01.py,v 1.12 2006/02/07 00:54:06 bnikolic Exp $
 #
 # Make the surface model for winter
 
@@ -86,12 +86,10 @@ def PrintEfficiencies():
         
         res.append(  ( el,
                        OffsetEfficiency( scandir) ,
+                       0.03,
                        scandir)
                      )
     res.sort()
-
-    for x,y,z in res:
-        print x,y,z
 
     pyxplot.scatter( res,
                      "plots/offseteff.eps",
@@ -99,8 +97,10 @@ def PrintEfficiencies():
                      xax=pyxplot.axis(r"$\theta\,$(deg)", xmin=0 , xmax=90),
                      yax=pyxplot.axis(r"$\epsilon_{\rm LSS}$"),
                      symbsize=0.05,
-                     addp=lambda g : g.plot(pyxplot.graph.data.function(
-        "y=exp(-1.0 * ((x-52)/52)**2)")))
+                     ploterrb=True)
+
+#)                     addp=lambda g : g.plot(pyxplot.graph.data.function(
+#        "y=exp(-1.0 * ((x-52)/52)**2)")))
     
 
 def ElHist():
