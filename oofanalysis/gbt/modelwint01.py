@@ -1,5 +1,5 @@
 # Bojan Nikolic
-# $Id: modelwint01.py,v 1.12 2006/02/07 00:54:06 bnikolic Exp $
+# $Id: modelwint01.py,v 1.13 2006/02/15 21:18:59 bnikolic Exp $
 #
 # Make the surface model for winter
 
@@ -255,17 +255,19 @@ def PlotClosure():
 
     phase1 = oofplot.PlotZernFile( os.path.join(measuredir ,
                                        "fitpars.fits"),
-                                   "plots/measuresfc.eps/CPS")
+                                   "plots/measuresfc.eps/CPS",
+                                   phaserange=[-1.2,1.2])
     i1    = oofplot.PlotIllumFile( os.path.join(measuredir ,
                                                 "fitpars.fits"),
-                                   "plots/measureamo.eps.eps/CPS")
+                                   "plots/measureamp.eps.eps/CPS")
 
     print "Unweighted RMS  " , pyplot.MapRMS(phase1)
     print "RMS measured : " , pyplot.MapRMS(phase1, i1)
 
     phase2= oofplot.PlotZernFile( os.path.join(corrdir ,
                                               "fitpars.fits"),
-                                 "plots/corrmeasuresfc.eps/CPS")
+                                 "plots/corrmeasuresfc.eps/CPS",
+                                  phaserange=[-1.2,1.2]                                  )
     i2    = oofplot.PlotIllumFile( os.path.join(corrdir ,
                                                 "fitpars.fits"),
                                    "plots/corrmeasureamp.eps/CPS")
