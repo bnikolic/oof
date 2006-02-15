@@ -1,5 +1,5 @@
 # Bojan Nikolic
-# $Id: implot.py,v 1.11 2005/09/23 15:57:05 bnikolic Exp $
+# $Id: implot.py,v 1.12 2006/02/15 23:20:00 bnikolic Exp $
 #
 # Routines for plotting maps
 
@@ -109,11 +109,15 @@ def finishplot(foutname):
         ## we are doing a hard copy...
         pyplot.cpgclos()
 
-def MkChopContours( m, step=0.5 , nlevels=5):
+def MkChopContours( m, step=0.5 , nlevels=5, ctype="log"):
 
     "Make contours suitable for chopped maps"
 
-    contours = [ m.max() * step**i for i in range(nlevels)  ]
-    contours.extend( [ m.min() * step**i for i in range(nlevels)  ] )
+    if ctype == "log":
+        contours = [ m.max() * step**i for i in range(nlevels)  ]
+        contours.extend( [ m.min() * step**i for i in range(nlevels)  ] )
+    elif ctype == "lin" :
+        contours = [ m.max() * i/float(nlevels) for i in range(nlevels)  ]
+        contours.extend( [ m.min() * i/float(nlevels) for i in range(nlevels)  ] )
 
     return contours

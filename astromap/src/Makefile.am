@@ -10,7 +10,9 @@ libastromap_la_SOURCES= astromap.cxx astromap.hxx \
 			mapset.cxx mapset.hxx tmapset.hxx \
 			pixextract.hxx pixextract.cxx \
 			lcmaps.hxx lcmaps.cxx \
-			astromapio.cxx astromapio.hxx
+			astromapio.cxx astromapio.hxx \
+			convolve.cxx convolve.hxx
+
 
 libastromap_la_CFLAGS = -Wall
 libastromap_la_CPPFLAGS = -Wall
@@ -24,6 +26,6 @@ include_HEADERS = 	astromap.hxx mapops.hxx \
 			lcmaps.hxx \
 			fft.hxx \
 			astromap_fwd.hxx \
-			astromapio.hxx
-
+			astromapio.hxx \
+			convolve.hxx
 
