@@ -7,6 +7,7 @@
 #include "../src/pixextract.hxx"
 #include "../src/fft.hxx"
 #include "../src/lcmaps.hxx"
+#include "../src/convolve.hxx"
 
 #include "../src/coordsys/coordsys.hxx"
 #include "../src/coordsys/lincordsys.hxx"
@@ -46,6 +47,7 @@ namespace std {
 %include "../src/pixextract.hxx"
 %include "../src/fft.hxx"
 %include "../src/lcmaps.hxx"
+%include "../src/convolve.hxx"
 
 %include "../src/coordsys/coordsys.hxx"
 %include "../src/coordsys/lincordsys.hxx"
@@ -86,6 +88,10 @@ namespace std {
 
      void add ( Map const & m ) {
 	(*self) += m;
+     }
+
+     void set  ( unsigned x, unsigned y, double val) {
+	self->get(x,y)=val;
      }
 	
 
