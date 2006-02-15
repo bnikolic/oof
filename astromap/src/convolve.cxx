@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: convolve.cxx,v 1.2 2006/02/15 23:41:00 bnikolic Exp $
+  $Id: convolve.cxx,v 1.3 2006/02/15 23:50:18 bnikolic Exp $
 
 */
 
@@ -47,10 +47,11 @@ namespace AstroMap {
 			FFTFact::forward,
 			FFTFact::center);
 
+
     ForwardFF.fftamphi( m1amp, m1phase);
     m1amp /= ( m1amp.nx * m1amp.ny);
     
-    return Clone(m1amp);
+    return new Map(m1amp);
 
 
   }
