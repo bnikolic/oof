@@ -1,5 +1,5 @@
 # Bojan Nikolic
-# $Id: moonscans.py,v 1.4 2006/02/16 21:34:04 bnikolic Exp $
+# $Id: moonscans.py,v 1.5 2006/02/16 22:17:39 bnikolic Exp $
 #
 # Analaze moon scans
 
@@ -19,13 +19,34 @@ import implot
 
 sfile= "cdata/TPTCSOOF_050324/s75-l.fits"
 
-def PlotF(fname):
+def PlotF(fname,
+          dxrange=[-30,-16],
+          dolog=False,
+          logsign=1      ):
 
     din=pyfits.open(fname)[1].data
 
-    pylab.plot( din.field("dx") * 180 * 60 / math.pi,
-                din.field("fnu"))
+    dx= din.field("dx") * 180 * 60 / math.pi
+    fnu = din.field("fnu") 
+
+    mask = numarray.logical_and( dx > dxrange[0] ,
+                                 dx < dxrange[1] )
+
+        
+    if dolog:
+
+        fnu -= fnu.min()
+        
+        fnu *= logsign
+        mask = numarray.logical_and( mask,
+                                     fnu > 0)
+        fnu  = numarray.log10(fnu)
+
+    pylab.plot(dx[mask], fnu[mask])
     pylab.show()
+
+#PlotF("cdata/TPTCSOOF_050324/s75-l-tp.fits", dxrange=[-40,-15], dolog=True)
+#PlotF("cdata/TPTCSOOF_050324/s75-l-tp.fits", dxrange=[15,45], dolog=True)
 
 def MkMoon(m):
 
@@ -131,6 +152,19 @@ def PlotSynthBeam(finlist):
         
     pylab.show()
 
+def ModelTPScan(fnamein):
+
+    delt= pyfits.open(fnamein)[0].header["CDELT1"]
+    din=pyfits.open(fnamein)[0].data
+    
+    nx, ny = din.shape
+    
+    fnu = din[ny/2,:]
+
+    dx  = ( numarray.arange(nx, type=numarray.Float64) - nx/2) * delt * 180 * 60 / math.pi
+
+    return dx , fnu
+
 def ModelDiffScan(fnamein,
                   diffgain):
 
@@ -179,3 +213,27 @@ def PlotDiffd(finlist,
 
     
 
+def PlotTP(finlist,
+           dxrange=[-30,-16],
+           dolog=False,
+           logsign=1):
+
+    for fnamein in finlist:
+
+        dx, fnudiff = ModelTPScan(  fnamein)
+        mask = numarray.logical_and( dx > dxrange[0] ,
+                                     dx < dxrange[1] )
+
+        
+        if dolog:
+            
+            fnudiff *= logsign
+            mask = numarray.logical_and( mask,
+                                         fnudiff > 0)
+            fnudiff  = numarray.log10(fnudiff)
+            
+            
+        pylab.plot(dx[mask], fnudiff[mask])
+        
+
+    pylab.show()
