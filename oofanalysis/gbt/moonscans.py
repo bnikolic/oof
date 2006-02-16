@@ -1,5 +1,5 @@
 # Bojan Nikolic
-# $Id: moonscans.py,v 1.6 2006/02/16 22:33:19 bnikolic Exp $
+# $Id: moonscans.py,v 1.7 2006/02/16 22:56:41 bnikolic Exp $
 #
 # Analaze moon scans
 
@@ -122,13 +122,15 @@ def TruncateBeam(fnamein, fnameout,
 
     mtemp = pyplot.Clone(mapin)
     tfn=  pybnlib.TopHatDD()
-    tfn.radius = rad_arcmin * math.pi / 360 / 60
+    tfn.radius = rad_arcmin * math.pi / 180 / 60
     pyplot.WorldSet( mtemp , tfn)
 
     mapin.mult(mtemp)
     pyplot.FitsWrite(mapin, fnameout)
     # Turns out truncation not very usefull, better off figuring out
     # how to get good beams without all the nasty ailasing
+
+#TruncateBeam( "temp/d10.fits" , "!temp/d10_t.fits", 20)
     
     
 
@@ -154,7 +156,7 @@ def MkMoonScan( fbeam,
 
     pyplot.FitsWrite(res, fnameout)
 
-
+#MkMoonScan( "temp/d10_t.fits" , "!temp/moonscan2.fits")
     
 
 def PlotSynthBeam(finlist):
