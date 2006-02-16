@@ -1,5 +1,5 @@
 # Bojan Nikolic
-# $Id: moonscans.py,v 1.2 2006/02/16 19:52:36 bnikolic Exp $
+# $Id: moonscans.py,v 1.3 2006/02/16 19:52:51 bnikolic Exp $
 #
 # Analaze moon scans
 
@@ -101,51 +101,6 @@ def MkSquare (m, s):
             
         
     
-def GenBeamV2( pixrms,
-               fnameout,             
-               npix=1024,
-               corrscale=4,
-             ):
-
-    # Note need 2 here for critical sampling!
-    oversample=2
-
-    tel=pyoof.TelSwitch("GBT")
-
-    mphase=pyoof.MkApMap(tel,
-                         npix,
-                         oversample)
-
-    mconvk  =  pyplot.Map(npix, npix)
-    MkSquare(mconvk, corrscale)
-
-    pyplot.NormDist( mphase,
-                     pixrms)
-
-    pyplot.FitsWrite(mphase, "!temp/mphaseorig.fits")
-
-    mphase2=pyplot.FFTConvolve(mphase,
-                               mconvk)
-    mphase2.mult( 1.0/ corrscale**2)
-    pyplot.FitsWrite(mphase2, "!temp/mphaseconv.fits")    
-    
-    mamp=pyoof.MkApMap(tel,
-                       npix,
-                       oversample)
-
-    mbeam = pyoof.MkApMap(tel,
-                          npix,
-                          oversample)
-
-    ilmod=pyoof.GaussAmpMod( tel, mamp)
-    ilmod.SetSigma(0.3)
-    ilmod.Calc(mamp)
-
-    farf= pyoof.FarF(mamp, 7.3e-3)
-    
-    farf.Power( mamp, mphase2, mbeam)
-
-    pyplot.FitsWrite(mbeam, fnameout)    
 
 def PlotSynthBeam(finlist):
 
