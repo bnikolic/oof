@@ -1,5 +1,5 @@
 # Bojan Nikolic
-# $Id: moonscans.py,v 1.5 2006/02/16 22:17:39 bnikolic Exp $
+# $Id: moonscans.py,v 1.6 2006/02/16 22:33:19 bnikolic Exp $
 #
 # Analaze moon scans
 
@@ -58,6 +58,8 @@ def MkMoon(m):
     pyplot.WorldSet( m , moonfn)
     
 
+
+
 def GenBeam( pixrms,
              fnameout,             
              npix=1024,
@@ -111,6 +113,24 @@ def GenBeam( pixrms,
 
     pyplot.FitsWrite(mbeam, fnameout)
 
+def TruncateBeam(fnamein, fnameout,
+                 rad_arcmin):
+
+    "Set beam everywhere outside certain pixel radius range to value indicated"
+
+    mapin = pyplot.FitsMapLoad(fnamein, 1)
+
+    mtemp = pyplot.Clone(mapin)
+    tfn=  pybnlib.TopHatDD()
+    tfn.radius = rad_arcmin * math.pi / 360 / 60
+    pyplot.WorldSet( mtemp , tfn)
+
+    mapin.mult(mtemp)
+    pyplot.FitsWrite(mapin, fnameout)
+    # Turns out truncation not very usefull, better off figuring out
+    # how to get good beams without all the nasty ailasing
+    
+    
 
 def MkSquare (m, s):
 
@@ -133,6 +153,8 @@ def MkMoonScan( fbeam,
                            mmoon)
 
     pyplot.FitsWrite(res, fnameout)
+
+
     
 
 def PlotSynthBeam(finlist):
@@ -143,11 +165,13 @@ def PlotSynthBeam(finlist):
         din=pyfits.open(fnamein)[0].data
 
         nx, ny = din.shape
-
+        
         fnu = din[ny/2,:]
         dx  = ( numarray.arange(nx, type=numarray.Float64) - nx/2) * delt * 180 * 60 / math.pi
+        mask = fnu > 0
 
-        pylab.plot(dx, numarray.log10(fnu))
+        pylab.plot(dx[mask],
+                   numarray.log10(fnu[mask]))
         
         
     pylab.show()
