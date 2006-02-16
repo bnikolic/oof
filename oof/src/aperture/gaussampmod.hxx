@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: gaussampmod.hxx,v 1.4 2005/08/28 04:26:03 bnikolic Exp $
+  $Id: gaussampmod.hxx,v 1.5 2006/02/16 00:23:12 bnikolic Exp $
 
   Gaussian amplitude model
 */
@@ -53,6 +53,10 @@ namespace OOF {
     
     virtual ~GaussAmpMod();
 
+    // ----- Add simplified access to the Gaussian parameers
+    
+    void SetSigma(double x);
+
     // ----- Inherited from AmpliMod  ------------------------------
 
     virtual void Calc( AstroMap::Map &m) const  ;
@@ -60,6 +64,7 @@ namespace OOF {
     // ------ Inherited functions rom Minim::Model ---------
       
     virtual    void     AddParams ( std::vector< Minim::DParamCtr > &pars ) ;
+
 
 
   };

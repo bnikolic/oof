@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: gaussampmod.cxx,v 1.6 2005/08/28 04:26:03 bnikolic Exp $
+  $Id: gaussampmod.cxx,v 1.7 2006/02/16 00:23:12 bnikolic Exp $
 
 */
 
@@ -57,6 +57,11 @@ namespace OOF {
 
 
     
+  }
+
+  void GaussAmpMod::SetSigma(double x)
+  {
+    gfn->sigma=x;
   }
 
   void     GaussAmpMod::AddParams ( std::vector< Minim::DParamCtr > &pars ) 
