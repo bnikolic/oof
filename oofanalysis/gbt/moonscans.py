@@ -1,5 +1,5 @@
 # Bojan Nikolic
-# $Id: moonscans.py,v 1.7 2006/02/16 22:56:41 bnikolic Exp $
+# $Id: moonscans.py,v 1.8 2006/02/16 23:27:15 bnikolic Exp $
 #
 # Analaze moon scans
 
@@ -64,13 +64,20 @@ def GenBeam( pixrms,
              fnameout,             
              npix=1024,
              corrscale=4,
-             postmult=1
+             postmult=1,
+             telradius=50,
+             soften=False,
+             oversample=2,
+             taper=0.3
              ):
 
-    oversample=2
-    # Note need 2 here for critical sampling!
-    tel=pyoof.TelSwitch("GBT")
 
+    # Note oversample needs to be  2 here for critical sampling!
+
+    #tel=pyoof.TelSwitch("GBT")
+    tel=pyoof.PrimeFocusGeo()
+    tel.PrimRadius=telradius
+    
     mphase=pyoof.MkApMap(tel,
                          npix,
                          oversample)
@@ -86,6 +93,14 @@ def GenBeam( pixrms,
     
     mphase2=pyplot.IntZoom ( mtemp, corrscale)
     mphase2.mult(postmult)
+
+    if soften:
+        mconvk  =  pyplot.Map(npix, npix)
+
+        MkSquare(mconvk, 3)
+        mphase3=pyplot.FFTConvolve(mphase2,
+                                   mconvk)
+        mphase3.mult( 1.0/ 3**2)
     
     pyplot.FitsWrite(mphase2, "!temp/mphase2.fits")    
 
@@ -103,15 +118,21 @@ def GenBeam( pixrms,
                           oversample)
 
     ilmod=pyoof.GaussAmpMod( tel, mamp)
-    ilmod.SetSigma(0.3)
+    ilmod.SetSigma(taper)
     ilmod.Calc(mamp)
     pyplot.FitsWrite(mamp, "!temp/aplitude.fits")
 
     farf= pyoof.FarF(mamp, 7.3e-3)
-    
-    farf.Power( mamp, mphase2, mbeam)
+
+    if soften:
+        farf.Power( mamp, mphase3, mbeam)
+    else:
+        farf.Power( mamp, mphase2, mbeam)
 
     pyplot.FitsWrite(mbeam, fnameout)
+
+# std GenBeam(0.43 , "!temp/d10.fits", corrscale=8, postmult=1)
+#GenBeam(0.43 , "!temp/d10_s.fits", corrscale=8, postmult=1, soften=True)    
 
 def TruncateBeam(fnamein, fnameout,
                  rad_arcmin):
