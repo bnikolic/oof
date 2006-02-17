@@ -1,5 +1,5 @@
 # Bojan Nikolic
-# $Id: moonscans.py,v 1.9 2006/02/17 14:41:16 bnikolic Exp $
+# $Id: moonscans.py,v 1.10 2006/02/17 16:21:31 bnikolic Exp $
 #
 # Analaze moon scans
 
@@ -32,7 +32,7 @@ def SaveScanFits(dx, fnu , fnameout):
 
     tabout= pyfits.new_table( coldefs )
 
-    fout=iofits4.PrepFitsOut(r"$Id: moonscans.py,v 1.9 2006/02/17 14:41:16 bnikolic Exp $")
+    fout=iofits4.PrepFitsOut(r"$Id: moonscans.py,v 1.10 2006/02/17 16:21:31 bnikolic Exp $")
     fout.append(tabout)
     iofits4.Write( fout,
                    fnameout,
@@ -113,7 +113,6 @@ def GenBeam( pixrms,
     pyplot.NormDist( mtemp,
                      pixrms)
 
-    pyplot.FitsWrite(mtemp, "!temp/temp.fits")
     
     mphase2=pyplot.IntZoom ( mtemp, corrscale)
     mphase2.mult(postmult)
@@ -306,6 +305,19 @@ def PlotTP(finlist,
             
             
         pylab.plot(dx[mask], fnudiff[mask])
-        SaveScanFits( dx[mask], fnudiff[mask] , fitsout)        
+        if fitsout:
+            SaveScanFits( dx[mask], fnudiff[mask] , fitsout)        
 
     pylab.show()
+
+def MkLargeScaleErrors():
+
+    GenBeam(0.43 * 250/250 , "!temp/dexp.fits", corrscale=8, postmult=1)
+    MkMoonScan( "temp/dexp.fits" , "!temp/moonsexp.fits")
+    PlotTP(["temp/moonsexp.fits"] ,
+           dxrange=[-40,-14] ,
+           dolog=True,
+           fitsout="moonscand/modelexp.fits")
+    PlotModData( "moonscand/modelexp.fits",
+                 "plots/moonscanexp.eps")
+    
