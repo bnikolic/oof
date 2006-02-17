@@ -1,5 +1,5 @@
 # Bojan Nikolic
-# $Id: moonscans.py,v 1.8 2006/02/16 23:27:15 bnikolic Exp $
+# $Id: moonscans.py,v 1.9 2006/02/17 14:41:16 bnikolic Exp $
 #
 # Analaze moon scans
 
@@ -10,6 +10,7 @@ import pyfits
 import numarray
 from matplotlib import pylab
 
+import iofits4
 
 import pyplot
 import pybnlib
@@ -19,10 +20,30 @@ import implot
 
 sfile= "cdata/TPTCSOOF_050324/s75-l.fits"
 
+def SaveScanFits(dx, fnu , fnameout):
+
+    "Save a moon scan, simulated or observed, to FITS file"
+
+    coldefs = [
+        pyfits.Column( "dx" , "E" , "arcmins" ,
+                       array=numarray.array(dx)),
+        pyfits.Column( "fnu" , "E" , "logpower" ,
+                       array=numarray.array(fnu))]
+
+    tabout= pyfits.new_table( coldefs )
+
+    fout=iofits4.PrepFitsOut(r"$Id: moonscans.py,v 1.9 2006/02/17 14:41:16 bnikolic Exp $")
+    fout.append(tabout)
+    iofits4.Write( fout,
+                   fnameout,
+                   overwrite=1)        
+
+
 def PlotF(fname,
           dxrange=[-30,-16],
           dolog=False,
-          logsign=1      ):
+          logsign=1,
+          fitsout=False):
 
     din=pyfits.open(fname)[1].data
 
@@ -42,6 +63,9 @@ def PlotF(fname,
                                      fnu > 0)
         fnu  = numarray.log10(fnu)
 
+    if fitsout:
+        SaveScanFits( dx[mask], fnu[mask] , fitsout)
+        
     pylab.plot(dx[mask], fnu[mask])
     pylab.show()
 
@@ -263,7 +287,8 @@ def PlotDiffd(finlist,
 def PlotTP(finlist,
            dxrange=[-30,-16],
            dolog=False,
-           logsign=1):
+           logsign=1,
+           fitsout=False):
 
     for fnamein in finlist:
 
@@ -281,6 +306,6 @@ def PlotTP(finlist,
             
             
         pylab.plot(dx[mask], fnudiff[mask])
-        
+        SaveScanFits( dx[mask], fnudiff[mask] , fitsout)        
 
     pylab.show()
