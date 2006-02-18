@@ -10,3 +10,4 @@ autoconf
 	CFLAGS="${CFLAGS} -I${HOME}/p/bnfits/include -I${HOME}/p/astromap/include -I${HOME}/p/bnmin1/include -I${HOME}/p/bnlib/include  -g" \
 	LDFLAGS="${LDFLAGS} -L${HOME}/p/astromap/lib -L${HOME}/p/bnmin1/lib -L${HOME}/p/bnlib/lib" \
 	 --prefix=${HOME}/p/oof 
+
