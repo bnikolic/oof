@@ -1,5 +1,5 @@
 # Bojan Nikolic
-# $Id: modtherm01.py,v 1.3 2006/02/18 21:51:19 bnikolic Exp $
+# $Id: modtherm01.py,v 1.4 2006/02/18 22:03:04 bnikolic Exp $
 #
 # Investigate thermal effects
 
@@ -45,8 +45,18 @@ def PrintPars(projname, zmax=5):
 
     dirin = "oofout%s" % projname
     pointd= pyfits.open("thermdata/pointing.fits")[1].data
-    
 
+    def GetScanR(i):
+        return (pointd.field("scanno")==i).argmax()
+
+    def GetTAz(scanno):
+        i = GetScanR(scanno)
+        return pointd.field("lpcaz")[i] + pointd.field("dynaz")[i]
+
+    def GetTEl(scanno):
+        i = GetScanR(scanno)
+        return pointd.field("lpcel")[i] + pointd.field("dynel")[i]
+    
     def GetZP(parname):
         return oofcol.getpar(thisdir,
                       "offsetpars.fits",
@@ -56,9 +66,11 @@ def PrintPars(projname, zmax=5):
 
     for s in scanlist:
         thisdir= os.path.join(dirin, "s%i-l-db-000/z%i" % (s, zmax))
-        print "S:  %i \t  z3 :  %g \t z5  %g"   %  ( s,
-                                                     GetZP("z3"),
-                                                     GetZP("z5"))
+        print "%i\t%g\t%g \t\t %g\t%g"   %  ( s,
+                                              GetTAz(s),
+                                              GetZP("z3"),
+                                              GetTEl(s),
+                                              GetZP("z5"))
 
         
 
