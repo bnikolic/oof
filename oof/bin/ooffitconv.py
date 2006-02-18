@@ -1,7 +1,7 @@
 #
 # Bojan Nikolic
 #
-# $Id: ooffitconv.py,v 1.5 2005/09/19 15:17:05 bnikolic Exp $
+# $Id: ooffitconv.py,v 1.6 2006/02/18 19:30:03 bnikolic Exp $
 #
 # Routines to convert OOF fits between various formats
 
@@ -17,7 +17,7 @@ import iofits4
 import oofreduce
 import oofcol
 
-modcvs = r"$Id: ooffitconv.py,v 1.5 2005/09/19 15:17:05 bnikolic Exp $"
+modcvs = r"$Id: ooffitconv.py,v 1.6 2006/02/18 19:30:03 bnikolic Exp $"
 
 def OOFktoOOFnl(k):
     "Converts between the sequential and n,l numbering used in the OOF software"
@@ -93,7 +93,32 @@ def ConvertOOFtoGBT (d ):
                 res[ "z%i" % (gbt1k) ] = d[k] * sign 
             
 
-    return res 
+    return res
+
+def ConvertGBTtoOOF(d):
+
+    "Convert GBT zernike convention to OOF zernike convention"
+
+    res={}
+    for k in d :
+        zrex=re.compile ("^z(\d)+")
+        if zrex.match(k):
+            gbtk = int(k[1:])
+            oofk = SchwabktoOOFk(gbtk)
+            oofn , oofl = OOFktoOOFnl(oofk)
+
+            if oofl <0 : sign = -1.0
+            else : sign = 1.0
+
+            if oofk == 1 or  oofk ==2:
+                res[ "z%i" % (oofk) ] = 0
+            else:
+                res[ "z%i" % (oofk) ] = d[k] * sign
+
+        else:
+            res[k] = d[k]
+    return res
+
 
 
 def LoadFITS(fnamein):
@@ -128,7 +153,8 @@ def SaveFITS(d , fnameout , keys={}):
     iofits4.Write( fout, fnameout , overwrite=1)
 
 
-def Scale( d , wavel , inv=0):
+def Scale( d , wavel ,
+           inv=False):
 
     c = wavel / (2 * math.pi ) * 1e6 / 2
 
@@ -152,11 +178,48 @@ def MkGBTSfcFile(fnamein, fnameout, wavel ):
              keys=  {"freq":  3e8/wavel } )
     
 
+
+def SfcFtoOOFpars(fnamein, fnameout, wavel):
+
+    "Convert a surface correction file to OOF parameters format"
+
+    """
+    Use this to convert surface model files (e.g.,
+    2005WinterV3/surfacepars-el10.fits) back to the OOF format
+    (radians of phase, OOF labeling convention) so that they can be
+    used to offset the results of a reduction.
+
+    wavel is the wavelegth to use when converting surface movement to
+    phase -- if using this to offset reduction results, use the
+    frequency of observations
+    
+    """
+
+    din = LoadFITS(fnamein)
+
+    # Convert to OOF zernike convention
+    d2= ConvertGBTtoOOF(din)
+
+    Scale(d2 , wavel, inv=True)
+
+    SaveFITS(d2, fnameout,
+             keys=  {"freq":  3e8/wavel } )
+    
+
+    
+
+
+
+    
     
 
 def MkGBTSfcDir(dirin, fnameout):
 
-    "Make a GBT surface correction file"
+    "Make a GBT surface correction file from a OOF reduction output dir"
+
+    """
+    dirin is a directory where the output of OOF reduction is stored.
+    """
 
     # If the offset file exists than that is almost certainly the one
     # to use
