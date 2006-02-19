@@ -1,13 +1,16 @@
 # Bojan Nikolic
-# $Id: modtherm01.py,v 1.5 2006/02/19 18:03:26 bnikolic Exp $
+# $Id: modtherm01.py,v 1.6 2006/02/19 19:02:46 bnikolic Exp $
 #
 # Investigate thermal effects
 
 import os
 import pyfits
+import numarray
+
 import oofplot
 import pyplot
 import oofcol
+import iofits4
 
 def PlotSfcs():
 
@@ -80,8 +83,56 @@ def PrintPars(projname, zmax=5):
     return res
 
         
+def GenThermData(zmax=2):
 
+    nrows= len(scanlist)
+    pointd= pyfits.open("thermdata/pointing.fits")[1].data
+    
+    def GetZP(parname):
+        return oofcol.getpar(thisdir,
+                      "offsetpars.fits",
+                      parname,
+                      parcol="ParName",
+                      valcol="ParValue")
+
+    def GetScanR(i):
+        return (pointd.field("scanno")==i).argmax()    
+
+    coldefs = [
+        pyfits.Column( "scanno" , "I" , "" ,
+                       array=numarray.zeros(nrows)),
+        pyfits.Column( "LPCEl" , "E" , "arcmin" ,
+                       array=numarray.zeros(nrows)),
+        pyfits.Column( "LPCAz" , "E" , "arcmin" ,
+                           array=numarray.zeros(nrows)),
+        pyfits.Column( "DynEl" , "E" , "arcmin" ,
+                       array=numarray.zeros(nrows)),
+        pyfits.Column( "DynAz" , "E" , "arcmin" ,
+                       array=numarray.zeros(nrows)),
+        pyfits.Column( "z3" , "E" , "rad" ,
+                       array=numarray.zeros(nrows)),
+        pyfits.Column( "z5" , "E" , "rad" ,
+                       array=numarray.zeros(nrows)),        
+
+        ]
+
+    tabout= pyfits.new_table( coldefs )
+    
+    for j,s in enumerate(scanlist):
+        thisdir= os.path.join("oofoutTPTCSOOF_060112", "s%i-l-db-000/z%i" % (s, zmax))
+        i = GetScanR(s)
+
+        for cname in [ "LPCaz" , "scanno" , "lpcel" , "dynaz" , "dynel"]:
+            tabout.data.field(cname)[j] = pointd.field(cname)[i]
+
+        for cname in [ "z3" , "z5" ]:
+            tabout.data.field(cname)[j] = GetZP(cname)
         
+    fout=iofits4.PrepFitsOut(r"$Id: modtherm01.py,v 1.6 2006/02/19 19:02:46 bnikolic Exp $")
+    fout.append(tabout)
+    iofits4.Write( fout,
+                   "thermdata/pointastigm.fits",
+                   overwrite=1)            
 
         
     
