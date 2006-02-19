@@ -1,5 +1,5 @@
 # Bojan Nikolic
-# $Id: modtherm01.py,v 1.4 2006/02/18 22:03:04 bnikolic Exp $
+# $Id: modtherm01.py,v 1.5 2006/02/19 18:03:26 bnikolic Exp $
 #
 # Investigate thermal effects
 
@@ -39,7 +39,7 @@ def MRMS( sdate, sno):
 
 scanlist =     [ 22,   52, 61, 70, 79, 88, 97, 106, 115, 124, 133, 142, 151, 160]
 
-scanlist =     [ 22,   52, 61, 70,  106, 115, 124, 133, 142, 151, 160]
+scanlist =     [ 22,   52, 61, 70,  106, 115, 124, 133, 142, 151, 160, 169, 178, 200, 209 , 218]
 
 def PrintPars(projname, zmax=5):
 
@@ -64,6 +64,7 @@ def PrintPars(projname, zmax=5):
                       parcol="ParName",
                       valcol="ParValue")
 
+    res = []
     for s in scanlist:
         thisdir= os.path.join(dirin, "s%i-l-db-000/z%i" % (s, zmax))
         print "%i\t%g\t%g \t\t %g\t%g"   %  ( s,
@@ -71,6 +72,14 @@ def PrintPars(projname, zmax=5):
                                               GetZP("z3"),
                                               GetTEl(s),
                                               GetZP("z5"))
+        res.append( (s,
+                     GetTAz(s),
+                     GetZP("z3"),
+                     GetTEl(s),
+                     GetZP("z5")))
+    return res
+
+        
 
         
 
