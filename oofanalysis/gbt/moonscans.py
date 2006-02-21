@@ -1,5 +1,5 @@
 # Bojan Nikolic
-# $Id: moonscans.py,v 1.10 2006/02/17 16:21:31 bnikolic Exp $
+# $Id: moonscans.py,v 1.11 2006/02/21 16:03:14 bnikolic Exp $
 #
 # Analaze moon scans
 
@@ -32,7 +32,7 @@ def SaveScanFits(dx, fnu , fnameout):
 
     tabout= pyfits.new_table( coldefs )
 
-    fout=iofits4.PrepFitsOut(r"$Id: moonscans.py,v 1.10 2006/02/17 16:21:31 bnikolic Exp $")
+    fout=iofits4.PrepFitsOut(r"$Id: moonscans.py,v 1.11 2006/02/21 16:03:14 bnikolic Exp $")
     fout.append(tabout)
     iofits4.Write( fout,
                    fnameout,
@@ -72,14 +72,16 @@ def PlotF(fname,
 #PlotF("cdata/TPTCSOOF_050324/s75-l-tp.fits", dxrange=[-40,-15], dolog=True)
 #PlotF("cdata/TPTCSOOF_050324/s75-l-tp.fits", dxrange=[15,45], dolog=True)
 
-def MkMoon(m):
+def MkMoon(m, Cm=0):
 
     # moon radius 15 arcmin
     mradius=15 * math.pi / 180 / 60
 
-    moonfn  =  pybnlib.TopHatDD()
+    moonfn  =  pybnlib.TaperedTopHatDD()
     moonfn.radius  =  mradius
+    moonfn.Cm = Cm
     pyplot.WorldSet( m , moonfn)
+    pyplot.FitsWrite(m, "!temp/moon.fits")    
     
 
 
@@ -120,10 +122,11 @@ def GenBeam( pixrms,
     if soften:
         mconvk  =  pyplot.Map(npix, npix)
 
-        MkSquare(mconvk, 3)
+        MkSquare(mconvk, soften)
         mphase3=pyplot.FFTConvolve(mphase2,
                                    mconvk)
-        mphase3.mult( 1.0/ 3**2)
+        mphase3.mult( 1.0/ soften**2)
+        mphase2=mphase3
     
     pyplot.FitsWrite(mphase2, "!temp/mphase2.fits")    
 
@@ -146,6 +149,8 @@ def GenBeam( pixrms,
     pyplot.FitsWrite(mamp, "!temp/aplitude.fits")
 
     farf= pyoof.FarF(mamp, 7.3e-3)
+
+    print "Maps weighted rms is : ", pyplot.MapRMS(mphase2, mamp)
 
     if soften:
         farf.Power( mamp, mphase3, mbeam)
@@ -189,11 +194,11 @@ def MkSquare (m, s):
 
             
 def MkMoonScan( fbeam,
-                fnameout):
+                fnameout, Cm=0):
 
     mbeam = pyplot.FitsMapLoad(fbeam, 1)
     mmoon = pyplot.Clone(mbeam)
-    MkMoon(mmoon)
+    MkMoon(mmoon, Cm=Cm)
 
     res=pyplot.FFTConvolve(mbeam,
                            mmoon)
@@ -312,12 +317,11 @@ def PlotTP(finlist,
 
 def MkLargeScaleErrors():
 
-    GenBeam(0.43 * 250/250 , "!temp/dexp.fits", corrscale=8, postmult=1)
+    GenBeam(0.43 * 250/250 , "!temp/dexp.fits", corrscale=32, postmult=1)
     MkMoonScan( "temp/dexp.fits" , "!temp/moonsexp.fits")
     PlotTP(["temp/moonsexp.fits"] ,
            dxrange=[-40,-14] ,
            dolog=True,
            fitsout="moonscand/modelexp.fits")
-    PlotModData( "moonscand/modelexp.fits",
-                 "plots/moonscanexp.eps")
+    
     

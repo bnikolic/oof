@@ -1,5 +1,5 @@
 # Bojan Nikolic
-# $Id: modtherm01.py,v 1.6 2006/02/19 19:02:46 bnikolic Exp $
+# $Id: modtherm01.py,v 1.7 2006/02/21 16:03:14 bnikolic Exp $
 #
 # Investigate thermal effects
 
@@ -11,6 +11,7 @@ import oofplot
 import pyplot
 import oofcol
 import iofits4
+
 
 def PlotSfcs():
 
@@ -128,7 +129,7 @@ def GenThermData(zmax=2):
         for cname in [ "z3" , "z5" ]:
             tabout.data.field(cname)[j] = GetZP(cname)
         
-    fout=iofits4.PrepFitsOut(r"$Id: modtherm01.py,v 1.6 2006/02/19 19:02:46 bnikolic Exp $")
+    fout=iofits4.PrepFitsOut(r"$Id: modtherm01.py,v 1.7 2006/02/21 16:03:14 bnikolic Exp $")
     fout.append(tabout)
     iofits4.Write( fout,
                    "thermdata/pointastigm.fits",
@@ -137,5 +138,3 @@ def GenThermData(zmax=2):
         
     
     
-
-

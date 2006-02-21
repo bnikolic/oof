@@ -1,5 +1,5 @@
 # Bojan Nikolic
-# $Id: modelwint01.py,v 1.13 2006/02/15 21:18:59 bnikolic Exp $
+# $Id: modelwint01.py,v 1.14 2006/02/21 16:03:14 bnikolic Exp $
 #
 # Make the surface model for winter
 
@@ -125,7 +125,16 @@ def ElHist():
 
 
     
+def PrintPars(pname, zmax=2):
+
+    scandirs = ( [ "oofout0911/s%i-l-db-000/z%i" % (i,zmax) for i in sl0911] +
+                 [ "oofout0912/s%i-l-db-000/z%i" % (i,zmax) for i in sl0912] +
+                 [ "oofout0411/s%i-l-db-000/z%i" % (i,zmax) for i in sl0411] )
     
+    for sd in scandirs:
+        print "%g\t%g" % (bnmin1io.FGetPar(os.path.join(sd, "fitpars.fits" ) , pname),
+                          bnmin1io.FGetPar(os.path.join(sd, "offsetpars.fits" ) , pname))
+        
 
 def getpardata(pname):
 
