@@ -1,5 +1,5 @@
 # Bojan Nikolic
-# $Id: oofcol.py,v 1.3 2005/09/09 17:46:24 bnikolic Exp $
+# $Id: oofcol.py,v 1.4 2006/03/04 16:18:09 bnikolic Exp $
 #
 # Various routines to help with collating oof data
 
@@ -33,7 +33,9 @@ def mkodir( base, prefix , fill =3 ):
     return os.path.join(base, prefix+ ( "-%0*i" % (fill,i)))
 
 
-def getpar(dirin, parfile , parname, extno=1):
+def getpar(dirin, parfile , parname, extno=1,
+           parcol="parameter",
+           valcol="value"):
 
     "Return the requested parameter from a fits table"
 
@@ -41,13 +43,13 @@ def getpar(dirin, parfile , parname, extno=1):
 
     dat=pyfits.open(fnamein)[extno].data
 
-    sres = dat.field("parameter").search(parname)
+    sres = dat.field(parcol).search(parname)
     if len( sres[0] ) == 0:
         raise "Parameter %s not found" % parname
 
     parindex = sres[0][0]
 
-    return dat.field("value")[parindex]
+    return dat.field(valcol)[parindex]
 
 def direlev(dirin):
 
