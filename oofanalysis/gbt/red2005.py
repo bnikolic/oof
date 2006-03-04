@@ -1,5 +1,5 @@
 # Bojan Nikolic
-# $Id: red2005.py,v 1.2 2006/02/18 20:40:02 bnikolic Exp $
+# $Id: red2005.py,v 1.3 2006/03/04 16:05:58 bnikolic Exp $
 #
 # The general routine for reducing data from the 2005 campaigns
 
@@ -51,12 +51,18 @@ def Red(obsdate):
                       nzmax=5,
                       prefdirout="oofout" +obsdate )
         
-    
-def Plot(obsdate):
+#Red("TPTCSOOF_060112")
 
-    for sno in GetRedScanList(obsdate):
+def Plot(obsdate,
+         zmax=5,
+         snolist=None):
 
-            oofplot.PlotDir( "oofout%s/s%i-l-db-000/z5" % (obsdate, sno) ,
+    if snolist == None:
+        snolist=GetRedScanList(obsdate)
+
+    for sno in snolist:
+
+            oofplot.PlotDir( "oofout%s/s%i-l-db-000/z%i" % (obsdate, sno, zmax) ,
                      bbox=[-0.6e-3, 0.4e-3, -0.5e-3, 0.5e-3],
                      npix=512,
                      fwhm=4, extent=10,
