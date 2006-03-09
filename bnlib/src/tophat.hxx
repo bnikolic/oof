@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: tophat.hxx,v 1.1 2005/08/31 02:32:04 bnikolic Exp $
+  $Id: tophat.hxx,v 1.2 2006/03/09 14:59:41 bnikolic Exp $
 
   A 2-d tophat functions
 */
@@ -33,8 +33,29 @@ namespace BNLib {
 
     /* ------- Inherited   -------------------*/
 
-    double operator() (double x1, double y1);
+    virtual double operator() (double x1, double y1);
 
+
+  };
+
+  /*! This is useful for modeling the Moon */
+  class TaperedTopHatDD : public TopHatDD {
+    
+
+
+  public:
+
+    /*! This is the amount of taper */
+    double Cm;
+
+    /* ---- Constructors & destructors ----- */
+
+    /*! Default constructor*/
+    TaperedTopHatDD(void);
+
+    /* ------- Inherited   -------------------*/
+
+    double operator() (double x1, double y1);
 
   };
 
