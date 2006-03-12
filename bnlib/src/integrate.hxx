@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: integrate.hxx,v 1.2 2005/09/14 15:50:51 bnikolic Exp $
+  $Id: integrate.hxx,v 1.3 2006/03/12 12:52:42 bnikolic Exp $
   
   Numerical integration
 
@@ -12,7 +12,10 @@ namespace BNLib {
 
   // Forward declarations
   class UnaryDD;
-  
+
+  /*! Virtual base class for ways of integrating an one-dimensional
+   *  real function.
+   */
   class Integrator {
 
     UnaryDD &fn;
@@ -40,6 +43,11 @@ namespace BNLib {
 
   /*! Performs adaptive integration of a function */
   class AdaptiveInt : public Integrator {
+    
+    /*! Use a completely separate implementation class to hide the
+     *  details of the numerical library used to perform the
+     *  integration.
+     */
     iAdaptiveInt *ip;
 
   public:
