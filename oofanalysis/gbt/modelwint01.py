@@ -1,5 +1,5 @@
 # Bojan Nikolic
-# $Id: modelwint01.py,v 1.14 2006/02/21 16:03:14 bnikolic Exp $
+# $Id: modelwint01.py,v 1.15 2006/03/17 17:08:18 bnikolic Exp $
 #
 # Make the surface model for winter
 
@@ -341,6 +341,17 @@ def PlotObs():
                      fwhm=4, extent=10,
                      ncont=5,
                      hardcopy=True)
+
+def PlotAllObs():
+
+    for i in range(5,9):
+        oofplot.PlotDir( "oofout0411/s114-l-db-001/z%i" %i ,
+                     bbox=[-0.6e-3, 0.4e-3, -0.5e-3, 0.5e-3],
+                     npix=512,
+                     fwhm=4, extent=10,
+                     ncont=5,
+                     hardcopy=False)
+        
 
 
 def Report():

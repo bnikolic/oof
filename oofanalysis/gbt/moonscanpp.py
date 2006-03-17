@@ -1,5 +1,5 @@
 # Bojan Nikolic
-# $Id: moonscanpp.py,v 1.2 2006/02/17 14:41:16 bnikolic Exp $
+# $Id: moonscanpp.py,v 1.3 2006/03/17 17:08:18 bnikolic Exp $
 #
 # Pretty plotting of the moonscan data
 #
@@ -36,7 +36,8 @@ def PlotModData(modname, fnameout):
                   fnameout,
                   xax=pyxplot.axis("Azimuth Offset (arcmin)",
                                    xmin=None, xmax=None),
-                  yax=pyxplot.axis("Rel Gain  (db)"),
+                  yax=pyxplot.axis("Rel Gain  (B)",
+                                   xmin=-3),
                   multi=1,
                   width=pyxplot.THESIS)
 
@@ -52,7 +53,7 @@ def PlotModDataR(modname, fnameout):
                   fnameout,
                   xax=pyxplot.axis("Azimuth Offset (arcmin)",
                                    xmin=None, xmax=None),
-                  yax=pyxplot.axis("Rel Gain  (db)"),
+                  yax=pyxplot.axis("Rel Gain  (B)"),
                   multi=1,
                   width=pyxplot.THESIS)    
 
@@ -68,7 +69,7 @@ def CmpRandom():
                   "plots/moonscanobscom.eps",
                   xax=pyxplot.axis("Azimuth Offset (arcmin)",
                                    xmin=None, xmax=None),
-                  yax=pyxplot.axis("Rel Gain  (db)"),
+                  yax=pyxplot.axis("Rel Gain  (B)"),
                   multi=1,
                   width=pyxplot.THESIS)
 
@@ -84,11 +85,16 @@ def CmpRandomV2():
                   "plots/moonscanrandcom.eps",
                   xax=pyxplot.axis("Azimuth Offset (arcmin)",
                                    xmin=None, xmax=None),
-                  yax=pyxplot.axis("Rel Gain  (db)"),
+                  yax=pyxplot.axis("Rel Gain  (B)"),
                   multi=1,
                   width=pyxplot.THESIS)    
     
 
+def doPlotsV2():
+
+    PlotModData( "moonscand/big250.fits",
+                 "plots/moonscanmod250comp.eps")
+    
 def doPlots():
 
     PlotModData( "moonscand/model250rms.fits",
