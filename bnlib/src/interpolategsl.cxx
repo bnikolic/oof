@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: interpolategsl.cxx,v 1.2 2005/09/23 21:26:20 bnikolic Exp $
+  $Id: interpolategsl.cxx,v 1.3 2006/03/21 15:26:59 bnikolic Exp $
 
 */
 
@@ -27,6 +27,8 @@ namespace BNLib {
     case InterpolatorBase::akima:
       return gsl_interp_akima;
       break;
+    default:
+      throw (method);
     }
   }
 
