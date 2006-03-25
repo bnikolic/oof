@@ -1,6 +1,8 @@
 /*
+  \file zernikepoly.hxx
+
   Bojan Nikolic
-  $Id: zernikepoly.hxx,v 1.3 2005/08/05 14:10:54 bnikolic Exp $
+  $Id: zernikepoly.hxx,v 1.4 2006/03/25 14:29:30 bnikolic Exp $
 
   Zernike Polynomial functions
 */
@@ -16,11 +18,18 @@ namespace BNLib {
   /*!
    * Defines a Zernike polynomial of radial order n and angular order
    * l.
+   * 
+   * Note under the definition used here that polynomials \f$ l < 0
+   * \f$ have a \f$ sin\f$-like dependance on the azimuth angle and
+   * polynomials with \f$l>0\f$ have a \f$ cos\f$-like dependance.
    */
   class ZernPoly :  public BinaryDD {
 
   public:
+    /*! Radial order of the polynomial */
     const int    n;
+
+    /*! Angular order of the polynomial */
     const int    l;
 
   private:
@@ -34,7 +43,15 @@ namespace BNLib {
   public:
     
     /* ---------- Constructors & Destructors -----------*/
+
+    /*! 
+      \param n is the radial order
+      \param l is the angular order
+     */
     ZernPoly( int n, int l  );
+
+    /*! destructor is trivial.
+     */
     virtual ~ZernPoly();
 
     /* ---------- Inherited             ----------------*/  

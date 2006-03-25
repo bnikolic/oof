@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: tophat.hxx,v 1.2 2006/03/09 14:59:41 bnikolic Exp $
+  $Id: tophat.hxx,v 1.3 2006/03/25 14:29:30 bnikolic Exp $
 
   A 2-d tophat functions
 */
@@ -12,6 +12,15 @@
 
 namespace BNLib {
 
+  /*! 
+    Defines a top hat function, i.e., a function which s.t.:
+    \f[
+    f(x,y) = 1 {\quad \rm if \quad} x^{2}+y^{2} \leq 1
+    \f]
+    \f[
+    f(x,y) = 0 {\quad \rm otherwise}
+    \f]
+  */
   class TopHatDD : public BinaryDD {
 
   public:
@@ -38,7 +47,11 @@ namespace BNLib {
 
   };
 
-  /*! This is useful for modeling the Moon */
+  /*! 
+     This is useful for modeling the Moon. See 1998A&AS..133..271G for
+     justification.
+  
+  */
   class TaperedTopHatDD : public TopHatDD {
     
 

@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: gaussian.hxx,v 1.2 2005/08/06 14:47:12 bnikolic Exp $
+  $Id: gaussian.hxx,v 1.3 2006/03/25 14:29:30 bnikolic Exp $
 
   Support for Gaussian  fns
 */
@@ -12,6 +12,7 @@
 
 namespace BNLib {
 
+  /*! A 2-dimensional gaussian  */
   class GaussianDD : public BinaryDD {
 
   public:

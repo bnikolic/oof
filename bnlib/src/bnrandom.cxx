@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: bnrandom.cxx,v 1.1 2005/06/21 11:42:12 bnikolic Exp $
+  $Id: bnrandom.cxx,v 1.2 2006/03/25 14:29:30 bnikolic Exp $
 
 */
 
@@ -16,6 +16,7 @@
 
 namespace BNLib { 
 
+  /*! Implements random number generation using GSL */
   class GSLRanGen {
     gsl_rng * generator;
   public:
