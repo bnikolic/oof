@@ -26,6 +26,13 @@ namespace BNFits {
   /*! Return the dimension of the image */
   std::vector<long> ImgDims(FitsF & file);
 
+  /*! Copy a column from file f1 to file f2 */
+  void CopyCol( FitsF &f1,
+		FitsF &f2,
+		unsigned incolnum,
+		unsigned outcolnum,
+		bool create);
+
 
   
 
