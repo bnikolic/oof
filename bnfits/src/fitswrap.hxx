@@ -1,5 +1,5 @@
 /* Bojan Nikolic
-   $Id: fitswrap.hxx,v 1.4 2005/08/18 04:56:37 bnikolic Exp $
+   $Id: fitswrap.hxx,v 1.5 2006/03/28 23:47:17 bnikolic Exp $
    
    Simple wrapper for cfitsio
 */
@@ -49,6 +49,12 @@ namespace BNFits {
     
     /*! Create an image extension. For now assume all are double type. */
     void MkImage ( std::vector<long> axes , int bitpix );
+
+    /* --------- Creating tables  ------------- */
+
+    /*! Create an empty table */
+    void CreateTbl(size_t nrows, char * extname);
+    
     
 
   };

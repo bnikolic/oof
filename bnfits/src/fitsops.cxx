@@ -8,6 +8,8 @@
 #include "fitswrap.hxx"
 #include "fitserr.hxx"
 
+#include <iostream>
+
 
 namespace BNFits {
 
@@ -75,9 +77,12 @@ namespace BNFits {
 			 incolnum, outcolnum,
 			 create,
 			 &status) )
-      throw (FIOExc(FName(f1) ,
-		    "Could not copy column ",
-		    status ));
+      {
+	std::cerr<<"Failed to copy column"<<std::endl;
+	throw (FIOExc(FName(f1) ,
+		      "Could not copy column ",
+		      status ));
+      }
 
   }
 

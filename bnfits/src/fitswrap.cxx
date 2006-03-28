@@ -1,5 +1,5 @@
 /* Bojan Nikolic
-   $Id: fitswrap.cxx,v 1.4 2005/08/18 04:56:37 bnikolic Exp $
+   $Id: fitswrap.cxx,v 1.5 2006/03/28 23:47:17 bnikolic Exp $
 */
 
 #include "fitswrap.hxx"
@@ -112,6 +112,24 @@ namespace BNFits {
 		     "Could not create image extension",
 		     status ));
 
+  }
+
+  void FitsF::CreateTbl(size_t nrows, char * extname)
+  {
+    int status = 0;
+    
+    if ( fits_create_tbl ( (*this),
+			   BINARY_TBL,
+			   nrows,
+			   0,
+			   NULL,
+			   NULL,
+			   NULL,
+			   extname,
+			   &status))
+      throw ( FIOExc(FName(*this) ,
+		     "Could not create table extension",
+		     status ));
   }
 
 
