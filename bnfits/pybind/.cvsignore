@@ -1,3 +1,4 @@
+
 *.la
 *.lo
 .deps
@@ -10,4 +11,5 @@ config.log
 config.status
 configure
 libtool
-
+pybnfits.cxx
+pybnfits.py
