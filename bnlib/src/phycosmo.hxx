@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: phycosmo.hxx,v 1.5 2006/03/29 17:40:47 bnikolic Exp $
+  $Id: phycosmo.hxx,v 1.6 2006/03/29 17:52:15 bnikolic Exp $
 
   Some simple cosmology routines
 */
@@ -47,7 +47,7 @@ namespace BNLib{
       /*! The luminosity distance */
       double DLum_m(double z);
       /*! Luminosity distance in Mega-parsecs */
-      double DLum_MPc(double z);
+      double DLum_Mpc(double z);
       
       double Dangular_m(double z);
       double Dangular_Mpc(double z);

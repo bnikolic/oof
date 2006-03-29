@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: phycosmo.cxx,v 1.4 2006/03/29 17:40:47 bnikolic Exp $
+  $Id: phycosmo.cxx,v 1.5 2006/03/29 17:52:15 bnikolic Exp $
 
 */
 
@@ -58,9 +58,9 @@ namespace BNLib{
     {
       return   D_m(z) * ( 1+ z) ;
     }
-    double RelCosmo::DLum_MPc(double z)
+    double RelCosmo::DLum_Mpc(double z)
     {
-      return DLum_m(z) * Mpc_m;
+      return DLum_m(z) / Mpc_m;
     }
       
     double RelCosmo::Dangular_m(double z) 
