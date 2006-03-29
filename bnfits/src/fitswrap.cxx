@@ -1,5 +1,5 @@
 /* Bojan Nikolic
-   $Id: fitswrap.cxx,v 1.5 2006/03/28 23:47:17 bnikolic Exp $
+   $Id: fitswrap.cxx,v 1.6 2006/03/29 16:57:11 bnikolic Exp $
 */
 
 #include "fitswrap.hxx"
@@ -70,6 +70,7 @@ namespace BNFits {
   }
 
   int FitsF::ColNo (unsigned extno, char * colname )
+    throw(BNFits::FIOExc)
   {
     TableChk(extno);
 

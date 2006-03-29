@@ -9,6 +9,8 @@
 #include <string>
 #include <vector>
 
+#include "fitserr.hxx"
+
 
 namespace BNFits {
 
@@ -31,7 +33,7 @@ namespace BNFits {
 		FitsF &f2,
 		unsigned incolnum,
 		unsigned outcolnum,
-		bool create);
+		bool create) throw(BNFits::FIOExc) ;
 
 
   

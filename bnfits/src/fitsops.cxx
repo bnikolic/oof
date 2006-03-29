@@ -69,6 +69,7 @@ namespace BNFits {
 		unsigned incolnum,
 		unsigned outcolnum,
 		bool create)
+    throw(FIOExc) 
   {
 
     int status = 0;

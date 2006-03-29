@@ -1,5 +1,5 @@
 /* Bojan Nikolic
-   $Id: fitswrap.hxx,v 1.5 2006/03/28 23:47:17 bnikolic Exp $
+   $Id: fitswrap.hxx,v 1.6 2006/03/29 16:57:11 bnikolic Exp $
    
    Simple wrapper for cfitsio
 */
@@ -8,6 +8,8 @@
 
 #include <fitsio.h>
 #include <vector>
+
+#include "fitserr.hxx"
 
 
 namespace BNFits {
@@ -41,7 +43,8 @@ namespace BNFits {
     void TableChk (unsigned dataextno) ;
 
     /*! Return the column number correspondong to colname */
-    int ColNo (unsigned extno, char * colname );
+    int ColNo (unsigned extno, char * colname )
+      throw(BNFits::FIOExc);
 
     int ColNo (unsigned extno, const char * colname );
 
