@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: astromapio.cxx,v 1.5 2005/08/18 18:33:23 bnikolic Exp $
+  $Id: astromapio.cxx,v 1.6 2006/04/01 20:40:01 bnikolic Exp $
 */
 
 #include "astromapio.hxx"
@@ -68,7 +68,7 @@ namespace AstroMap {
     axes[0] = m.nx;
     axes[1] = m.ny;
     fout.MkImage(axes, DOUBLE_IMG);
-    
+
     WriteImg( fout,
 	      m);
     

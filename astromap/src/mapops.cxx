@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: mapops.cxx,v 1.3 2005/10/24 22:37:37 bnikolic Exp $
+  $Id: mapops.cxx,v 1.4 2006/04/01 20:40:01 bnikolic Exp $
 
 
 */
@@ -9,12 +9,13 @@
 
 #include <valarray>
 #include <cmath>
+#include <memory>
 
 #include "astromap.hxx"
+#include "coordsys/lincordsys.hxx"
 
 #include <bnrandom.hxx>
 
-#include <iostream>
 
 
 namespace AstroMap {
@@ -50,6 +51,30 @@ namespace AstroMap {
     double var = (goodmap  * goodweight).sum() / goodweight.sum()  - pow(mean,2);
 
     return sqrt(var);
+
+  }
+
+  Map *  IntZoom( Map &m, unsigned scale)
+  {
+    
+    std::auto_ptr<Map> mres ( new Map( m.nx *scale, m.ny  *scale));
+
+    // First copy the data
+    for (unsigned x =0 ;  x < m.nx  ; ++x)
+      for (unsigned y= 0 ; y < m.ny; ++y ) 
+	{
+	  for ( unsigned dx  =0 ; dx < scale ; ++dx)
+	    for (unsigned dy =0 ; dy < scale ; ++dy)
+	      {
+		mres->get( x*scale+dx, y*scale+dy) = m.get(x,y);
+	      }
+	}
+
+    // Sort out the coordinate system
+    delete(    mres->cs);
+    mres->cs = m.cs->Clone();
+    
+    return mres.release();
 
   }
 

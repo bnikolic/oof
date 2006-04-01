@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: mapops.hxx,v 1.2 2005/10/24 22:04:47 bnikolic Exp $
+  $Id: mapops.hxx,v 1.3 2006/04/01 20:40:01 bnikolic Exp $
 
   Some operations on maps
 */
@@ -30,9 +30,16 @@ namespace AstroMap {
   double MapRMS( Map &m);
 
   /*!
-   * Calculate the weighted RMS value of the map
+   * This function is misnamed: it actually calculates the standard
+   * deviation of the supplied map weighted by the map weight.
    */
   double MapRMS( Map &m, Map & weight);
+
+  /*!
+   *  Create a map that is scale times bigger than m, with the pixel
+   *  values replicated to fill up the bigger map.
+   */
+  Map *  IntZoom( Map &m, unsigned scale);
 
 }
 
