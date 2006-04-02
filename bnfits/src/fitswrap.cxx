@@ -1,5 +1,5 @@
 /* Bojan Nikolic
-   $Id: fitswrap.cxx,v 1.7 2006/04/02 19:55:12 bnikolic Exp $
+   $Id: fitswrap.cxx,v 1.8 2006/04/02 23:34:36 bnikolic Exp $
 */
 
 #include "fitswrap.hxx"
@@ -13,6 +13,7 @@
 namespace BNFits {
 
   FitsF::FitsF( const char * fname, openmode mode  )
+    throw(BNFits::FIOExc)
   {
     int status = 0;
 
@@ -28,6 +29,13 @@ namespace BNFits {
       {
 	fits_create_file( &file, fname , &status ) ;
 	  
+      }
+    else if ( readwrite == mode )
+      {
+	iomode = READWRITE;
+
+      if ( fits_open_file(&file, fname , iomode, &status))
+	throw ( FIOExc(fname ,"Error opening FITS file for read/write", status) ); 
       }
 
   }

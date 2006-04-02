@@ -187,6 +187,7 @@ namespace BNFits {
 
   void DeleteRows( FitsF &f1,
 		   std::valarray<long> &rowlist )
+    throw(BNFits::FIOExc)
   {
     
     f1.TableChk();
@@ -200,6 +201,16 @@ namespace BNFits {
 		     "Could not delete rows",
 		     status));
     
+  }
+
+  void DeleteRows( FitsF &f1,
+		   std::vector<long> &rowlist )
+    throw(BNFits::FIOExc)
+  {
+    std::valarray<long> rl (&rowlist[0],
+			    rowlist.size());
+
+    DeleteRows(f1, rl);
   }
 
 

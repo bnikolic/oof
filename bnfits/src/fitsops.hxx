@@ -68,7 +68,10 @@ namespace BNFits {
 
   /*! Delete specified row numbers */
   void DeleteRows( FitsF &f1,
-		   std::valarray<long> &rowlist );
+		   std::valarray<long> &rowlist ) throw(BNFits::FIOExc);
+
+  void DeleteRows( FitsF &f1,
+		   std::vector<long> &rowlist ) throw(BNFits::FIOExc);
 
 
   

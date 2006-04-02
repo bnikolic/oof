@@ -1,5 +1,5 @@
 /* Bojan Nikolic
-   $Id: fitswrap.hxx,v 1.7 2006/04/02 19:55:12 bnikolic Exp $
+   $Id: fitswrap.hxx,v 1.8 2006/04/02 23:34:36 bnikolic Exp $
    
    Simple wrapper for cfitsio
 */
@@ -28,7 +28,8 @@ namespace BNFits {
     
     enum openmode {read ,readwrite, create } ;
 
-    FitsF( const char * fname, openmode mode  );
+    FitsF( const char * fname, openmode mode  )
+      throw(BNFits::FIOExc);
 
     ~FitsF();
     
