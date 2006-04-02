@@ -9,6 +9,7 @@
 #include "fitserr.hxx"
 
 #include <iostream>
+#include <valarray>
 
 
 namespace BNFits {
@@ -27,6 +28,19 @@ namespace BNFits {
   unsigned long NRows (FitsF & file, unsigned extno)
   {
     file.HDUseek (extno);
+
+    long nrows = 0;
+    int status = 0;
+    fits_get_num_rows(file, &nrows, &status);
+
+    return nrows;
+
+  }
+
+  unsigned long NRows (FitsF & file)
+  {
+
+    file.TableChk();
 
     long nrows = 0;
     int status = 0;
@@ -87,16 +101,15 @@ namespace BNFits {
 
   }
 
-  int GetColType(FitsF &file, unsigned colno)
-    throw(BNFits::FIOExc)  
+  /*! Return info about column types */
+  void GetColInfo(FitsF &file, unsigned colno,
+		  int &typecode,
+		  long &repeat,
+		  long &width)
   {
-    
     /* This checks we are on a table hdu */
     file.TableChk();
-    
-    int typecode;
-    long repeat;
-    long width;
+
     int status=0;
 
     if (fits_get_coltype( file, colno, 
@@ -107,7 +120,18 @@ namespace BNFits {
       throw ( FIOExc(FName(file),
 		     "Could not retrieve info about column",
 		     status));
+
+  }
+
+  int GetColType(FitsF &file, unsigned colno)
+    throw(BNFits::FIOExc)  
+  {
     
+    int typecode;
+    long repeat;
+    long width;
+
+    GetColInfo( file, colno, typecode, repeat, width );
     return typecode;
 
   }
@@ -118,6 +142,32 @@ namespace BNFits {
 		    size_t outcolnum,
 		    size_t outfirstrow ) throw(BNFits::FIOExc) 
   {
+
+    int typecode;
+    long repeat;
+    long width;
+
+    GetColInfo( f1, incolnum, 
+		typecode, repeat, width );
+
+    
+    size_t nrows = NRows(f1);
+    
+    std::valarray<char> data  ( width * repeat * nrows);
+
+    // Read input data
+
+    int anynul= 0;
+    int status=0;
+    if( fits_read_col(f1, typecode, incolnum,
+		      1  , 1 , repeat* nrows,
+		      NULL,
+		      &data[0],
+		      &anynul,
+		      &status) )
+      throw ( FIOExc(FName(f1),
+		     "Could not read data from input column",
+		     status));
     
 
   }

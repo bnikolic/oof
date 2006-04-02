@@ -22,6 +22,9 @@ namespace BNFits {
   /*! Returns the number of rows in this table extension */
   unsigned long NRows (FitsF & file, unsigned extno);
 
+  /*! Returns number of rows in the current extnesion */
+  unsigned long NRows (FitsF & file);
+
   /*! Return the number of dimensions */
   unsigned NAxis(FitsF & file);
 
@@ -34,6 +37,22 @@ namespace BNFits {
 		unsigned incolnum,
 		unsigned outcolnum,
 		bool create) throw(BNFits::FIOExc) ;
+
+  /*! 
+    Return info about column types 
+
+    \par repeat returns the vector repeat count on the binary table
+    TFORMn keyword value. (ASCII table columns always have repeat = 1)
+
+    \par width parameter returns the width in bytes of a single column
+    element (e.g., a '10D' binary table column will have width = 8, an
+    ASCII table 'F12.2' column will have width = 12, and a binary
+    table'60A' character string column will have width = 60)
+  */
+  void GetColInfo(FitsF &file, unsigned colno,
+		  int &typecode,
+		  long &repeat,
+		  long &width);
 
   /*! Return the CFits type-code  for specified column */
   int GetColType(FitsF &file, unsigned colno) throw(BNFits::FIOExc)  ;
