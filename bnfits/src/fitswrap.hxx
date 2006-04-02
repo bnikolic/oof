@@ -1,5 +1,5 @@
 /* Bojan Nikolic
-   $Id: fitswrap.hxx,v 1.6 2006/03/29 16:57:11 bnikolic Exp $
+   $Id: fitswrap.hxx,v 1.7 2006/04/02 19:55:12 bnikolic Exp $
    
    Simple wrapper for cfitsio
 */
@@ -41,6 +41,9 @@ namespace BNFits {
 
     /*! If not a table throw an exception */
     void TableChk (unsigned dataextno) ;
+
+    /*! Throw execpetion if current hdu is not a table */
+    void TableChk () ;
 
     /*! Return the column number correspondong to colname */
     int ColNo (unsigned extno, char * colname )

@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: tfitsops.hxx,v 1.6 2005/08/18 18:33:34 bnikolic Exp $
+  $Id: tfitsops.hxx,v 1.7 2006/04/02 19:55:12 bnikolic Exp $
 
   Templated fits file operations 
 */
@@ -193,11 +193,10 @@ namespace BNFits {
   }
 				       
 
-
-  /*! Loads a column from a table */
+  /*! Loads a column from a table, takes column number */
   template<class T> void LoadCol ( FitsF &file,
 				   unsigned extno,
-				   const char  * colname,
+				   unsigned colno,
 				   std::valarray<T> &data )
   {
 
@@ -228,8 +227,6 @@ namespace BNFits {
 	throw ( 0 );
       }
 
-    int colno = file.ColNo(extno , colname);
-
     int ann = 0;
     int status = 0;
 
@@ -243,10 +240,25 @@ namespace BNFits {
 		      &ann, 
 		      &status) )
       throw FIOExc( FName(file),
-		    "Failed to read column " + std::string(colname) ,
+		    "Failed to read column ",
 		    status );
     
     
+
+
+  }
+
+  /*! Loads a column from a table, takes column name */
+  template<class T> void LoadCol ( FitsF &file,
+				   unsigned extno,
+				   const char  * colname,
+				   std::valarray<T> &data )
+  {
+
+
+    int colno = file.ColNo(extno , colname);
+
+    LoadCol(file, extno, colno, data);
 
 
   }

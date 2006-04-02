@@ -35,6 +35,16 @@ namespace BNFits {
 		unsigned outcolnum,
 		bool create) throw(BNFits::FIOExc) ;
 
+  /*! Return the CFits type-code  for specified column */
+  int GetColType(FitsF &file, unsigned colno) throw(BNFits::FIOExc)  ;
+
+  /*! Copy column data from file f1 to file f2, starting from specified row */
+  void CopyColData( FitsF &f1,
+		    FitsF &f2,
+		    size_t incolnum,
+		    size_t outcolnum,
+		    size_t outfirstrow ) throw(BNFits::FIOExc) ;
+
 
   
 

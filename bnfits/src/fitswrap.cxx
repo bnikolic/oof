@@ -1,5 +1,5 @@
 /* Bojan Nikolic
-   $Id: fitswrap.cxx,v 1.6 2006/03/29 16:57:11 bnikolic Exp $
+   $Id: fitswrap.cxx,v 1.7 2006/04/02 19:55:12 bnikolic Exp $
 */
 
 #include "fitswrap.hxx"
@@ -63,6 +63,16 @@ namespace BNFits {
   {
 
     if ( not TableP(dataextno) )
+      throw ( FIOExc ( FName (*this) , 
+		       "Tried a table operation on a non-table HDU",
+		       99));
+
+  }
+
+  void FitsF::TableChk () 
+  {
+
+    if ( not (  hdutype == ASCII_TBL || hdutype == BINARY_TBL  ) )
       throw ( FIOExc ( FName (*this) , 
 		       "Tried a table operation on a non-table HDU",
 		       99));

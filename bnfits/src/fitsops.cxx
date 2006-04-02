@@ -87,6 +87,41 @@ namespace BNFits {
 
   }
 
+  int GetColType(FitsF &file, unsigned colno)
+    throw(BNFits::FIOExc)  
+  {
+    
+    /* This checks we are on a table hdu */
+    file.TableChk();
+    
+    int typecode;
+    long repeat;
+    long width;
+    int status=0;
+
+    if (fits_get_coltype( file, colno, 
+			  &typecode, 
+			  &repeat,
+			  &width,
+			  &status) )
+      throw ( FIOExc(FName(file),
+		     "Could not retrieve info about column",
+		     status));
+    
+    return typecode;
+
+  }
+
+  void CopyColData( FitsF &f1,
+		    FitsF &f2,
+		    size_t incolnum,
+		    size_t outcolnum,
+		    size_t outfirstrow ) throw(BNFits::FIOExc) 
+  {
+    
+
+  }
+
 
 }
 
