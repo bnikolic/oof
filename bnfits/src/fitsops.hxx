@@ -8,6 +8,7 @@
 
 #include <string>
 #include <vector>
+#include <valarray>
 
 #include "fitserr.hxx"
 
@@ -57,12 +58,17 @@ namespace BNFits {
   /*! Return the CFits type-code  for specified column */
   int GetColType(FitsF &file, unsigned colno) throw(BNFits::FIOExc)  ;
 
-  /*! Copy column data from file f1 to file f2, starting from specified row */
+  /*! Copy column data from file f1 to file f2, starting from
+      specified row. Output table is extend as necesary. */
   void CopyColData( FitsF &f1,
 		    FitsF &f2,
 		    size_t incolnum,
 		    size_t outcolnum,
 		    size_t outfirstrow ) throw(BNFits::FIOExc) ;
+
+  /*! Delete specified row numbers */
+  void DeleteRows( FitsF &f1,
+		   std::valarray<long> &rowlist );
 
 
   

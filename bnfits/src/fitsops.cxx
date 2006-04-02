@@ -168,8 +168,38 @@ namespace BNFits {
       throw ( FIOExc(FName(f1),
 		     "Could not read data from input column",
 		     status));
+
+    // Write to output column
+
+    if ( fits_write_col( f2, typecode, outcolnum,
+			 outfirstrow, 
+			 1,
+			 repeat*nrows,
+			 &data[0],
+			 &status ))
+      throw ( FIOExc(FName(f2),
+		     "Could not write data to output column",
+		     status));
+
     
 
+  }
+
+  void DeleteRows( FitsF &f1,
+		   std::valarray<long> &rowlist )
+  {
+    
+    f1.TableChk();
+
+    int status=0;
+    if ( fits_delete_rowlist( f1,
+			      &rowlist[0],
+			      rowlist.size(),
+			      &status))
+      throw ( FIOExc(FName(f1),
+		     "Could not delete rows",
+		     status));
+    
   }
 
 
