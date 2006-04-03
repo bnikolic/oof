@@ -1,5 +1,5 @@
 # Bojan Nikolic
-# $Id: bnfitsutils.py,v 1.3 2006/04/03 10:16:01 bnikolic Exp $
+# $Id: bnfitsutils.py,v 1.4 2006/04/03 10:47:06 bnikolic Exp $
 #
 # FITS file utilities exploting pybnfits
 
@@ -22,7 +22,7 @@ def MaskToList(mask):
 
     res=pybnfits.LongVector(len(xr))
     for i,v in enumerate(xr):
-        res[i]=v
+        res[i]=v+1
     return res
 
 def Select(fname,
