@@ -1,5 +1,5 @@
 # Bojan Nikolic
-# $Id: bnfitsutils.py,v 1.2 2006/04/02 23:34:08 bnikolic Exp $
+# $Id: bnfitsutils.py,v 1.3 2006/04/03 10:16:01 bnikolic Exp $
 #
 # FITS file utilities exploting pybnfits
 
@@ -16,6 +16,7 @@ def MaskToList(mask):
     "Turn a mask into a list of rows to delete"
 
     mask = numarray.array( mask, numarray.Bool)
+    mask = numarray.logical_not(mask)
     xr=numarray.arange( len(mask) )[mask]
     xr=numarray.array(xr)
 
