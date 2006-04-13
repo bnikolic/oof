@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: csops.hxx,v 1.3 2005/08/03 12:00:37 bnikolic Exp $
+  $Id: csops.hxx,v 1.4 2006/04/13 16:16:18 bnikolic Exp $
 
   Coordinate system operations
 */
@@ -15,6 +15,9 @@ namespace AstroMap {
     dimension and with the specified halflength
   */
   void MkApCS(Map &m, double halflen);
+
+  /*! Assing a rectangular coordinate system */
+  void MkRectCS(Map &m, double xhalflen, double yhalflen);
 
   /*! Shring the coordinate cs around the centre of the map by the
    * specified factor

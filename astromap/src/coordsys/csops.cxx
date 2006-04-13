@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: csops.cxx,v 1.4 2005/08/05 12:59:41 bnikolic Exp $
+  $Id: csops.cxx,v 1.5 2006/04/13 16:16:18 bnikolic Exp $
 
   Coordinate system operations
 */
@@ -32,6 +32,23 @@ namespace AstroMap {
     lcs->TM[4] = halflen * 2 / m.ny;
     lcs->TM[5] = -1.0 *  halflen  ;
 
+
+  }
+
+  void MkRectCS(Map &m, double xhalflen, double yhalflen)
+  {
+    // For the time being assumed we have a linear coordinate system;
+
+    LinCS * lcs = ENFORCE(dynamic_cast<LinCS *>( m.cs ));
+
+
+    lcs->TM[0] = xhalflen * 2 / m.nx;
+    lcs->TM[1] = 0;
+    lcs->TM[2] = -1.0 * xhalflen  ;
+    
+    lcs->TM[3] = 0;
+    lcs->TM[4] = yhalflen * 2 / m.ny;
+    lcs->TM[5] = -1.0 *  yhalflen  ;
 
   }
 

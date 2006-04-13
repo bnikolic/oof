@@ -2,7 +2,7 @@ AC_INIT(ASTROMAP, 0.02, bnikolic@nrao.edu)
 
 AC_CONFIG_AUX_DIR(config)
 
-AC_REVISION($Revision: 1.9 $)
+AC_REVISION($Revision: 1.10 $)
 
 AM_INIT_AUTOMAKE(ASTROMAP, 0.02, bnikolic@nrao.edu)
 
@@ -40,5 +40,6 @@ AC_OUTPUT(Makefile
           src/Makefile
 	  src/coordsys/Makefile	
 	  src/dataser/Makefile	
-	  src/wcs/Makefile)
+	  src/wcs/Makefile
+	  doc/Doxyfile)
 
