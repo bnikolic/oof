@@ -1,5 +1,5 @@
 # Bojan Nikolic
-# $Id: verification.py,v 1.2 2006/04/25 14:57:00 bnikolic Exp $
+# $Id: verification.py,v 1.3 2006/04/25 15:10:07 bnikolic Exp $
 #
 # Plot OOF verification results
 
@@ -40,8 +40,25 @@ def ParseData(fin):
 
 def PlotGain( d):
 
-    rcpnone = [ ( x[1 ] , x[2][0] , x[2][1] ) for x in d if x[0]=="RCP" and x[3]==0 ]
-    rcpv1 = [ ( x[1 ] , x[2][0] , x[2][1] ) for x in d if x[0]=="RCP" and x[3]==1 ]    
+    def ProcD(d2):
+
+        pt=[]
+        md = {}
+
+        for x in d2:
+            if md.has_key(x[4] ):
+                md[x[4]].append (  ( x[1 ] , x[2][0] , x[2][1]  ) )
+            else:
+                md[x[4]]= [ ( x[1 ] , x[2][0] , x[2][1]  ) ]
+
+        for k in md.keys():
+            pt.append( pyxplot.graph.data.list( md[k], x=1, y=2, dy=3))
+
+        return pt
+        
+
+    rcpnone = [ x for x in d if x[0]=="RCP" and x[3]==0 ]
+    rcpv1 = [ x for x in d if x[0]=="RCP" and x[3]==1 ]    
 
     pt      = [ pyxplot.graph.data.list( rcpnone, x=1, y=2, dy=3),
                 pyxplot.graph.data.list( rcpv1, x=1, y=2, dy=3),                
@@ -53,10 +70,10 @@ def PlotGain( d):
                                           x=pyxplot.axis(r"$\theta\,$(degrees)",
                                                          xmin=0, xmax=90) ,
                                           y=pyxplot.axis(r"$\eta_{\rm a}$",
-                                                         xmin=0.2, xmax=0.6),
+                                                         xmin=0.2, xmax=0.5),
                                           ))
-    gon.plot(pt[1],
-             [ graph.style.symbol(graph.style.symbol.changecircle,
+    gon.plot(ProcD(rcpv1),
+             [ graph.style.symbol(graph.style.symbol.changesquare,
                                   symbolattrs=[deco.filled()]
                                   ),
                graph.style.errorbar()
@@ -67,11 +84,11 @@ def PlotGain( d):
                                            ypos =gon.height+0.5,
                                            x=gon.axes["x"].createlinkaxis(),
                                           y=pyxplot.axis(r"$\eta_{\rm a}$",
-                                                         xmin=0.2, xmax=0.6),
+                                                         xmin=0.2, xmax=0.5),
                                            ))
 
 
-    goff.plot(pt[0],
+    goff.plot(ProcD(rcpnone),
              [ graph.style.symbol(graph.style.symbol.changesquare),
                graph.style.errorbar()
                ]
