@@ -1,8 +1,15 @@
 # Bojan Nikolic
-# $Id: modthermplot.py,v 1.1 2006/04/06 20:02:36 bnikolic Exp $
+# $Id: modthermplot.py,v 1.2 2006/04/26 09:23:10 bnikolic Exp $
+
+import string
+
+import pyfits
+import numarray
 
 from  matplotlib import pylab
-import pyfits
+
+import pyxplot
+
 
 
 din = pyfits.open("thermdata/pointastigm.fits")[1].data
@@ -93,3 +100,30 @@ def doplots():
 
     
     
+def LoadElScanData(fnamein):
+
+    eloff , tant, modtant = [] , [] , []
+    for line in open(fnamein):
+        ld = string.split(line)
+        eloff.append( float(ld[0]  ))
+        tant.append( float(ld[1]  ))
+        modtant.append( float(ld[3]  ))
+
+    return ( numarray.array(eloff),
+             numarray.array(tant),
+             numarray.array(modtant))
+        
+def PlotElScan(fnamein, fnameout ):
+
+    eloff, tant, modtant = LoadElScanData(fnamein)
+
+    pyxplot.vect( [ eloff, eloff],
+                  [ tant, modtant],
+                  fnameout,
+                  yax=pyxplot.axis(r"$T_{\rm Ant}\,({\rm K})$", xmin=82, xmax=90),
+                  xax=pyxplot.axis(r"$\delta\theta\,({\rm arcmin})$",xmin=-1.5, xmax=1.5),
+                  multi=True)
+
+def DoElScanPlots():
+    PlotElScan("thermdata/482.dat", "temp/els1.eps")
+    PlotElScan("thermdata/488.dat", "temp/els2.eps")

@@ -1,5 +1,5 @@
 # Bojan Nikolic
-# $Id: modelwint01.py,v 1.15 2006/03/17 17:08:18 bnikolic Exp $
+# $Id: modelwint01.py,v 1.16 2006/04/26 09:23:10 bnikolic Exp $
 #
 # Make the surface model for winter
 
@@ -93,10 +93,10 @@ def PrintEfficiencies():
 
     pyxplot.scatter( res,
                      "plots/offseteff.eps",
-                     width=pyxplot.THESIS,
-                     xax=pyxplot.axis(r"$\theta\,$(deg)", xmin=0 , xmax=90),
-                     yax=pyxplot.axis(r"$\epsilon_{\rm LSS}$"),
-                     symbsize=0.05,
+                     width=pyxplot.MNRAS_SC,
+                     xax=pyxplot.axis(r"$\theta\,$(degrees)", xmin=0 , xmax=90),
+                     yax=pyxplot.axis(r"$\eta_{\rm LSS}$"),
+                     symbsize=0.1,
                      ploterrb=True)
 
 #)                     addp=lambda g : g.plot(pyxplot.graph.data.function(

@@ -1,5 +1,5 @@
 # Bojan Nikolic
-# $Id: analysebump.py,v 1.2 2006/04/05 18:42:13 bnikolic Exp $
+# $Id: analysebump.py,v 1.3 2006/04/26 09:23:10 bnikolic Exp $
 #
 #
 
@@ -92,15 +92,19 @@ def PlotDiff():
 def ClosurePlot():
 
     m1=oofplot.PlotZernFile( "oofout0411/s471-l-db-000/z5/fitpars.fits" ,
-                             "plots/closure/daybefore.png/PNG" )
+                             "plots/closure/daybefore.png/PNG" ,
+                             phaserange=[-2,2])
 
     m1=oofplot.PlotZernFile( "oofout0411/s471-l-db-000/z5/fitpars.fits" ,
-                             "plots/closure/daybefore.eps/CPS" )    
+                             "plots/closure/daybefore.eps/CPS" ,
+                             phaserange=[-2,2])    
 
     m2=oofplot.PlotZernFile( "oofout0411/s492-l-db-000/z5/fitpars.fits" ,
-                             "plots/closure/dayafter.png/PNG" )
+                             "plots/closure/dayafter.png/PNG" ,
+                             phaserange=[-2,2])
     m2=oofplot.PlotZernFile( "oofout0411/s492-l-db-000/z5/fitpars.fits" ,
-                             "plots/closure/dayafter.eps/CPS" )    
+                             "plots/closure/dayafter.eps/CPS" ,
+                             phaserange=[-2,2])    
 
     i1    = oofplot.PlotIllumFile("oofout0411/s471-l-db-000/z5/fitpars.fits" ,
                                    "temp/amp.png/PNG")
