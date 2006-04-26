@@ -1,5 +1,5 @@
 # Bojan Nikolic
-# $Id: oofplot.py,v 1.16 2006/02/15 23:15:02 bnikolic Exp $
+# $Id: oofplot.py,v 1.17 2006/04/26 10:16:48 bnikolic Exp $
 #
 # Various utilities for plotting OOF data
 
@@ -19,7 +19,8 @@ import oofcol
 
 def PlotDir(dirnamein, bbox=None, hardcopy=False, odir="plots",
             fwhm=None , extent = None, npix= None,
-            ncont=None):
+            ncont=None,
+            decorate=True):
 
     "Make all the relevant plots"
 
@@ -44,7 +45,8 @@ def PlotDir(dirnamein, bbox=None, hardcopy=False, odir="plots",
                 extent=extent,
                 bbox=bbox,
                 ncont=ncont,
-                hardcopy=hardcopy)
+                hardcopy=hardcopy,
+                decorate=decorate)
 
     PlotSimDrizzleBeams( obsdsfname,
                          os.path.join(dirnamein, "fitbeams.fits"),
@@ -56,7 +58,8 @@ def PlotDir(dirnamein, bbox=None, hardcopy=False, odir="plots",
                          npix=npix,
                          oversample=oversample,
                          ncont=ncont,
-                         hardcopy=hardcopy)
+                         hardcopy=hardcopy,
+                         decorate=decorate)
 
     PlotSimDrizzleBeams( obsdsfname,
                          os.path.join(dirnamein, "perfectbeams.fits"),
@@ -68,7 +71,8 @@ def PlotDir(dirnamein, bbox=None, hardcopy=False, odir="plots",
                          npix=npix,
                          oversample=oversample,
                          ncont=ncont,
-                         hardcopy=hardcopy)
+                         hardcopy=hardcopy,
+                         decorate=decorate)
 
     PlotAperture( os.path.join(dirnamein, "aperture-notilt.fits"),
                   os.path.join(dirnamein, odir),
@@ -87,7 +91,8 @@ def PlotDir(dirnamein, bbox=None, hardcopy=False, odir="plots",
                              npix=npix,
                              oversample=oversample,
                              ncont=ncont,
-                             hardcopy=hardcopy)
+                             hardcopy=hardcopy,
+                             decorate=decorate)
 
         PlotAperture( os.path.join(dirnamein, "aperture-offset.fits"),
                       os.path.join(dirnamein, odir),
@@ -126,7 +131,8 @@ def PlotDSFile( fnamein,
                 extent=4.0,
                 bbox=None,
                 ncont=None,
-                hardcopy=False
+                hardcopy=False,
+                decorate=True
                ):
     "Plot beams contained in a dataseries file"
 
@@ -150,7 +156,9 @@ def PlotDSFile( fnamein,
                                           prefix + "-%i%s" % (i, end) ),
                         colmap="heat",
                         bbox=bbox,
-                        contours=ncont and implot.MkChopContours(m, nlevels=ncont))
+                        contours=ncont and implot.MkChopContours(m, nlevels=ncont),
+                        plotbox=decorate,
+                        plotwedge=decorate)
                                           
 
 def PlotSimDrizzleBeams(obsfilename, beamfilename,
@@ -161,7 +169,8 @@ def PlotSimDrizzleBeams(obsfilename, beamfilename,
                         npix=128,
                         bbox=None,
                         ncont=None,
-                        hardcopy=False):
+                        hardcopy=False,
+                        decorate=True):
 
     "Create a simulated ds from model beams and then drizzle"
 
@@ -178,7 +187,9 @@ def PlotSimDrizzleBeams(obsfilename, beamfilename,
                                          prefix + "-%i%s" % (i, end) ),
                        colmap="heat",
                        bbox=bbox,
-                       contours=ncont and implot.MkChopContours(skym, nlevels=ncont)
+                       contours=ncont and implot.MkChopContours(skym, nlevels=ncont),
+                       plotbox=decorate,
+                       plotwedge=decorate
                        )
 
 def PlotAperture(apfname,
