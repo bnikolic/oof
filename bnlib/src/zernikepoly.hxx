@@ -2,7 +2,7 @@
   \file zernikepoly.hxx
 
   Bojan Nikolic
-  $Id: zernikepoly.hxx,v 1.4 2006/03/25 14:29:30 bnikolic Exp $
+  $Id: zernikepoly.hxx,v 1.5 2006/05/22 21:21:18 bnikolic Exp $
 
   Zernike Polynomial functions
 */
@@ -45,7 +45,7 @@ namespace BNLib {
     /* ---------- Constructors & Destructors -----------*/
 
     /*! 
-      \param n is the radial order
+      \param n is the radial  order
       \param l is the angular order
      */
     ZernPoly( int n, int l  );

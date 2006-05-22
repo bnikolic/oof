@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: onedroot.hxx,v 1.3 2005/07/17 19:25:58 bnikolic Exp $
+  $Id: onedroot.hxx,v 1.4 2006/05/22 21:21:18 bnikolic Exp $
 
   One dimensional root finding
 */
@@ -14,8 +14,8 @@ namespace BNLib {
   /*! Finds a root of the supplied function fn
    *
    *  Root is sought in interval xmin, xmax
-   *  epsrel is the desired absolute accuracy
-   *  epsrel is the desired relative accuracy
+   *  \param epsrel is the desired absolute accuracy
+   *  \param epsrel is the desired relative accuracy
    */
   double Root1D ( UnaryDD & fn , 
 		  double xmin, double xmax,
