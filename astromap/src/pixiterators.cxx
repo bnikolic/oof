@@ -1,7 +1,7 @@
 /**
    \file pixiterators.cxx
 
-   $Id: pixiterators.cxx,v 1.1 2006/06/06 20:10:47 bnikolic Exp $
+   $Id: pixiterators.cxx,v 1.2 2006/06/06 20:18:18 bnikolic Exp $
 */
 
 #include "pixiterators.hxx"
@@ -17,13 +17,18 @@ namespace AstroMap {
   {
 
   }
-
   void PixISpiral::operator++ (void)
+  {
+    advance();
+  }
+
+  void PixISpiral::advance (void)
   {
     
     if ( n == 0 )
       {// we're at origin
 	x++; y--;
+	n++;
       }
     else
       {
@@ -34,7 +39,7 @@ namespace AstroMap {
 	      x--;
 	    else if ( (cy-y) == n ) // bottom right corner
 	      {
-		ENFORCE(false);
+		y++;
 	      }
 	    else
 	      y++;

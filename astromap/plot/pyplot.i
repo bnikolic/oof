@@ -46,7 +46,7 @@ namespace std {
 %include "../src/astromapio.hxx"
 %include "../src/mapops.hxx"
 %include "../src/pixextract.hxx"
-%include "../src/pixiterators.hxx"
+%include "../src/pixiterators.hxx" 
 %include "../src/fft.hxx"
 %include "../src/lcmaps.hxx"
 %include "../src/convolve.hxx"
