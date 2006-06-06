@@ -1,5 +1,5 @@
 # Bojan Nikolic
-# $Id: implot.py,v 1.12 2006/02/15 23:20:00 bnikolic Exp $
+# $Id: implot.py,v 1.13 2006/06/06 20:10:46 bnikolic Exp $
 #
 # Routines for plotting maps
 
@@ -60,6 +60,8 @@ def plotmap(mapp,
 
     if plotbox:
         pyplot.cpgtbox("DYFOBCNS",0,0,"DYFOBCNS",0,0)
+    else:
+        pyplot.cpgtbox("BC",0,0,"BC",0,0)
 
     pyplot.cpgsitf(transf)
 

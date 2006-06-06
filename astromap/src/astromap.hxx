@@ -1,6 +1,8 @@
 /*
+  \file astromap.hxx
+
   Bojan Nikolic
-  $Id: astromap.hxx,v 1.3 2005/06/21 00:44:44 bnikolic Exp $
+  $Id: astromap.hxx,v 1.4 2006/06/06 20:10:47 bnikolic Exp $
 
 */
 #ifndef _ASTROMAP_ASTROMAP_HXX__
@@ -24,7 +26,7 @@ namespace AstroMap {
 
   public:
     
-
+    /* ----------- Public data members --------------------*/
 
     /*! Extent in the x direction (first index) */
     const unsigned nx;
@@ -57,6 +59,12 @@ namespace AstroMap {
     double & get(unsigned x , unsigned y );
 
     const double & get(unsigned x , unsigned y ) const;
+
+    /** Returns true if the pixel lies within map boundaries */
+    bool belongs(unsigned x , unsigned y) const 
+    { return x>=0 && x<nx && y >=0 && y< ny ; }
+
+    
     
 
   };

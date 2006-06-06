@@ -5,6 +5,7 @@
 #include "../src/astromapio.hxx"
 #include "../src/mapops.hxx"
 #include "../src/pixextract.hxx"
+#include "../src/pixiterators.hxx"
 #include "../src/fft.hxx"
 #include "../src/lcmaps.hxx"
 #include "../src/convolve.hxx"
@@ -45,6 +46,7 @@ namespace std {
 %include "../src/astromapio.hxx"
 %include "../src/mapops.hxx"
 %include "../src/pixextract.hxx"
+%include "../src/pixiterators.hxx"
 %include "../src/fft.hxx"
 %include "../src/lcmaps.hxx"
 %include "../src/convolve.hxx"
@@ -90,6 +92,10 @@ namespace std {
 	(*self) += m;
      }
 
+    double getv  ( unsigned x, unsigned y) {
+	return 	self->get(x,y);
+     } 
+
      void set  ( unsigned x, unsigned y, double val) {
 	self->get(x,y)=val;
      }
@@ -110,6 +116,19 @@ namespace std {
 	(*self).pxtoworld(px, py , wx , wy);
 	return wy;
 	}
+
+  double  x_worldtopx(double wx, double wy ) {
+	double px ; double py;
+	(*self).worldtopx( wx , wy, px, py );
+	return px;
+	}
+
+  double  y_worldtopx(double wx, double wy ) {
+	double px ; double py;
+	(*self).worldtopx( wx , wy, px, py );
+	return py;
+	}
+
 
 }
 
