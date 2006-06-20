@@ -1,7 +1,7 @@
 /**
    \file pixiterators.cxx
 
-   $Id: pixiterators.cxx,v 1.2 2006/06/06 20:18:18 bnikolic Exp $
+   $Id: pixiterators.cxx,v 1.3 2006/06/20 17:56:12 bnikolic Exp $
 */
 
 #include "pixiterators.hxx"
@@ -69,6 +69,11 @@ namespace AstroMap {
 	      x++;
 	  }
       }
+  }
+
+  unsigned PixISpiral::get_n(void)
+  {
+    return n;
   }
 
 }

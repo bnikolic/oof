@@ -2,7 +2,7 @@
   \file astromap.hxx
 
   Bojan Nikolic
-  $Id: astromap.hxx,v 1.4 2006/06/06 20:10:47 bnikolic Exp $
+  $Id: astromap.hxx,v 1.5 2006/06/20 17:56:12 bnikolic Exp $
 
 */
 #ifndef _ASTROMAP_ASTROMAP_HXX__
@@ -62,6 +62,12 @@ namespace AstroMap {
 
     /** Returns true if the pixel lies within map boundaries */
     bool belongs(unsigned x , unsigned y) const 
+    { return x>=0 && x<nx && y >=0 && y< ny ; }
+
+    bool belongs(int x , int y) const 
+    { return x>=0 && x< (int)nx && y >=0 && y< (int)ny ; }
+
+    bool belongs(double x , double y) const 
     { return x>=0 && x<nx && y >=0 && y< ny ; }
 
     

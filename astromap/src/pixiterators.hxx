@@ -2,7 +2,7 @@
    \file pixiterators.hxx
 
    Bojan Nikolic
-   $Id: pixiterators.hxx,v 1.2 2006/06/06 20:18:18 bnikolic Exp $
+   $Id: pixiterators.hxx,v 1.3 2006/06/20 17:56:12 bnikolic Exp $
 
    Iterating on pixels 
 */
@@ -36,7 +36,12 @@ namespace AstroMap {
 
     /// Get current position
     int  get_x(void) { return x;};
+
+    /// Get current position
     int  get_y(void) { return y;};
+
+    /// Return the current rectangular radius.
+    unsigned get_n(void);
 
   };
 

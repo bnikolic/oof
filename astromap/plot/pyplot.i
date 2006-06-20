@@ -1,10 +1,9 @@
-%module pyplot 
+%module pyplot   
 %{
 
 #include "../src/astromap.hxx"
 #include "../src/astromapio.hxx"
 #include "../src/mapops.hxx"
-#include "../src/pixextract.hxx"
 #include "../src/pixiterators.hxx"
 #include "../src/fft.hxx"
 #include "../src/lcmaps.hxx"
@@ -45,7 +44,6 @@ namespace std {
 %include "../src/astromap.hxx"
 %include "../src/astromapio.hxx"
 %include "../src/mapops.hxx"
-%include "../src/pixextract.hxx"
 %include "../src/pixiterators.hxx" 
 %include "../src/fft.hxx"
 %include "../src/lcmaps.hxx"
