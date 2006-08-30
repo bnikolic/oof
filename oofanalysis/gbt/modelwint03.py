@@ -1,5 +1,5 @@
 # Bojan Nikolic
-# $Id: modelwint03.py,v 1.2 2005/12/22 10:54:55 bnikolic Exp $
+# $Id: modelwint03.py,v 1.3 2006/08/30 20:52:21 bnikolic Exp $
 #
 # Make the surface model for winter
 #
@@ -23,6 +23,8 @@ import bnmin1io
 
 import pyxplot
 import pyplot
+
+import modeloutput
 
 
 #Candidates for excission:
@@ -159,14 +161,17 @@ def MkHFn(a , b ,c ):
     return lambda e : HookModel( e, a, b, c)
 
 def MkModel(outputmod=True,
-            printmod =True):
+            printmod =True,
+            storecoeffs=True):
 
     resd = {}
+    mc   = {}
     for i in range(3,21):
         pname="z%i" % i 
         res= fitfn(pname,
                    rigangle=50.29)
         resd[pname] = MkHFn(  res[0] , res[1],res[2] )
+        mc  [pname] = ( res[0] , res[1],res[2] )
         if printmod:
             n,l=ooffitconv.OOFktoOOFnl(i)
             print r"%i & %i & %2.1f & %2.1f & %2.1f & %3.2f & %3.2f \\" % (n , l ,
@@ -175,6 +180,11 @@ def MkModel(outputmod=True,
                                                            res[2],
                                                            ParRMS(pname),
                                                            ParRMS(pname, resd[pname]))
+    if storecoeffs:
+        modeloutput.WriteHookModel( mc,
+                                    "models/Wint2005V3/coefficients.fits")
+                                    
+            
 
 
     fsample = os.path.join(allscans[0], "offsetpars.fits" )

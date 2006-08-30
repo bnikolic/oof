@@ -1,5 +1,5 @@
 # Bojan Nikolic
-# $Id: modelwint01.py,v 1.16 2006/04/26 09:23:10 bnikolic Exp $
+# $Id: modelwint01.py,v 1.17 2006/08/30 20:52:21 bnikolic Exp $
 #
 # Make the surface model for winter
 
@@ -11,7 +11,7 @@ import pickle
 import pyfits
 from  matplotlib import pylab
 import numarray
-
+import pyplot
 from sfcmodels import *
 
 import oofcol
@@ -20,7 +20,7 @@ import ooffitconv
 import bnmin1io
 
 import pyxplot
-import pyplot
+
 
 
 #Candidates for excission:
@@ -168,13 +168,16 @@ def MkHFn(a , b ,c ):
     return lambda e : HookModel( e, a, b, c)
 
 def MkModel(outputmod=True,
-            printmod =True):
+            printmod =True,
+            storecoeffs=True):
 
     resd = {}
+    mc   = {}
     for i in range(3,21):
         pname="z%i" % i 
         res= fitfn(pname)
         resd[pname] = MkHFn(  res[0] , res[1],res[2] )
+        mc  [pname] = ( res[0] , res[1],res[2] )        
         if printmod:
             n,l=ooffitconv.OOFktoOOFnl(i)
             print r"%i & %i & %2.1f & %2.1f & %2.1f & %3.2f & %3.2f \\" % (n , l ,
@@ -184,7 +187,10 @@ def MkModel(outputmod=True,
                                                            ParRMS(pname),
                                                            ParRMS(pname, resd[pname]))
 
-
+    if storecoeffs:
+        modeloutput.WriteHookModel( mc,            
+                                    "models/Wint2005V1/coefficients.fits")
+        
     fsample = os.path.join(allscans[0], "offsetpars.fits" )
 
     f=pyfits.open(fsample)
@@ -340,7 +346,8 @@ def PlotObs():
                      npix=512,
                      fwhm=4, extent=10,
                      ncont=5,
-                     hardcopy=True)
+                     hardcopy=True,
+                     decorate=False)
 
 def PlotAllObs():
 

@@ -1,5 +1,5 @@
 # Bojan Nikolic
-# $Id: analysebump.py,v 1.3 2006/04/26 09:23:10 bnikolic Exp $
+# $Id: analysebump.py,v 1.4 2006/08/30 20:52:21 bnikolic Exp $
 #
 #
 
@@ -27,13 +27,16 @@ def BumpPlot(m,fnameout):
                     os.path.join("plots/bump", fnameout+".png/PNG"),
                     colmap="heat",
                     contours=[-2,-1.5,-1,-0.5,0,0.5,1,1.5,2],
-                    valrange=[-2,2])
+                    valrange=[-2,2],
+                    plotwedge=False)
 
     implot.plotmap( m,
-                    os.path.join("plots/bump", fnameout+".cps/CPS"),
+                    os.path.join("plots/bump", fnameout+".eps/CPS"),
                     colmap="heat",
                     contours=[-2,-1.5,-1,-0.5,0,0.5,1,1.5,2],
-                    valrange=[-2,2])
+                    valrange=[-2,2],
+                    plotwedge=False                    
+                    )
     
 def PlotNBAvg():
 
@@ -93,18 +96,22 @@ def ClosurePlot():
 
     m1=oofplot.PlotZernFile( "oofout0411/s471-l-db-000/z5/fitpars.fits" ,
                              "plots/closure/daybefore.png/PNG" ,
-                             phaserange=[-2,2])
+                             phaserange=[-2,2],
+                             plotwedge=False)
 
     m1=oofplot.PlotZernFile( "oofout0411/s471-l-db-000/z5/fitpars.fits" ,
                              "plots/closure/daybefore.eps/CPS" ,
-                             phaserange=[-2,2])    
+                             phaserange=[-2,2],
+                             plotwedge=False)    
 
     m2=oofplot.PlotZernFile( "oofout0411/s492-l-db-000/z5/fitpars.fits" ,
                              "plots/closure/dayafter.png/PNG" ,
-                             phaserange=[-2,2])
+                             phaserange=[-2,2],
+                             plotwedge=False)
     m2=oofplot.PlotZernFile( "oofout0411/s492-l-db-000/z5/fitpars.fits" ,
                              "plots/closure/dayafter.eps/CPS" ,
-                             phaserange=[-2,2])    
+                             phaserange=[-2,2],
+                             plotwedge=False)    
 
     i1    = oofplot.PlotIllumFile("oofout0411/s471-l-db-000/z5/fitpars.fits" ,
                                    "temp/amp.png/PNG")
