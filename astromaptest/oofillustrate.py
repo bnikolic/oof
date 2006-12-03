@@ -1,5 +1,5 @@
 # Bojan Nikolic
-# $Id: oofillustrate.py,v 1.2 2005/10/20 19:46:18 bnikolic Exp $
+# $Id: oofillustrate.py,v 1.3 2006/12/03 20:41:36 bnikolic Exp $
 #
 # Make illustrations for an OOF talk
 
@@ -7,6 +7,7 @@ import pybnlib
 import pyplot
 import pyoof
 import pybnmin1
+import ooffitconv
 
 import implot
 
@@ -38,18 +39,14 @@ def PlotZern(nmax=6):
             m.mult( mask)
 
             implot.plotmap( m,
-                            fout="plots/ZPoly-%i%i.eps/CPS" % (n,l),
+                            fout="plots/ZPoly-%i%i.png/PNG" % (n,l),
                             colmap="heat")
 
-    # Plot inverted 5,1
-    zfn=pybnlib.ZernPoly(5,1)
-    pyplot.WorldSet( m , zfn)
-    m.mult( mask)
-    m.mult(-1)
-    
-    implot.plotmap( m,
-                    fout="plots/ZPoly-51-inv.eps/CPS" ,
-                    colmap="heat")
+
+def ZPAll():
+
+    for i in range( 16 , 17):
+        ZernPower(i , 2)
 
 def ZernPower(zn , dz):
 
@@ -75,7 +72,88 @@ def ZernPower(zn , dz):
 
         farf.Power( apmod.getamp(), apmod.getphase(),  m)
         implot.plotmap( m, colmap="heat",
-                        fout="plots/ZPpower-zn%i-dz%g.eps/CPS" % ( zn , cdz ),
+                        fout="plots/ZPpower-zn%i-dz%g.png/PNG" % ( zn , cdz ),
                         bbox=[-0.007, 0.007, -0.007,0.007])
+
+def GenTable(nmax=21):
+
+    for zn in range(1,nmax):
+        oofn=zn
+        n,l = ooffitconv.OOFktoOOFnl(zn)
+        gbtn = ooffitconv.OOFktoSchwabk(zn)
+
+        print """
+    <tr>
+  <td> n=%i, l=%i <br/>
+       OOF=%i<br/>
+       GBT=%i<br/>       
+  </td>
+  <td>
+  <figure src="images/zern/ZPoly-%i%i.png" alt=""
+      width="150" height="150" />
+  </td>
+  <td>
+  <figure src="images/zern/ZPpower-zn%i-dz0.png" alt=""
+      width="150" height="150" />
+  </td>
+  <td>
+  <figure src="images/zern/ZPpower-zn%i-dz-2.png" alt=""
+      width="150" height="150" />
+  </td>
+  <td>
+  <figure src="images/zern/ZPpower-zn%i-dz2.png" alt=""
+      width="150" height="150" />
+  </td>
+  </tr>
+  """ % ( n, l, zn, oofn, n, l , zn, zn , zn)
+  
     
+def WhyDefocus(npix=256, zn=7, err=1):
+
+    tel1 = MkSimpleTel()
+    m = pyplot.Map(npix, npix)
+    mperf = pyplot.Map(npix, npix)
+    
+    apmod = pyoof.MkSimpleAp( tel1,
+                              1e-3,
+                              npix,
+                              5,
+                              4)
+
+    amm=pybnmin1.ModelDesc( apmod.downcast() )
+    amm.getbyname("z%i" % zn).setp(err)
+
+    apmodperf = pyoof.MkSimpleAp( tel1,
+                              1e-3,
+                              npix,
+                              5,
+                              4)
+
+    ammperf=pybnmin1.ModelDesc( apmodperf.downcast() )
+
+    for cdz in [ 0 , 0.5  , 1 , 2 , 5]:
+        amm.getbyname("z4" ).setp(cdz)
+        ammperf.getbyname("z4" ).setp(cdz)
+
+        farf= pyoof.FarF ( apmod.getphase(),
+                           1e-3)
+
+        farf.Power( apmod.getamp(), apmod.getphase(),  m)
+        farf.Power( apmodperf.getamp(), apmodperf.getphase(),  mperf)
+
+        
+        
+        implot.plotmap( m,
+                        colmap="heat",
+                        fout="plots/LWhydefocux-zn%i-dz%g.png/PNG" % ( zn , cdz ),
+                        bbox=[-0.007, 0.007, -0.007,0.007],
+                        valrange=[0,3e5])
+
+        mperf.mult(-1)
+        m.add(mperf)
+        implot.plotmap( m,
+                        colmap="heat",
+                        fout="plots/LDiffWhydefocux-zn%i-dz%g.png/PNG" % ( zn , cdz ),
+                        bbox=[-0.007, 0.007, -0.007,0.007])
+                        
     

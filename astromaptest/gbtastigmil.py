@@ -1,5 +1,5 @@
 # Bojan Nikolic
-# $Id: gbtastigmil.py,v 1.3 2005/10/25 16:40:14 bnikolic Exp $
+# $Id: gbtastigmil.py,v 1.4 2006/12/03 20:41:36 bnikolic Exp $
 #
 # Illustrate where astigmatism comes in from at the gbt
 
@@ -20,8 +20,11 @@ tel1.PrimRadius=ParentRadius
 tel1.PrimF= ParentRadius * 1
 
 #wholetilt = 0
-#wholetilt=-4.5e-3 /200.0
-wholetilt= -9e-3 /200.0
+wholetilt=-3.5e-3 /200.0
+#wholetilt = 0
+
+# For the y comp
+#wholetilt= -9e-3 /200.0
 
 #tilt= -0.009
 #tilt= 0
@@ -34,13 +37,13 @@ def mkfocmove():
     mask = pyoof.Clone(m)
     tel1.DishMask(mask)
 
-
-    #dX = 0.01 * math.cos( 36.7 * math.pi / 180 )
-    #dY = 0.01 * math.sin( 36.7 * math.pi / 180 )
+    # lateral defocus
+    dX = 0.01 * math.cos( 36.7 * math.pi / 180 )
+    dY = 0.01 * math.sin( 36.7 * math.pi / 180 )
     
-    dX = 0.01 * math.sin( 36.7 * math.pi / 180 )
+    #dX = 0.01 * math.sin( 36.7 * math.pi / 180 )
     #dY = 0.01 * math.cos( 36.7 * math.pi / 180 )
-    dY=0
+    #dY=0
     
     tel1.MkFocMove(dX,0,dY,m)
     m.mult( mask)
@@ -51,6 +54,11 @@ m,mask= mkfocmove()
 
 scratch = pyplot.Map(npix, npix)
 pyplot.MkApCS(scratch, ParentRadius *1.2)
+
+piston = pyplot.Map(npix, npix)
+pyplot.MkApCS(piston, ParentRadius *1.2)
+pzfn=pybnlib.ZernPoly(0,0)
+pyplot.WorldSet( piston , pzfn)
 
 zfn=pybnlib.ZernPoly(1,1)
 pyplot.WorldSet( scratch , zfn)
@@ -67,7 +75,12 @@ th1.y0 = 0
 th1.radius=0.5 * ParentRadius
 mask1 = pyoof.Clone(m)
 pyplot.WorldSet( mask1 , th1)
+piston.mult( -6e-3)
+m.add(piston)
 m.mult(mask1)
+
+
+
 
 implot.plotmap(m, colmap="heat", fout="gbtil/apX.eps/CPS" ,
                contours=implot.MkChopContours(m, ctype="lin", nlevels=8))
