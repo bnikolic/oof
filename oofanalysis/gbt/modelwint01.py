@@ -1,17 +1,24 @@
 # Bojan Nikolic
-# $Id: modelwint01.py,v 1.17 2006/08/30 20:52:21 bnikolic Exp $
-#
+# $Id: modelwint01.py,v 1.18 2007/01/13 16:50:45 bnikolic Exp $
+
 # Make the surface model for winter
 
+
 import os
-from itertools import izip
+import pdb
 import math
 import pickle
 
+from itertools import izip
+
 import pyfits
 from  matplotlib import pylab
+
 import numarray
+
+import pyoof
 import pyplot
+
 from sfcmodels import *
 
 import oofcol
@@ -21,7 +28,7 @@ import bnmin1io
 
 import pyxplot
 
-
+import modeloutput
 
 #Candidates for excission:
 #
@@ -94,7 +101,7 @@ def PrintEfficiencies():
     pyxplot.scatter( res,
                      "plots/offseteff.eps",
                      width=pyxplot.MNRAS_SC,
-                     xax=pyxplot.axis(r"$\theta\,$(degrees)", xmin=0 , xmax=90),
+                     xax=pyxplot.axis(r"$E\,$(degrees)", xmin=0 , xmax=90),
                      yax=pyxplot.axis(r"$\eta_{\rm LSS}$"),
                      symbsize=0.1,
                      ploterrb=True)
@@ -345,7 +352,7 @@ def PlotObs():
                      bbox=[-0.6e-3, 0.4e-3, -0.5e-3, 0.5e-3],
                      npix=512,
                      fwhm=4, extent=10,
-                     ncont=5,
+                     ncont=7,
                      hardcopy=True,
                      decorate=False)
 

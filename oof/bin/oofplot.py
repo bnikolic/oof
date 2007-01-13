@@ -1,5 +1,5 @@
 # Bojan Nikolic
-# $Id: oofplot.py,v 1.17 2006/04/26 10:16:48 bnikolic Exp $
+# $Id: oofplot.py,v 1.18 2007/01/13 16:50:45 bnikolic Exp $
 #
 # Various utilities for plotting OOF data
 
@@ -270,7 +270,8 @@ def PlotZernFile( fnamein,
                   fnameout,
                   npix=256,
                   telgeo=pyoof.GBTGeo(),
-                  phaserange=None):
+                  phaserange=None,
+                  plotwedge=True):
 
     #Should convert this to use MkApFile
     m = pyplot.Map(npix,npix)
@@ -291,7 +292,8 @@ def PlotZernFile( fnamein,
                     fnameout,
                     colmap="heat",
                     contours=[-2,-1.5,-1,-0.5,0,0.5,1,1.5,2],
-                    valrange=phaserange)
+                    valrange=phaserange,
+                    plotwedge=plotwedge)
     return m
 
     

@@ -1,5 +1,5 @@
 # Bojan Nikolic
-# $Id: verification.py,v 1.4 2006/11/20 23:31:20 bnikolic Exp $
+# $Id: verification.py,v 1.5 2007/01/13 16:50:45 bnikolic Exp $
 #
 # Plot OOF verification results
 
@@ -48,7 +48,8 @@ def PlotGain( d,
               utmin=0,
               utmax=24,
               mineff=0.2,
-              maxeff=0.5):
+              maxeff=0.5,
+              src=None):
 
     def ProcD(d2):
 
@@ -61,14 +62,18 @@ def PlotGain( d,
             else:
                 md[x[4]]= [ ( x[1 ] , x[2][0] , x[2][1]  ) ]
 
-        for k in md.keys():
+        for i,k in enumerate(md.keys()):
+            print "Series %i  is %s " % ( i, k)
             pt.append( pyxplot.graph.data.list( md[k], x=1, y=2, dy=3))
 
         return pt
         
-
-    rcpnone = [ x for x in d if x[0]=="RCP" and x[3]==0 and x[5] > utmin and x[5] < utmax ]
-    rcpv1 = [ x for x in d if x[0]=="RCP" and x[3]==model and x[5] > utmin and x[5] < utmax ]
+    if src == None:
+        rcpnone = [ x for x in d if x[0]=="RCP" and x[3]==0 and x[5] > utmin and x[5] < utmax ]
+        rcpv1 = [ x for x in d if x[0]=="RCP" and x[3]==model and x[5] > utmin and x[5] < utmax ]
+    else:
+        rcpnone = [ x for x in d if x[0]=="RCP" and x[3]==0 and x[5] > utmin and x[5] < utmax and x[4] ==src ]
+        rcpv1 = [ x for x in d if x[0]=="RCP" and x[3]==model and x[5] > utmin and x[5] < utmax and x[4]==src]
 
 
     pt      = [ pyxplot.graph.data.list( rcpnone, x=1, y=2, dy=3),
@@ -112,3 +117,5 @@ def PlotGain( d,
 
 #d=ParseData(open("cdata/efficiency050411.txt"))        
 #PlotGain(d , "2005SpringV1", 3, 12.5, 0.25, 0.55)
+#changesquare
+#attr.changelist([square, triangle, circle, diamond, cross, plus])

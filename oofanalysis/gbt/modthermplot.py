@@ -1,5 +1,5 @@
 # Bojan Nikolic
-# $Id: modthermplot.py,v 1.2 2006/04/26 09:23:10 bnikolic Exp $
+# $Id: modthermplot.py,v 1.3 2007/01/13 16:50:45 bnikolic Exp $
 
 import string
 
@@ -121,7 +121,7 @@ def PlotElScan(fnamein, fnameout ):
                   [ tant, modtant],
                   fnameout,
                   yax=pyxplot.axis(r"$T_{\rm Ant}\,({\rm K})$", xmin=82, xmax=90),
-                  xax=pyxplot.axis(r"$\delta\theta\,({\rm arcmin})$",xmin=-1.5, xmax=1.5),
+                  xax=pyxplot.axis(r"$\delta E\,({\rm arcmin})$",xmin=-1.5, xmax=1.5),
                   multi=True)
 
 def DoElScanPlots():

@@ -1,4 +1,4 @@
-%module pyoof 
+%module pyoof  
 %{
 
 #include <minimmodel.hxx>
