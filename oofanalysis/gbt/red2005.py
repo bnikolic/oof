@@ -1,5 +1,5 @@
 # Bojan Nikolic
-# $Id: red2005.py,v 1.3 2006/03/04 16:05:58 bnikolic Exp $
+# $Id: red2005.py,v 1.4 2007/01/13 16:34:29 bnikolic Exp $
 #
 # The general routine for reducing data from the 2005 campaigns
 
@@ -36,11 +36,11 @@ def GetRedScanList(obsdate):
         if m : res.append( int(m.group("sno")) )
     return res
 
-def Red(obsdate):
 
-    for sno in GetScanList(obsdate):
-
-        oofreduce.Red(os.path.join(datadir, obsdate,  "s%i-l-db.fits" % sno),
+def RedScan(obsdate, sno,
+            nzmax=5):
+    
+    oofreduce.Red(os.path.join(datadir, obsdate,  "s%i-l-db.fits" % sno),
                       extrafit=[ "beamgainf" ],
                       extraic =[ ("z2" , -6.2),
                                  ( "sigma" , 0.3 )],
@@ -48,8 +48,14 @@ def Red(obsdate):
                       oversample=4.0,
                       ds_fwhm=1.0,
                       ds_extent=2.0,
-                      nzmax=5,
+                      nzmax=nzmax,
                       prefdirout="oofout" +obsdate )
+    
+def Red(obsdate):
+
+    for sno in GetScanList(obsdate):
+        RedScan(obsdate, sno)
+    
         
 #Red("TPTCSOOF_060112")
 
@@ -67,7 +73,7 @@ def Plot(obsdate,
                      npix=512,
                      fwhm=4, extent=10,
                      ncont=5,
-                     hardcopy=True)
+                     hardcopy=hardcopy)
 
         
     
