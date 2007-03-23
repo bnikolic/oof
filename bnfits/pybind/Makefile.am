@@ -4,7 +4,7 @@ EXTRA_DIST = config/swig.am
 
 
 BUILT_SOURCES = pybnfits.py pybnfits.cxx 
-bin_SCRIPTS =   pybnfits.py bin/bnfitsutils.py
+dist_bin_SCRIPTS =   pybnfits.py bin/bnfitsutils.py
 
 lib_LTLIBRARIES = _pybnfits.la 
 
