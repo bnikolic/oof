@@ -1,6 +1,5 @@
 /*
   Bojan Nikolic
-  $Id: fft.cxx,v 1.2 2005/08/15 18:34:09 bnikolic Exp $
 
   still need to rename fftScratch to just Scratch...
 */

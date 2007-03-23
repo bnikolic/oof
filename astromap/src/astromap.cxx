@@ -1,6 +1,5 @@
 /*
   Bojan Nikolic
-  $Id: astromap.cxx,v 1.3 2005/06/21 00:44:44 bnikolic Exp $
 
 */
 

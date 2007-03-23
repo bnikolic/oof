@@ -1,6 +1,5 @@
 /*
   Bojan Nikolic
-  $Id: fft.hxx,v 1.2 2005/08/15 18:34:09 bnikolic Exp $
 
   Support for FFT's
 

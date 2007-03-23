@@ -1,3 +1,9 @@
+
+Copyright Bojan Nikolic, 2005-2007 except src/wcs/* which is as
+indicated there
+
+
+
 aclocal-1.9
 libtoolize
 automake-1.9 -a

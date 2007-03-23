@@ -2,7 +2,6 @@
    \file mapregions.hxx
 
    Bojan Nikolic
-   $Id: mapregions.hxx,v 1.1 2006/06/06 20:10:47 bnikolic Exp $
 
 */
 #ifndef _ASTROMAP_MAPREGIONS_HXX__

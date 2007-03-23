@@ -1,6 +1,5 @@
 /*
   Bojan Nikolic
-  $Id: astromap_fwd.hxx,v 1.2 2005/08/15 18:34:09 bnikolic Exp $
 
   Collected useful astromap forwards 
 */

@@ -1,6 +1,5 @@
 /*
   Bojan Nikolic
-  $Id: convolve.cxx,v 1.3 2006/02/15 23:50:18 bnikolic Exp $
 
 */
 

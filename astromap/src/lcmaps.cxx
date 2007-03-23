@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: lcmaps.cxx,v 1.2 2005/08/05 17:34:40 bnikolic Exp $
+
   
 */
 

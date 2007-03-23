@@ -1,6 +1,5 @@
 /*
   Bojan Nikolic
-  $Id: convolve.hxx,v 1.2 2006/02/15 23:41:00 bnikolic Exp $
 
   Tools for convolving maps together
 

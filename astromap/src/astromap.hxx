@@ -2,7 +2,6 @@
   \file astromap.hxx
 
   Bojan Nikolic
-  $Id: astromap.hxx,v 1.5 2006/06/20 17:56:12 bnikolic Exp $
 
 */
 #ifndef _ASTROMAP_ASTROMAP_HXX__

@@ -1,7 +1,5 @@
 /*
   Bojan Nikolic
-  $Id: mapops.cxx,v 1.4 2006/04/01 20:40:01 bnikolic Exp $
-
 
 */
 

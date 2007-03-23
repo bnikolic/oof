@@ -1,6 +1,5 @@
 /*
   Bojan Nikolic
-  $Id: tmapset.hxx,v 1.3 2005/08/06 14:46:55 bnikolic Exp $
 
   Templated functions to set maps
 */

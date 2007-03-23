@@ -1,6 +1,5 @@
 /*
   Bojan Nikolic
-  $Id: astromapio.hxx,v 1.3 2005/08/18 17:56:07 bnikolic Exp $
 
   Input/Output routines for astromap
 */

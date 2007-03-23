@@ -1,6 +1,5 @@
 /*
   Bojan Nikolic
-  $Id: mapops.hxx,v 1.3 2006/04/01 20:40:01 bnikolic Exp $
 
   Some operations on maps
 */

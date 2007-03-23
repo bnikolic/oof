@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: astromapio.cxx,v 1.6 2006/04/01 20:40:01 bnikolic Exp $
+
 */
 
 #include "astromapio.hxx"

@@ -1,6 +1,5 @@
 /*
   Bojan Nikolic
-  $Id: pixextract.cxx,v 1.4 2005/08/03 12:00:37 bnikolic Exp $
 
 */
 

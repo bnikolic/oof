@@ -2,7 +2,6 @@
    \file pixiterators.hxx
 
    Bojan Nikolic
-   $Id: pixiterators.hxx,v 1.3 2006/06/20 17:56:12 bnikolic Exp $
 
    Iterating on pixels 
 */

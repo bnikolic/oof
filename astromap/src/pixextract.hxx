@@ -1,6 +1,5 @@
 /*
   Bojan Nikolic
-  $Id: pixextract.hxx,v 1.3 2005/08/03 12:00:37 bnikolic Exp $
 
   Extract ranges of pixels from a map
 */
