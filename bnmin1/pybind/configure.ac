@@ -3,7 +3,7 @@ AC_PREREQ(2.59)
 AC_COPYRIGHT(Bojan Nikolic)
 AC_REVISION($Id: configure.ac,v 1.2 2005/09/18 17:05:00 bnikolic Exp $)
 
-AC_INIT([pybnmin1] , [0.01])
+AC_INIT([pybnmin1] , [1.0])
 
 AC_CONFIG_AUX_DIR(config)
 
@@ -16,7 +16,7 @@ AC_PROG_LIBTOOL
 AC_PROG_CC
 AC_PROG_CXX
 
-AM_PATH_PYTHON(2.3)
+AM_PATH_PYTHON(2.4)
 
 AM_CHECK_PYTHON_HEADERS()
 AC_PATH_PROGS([SWIG],[swig])

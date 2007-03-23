@@ -1,8 +1,14 @@
 
-Copyright Bojan Nikolic, 2005-2007 except src/wcs/* which is as
+Copyright Bojan Nikolic, 2005-2007, except src/wcs/* which is as
 indicated there
 
+Building:
 
+* SWIGFLAGS need to be defined to include headers from bnlib. e.g.:
+	
+	export SWIGFLAGS=-I/home/bn204/temp/oofbuild/s/include/
+
+*  If from RCS something like:
 
 aclocal-1.9
 libtoolize

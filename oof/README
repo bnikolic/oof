@@ -1,4 +1,7 @@
 
+Copyright: Bojan Nikolic
+
+
 aclocal-1.9
 libtoolize
 automake-1.9 -a
