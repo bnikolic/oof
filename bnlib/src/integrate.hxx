@@ -1,6 +1,6 @@
 /*
+  Copyright:
   Bojan Nikolic
-  $Id: integrate.hxx,v 1.3 2006/03/12 12:52:42 bnikolic Exp $
   
   Numerical integration
 

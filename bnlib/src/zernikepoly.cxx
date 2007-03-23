@@ -1,6 +1,5 @@
 /*
   Bojan Nikolic
-  $Id: zernikepoly.cxx,v 1.3 2005/08/05 14:10:54 bnikolic Exp $
 
 */
 

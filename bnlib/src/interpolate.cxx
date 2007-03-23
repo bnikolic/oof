@@ -1,7 +1,6 @@
 /* 
+  Copyright:
   Bojan Nikolic
-  $Id: interpolate.cxx,v 1.3 2005/09/23 21:26:20 bnikolic Exp $
-
 */
 
 #include "interpolate.hxx"

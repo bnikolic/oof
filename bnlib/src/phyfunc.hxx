@@ -1,6 +1,5 @@
 /*
   Bojan Nikolic
-  $Id: phyfunc.hxx,v 1.1 2005/05/14 20:02:03 bnikolic Exp $
 
   Some useful functions from physics
 */

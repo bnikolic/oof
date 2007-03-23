@@ -1,6 +1,6 @@
 /*
+  Copyright:
   Bojan Nikolic
-  $Id: bnrandom.hxx,v 1.1 2005/06/21 11:42:12 bnikolic Exp $
 
   Interface to random number generators
 
@@ -16,6 +16,11 @@ namespace BNLib{
   /// A virtual base class for random number generators 
   class RDist {
   public:
+    
+    // ------  Construction / Destruction -------------
+    virtual ~RDist() {};
+
+    // ------  Public interface -----------------------
     
     /// Returns a sample from the distribution
     virtual double sample(void)=0;

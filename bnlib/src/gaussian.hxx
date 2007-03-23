@@ -1,6 +1,7 @@
 /*
+  Copyright:
   Bojan Nikolic
-  $Id: gaussian.hxx,v 1.3 2006/03/25 14:29:30 bnikolic Exp $
+
 
   Support for Gaussian  fns
 */

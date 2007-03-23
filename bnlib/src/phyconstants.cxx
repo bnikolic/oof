@@ -1,7 +1,5 @@
 /*
   Bojan Nikolic
-  $Id: phyconstants.cxx,v 1.2 2006/01/24 02:05:51 bnikolic Exp $
-
 
 */
 

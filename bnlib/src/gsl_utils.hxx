@@ -1,6 +1,6 @@
 /*
+  Copyright:
   Bojan Nikolic
-  $Id: gsl_utils.hxx,v 1.1 2005/07/17 19:25:58 bnikolic Exp $
 
   Some helper classes for dealing with gsl
 */

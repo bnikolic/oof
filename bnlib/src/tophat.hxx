@@ -1,6 +1,5 @@
 /*
   Bojan Nikolic
-  $Id: tophat.hxx,v 1.3 2006/03/25 14:29:30 bnikolic Exp $
 
   A 2-d tophat functions
 */

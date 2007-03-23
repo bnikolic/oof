@@ -2,7 +2,6 @@
   \file zernikepoly.hxx
 
   Bojan Nikolic
-  $Id: zernikepoly.hxx,v 1.5 2006/05/22 21:21:18 bnikolic Exp $
 
   Zernike Polynomial functions
 */

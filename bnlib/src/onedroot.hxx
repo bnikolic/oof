@@ -1,6 +1,5 @@
 /*
   Bojan Nikolic
-  $Id: onedroot.hxx,v 1.4 2006/05/22 21:21:18 bnikolic Exp $
 
   One dimensional root finding
 */

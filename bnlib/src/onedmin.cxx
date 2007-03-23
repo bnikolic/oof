@@ -1,7 +1,6 @@
 /*
+  Copyright:
   Bojan Nikolic
-  $Id: onedmin.cxx,v 1.3 2005/07/17 20:13:38 bnikolic Exp $
-
 
 */
 #include "onedmin.hxx"

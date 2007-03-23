@@ -1,6 +1,5 @@
 /*
   Bojan Nikolic
-  $Id: phycosmo.cxx,v 1.5 2006/03/29 17:52:15 bnikolic Exp $
 
 */
 

@@ -1,6 +1,5 @@
 /*
   Bojan Nikolic
-  $Id: onedroot.cxx,v 1.6 2005/09/19 21:25:55 bnikolic Exp $
 
 */
 

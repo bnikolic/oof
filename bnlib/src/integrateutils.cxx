@@ -1,7 +1,6 @@
 /*
  * Bojan Nikolic
  *
- * $Id: integrateutils.cxx,v 1.4 2005/09/20 01:31:24 bnikolic Exp $
  */
 
 #include "integrateutils.hxx"

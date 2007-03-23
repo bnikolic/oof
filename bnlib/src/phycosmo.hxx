@@ -1,6 +1,5 @@
 /*
   Bojan Nikolic
-  $Id: phycosmo.hxx,v 1.6 2006/03/29 17:52:15 bnikolic Exp $
 
   Some simple cosmology routines
 */

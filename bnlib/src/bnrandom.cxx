@@ -1,6 +1,8 @@
 /*
+  Copyright:
   Bojan Nikolic
-  $Id: bnrandom.cxx,v 1.2 2006/03/25 14:29:30 bnikolic Exp $
+
+  
 
 */
 

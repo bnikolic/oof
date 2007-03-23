@@ -1,6 +1,6 @@
 /*
   Bojan Nikolic
-  $Id: tophat.cxx,v 1.2 2006/03/09 14:59:41 bnikolic Exp $
+
 */
 
 #include "tophat.hxx"

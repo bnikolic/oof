@@ -1,6 +1,6 @@
 /*
+  Copyright:
   Bojan Nikolic
-  $Id: interpolategsl.hxx,v 1.2 2005/09/23 21:26:20 bnikolic Exp $
 
   Routines for interpolation
 */

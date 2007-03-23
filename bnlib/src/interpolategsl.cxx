@@ -1,6 +1,6 @@
 /*
+  Copyright:
   Bojan Nikolic
-  $Id: interpolategsl.cxx,v 1.3 2006/03/21 15:26:59 bnikolic Exp $
 
 */
 

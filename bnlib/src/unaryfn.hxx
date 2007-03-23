@@ -1,6 +1,5 @@
 /*
   Bojan Nikolic
-  $Id: unaryfn.hxx,v 1.2 2005/10/05 03:05:41 bnikolic Exp $
 
   Declares a simple unary function class 
 

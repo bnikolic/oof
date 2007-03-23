@@ -2,8 +2,6 @@
  * Bojan Nikolic
  *
  * Some utilities to deal with difficult integrations.
- * 
- * $Id: integrateutils.hxx,v 1.3 2005/09/20 01:31:24 bnikolic Exp $
  */
 
 #ifndef _BNLIB_INTEGRATEUTILS_HXX__

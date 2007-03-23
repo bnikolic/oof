@@ -1,6 +1,6 @@
 /*
+  Copyright:
   Bojan Nikolic
-  $Id: interpolatelog.hxx,v 1.4 2005/09/23 21:29:26 bnikolic Exp $
 
   Routines to interpolate in log-space
 */

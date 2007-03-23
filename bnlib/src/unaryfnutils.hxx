@@ -1,6 +1,5 @@
 /*
   Bojan Nikolic
-  $Id: unaryfnutils.hxx,v 1.1 2005/10/05 03:06:00 bnikolic Exp $
   
   Some simple usefuly unary functions 
 */

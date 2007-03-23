@@ -1,6 +1,6 @@
 /*
+  Copyright:
   Bojan Nikolic
-  $Id: linraster.hxx,v 1.2 2005/10/08 20:28:54 bnikolic Exp $
 
   Routines to create 1-d rasters
 */

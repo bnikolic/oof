@@ -1,6 +1,6 @@
 /*
+  Copyright:
   Bojan Nikolic
-  $Id: binaryfn.hxx,v 1.2 2006/03/25 14:29:30 bnikolic Exp $
 
   Declares a simple binary function class 
 

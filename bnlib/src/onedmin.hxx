@@ -1,6 +1,5 @@
 /*
   Bojan Nikolic
-  $Id: onedmin.hxx,v 1.2 2005/07/17 19:25:58 bnikolic Exp $
 
   One dimensional minimisation
 */

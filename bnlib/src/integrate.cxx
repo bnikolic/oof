@@ -1,6 +1,6 @@
 /*
+  Copyright:
   Bojan Nikolic
-  $Id: integrate.cxx,v 1.4 2005/10/17 13:49:57 bnikolic Exp $
 
 */
 #include "integrate.hxx"

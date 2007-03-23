@@ -1,6 +1,6 @@
 /*
+  Copyright:
   Bojan Nikolic
-  $Id: bndebug.hxx,v 1.3 2005/08/25 15:13:42 bnikolic Exp $
 
   Some utilities for debugging
 */

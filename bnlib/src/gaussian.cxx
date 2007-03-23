@@ -1,6 +1,6 @@
 /*
+  Copyright:
   Bojan Nikolic
-  $Id: gaussian.cxx,v 1.1 2005/06/28 13:36:39 bnikolic Exp $
 
 */
 

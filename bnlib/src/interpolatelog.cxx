@@ -1,6 +1,6 @@
 /*
+  Copyright:
   Bojan Nikolic
-  $Id: interpolatelog.cxx,v 1.4 2005/09/23 21:29:26 bnikolic Exp $
 */
 
 #include "interpolatelog.hxx"

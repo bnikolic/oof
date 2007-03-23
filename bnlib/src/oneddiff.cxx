@@ -1,6 +1,6 @@
 /*
+  Copyright:
   Bojan Nikolic
-  $Id: oneddiff.cxx,v 1.2 2005/07/16 15:50:17 bnikolic Exp $
   
 */
 
