@@ -16,6 +16,13 @@ namespace Minim {
 
   public:
 
+    // --------- Construction / Destruction ---------
+
+    virtual ~Monitor() {};
+
+    // --------- Public Interface -------------------
+
+
     virtual void Iter ( Minimiser * m) = 0;
 
 
