@@ -4,7 +4,7 @@ EXTRA_DIST = config/swig.am
 
 
 BUILT_SOURCES = pybnmin1.py pybnmin1.cxx 
-bin_SCRIPTS = pybnmin1.py  bin/bnmin1io.py
+dist_bin_SCRIPTS = pybnmin1.py  bin/bnmin1io.py
 
 lib_LTLIBRARIES = _pybnmin1.la 
 

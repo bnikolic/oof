@@ -3,7 +3,11 @@ libtoolize
 automake-1.9 -a
 autoconf
 
+Note on 64 bit systems extra linker flags may need to be passed to
+pick up correct libgsl:
 
-Build with something like
+LDFLAGS="-L/usr/lib64/ -L/home/bn204/temp/oofbuild/s/lib/"
+
+On laptop build with something like
 
 ./configure --prefix=${HOME}/p/bnmin1 

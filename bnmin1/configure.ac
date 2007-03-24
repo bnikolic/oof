@@ -1,4 +1,4 @@
-AC_INIT()
+AC_INIT(src/minim.hxx)
 
 AC_CONFIG_AUX_DIR(config)
 
@@ -12,6 +12,8 @@ AC_PROG_LIBTOOL
 AC_PROG_CC
 AC_PROG_CXX
 AC_PROG_F77
+
+AM_PATH_GSL(1.6)
 
 AC_LANG_PUSH(C++)
 
