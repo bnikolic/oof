@@ -1,0 +1,14 @@
+
+Pre-required packages for the OOF holography software:
+
+* FFTW v.2 
+
+* SWIG 1.3.31 or later
+
+* PGPLOT
+
+* GSL V 1.6 or later
+
+* Boost C++ libraries v. 1.30.0 or later
+
+* CFitsIO
