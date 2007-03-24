@@ -1,6 +1,8 @@
 
 Pre-required packages for the OOF holography software:
 
+* Python 2.4
+
 * FFTW v.2 
 
 * SWIG 1.3.31 or later
