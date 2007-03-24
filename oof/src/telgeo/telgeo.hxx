@@ -24,6 +24,12 @@ namespace OOF {
 
   public:
     
+    // ---------- Construction - Destruction -----------
+    
+    virtual ~TelGeometry() {};
+
+    // ---------- Public interface ---------------------
+    
     /*! Calculates the phase change in the aperture plane due to a
      * defocus dz */
     virtual void MkDefocus( double dz , AstroMap::Map & Phase) const = 0 ;

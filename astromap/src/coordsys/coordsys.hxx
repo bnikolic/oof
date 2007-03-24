@@ -18,6 +18,12 @@ namespace AstroMap {
 
   public:
 
+    // ---------- Construction - Destruction -----------
+    
+    virtual ~CoordSys() {};
+    
+    // ---------- Public interface ---------------------
+
     /*! Return a copy of myself */
     virtual CoordSys * Clone(void) const  = 0 ;
 
