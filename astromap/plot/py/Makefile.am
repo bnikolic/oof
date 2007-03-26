@@ -1,2 +1,2 @@
 
-bin_SCRIPTS =   implot.py 
+dist_bin_SCRIPTS =   implot.py 
