@@ -30,6 +30,55 @@ namespace BNLib {
   void KolmogorovPlatform( size_t N,
 			   double * grid,
 			   const double * normvect);
+
+  /**
+     A utility class to iterate over centers of cells when subdividing
+     for the KologorovPlatform algorithm.
+  */
+  class CenterIter {
+
+    size_t i, j;
+
+
+
+  public:
+
+    // ----------------  Public Data -----------------------
+
+    const size_t N;
+    const size_t o;
+    const size_t delta; 
+
+
+    // ----------------   Constructors / Destructors ----------
+
+    /**
+       \param N the grid is NxN
+
+       \param o the order; order 0 has one center subdivision, order 1
+       has four, etc.
+    */
+    CenterIter(size_t N,
+	       size_t o);
+
+    // ---------------   Public interface --------------------
+
+    /**
+       Get the current point
+    */
+    void getc( size_t & i,
+	       size_t & j);
+
+    /**
+       Iterate to the next point
+    */
+    void next(void);
+
+    
+    
+    
+
+  };
   
 }
 #endif

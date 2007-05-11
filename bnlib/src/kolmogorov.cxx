@@ -41,5 +41,37 @@ namespace BNLib {
 
   }
 
+  CenterIter::CenterIter( size_t N,
+			  size_t o):
+    N(N),
+    o(o),
+    delta( N>>(o+1) )
+  {
+    // initialise to the first point
+    i=delta;
+    j=delta;
+  }
+
+  
+  void CenterIter::getc( size_t & pi,
+			 size_t & pj)
+  {
+    pi=i;
+    pj=j;
+  }
+
+  void CenterIter::next(void)
+  {
+    if ( i + delta >= N )
+    {
+      i=delta;
+      j=j+delta;
+    }
+    else
+    {
+      i=i+delta;
+    }
+  }
+
 
 }
