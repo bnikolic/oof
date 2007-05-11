@@ -50,6 +50,8 @@ namespace BNLib {
     const size_t origin; 
     const size_t delta; 
 
+    enum parentPos { TL, TR, BL , BR };
+
 
     // ----------------   Constructors / Destructors ----------
 
@@ -68,7 +70,18 @@ namespace BNLib {
        Get the current point
     */
     void getc( size_t & iOUT,
-	       size_t & jOUT);
+	       size_t & jOUT) const;
+
+    /**
+       Get the position of one of the parent points of the current
+       point.
+    */
+    void getParent(size_t & iOUT,
+		   size_t & jOUT,
+		   parentPos p
+		   ) const ;
+
+
 
     /**
        Iterate to the next point
@@ -79,7 +92,7 @@ namespace BNLib {
        Return true if we haven't steped out of bounds. I.E., this will
        return false when all points have been iterated over.
     */
-    bool inBounds(void);
+    bool inBounds(void) const;
 
     
     

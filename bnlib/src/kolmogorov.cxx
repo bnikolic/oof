@@ -48,17 +48,57 @@ namespace BNLib {
     origin( N>>(o+1) ),
     delta( N>>(o) )
   {
-    // initialise to the first point
-    i=origin;
-    j=origin;
+    if ( delta > 0 )
+    {
+      // initialise to the first point
+      i=origin;
+      j=origin;
+    }
+    else
+    {
+      // order is too high for this grid size so go out of bounds
+      // straight away
+      i=N;
+      j=N;
+    }
   }
 
   
   void CenterIter::getc( size_t & pi,
-			 size_t & pj)
+			 size_t & pj) const
   {
     pi=i;
     pj=j;
+  }
+
+  void CenterIter::getParent(size_t & iOUT,
+			     size_t & jOUT,
+			     parentPos p
+			     ) const
+  {
+    size_t ri = i;
+    size_t rj = j;
+
+    if ( p == TL || p == TR )
+    {
+      rj -= origin;
+    }
+    else 
+    {
+      rj += origin;
+    }
+
+    if ( p == TL || p == BL )
+    {
+      ri -= origin;
+    }
+    else
+    {
+      ri += origin;
+    }
+    
+    iOUT= ri;
+    jOUT= rj;
   }
 
   void CenterIter::next(void)
@@ -74,7 +114,7 @@ namespace BNLib {
     }
   }
 
-  bool CenterIter::inBounds(void)
+  bool CenterIter::inBounds(void) const
   {
     return ( i < N && j < N);
   }
