@@ -45,11 +45,12 @@ namespace BNLib {
 			  size_t o):
     N(N),
     o(o),
-    delta( N>>(o+1) )
+    origin( N>>(o+1) ),
+    delta( N>>(o) )
   {
     // initialise to the first point
-    i=delta;
-    j=delta;
+    i=origin;
+    j=origin;
   }
 
   
@@ -64,13 +65,18 @@ namespace BNLib {
   {
     if ( i + delta >= N )
     {
-      i=delta;
+      i=origin;
       j=j+delta;
     }
     else
     {
       i=i+delta;
     }
+  }
+
+  bool CenterIter::inBounds(void)
+  {
+    return ( i < N && j < N);
   }
 
 

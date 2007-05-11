@@ -47,6 +47,7 @@ namespace BNLib {
 
     const size_t N;
     const size_t o;
+    const size_t origin; 
     const size_t delta; 
 
 
@@ -66,13 +67,19 @@ namespace BNLib {
     /**
        Get the current point
     */
-    void getc( size_t & i,
-	       size_t & j);
+    void getc( size_t & iOUT,
+	       size_t & jOUT);
 
     /**
        Iterate to the next point
     */
     void next(void);
+
+    /**
+       Return true if we haven't steped out of bounds. I.E., this will
+       return false when all points have been iterated over.
+    */
+    bool inBounds(void);
 
     
     

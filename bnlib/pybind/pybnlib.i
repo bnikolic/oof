@@ -14,12 +14,16 @@
 #include "../src/phyfunc.hxx"
 #include "../src/phycosmo.hxx"
 #include "../src/integrate.hxx"
+#include "../src/kolmogorov.hxx"
 
 %}
 
 %include "carrays.i"
+%include "typemaps.i"
 
 %array_class( double , doubleArray);
+
+%apply size_t & OUTPUT { size_t &iOUT, size_t &jOUT };
 
 %include "../src/unaryfn.hxx"
 %include "../src/unaryfnutils.hxx"
@@ -34,6 +38,7 @@
 %include "../src/phyconstants.hxx"
 %include "../src/phyfunc.hxx"
 %include "../src/phycosmo.hxx"
+%include "../src/kolmogorov.hxx"
 
 %extend BNLib::ConstUDD {
 	
