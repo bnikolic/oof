@@ -6,7 +6,7 @@
 
    May 2007
 
-   Construct 2D radnom fields with Kolmorogov structure
+   Construct 2D random fields with Kolmorogov structure
 
 */
 #ifndef _BNLIB_KOLMOGOROV_HXX__
@@ -119,6 +119,10 @@ namespace BNLib {
 		   parentPos p
 		   ) const ;
 
+    /**
+       Return normalised distance to the parent points.
+    */
+    double parentDist(void) const;
 
     /**
        Iterate to the next point
@@ -143,6 +147,9 @@ namespace BNLib {
     /// Positions of parets: left, right, top, bottom
     enum parentPos { L, R, T , B };
 
+    /// Possible edges
+    enum edgePos {noEdge = 0, HEdge, VEdge };
+
     
     // ----------------   Constructors / Destructors ----------
 
@@ -157,6 +164,36 @@ namespace BNLib {
        Iterate to the next point
     */
     void next(void);
+
+    /**
+       Are we on an edge and if so, is it a horisontal or vertical
+       edge.
+     */
+    edgePos isEdge(void) const;
+
+    /**
+       Are we on a horisontal edge
+    */
+    bool isHEdge(void) const ;
+
+    /**
+       Are we on a vertical edge
+    */
+    bool isVEdge(void) const;
+
+    /**
+       Get the position of one of the parent points of the current
+       point.
+    */
+    void getParent(size_t & iOUT,
+		   size_t & jOUT,
+		   parentPos p
+		   ) const ;
+
+    /**
+       Return normalised distance to the parent points.
+    */
+    double parentDist(void) const;
 
   };
 

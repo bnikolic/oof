@@ -7,6 +7,8 @@
 
 #include "kolmogorov.hxx"
 
+#include <cmath>
+
 namespace BNLib {
 
   /** Generate the four corner samples of the Kolmogorov
@@ -32,12 +34,92 @@ namespace BNLib {
     *delta = normvect[3] * SigmaC - 0.5 * Rad;
   }
 
+
+  /**
+     Get parent values from a double array
+  */
+  template<class T, class pT> 
+  double getParentVal( double * a,
+		       const T & iter,
+		       pT  p)
+  {
+    size_t i, j;
+    iter.getParent( i,j, p);
+    return a[j* iter.N +i];
+  }
   
 
   void KolmogorovPlatform( size_t N,
 			   double * grid,
 			   const double * normvect)
   {
+    /*   (alpha)               (beta)
+
+    
+         (gamma)                (delta)
+
+    */
+    KPCorners( grid,
+	       grid + (N-1),
+	       grid + N*(N-1),
+	       grid + N*N - 1,
+	       normvect);
+
+    // We've used up six random values
+    normvect += 6;
+
+    for ( size_t o =0 ;  ( ((size_t)1) << (o+1) ) < N  ; ++o )
+    {
+      // First the centre cells...
+      CenterIter ci(N, o);
+      while ( ci.inBounds() )
+      {
+	size_t i,j;
+	ci.getc( i,j);
+
+	double newval = 0.25 * ( getParentVal( grid, ci , CenterIter::TL),
+				 getParentVal( grid, ci , CenterIter::TR),
+				 getParentVal( grid, ci , CenterIter::BL),
+				 getParentVal( grid, ci , CenterIter::BR)) +
+	  ( *normvect  ) * 0.6091 * pow( ci.parentDist() , 5.0 / 3.0);
+	
+	grid[j*N+i] = newval;
+	++normvect;
+
+	ci.next();
+      }
+      
+      // Next the "edge" cells
+      EdgeIter ei(N,o);
+      while (ei.inBounds() )
+      {
+	size_t i,j;
+	ei.getc( i,j);
+
+	double newval=0;
+
+	// Do the calculation....
+	if ( j==0 || j== (N-1) )
+	{
+
+	}
+	else if ( i==0 || i == (N-1 ) )
+	{
+
+	}
+	else
+	{
+	  // not an edge, use four parents as normal.
+
+	}
+
+	grid[j*N+i] = newval;
+	++normvect;
+	ei.next();
+
+      }
+
+    }
 
   }
 
@@ -117,6 +199,19 @@ namespace BNLib {
     jOUT= rj;
   }
 
+  double CenterIter::parentDist(void) const
+  {
+    size_t pi , pj;
+
+    // Distance to all should be the same of course
+    getParent( pi, pj,
+	       TL);
+
+    double d2=    pow( i-pi , 2) + pow( j - pj, 2);
+
+    return pow( d2, 0.5) / ( double(N)-1) ;
+  }
+
   void CenterIter::next(void)
   {
     if ( i + delta >= N )
@@ -170,5 +265,64 @@ namespace BNLib {
     }
     
   }
+
+  EdgeIter::edgePos EdgeIter::isEdge(void) const
+  {
+    if ( i == 0 || i== ( N-1 ) )
+    {
+      return VEdge;
+    }
+    else if ( j ==0 || j == (N-1) )
+    {
+      return HEdge;
+    }
+    else
+    {
+      return noEdge;
+    }
+  }
+
+  bool EdgeIter::isHEdge(void) const 
+  {
+    return isEdge() == HEdge;
+  }
+
+  bool EdgeIter::isVEdge(void) const 
+  {
+    return isEdge() == VEdge;
+  }
+
+  void EdgeIter::getParent(size_t & iOUT,
+			   size_t & jOUT,
+			   parentPos p
+			   ) const 
+  {
+    iOUT= i;
+    jOUT= j;
+    
+    if ( p == L )
+    {
+      iOUT -= origin;
+    } 
+    else if ( p == R)
+    {
+      iOUT += origin;
+    }
+    else if ( p == T )
+    {
+      jOUT -= origin;
+    }
+    else 
+    {
+      jOUT += origin;
+    }
+  }
+
+  double EdgeIter::parentDist(void) const
+  {
+    return origin/ (double (N-1));
+    
+  }
+
 
 }
