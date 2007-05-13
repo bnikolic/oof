@@ -2,8 +2,9 @@
 
    \file kolmogorov.hxx
 
-   Boan Nikolic <bn204@mrao.cam.ac.uk>, <bojan@bnikolic.co.uk>
-   May 2007 
+   Bojan Nikolic <bn204@mrao.cam.ac.uk>, <bojan@bnikolic.co.uk> 
+
+   May 2007
 
    Construct 2D radnom fields with Kolmorogov structure
 
