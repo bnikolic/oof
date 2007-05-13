@@ -81,7 +81,8 @@ namespace BNLib {
 				 getParentVal( grid, ci , CenterIter::TR),
 				 getParentVal( grid, ci , CenterIter::BL),
 				 getParentVal( grid, ci , CenterIter::BR)) +
-	  ( *normvect  ) * 0.6091 * pow( ci.parentDist() , 5.0 / 3.0);
+	  ( *normvect  ) * pow( 0.6091 * pow( ci.parentDist() , 5.0 / 3.0),
+				0.5);
 	
 	grid[j*N+i] = newval;
 	++normvect;
@@ -99,18 +100,31 @@ namespace BNLib {
 	double newval=0;
 
 	// Do the calculation....
-	if ( j==0 || j== (N-1) )
+	if ( ei.isHEdge() )
 	{
-
+	  newval = 0.5 * ( getParentVal( grid, ei , EdgeIter::L) +
+			   getParentVal( grid, ei , EdgeIter::R) ) +
+	    (*normvect) * pow ( 0.4471 * pow(ei.parentDist(), 5.0/3) , 
+				0.5 );
 	}
-	else if ( i==0 || i == (N-1 ) )
+	else if ( ei.isVEdge())
 	{
+	  newval = 0.5 * ( getParentVal( grid, ei , EdgeIter::T) +
+			   getParentVal( grid, ei , EdgeIter::B) ) +
+	    (*normvect) * pow ( 0.4471 * pow(ei.parentDist(), 5.0/3) , 
+				0.5 );
 
 	}
 	else
 	{
 	  // not an edge, use four parents as normal.
-
+	  newval = 0.25 * ( getParentVal( grid, ei , EdgeIter::T),
+			    getParentVal( grid, ei , EdgeIter::B),
+			    getParentVal( grid, ei , EdgeIter::L),
+			    getParentVal( grid, ei , EdgeIter::R)) +
+	  ( *normvect  ) * pow( 0.6091 * pow( ei.parentDist() , 5.0 / 3.0),
+				0.5);
+	  
 	}
 
 	grid[j*N+i] = newval;
