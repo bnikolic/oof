@@ -41,12 +41,34 @@ namespace BNLib {
 
   }
 
+  KolCellIteratorBase::KolCellIteratorBase( size_t N, 
+					    size_t o):
+    N(N),
+    o(o)
+  {
+
+  }
+
+  void KolCellIteratorBase::getc( size_t & pi,
+				  size_t & pj) const
+  {
+    pi=i;
+    pj=j;
+  }
+
+  bool KolCellIteratorBase::inBounds(void) const
+  {
+    return ( i < N && j < N);
+  }
+
+  
+
   CenterIter::CenterIter( size_t N,
 			  size_t o):
-    N(N),
-    o(o),
-    origin( N>>(o+1) ),
-    delta( N>>(o) )
+    KolCellIteratorBase( N,
+			 o),
+    origin(N>>(o+1)),
+    delta( N>>(o))
   {
     if ( delta > 0 )
     {
@@ -64,12 +86,7 @@ namespace BNLib {
   }
 
   
-  void CenterIter::getc( size_t & pi,
-			 size_t & pj) const
-  {
-    pi=i;
-    pj=j;
-  }
+
 
   void CenterIter::getParent(size_t & iOUT,
 			     size_t & jOUT,
@@ -114,10 +131,7 @@ namespace BNLib {
     }
   }
 
-  bool CenterIter::inBounds(void) const
-  {
-    return ( i < N && j < N);
-  }
+
 
 
 }

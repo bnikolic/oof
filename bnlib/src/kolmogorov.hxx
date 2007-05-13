@@ -31,26 +31,23 @@ namespace BNLib {
 			   double * grid,
 			   const double * normvect);
 
-  /**
-     A utility class to iterate over centers of cells when subdividing
-     for the KologorovPlatform algorithm.
+  /** 
+     Base class for iterators over cells for kolmogorov phase screen
+     generation.
   */
-  class CenterIter {
+  class KolCellIteratorBase {
 
-    size_t i, j;
+  protected:
 
-
+    /// Current position on the grid
+    size_t i, j;    
 
   public:
-
-    // ----------------  Public Data -----------------------
+    
+    // ----------------  Public Data -----------------------    
 
     const size_t N;
     const size_t o;
-    const size_t origin; 
-    const size_t delta; 
-
-    enum parentPos { TL, TR, BL , BR };
 
 
     // ----------------   Constructors / Destructors ----------
@@ -61,8 +58,8 @@ namespace BNLib {
        \param o the order; order 0 has one center subdivision, order 1
        has four, etc.
     */
-    CenterIter(size_t N,
-	       size_t o);
+    KolCellIteratorBase( size_t N, 
+			 size_t o);
 
     // ---------------   Public interface --------------------
 
@@ -71,6 +68,46 @@ namespace BNLib {
     */
     void getc( size_t & iOUT,
 	       size_t & jOUT) const;
+
+    /**
+       Return true if we haven't steped out of bounds. I.E., this will
+       return false when all points have been iterated over.
+    */
+    bool inBounds(void) const;    
+
+
+  };
+
+
+  /**
+     A utility class to iterate over centers of cells when subdividing
+     for the KologorovPlatform algorithm.
+  */
+  class CenterIter:
+    public KolCellIteratorBase
+  {
+
+
+  public:
+
+    // ----------------  Public Data -----------------------
+
+    const size_t origin; 
+    const size_t delta; 
+
+    enum parentPos { TL, TR, BL , BR };
+
+
+    // ----------------   Constructors / Destructors ----------
+
+    /**
+       See KolCellIteratorBase constructor.
+    */
+    CenterIter(size_t N,
+	       size_t o);
+
+    // ---------------   Public interface --------------------
+
 
     /**
        Get the position of one of the parent points of the current
@@ -82,23 +119,35 @@ namespace BNLib {
 		   ) const ;
 
 
-
     /**
        Iterate to the next point
     */
     void next(void);
 
-    /**
-       Return true if we haven't steped out of bounds. I.E., this will
-       return false when all points have been iterated over.
-    */
-    bool inBounds(void) const;
+
+  };
+
+  /** A utlity class to iterate over edge cells */
+  class EdgeIter :
+    public KolCellIteratorBase
+  {
+    
+  public:
+    
+    // ----------------  Public Data -----------------------
+
+    /// Positions of parets: left, right, top, bottom
+    enum parentPos { L, R, T , B };
 
     
+    // ----------------   Constructors / Destructors ----------
+
     
     
 
   };
+
+    
   
 }
 #endif
