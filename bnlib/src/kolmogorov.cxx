@@ -96,7 +96,6 @@ namespace BNLib {
       {
 	size_t i,j;
 	ei.getc( i,j);
-
 	double newval=0;
 
 	// Do the calculation....
@@ -104,14 +103,14 @@ namespace BNLib {
 	{
 	  newval = 0.5 * ( getParentVal( grid, ei , EdgeIter::L) +
 			   getParentVal( grid, ei , EdgeIter::R) ) +
-	    (*normvect) * pow ( 0.4471 * pow(ei.parentDist(), 5.0/3) , 
+	    (*normvect) * pow ( 0.4471 * pow(ei.parentDist(), 5.0/3.0) , 
 				0.5 );
 	}
 	else if ( ei.isVEdge())
 	{
 	  newval = 0.5 * ( getParentVal( grid, ei , EdgeIter::T) +
 			   getParentVal( grid, ei , EdgeIter::B) ) +
-	    (*normvect) * pow ( 0.4471 * pow(ei.parentDist(), 5.0/3) , 
+	    (*normvect) * pow ( 0.4471 * pow(ei.parentDist(), 5.0/3.0) , 
 				0.5 );
 
 	}

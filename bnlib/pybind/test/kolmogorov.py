@@ -6,6 +6,7 @@
 import pybnlib
 
 import numarray
+import numarray.random_array
 from  matplotlib import pylab
 
 def MarkGIter( grid,
@@ -36,7 +37,31 @@ def MarkCiter( grid,
 def MarkEiter( grid,
                o):
 
-    MarkGIter( grid, o , pybnlib.EdgeIter)    
+    MarkGIter( grid, o , pybnlib.EdgeIter)
+
+def GenKolmogorov(N):
+
+    grid=pybnlib.doubleArray( N*N)
+    normv = pybnlib.doubleArray( N*N+2)
+    anormv=numarray.random_array.normal(0.0, 1.0 , N*N+2)
+    for i,x in enumerate(anormv):
+        normv[i]=x
+
+    pybnlib.KolmogorovPlatform(N,
+                               grid,
+                               normv)
+
+    res=numarray.zeros( (N,N),
+                        numarray.Float64)
+    for j in range(N):
+        for i in range(N):
+            res[i,j]=grid[j*N+i]
+
+    return res
+    
+    
+
+    
 
 
 
