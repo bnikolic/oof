@@ -77,10 +77,10 @@ namespace BNLib {
 	size_t i,j;
 	ci.getc( i,j);
 
-	double newval = 0.25 * ( getParentVal( grid, ci , CenterIter::TL),
-				 getParentVal( grid, ci , CenterIter::TR),
-				 getParentVal( grid, ci , CenterIter::BL),
-				 getParentVal( grid, ci , CenterIter::BR)) +
+	double newval = 0.25 * ( getParentVal( grid, ci , CenterIter::TL) +
+				 getParentVal( grid, ci , CenterIter::TR) +
+				 getParentVal( grid, ci , CenterIter::BL) +
+				 getParentVal( grid, ci , CenterIter::BR)  ) +
 	  ( *normvect  ) * pow( 0.6091 * pow( ci.parentDist() , 5.0 / 3.0),
 				0.5);
 	
@@ -117,10 +117,10 @@ namespace BNLib {
 	else
 	{
 	  // not an edge, use four parents as normal.
-	  newval = 0.25 * ( getParentVal( grid, ei , EdgeIter::T),
-			    getParentVal( grid, ei , EdgeIter::B),
-			    getParentVal( grid, ei , EdgeIter::L),
-			    getParentVal( grid, ei , EdgeIter::R)) +
+	  newval = 0.25 * ( getParentVal( grid, ei , EdgeIter::T) + 
+			    getParentVal( grid, ei , EdgeIter::B) + 
+			    getParentVal( grid, ei , EdgeIter::L) +
+			    getParentVal( grid, ei , EdgeIter::R)  ) +
 	  ( *normvect  ) * pow( 0.6091 * pow( ei.parentDist() , 5.0 / 3.0),
 				0.5);
 	  
