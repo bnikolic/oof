@@ -136,14 +136,26 @@ namespace BNLib {
     
     // ----------------  Public Data -----------------------
 
+    const size_t origin; 
+    const size_t delta; 
+
     /// Positions of parets: left, right, top, bottom
     enum parentPos { L, R, T , B };
 
     
     // ----------------   Constructors / Destructors ----------
 
-    
-    
+    /**
+       See KolCellIteratorBase constructor for description of
+       parameters.
+    */
+    EdgeIter( size_t N,
+	      size_t o);
+
+    /**
+       Iterate to the next point
+    */
+    void next(void);
 
   };
 

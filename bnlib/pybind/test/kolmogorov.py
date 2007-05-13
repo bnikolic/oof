@@ -8,6 +8,19 @@ import pybnlib
 import numarray
 from  matplotlib import pylab
 
+def MarkGIter( grid,
+               o,
+               cntruct):
+
+    ci=cntruct(grid.shape[0],o)
+
+    while ci.inBounds():
+        i,j=ci.getc()
+        print i,j
+        grid[i,j]=1
+        ci.next()
+    
+
 def MarkCiter( grid,
                o):
 
@@ -18,12 +31,13 @@ def MarkCiter( grid,
 
     """
 
-    ci=pybnlib.CenterIter(grid.shape[0],o)
+    MarkGIter( grid, o , pybnlib.CenterIter)
 
-    while ci.inBounds():
-        i,j=ci.getc()
-        grid[i,j]=1
-        ci.next()
+def MarkEiter( grid,
+               o):
+
+    MarkGIter( grid, o , pybnlib.EdgeIter)    
+
 
 
 

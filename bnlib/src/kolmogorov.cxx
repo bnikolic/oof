@@ -65,8 +65,7 @@ namespace BNLib {
 
   CenterIter::CenterIter( size_t N,
 			  size_t o):
-    KolCellIteratorBase( N,
-			 o),
+    KolCellIteratorBase( N,  o),
     origin(N>>(o+1)),
     delta( N>>(o))
   {
@@ -131,7 +130,45 @@ namespace BNLib {
     }
   }
 
+  EdgeIter::EdgeIter( size_t N,
+		      size_t o):
+    KolCellIteratorBase( N, o),
+    origin(N>>(o+1)),
+    delta( origin *2  )
+  {
+    if ( origin > 0 ) 
+    {
+      i=origin;
+      j=0;
+    }
+    else
+    {
+      i=j=N;
+    }
+  }
 
+  void EdgeIter::next(void)
+  {
+    if ( i + delta >= N)
+    {
+      // start new row.
+      j +=  origin;
 
+      //odd rows start at i =0
+      if ( (j/origin) & 1 )
+      {
+	i =0;
+      }
+      else
+      {
+	i=origin;
+      }
+    }
+    else
+    {
+      i += delta;
+    }
+    
+  }
 
 }
