@@ -58,6 +58,23 @@ def GenKolmogorov(N):
             res[i,j]=grid[j*N+i]
 
     return res
+
+
+def Structure(a):
+
+    N=a.shape[0]
+    res=[]
+    for d in range( 1 , N/2):
+        x= a[:,d:] - a[:,:-1*d]
+        res.append( ( d, (x**2).mean() ))
+    return res
+
+# Plot as
+# pylab.plot( [x[1] for x in ss] ) ; pylab.plot( [ 6.88 * ( x[0]/ 2050.0 )**(5.0/3) for x in ss] ) ; pylab.show()
+        
+        
+        
+    
     
     
 
