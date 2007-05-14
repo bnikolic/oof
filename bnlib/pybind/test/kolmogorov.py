@@ -69,6 +69,22 @@ def Structure(a):
         res.append( ( d, (x**2).mean() ))
     return res
 
+def TwoPointCross(a, sep):
+
+    m=a.shape[0]/2
+
+    return a[:,m - sep/2] - a[:,m + sep/2]
+
+def TwoPointLong(a, sep):
+
+    m=a.shape[0]/2
+    ds=sep/2
+
+    return a[ds:,m] - a[:-ds,m]
+    
+
+    
+
 # Plot as
 # pylab.plot( [x[1] for x in ss] ) ; pylab.plot( [ 6.88 * ( x[0]/ 2050.0 )**(5.0/3) for x in ss] ) ; pylab.show()
         
