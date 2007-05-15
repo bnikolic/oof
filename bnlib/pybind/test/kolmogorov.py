@@ -2,6 +2,11 @@
 # May 2007
 #
 # Testing script for Kolmogorov phase screen generation
+#
+# Setting python path if necessary:
+# sys.path.extend(["/import/appcs/bn204/p/bnprog-devel-main/"+x for x in ["bin", "lib"] ])
+
+import sys
 
 import pybnlib
 
