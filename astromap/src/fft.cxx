@@ -1,10 +1,17 @@
-/*
-  Bojan Nikolic
+/**
+   \file fft.cxx
 
-  still need to rename fftScratch to just Scratch...
+   Bojan Nikolic <bojan@bnikolic.co.uk>, <bn204@mrao.cam.ac.uk>,
+   <bnikolic@nrao.edu>
+   
+   2003--2007
+
+   An interface to the FFT libraries.
 */
 
 #include "fft.hxx"
+
+#include <vector>
 
 #include <fftw.h>
 
@@ -26,7 +33,7 @@ namespace AstroMap {
     fftwnd_plan plan;
 
     /// Scratch space for the transform
-    std::auto_ptr<fftw_complex>  fftScratch;
+    std::vector<fftw_complex>  fftScratch;
 
     /// Are we centering?
     FFTFact::cntr docenter;
@@ -43,7 +50,7 @@ namespace AstroMap {
 					 ny, 
 					 direction,
 					 FFTW_ESTIMATE | FFTW_IN_PLACE) )),
-      fftScratch( ENFORCE(new fftw_complex[ nx * ny ]) ),
+      fftScratch( nx * ny  ),
       docenter(docenter)
     {
     }
@@ -69,18 +76,18 @@ namespace AstroMap {
 		  {
 		    if (i+j & 1) 
 		      {
-			(&*fftScratch)[i*nx + j].re= Amp[i*nx + j] * cos( Phi[i*nx + j] ) * mul;
-			(&*fftScratch)[i*nx + j].im= Amp[i*nx + j] * sin( Phi[i*nx + j] ) * mul;
+			fftScratch[i*nx + j].re= Amp[i*nx + j] * cos( Phi[i*nx + j] ) * mul;
+			fftScratch[i*nx + j].im= Amp[i*nx + j] * sin( Phi[i*nx + j] ) * mul;
 		      } 
 		    else 
 		      {
-			(&*fftScratch)[i*nx + j].re= Amp[i*nx + j] * cos(Phi[i*nx + j] );
-			(&*fftScratch)[i*nx + j].im= Amp[i*nx + j] * sin(Phi[i*nx + j] );
+			fftScratch[i*nx + j].re= Amp[i*nx + j] * cos(Phi[i*nx + j] );
+			fftScratch[i*nx + j].im= Amp[i*nx + j] * sin(Phi[i*nx + j] );
 		      }
 		  }
 	      }
   
-	    fftwnd_one( plan , fftScratch.get(), NULL);
+	    fftwnd_one( plan , &fftScratch[0], NULL);
 	    // Thats it... result should be in fftScratch
     }
     
@@ -99,8 +106,8 @@ namespace AstroMap {
 	{
 	  for (unsigned j=0 ; j < ny ; j++ ) 
 	    {
-	    Amp[i*nx + j] = sqrt ( pow(fftScratch.get()[i*nx + j].re,2) + pow(fftScratch.get()[i*nx + j].im , 2) ) ;
-	    Phi[i*nx + j] = atan2( fftScratch.get()[i*nx + j].im, fftScratch.get()[i*nx + j].re ) ;
+	    Amp[i*nx + j] = sqrt ( pow(fftScratch[i*nx + j].re,2) + pow(fftScratch[i*nx + j].im , 2) ) ;
+	    Phi[i*nx + j] = atan2( fftScratch[i*nx + j].im, fftScratch[i*nx + j].re ) ;
 	  
 	}
       }
@@ -118,8 +125,8 @@ namespace AstroMap {
 	{
 	  for (unsigned  j=0 ; j < ny ; j++ ) 
 	    {
-	      ResPower[i*nx + j] =  pow((&*fftScratch)[i*nx + j].re,2) + 
-		pow((&*fftScratch)[i*nx + j].im ,2)   ;
+	      ResPower[i*nx + j] =  pow(fftScratch[i*nx + j].re,2) + 
+		pow(fftScratch[i*nx + j].im ,2)   ;
 	}
       }
     }

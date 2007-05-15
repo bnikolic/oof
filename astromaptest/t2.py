@@ -13,7 +13,7 @@ m = pyplot.Map(128,128)
 pyplot.MkApCS(m, 8)
 tel1.DishMask(m)
 
-if 0:
+if 1:
     fftf=pyplot.FFTFact( m.nx , m.ny  , pyplot.FFTFact.forward , pyplot.FFTFact.center)
     m2 = pyplot.Map(128,128)
     m3 = pyplot.Map(128,128)
@@ -21,7 +21,7 @@ if 0:
 
 #implot.plotmap(m3, colmap="heat", transf=1)
 
-if 1:
+if 0:
     ds1=pyplot.LoadFITSDS("/home/bnikolic/temp/s114-l-db.fits",3)
     m4 = pyplot.Map(128,128)
     pyplot.MkApCS(m4, 4.8e-6*100)
