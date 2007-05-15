@@ -22,7 +22,8 @@ libbnlib_la_SOURCES= interpolate.hxx interpolate.cxx \
 			tophat.cxx tophat.hxx \
 			integrateutils.cxx integrateutils.hxx\
 			unaryfnutils.cxx unaryfnutils.hxx\
-			kolmogorov.cxx kolmogorov.hxx
+			kolmogorov.cxx kolmogorov.hxx \
+			kolmogorov_wrap.cxx kolmogorov_wrap.hxx
 
 libbnlib_la_CFLAGS = -Wall
 libbnlib_la_CPPFLAGS = -Wall
@@ -51,4 +52,5 @@ include_HEADERS = 	unaryfn.hxx \
 			tophat.hxx\
 			integrateutils.hxx\
 			unaryfnutils.hxx \
-			kolmogorov.hxx
+			kolmogorov.hxx\
+			kolmogorov_wrap.hxx

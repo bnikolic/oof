@@ -1,9 +1,9 @@
-/*
-  Copyright:
-  Bojan Nikolic
+/**
+   \file bnrandom.cxx
+   
+   Bojan Nikolic <bojan@bnikolic.co.uk>, <bn204@mrao.cam.ac.uk>
 
-  
-
+   2004-2007
 */
 
 #include "bnrandom.hxx"
@@ -17,6 +17,20 @@
 #include <sys/time.h>
 
 namespace BNLib { 
+
+  // ----------------  class RDist section     -----------------
+
+  double RDist::samplefill(std::vector<double> &res)
+  {
+    for (size_t i = 0 ; i < res.size() ; ++ i)
+    {
+      res[i] = sample();
+    }
+    return sample();
+  }
+
+  // ----------------  Helpers for GSL random number generators  ----------------
+  
 
   /*! Implements random number generation using GSL */
   class GSLRanGen {

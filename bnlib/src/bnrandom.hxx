@@ -1,14 +1,16 @@
-/*
-  Copyright:
-  Bojan Nikolic
+/**
+   \file bnrandom.hxx
 
-  Interface to random number generators
+   Bojan Nikolic <bn204@mrao.cam.ac.uk>, <bnikolic@nrao.edu>,
+   <bojan@bnikolic.co.uk> 2004-2007
 
+   Interface to random number generators
 */
 #ifndef __BNLib_RANDOM_HXX__
 #define __BNLib_RANDOM_HXX__
 
 #include <memory>
+#include <vector>
 
 
 namespace BNLib{
@@ -24,14 +26,25 @@ namespace BNLib{
     
     /// Returns a sample from the distribution
     virtual double sample(void)=0;
-  };
 
+    /**
+       Fill out the supplied vector res with random numbers sampled
+       from this ditribution. Returns one further random sample.
+       
+       Virtual to allow more efficient implementation if a random
+       number generator allows it.
+       
+    */
+    virtual double samplefill( std::vector<double> & res );
+  };
 
 
   class iNormDist;
 
   /// A zero-mean normal distribution
-  class NormDistZM : public RDist {
+  class NormDistZM : 
+    public RDist 
+  {
 
     /// This is the implementation class
     std::auto_ptr<iNormDist> ip;

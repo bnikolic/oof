@@ -39,17 +39,14 @@ def MarkEiter( grid,
 
     MarkGIter( grid, o , pybnlib.EdgeIter)
 
-def GenKolmogorov(N):
+def GenKolmogorov(N,
+                  seed=0):
 
     grid=pybnlib.doubleArray( N*N)
-    normv = pybnlib.doubleArray( N*N+2)
-    anormv=numarray.random_array.normal(0.0, 1.0 , N*N+2)
-    for i,x in enumerate(anormv):
-        normv[i]=x
 
     pybnlib.KolmogorovPlatform(N,
                                grid,
-                               normv)
+                               seed)
 
     res=numarray.zeros( (N,N),
                         numarray.Float64)
