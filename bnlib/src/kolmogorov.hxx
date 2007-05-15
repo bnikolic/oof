@@ -14,6 +14,10 @@
 
 #include <stdlib.h>
 
+/**
+   BNLib is the strandard namespace into which parts of this library
+   go.
+*/
 namespace BNLib {
 
   /**
