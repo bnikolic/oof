@@ -92,3 +92,12 @@ CVS
 ./astromaptest/plots
 ./astromaptest/gbtil
 ./astromaptest/temp
+./bnlib/pybind/config/ltmain.sh
+./bnlib/pybind/config/depcomp
+./bnlib/pybind/config/config.sub
+./bnlib/pybind/config/config.guess
+./bnlib/doc/Doxyfile
+./bnlib/config/ltmain.sh
+./bnlib/config/depcomp
+./bnlib/config/config.sub
+./bnlib/config/config.guess
