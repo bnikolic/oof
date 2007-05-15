@@ -8,6 +8,7 @@
 #include "../src/fft.hxx"
 #include "../src/lcmaps.hxx"
 #include "../src/convolve.hxx"
+#include "../src/fresneltrans.hxx"
 
 #include "../src/coordsys/coordsys.hxx"
 #include "../src/coordsys/lincordsys.hxx"
@@ -35,6 +36,7 @@
 
 %include "typemaps.i"
 %include "std_vector.i"
+%include "std_complex.i"
 
 
 namespace std {
@@ -48,6 +50,7 @@ namespace std {
 %include "../src/fft.hxx"
 %include "../src/lcmaps.hxx"
 %include "../src/convolve.hxx"
+%include "../src/fresneltrans.hxx"
 
 %include "../src/coordsys/coordsys.hxx"
 %include "../src/coordsys/lincordsys.hxx"
@@ -98,35 +101,6 @@ namespace std {
 	self->get(x,y)=val;
      }
 	
-
-}
-
-%extend AstroMap::CoordSys {
-
-  double  x_pxtoworld(double px , double py ) {
-	double wx; double wy;
-	(*self).pxtoworld(px, py , wx , wy);
-	return wx;
-	}
-
-  double  y_pxtoworld(double px , double py ) {
-	double wx; double wy;
-	(*self).pxtoworld(px, py , wx , wy);
-	return wy;
-	}
-
-  double  x_worldtopx(double wx, double wy ) {
-	double px ; double py;
-	(*self).worldtopx( wx , wy, px, py );
-	return px;
-	}
-
-  double  y_worldtopx(double wx, double wy ) {
-	double px ; double py;
-	(*self).worldtopx( wx , wy, px, py );
-	return py;
-	}
-
 
 }
 

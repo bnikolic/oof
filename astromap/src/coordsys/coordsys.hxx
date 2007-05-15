@@ -33,6 +33,13 @@ namespace AstroMap {
     /*! Convert world to pixel coordinates */
     virtual void worldtopx(double wx, double wy , double &px , double &py ) const = 0;
 
+    // ------------- Helper functions to avoid references ----------------
+    
+    double  x_pxtoworld(double px , double py );
+    double  y_pxtoworld(double px , double py );
+
+    double  x_worldtopx(double wx, double wy );
+    double  y_worldtopx(double wx, double wy );
 
   };
   
