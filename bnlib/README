@@ -11,3 +11,9 @@ configure as:
 
  	./configure --prefix=${HOME}/p/bnlib
 
+Or, even better: define prefix as:
+export set BNPREFIX=/home/bn204/d/p/bnprog-devel-main
+
+and then 
+	
+	./configure --prefix=${BNPREFIX}

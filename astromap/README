@@ -30,3 +30,13 @@ on hathor:
  	CFLAGS="${CFLAGS}  -I${HOME}/p/bnlib/include  -I${HOME}/p/bnfits/include -g" \
 	LDFLAGS="${LDFLAGS} -L${HOME}/p/bnlib/lib -L${HOME}/p/bnfits/lib"  \
 	--prefix=${HOME}/p/astromap 
+
+
+More notes:
+	export PYTHON=python2.4
+	./configure 	CPPFLAGS="-I${BNPREFIX}/include" \
+			CFLAGS="-I${BNPREFIX}/include" \
+			SWIGFLAGS="-I${BNPREFIX}/include" \
+			LDFLAGS="-L${BNPREFIX}/lib"\
+			 --prefix=${BNPREFIX} 
+
