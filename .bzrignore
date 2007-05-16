@@ -135,3 +135,4 @@ CVS
 ./bnmin1/config/depcomp
 ./bnmin1/config/config.sub
 ./bnmin1/config/config.guess
+./astromap/doc/Doxyfile

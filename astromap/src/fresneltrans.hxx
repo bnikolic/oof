@@ -20,6 +20,9 @@ namespace AstroMap {
 
   /** 
       Calculate the pixel (k,l) of the Fresnel transform of the map m.
+      
+      \bug Does not yet do the proper treatement -- just the classical
+      "Fresnel" approximation.
   */
   std::complex<double> dFresnelDir( const Map & m,
 				    size_t k,
