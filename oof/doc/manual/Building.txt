@@ -1,0 +1,38 @@
+
+Recommended procedure for building OOF.
+
+export set BNPREFIX=/home/bnikolic/p/bnprog-devel-main
+export set PYTHON=python2.4
+
+export set CPPFLAGS="${CPPFLAGS} -I${BNPREFIX}/include"
+export set CFLAGS="${CFLAGS} -I${BNPREFIX}/include" 
+export set SWIGFLAGS="-I${BNPREFIX}/include" 
+export set LDFLAGS="${LDFLAGS} -L${BNPREFIX}/lib"
+
+cd bnlib && \
+./configure --prefix=${BNPREFIX} && \
+make install &&\
+cd ..
+
+cd bnfits && \
+./configure --prefix=${BNPREFIX} && \
+make install &&\
+cd ..
+
+cd astromap && \
+./configure --prefix=${BNPREFIX} && \
+make install &&\
+cd ..
+
+cd bnmin1 && \
+./configure --prefix=${BNPREFIX} && \
+make install &&\
+cd ..
+
+cd oof && \
+./configure --prefix=${BNPREFIX} && \
+make install &&\
+cd ..
+
+
+
