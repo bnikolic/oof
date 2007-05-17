@@ -5,6 +5,10 @@ Pre-required packages for the OOF holography software:
 
 * FFTW v.2 
 
+  ** Note that FFTW v.3 is *not* compatible with FFTW2 and will not
+     work in place of FFTW v.2. It should however be possible to have
+     both installed on the system if required.
+
 * SWIG 1.3.31 or later
 
 * PGPLOT

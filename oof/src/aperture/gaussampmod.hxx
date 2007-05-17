@@ -1,8 +1,18 @@
-/*
-  Bojan Nikolic
-  $Id: gaussampmod.hxx,v 1.5 2006/02/16 00:23:12 bnikolic Exp $
+/**
+   \file gaussampmod.hxx
+   
+   Bojan Nikolic <bn204@mrao.cam.ac.uk>, <bojan@bnikolic.co.uk>
+   2004-2007
+   
+   The gaussian model for aperture plane amplitude distribution. Note
+   that this describes the distribution of the amplitude of the
+   electric field -- therefore to needs to converted to power (i.e.,
+   squared) to calculate "dB" values. 
 
-  Gaussian amplitude model
+   For example if sigma=0.3 then this is equivalent to 14dB
+   taper. (since \f$\log_{10}(e)=0.43\f$ and \f$\log_{10}(e)/0.3
+   \times 10=14.47\f$)
+
 */
 #ifndef __OOF_GAUSSAMPMOD_HXX__
 #define __OOF_GAUSSAMPMOD_HXX__
