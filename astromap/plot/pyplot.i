@@ -81,6 +81,10 @@ namespace std {
 	return (*self).max();
 	}
 
+    double sum() {
+	return (*self).sum();
+	}
+
      void mult ( Map const & m ) {
 	(*self) *= m;
      }

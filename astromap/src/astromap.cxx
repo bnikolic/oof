@@ -1,11 +1,15 @@
-/*
-  Bojan Nikolic
-
+/**
+   \file astromap.cxx
+   
+   Bojan Nikolic <bn204@mrao.cam.ac.uk>, <bojan@bnikolic.co.uk>
+   2004-2007
 */
 
 #include "astromap.hxx"
 
+
 #include <bndebug.hxx>
+#include <cmath>
 
 #include "coordsys/coordsys.hxx"
 #include "coordsys/lincordsys.hxx"
@@ -69,9 +73,16 @@ namespace AstroMap {
     return (*this)[y*nx+x];
   }
 
+  void Map::sqrt(void)
+  {
+    (*dynamic_cast<MapBase * >(this)) = std::sqrt(*this);    
+  }
+
   Map * Clone (Map &m)
   {
     return new Map( m.nx, m.ny, m.cs->Clone());
   }
+
+
 
 }

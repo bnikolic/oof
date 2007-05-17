@@ -1,8 +1,9 @@
-/*
-  Bojan Nikolic
-  $Id: farf.cxx,v 1.5 2005/08/18 04:57:43 bnikolic Exp $
+/**
+   \file farf.cxx
+   
+   Bojan Nikolic <bn204@mrao.cam.ac.uk>, <bojan@bnikolic.co.uk>
 
-
+   2004-2007
 */
 
 #include "farf.hxx"
@@ -25,7 +26,8 @@ namespace OOF {
   }
 
 
-  void FarF::Power ( const AstroMap::Map & amp, AstroMap::Map & phase, 
+  void FarF::Power ( const AstroMap::Map & amp, 
+		     const AstroMap::Map & phase, 
 		     AstroMap::Map & res)
   {
     ff->FFTAmpPh_Power(amp, phase , res);
@@ -33,6 +35,15 @@ namespace OOF {
     // now set the coordinate system!
     SetFarFCS( amp , wavel , res);
 
+  }
+
+  void FarF::Amplitude ( const AstroMap::Map & amp, 
+			 const AstroMap::Map & phase, 
+			 AstroMap::Map & res)
+  {
+
+    Power( amp, phase, res);
+    res.sqrt();
   }
   
   void     FarF::AddParams ( std::vector< Minim::DParamCtr > &pars )

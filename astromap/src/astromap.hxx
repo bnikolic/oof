@@ -69,8 +69,11 @@ namespace AstroMap {
     bool belongs(double x , double y) const 
     { return x>=0 && x<nx && y >=0 && y< ny ; }
 
-    
-    
+    // ---------- Misc mathemathics stuff ------------
+
+    /// In-place square root of the elements
+    void sqrt(void);    
+
 
   };
 
