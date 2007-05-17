@@ -35,6 +35,25 @@ namespace AstroMap {
     return res;
   }
 
+  double MapPixLC::operator() (Map const &m, 
+			       signed int offset)
+  {
+    double res=0;
+    size_t totpx= m.nx*m.ny;
+    for ( size_t i =0 ; i < index.size() ; ++i )
+    {
+      signed int px = index[i] + offset;
+      if ( px <0 || px >= totpx )
+      {
+	throw "Offset has taken the interpolation out of bounds";
+      }
+      res += coeff[i] * m[ px ];
+    }
+
+    return res;
+
+  }
+
   MapPixLC * MkGaussCoffs (double cx, double cy, Map const &msample,
 			   double fwhm_px, double extent_px)
   {

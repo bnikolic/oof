@@ -1,8 +1,12 @@
-/*
-  Bojan Nikolic
-  $Id: mapdseval.hxx,v 1.2 2005/08/03 12:00:37 bnikolic Exp $
+/**
+   \file mapdseval.hxx
 
-  Interpolate a map to positions contained in a dataseries.
+   Bojan Nikolic <bn204@mrao.cam.ac.uk> , <bojan@bnikolic.co.uk>
+
+   2004-2007
+
+   Interpolation of maps to positions contained in a dataseries and
+   similar routines.
 */
 #ifndef _ASTROMAP_MAPDSEVAL_HXX__
 #define _ASTROMAP_MAPDSEVAL_HXX__
@@ -31,13 +35,24 @@ namespace AstroMap {
 
   public:
     
-    /*! */
+    /**
+     \param index The indices of pixels to be weighted together
+
+     \param coeff The coefficients to use for the weighthing
+    */
     MapPixLC( std::valarray<unsigned> const &index , 
 	      std::valarray<double > const &coeff );
 
     /*! Calculate the linear combination on the supplied map and
       return the value*/
     double operator() (Map const &m);
+
+    /**
+       Calculate the linear combination, but ofset all of the indices
+       by the supplied parameter
+    */
+    double operator() (Map const &m, 
+		       signed int offset);
     
   };
 
@@ -53,8 +68,11 @@ namespace AstroMap {
 			   double fwhm_px, double extent_px);
 
   
-  /*! 
-   
+  /** 
+    Interpolates a map using a gaussian kernel onto the positions
+    specified by the data series. Use this class to make it possible
+    to re-use kernel coefficients as the input map changes --
+    significantly saving time.
   */
   class MapDSEval {
     
@@ -62,7 +80,17 @@ namespace AstroMap {
 
   public:
 
-    /*! Setup the interpolators so that can be evaluated quickly*/
+    /** Setups the interpolators so that heycan be evaluated
+	quickly. 
+	
+	\param ds The positions to interpolate to. All calls to Calc
+	will be apropriate for these positions only.
+
+	\param msample Map dimensions are figured out from this.
+
+	\param fwhm_px, extent_px define the Gaussian interpolation
+	kernel used.
+    */
     MapDSEval( DataSeries const & ds , 
 	       Map const & msample,
 	       double fwhm_px, double extent_px);
