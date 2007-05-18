@@ -13,6 +13,7 @@
 #include "coordsys/lincordsys.hxx"
 
 #include <bnrandom.hxx>
+#include <kolmogorov_wrap.hxx>
 
 
 
@@ -74,6 +75,11 @@ namespace AstroMap {
     
     return mres.release();
 
+  }
+
+  void KolmogorovMap( Map &m )
+  {
+    BNLib::KolmogorovPlatform(m.nx, &m[0], 0);
   }
 
 }

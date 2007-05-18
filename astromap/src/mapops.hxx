@@ -40,6 +40,9 @@ namespace AstroMap {
    */
   Map *  IntZoom( Map &m, unsigned scale);
 
+  /** Assign a Kolmogorov distribution the the supplied map */
+  void KolmogorovMap( Map &m );
+
 }
 
 
