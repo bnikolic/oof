@@ -1,4 +1,9 @@
 
+Required compilers:
+
+* C, C++ and Fortran compilers are required. It appears that gfortran
+  4.1 *does not work*, so g77 is required.
+
 Pre-required packages for the OOF holography software:
 
 * Python 2.4

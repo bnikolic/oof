@@ -1,13 +1,18 @@
-/*
-  Bojan Nikolic
-  $Id: mapdseval.cxx,v 1.2 2005/08/03 12:00:37 bnikolic Exp $
+/**
+   \file mapdseval.cxx
 
+   Bojan Nikolic <bn204@mrao.cam.ac.uk> , <bojan@bnikolic.co.uk>
+   2004-2007
 */
 
 #include "mapdseval.hxx"
 
 #include <memory>
+#include <vector>
+#include <iostream>
+
 #include <gaussian.hxx>
+
 
 #include "../astromap.hxx"
 #include "../pixextract.hxx"
@@ -43,7 +48,7 @@ namespace AstroMap {
     for ( size_t i =0 ; i < index.size() ; ++i )
     {
       signed int px = index[i] + offset;
-      if ( px <0 || px >= totpx )
+      if ( px <0 || px >= (int)totpx )
       {
 	throw "Offset has taken the interpolation out of bounds";
       }
@@ -52,6 +57,14 @@ namespace AstroMap {
 
     return res;
 
+  }
+
+  void MapPixLC::print(void)
+  {
+    for (unsigned i =0 ; i < index.size() ; ++i )
+    {
+      std::cout<<"inx=" <<index[i]<<" c=" <<coeff[i];
+    }
   }
 
   MapPixLC * MkGaussCoffs (double cx, double cy, Map const &msample,
@@ -91,6 +104,34 @@ namespace AstroMap {
     coeff /= totcoeff;
     return new MapPixLC( index, coeff);
 
+  }
+
+  MapPixLC * MkCircleCoeffs (int px, int py, 
+			     Map const &msample,
+			     double radius)
+  {
+
+    PixListInt pxl = ExSquare(  px,  py, ceil(radius), msample);
+    
+    std::vector<unsigned> index;
+    std::vector<double>   coeff;
+
+    for (unsigned i =0 ; i < pxl.size() ; ++i ) 
+    {
+	int currpx = (*pxl.px)[i];
+	int currpy = (*pxl.py)[i];	
+	
+	if ( pow( currpx - px,2 ) + pow( currpy-py,2) < pow(radius,2))
+	{
+	  index.push_back( currpy * msample.nx + currpx);
+	  coeff.push_back( 1.0);
+	}
+    }
+
+    std::valarray<double> vcoeff( &coeff[0] , coeff.size() );
+    std::valarray<unsigned> vindex( &index[0] , index.size() );
+    vcoeff /= vcoeff.sum() ;
+    return new MapPixLC( vindex, vcoeff);
   }
 
   MapDSEval::MapDSEval( DataSeries const & ds , 

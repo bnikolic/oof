@@ -136,3 +136,10 @@ CVS
 ./bnmin1/config/config.sub
 ./bnmin1/config/config.guess
 ./astromap/doc/Doxyfile
+*config.guess*
+*config.sub*
+*depcomp*
+*ltmain.sh*
+*config.status.lineno*
+*configure.lineno*
+*config/compile*

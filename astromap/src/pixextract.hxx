@@ -1,7 +1,9 @@
-/*
-  Bojan Nikolic
+/**
+   \file pixextract.hxx
+   
+   Bojan Nikolic <bojan@bnikolic.co.uk>
 
-  Extract ranges of pixels from a map
+   Extract ranges of pixels from a map
 */
 
 #ifndef _ASTROMPA_PIXEXTRACT_HXX__
@@ -15,7 +17,10 @@ namespace AstroMap {
   // Forwards
   class Map;
 
-  /*! Stores a list of pixel positions */
+  /** Stores a list of pixel positions
+      
+  \bug The use of std::auto_ptr here seems like a bad choice.
+  */
   struct PixListInt {
 
     /*! x-position of each pixel.  */

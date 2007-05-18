@@ -53,19 +53,36 @@ namespace AstroMap {
     */
     double operator() (Map const &m, 
 		       signed int offset);
+
+    /**
+       Print indices and coefficients to standard output
+    */
+    void print(void) ;
     
   };
 
-  /*! 
+  /**
     Return a pixel linear combination which represents a gaussian
     interpolation at position cx,cy of a map of properties like
     msample.
     
-    fwhm_px is the full-width-half-maximum of the interpolation
-    gaussian kernel and extent_px it the size of the kernel.
+    \param fwhm_px is the full-width-half-maximum of the interpolation
+    gaussian kernel
+
+    \param extent_px it the size of the kernel.
   */
   MapPixLC * MkGaussCoffs (double cx, double cy, Map const &msample,
 			   double fwhm_px, double extent_px);
+
+  /**
+     Return a pixel interpolation which represent simple flat circle
+     specified in pixel coordinates.
+     
+  */
+  MapPixLC * MkCircleCoeffs (int px, int py, 
+			     Map const &msample,
+			     double radius);
+  
 
   
   /** 
