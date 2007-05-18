@@ -1,7 +1,9 @@
-/*
-  Bojan Nikolic
+/**
+   \file mapops.hxx
 
-  Some operations on maps
+   Bojan Nikolic <bn204@mrao.cam.ac.uk>, <bojan@bnikolic.co.uk>
+
+   Define some useful operations on maps
 */
 #ifndef _ASTROMAP_MAPOPS_HXX__
 #define _ASTROMAP_MAPOPS_HXX__

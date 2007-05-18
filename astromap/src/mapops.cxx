@@ -1,5 +1,7 @@
-/*
-  Bojan Nikolic
+/**
+   \file mapops.cxx
+   
+   Bojan Nikolic <bn204@mrao.cam.ac.uk>, <bojan@bnikolic.co.uk>
 
 */
 
