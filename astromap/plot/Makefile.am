@@ -6,7 +6,7 @@ SUBDIRS = colmaps py
 lib_LTLIBRARIES = libastromapplot.la  _pyplot.la
 
 BUILT_SOURCES = pyplot.py pyplot.cxx
-bin_SCRIPTS =   pyplot.py 
+nodist_bin_SCRIPTS =   pyplot.py 
 
 
 libastromapplot_la_SOURCES=   plot.hxx plot.cxx \
@@ -22,7 +22,8 @@ _pyplot_la_LIBADD  = ../src/libastromap.la \
 			-lpgplot -lcpgplot  -lX11 -lg2c -lpng
 
 
-_pyplot_la_SOURCES = pyplot.cxx pyplot.i
+_pyplot_la_SOURCES =  pyplot.i
+nodist__pyplot_la_SOURCES = pyplot.cxx
 _pyplot_la_CPPFLAGS = @PYTHON_INCLUDES@
 
 
