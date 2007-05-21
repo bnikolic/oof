@@ -1,0 +1,25 @@
+
+The OOF software runs from withing the python interpreter. It can be
+used interactively from the standard python command line, from
+scripts, or from an IPython command line (although I haven't tested
+this).
+
+In order for Python to be able to find the OOF modules, the
+environment variable PYTHONPATH needs to be set. Continuing the
+previous example, if 
+
+export set BNPREFIX=/home/bnikolic/p/bnprog-devel-main
+
+then PYTHONPATH should be set as 
+
+export set PYTHONPATH="${BNPREFIX}/bin:${BNPREFIX}/lib:${PYTHONPATH}"
+
+It is then just necessary to invoke the python executable (being
+careful to use the same one as the libraries were compiled against --
+python2.4 in our case) and try :
+
+# Python:
+import pyoof
+# end Python
+
+If this works then everything else should too.
