@@ -15,6 +15,7 @@
 #include "../src/phycosmo.hxx"
 #include "../src/integrate.hxx"
 #include "../src/kolmogorov.hxx"
+#include "../src/kolmogorov_iters.hxx"
 #include "../src/kolmogorov_wrap.hxx"
 
 %}
@@ -39,7 +40,7 @@
 %include "../src/phyconstants.hxx"
 %include "../src/phyfunc.hxx"
 %include "../src/phycosmo.hxx"
-%include "../src/kolmogorov.hxx"
+%include "../src/kolmogorov_iters.hxx"
 %include "../src/kolmogorov_wrap.hxx"
 
 %extend BNLib::ConstUDD {
