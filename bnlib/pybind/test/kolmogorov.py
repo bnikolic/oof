@@ -5,6 +5,8 @@
 #
 # Setting python path if necessary:
 # sys.path.extend(["/import/appcs/bn204/p/bnprog-devel-main/"+x for x in ["bin", "lib"] ])
+# or
+# import sys ; sys.path.extend(["/home/bnikolic/p/bnprog-devel-main/"+x for x in ["bin", "lib"] ])
 
 import sys
 
@@ -85,6 +87,20 @@ def TwoPointLong(a, sep):
     return a[ds:,m] - a[:-ds,m]
     
 
+def PlotPowerLaws():
+
+    """
+    Test the kolmogorov power law generation functions
+    """
+    
+    def PlotFn(f):
+        xa=numarray.arange(1.0, 100.0, 1.0)
+        ya=numarray.array([ f(x) for x in xa] )
+        pylab.loglog( xa, ya)
+
+    
+    PlotFn(pybnlib.KolPowerLawFn(pybnlib.KolPowerLawFn.D3Thin))
+    PlotFn(pybnlib.KolPowerLawFn(pybnlib.KolPowerLawFn.D3Thick))
     
 
 # Plot as

@@ -24,7 +24,8 @@ libbnlib_la_SOURCES= interpolate.hxx interpolate.cxx \
 			unaryfnutils.cxx unaryfnutils.hxx\
 			kolmogorov.cxx kolmogorov.hxx \
 			kolmogorov_iters.cxx kolmogorov_iters.hxx \
-			kolmogorov_wrap.cxx kolmogorov_wrap.hxx
+			kolmogorov_wrap.cxx kolmogorov_wrap.hxx \
+			kolmogorov_spec.cxx kolmogorov_spec.hxx
 
 libbnlib_la_CFLAGS = -Wall
 libbnlib_la_CPPFLAGS = -Wall
@@ -55,4 +56,5 @@ include_HEADERS = 	unaryfn.hxx \
 			unaryfnutils.hxx \
 			kolmogorov.hxx\
 			kolmogorov_iters.hxx \
+			kolmogorov_spec.hxx \
 			kolmogorov_wrap.hxx
