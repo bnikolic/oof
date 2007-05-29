@@ -62,6 +62,48 @@ namespace BNLib {
 
   };
 
+  /**
+     \brief Broken power law representing transition from thin screen
+     to thick screen.
+
+     The thin screen structure function is scaled to fit contiously
+     onto the thick screen.
+  */
+  class Kol3DBreakLaw : 
+    public KolStructureFn
+  {
+    
+    KolPowerLawFn thick ;
+    KolPowerLawFn thin  ;
+
+
+  public:
+
+    /** Length at which transition from thin screen to thick screen
+	occurrs.
+     */
+    const double w;
+
+    /**
+       Normalisation of the thin function so that the spectrum is
+       contiuous. thick(w) = c * thin(w) -> c= thick(w)/thin(w)
+     */
+    const double c;
+
+    // --------------- Construction / Destruction ----------
+    
+    /**
+       \param w Transition from thin screen to thick screen regime.
+    */
+    Kol3DBreakLaw( double w);
+
+    // --------------- Public interface --------------------
+
+    virtual double operator() (double x);    
+    
+
+  };
+
 
 }
 

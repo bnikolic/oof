@@ -101,6 +101,7 @@ def PlotPowerLaws():
     
     PlotFn(pybnlib.KolPowerLawFn(pybnlib.KolPowerLawFn.D3Thin))
     PlotFn(pybnlib.KolPowerLawFn(pybnlib.KolPowerLawFn.D3Thick))
+    PlotFn(pybnlib.Kol3DBreakLaw(10.0) )
     
 
 # Plot as

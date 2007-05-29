@@ -45,6 +45,28 @@ namespace BNLib {
     return 6.88 * pow(x, xi);
   }
 
+  Kol3DBreakLaw::Kol3DBreakLaw(double w) :
+    thick( KolPowerLawFn::D3Thick),
+    thin ( KolPowerLawFn::D3Thin) ,
+    w(w),
+    c ( thick(w)/ thin(w) )
+  {
+
+  }
+
+  double Kol3DBreakLaw::operator() (double x)
+  {
+    if ( x <= w)
+    {
+      return thick(x);
+    }
+    else
+    {
+      return c* thin(x);
+    }
+    
+  }
+
 
 }
    
