@@ -5,6 +5,7 @@
 #include "../src/unaryfnutils.hxx"
 #include "../src/binaryfn.hxx"
 #include "../src/tophat.hxx"
+#include "../src/bnrandom.hxx"
 #include "../src/zernikepoly.hxx"
 #include "../src/interpolate.hxx"
 #include "../src/interpolategsl.hxx"
@@ -27,11 +28,16 @@
 %array_class( double , doubleArray);
 
 %apply size_t & OUTPUT { size_t &iOUT, size_t &jOUT };
+%apply double * OUTPUT { double * OUTalpha, 
+			 double *OUTbeta,
+			 double *OUTgamma,
+			 double *OUTdelta};
 
 %include "../src/unaryfn.hxx"
 %include "../src/unaryfnutils.hxx"
 %include "../src/binaryfn.hxx"
 %include "../src/tophat.hxx"
+%include "../src/bnrandom.hxx"
 %include "../src/zernikepoly.hxx"
 %include "../src/interpolate.hxx"
 %include "../src/interpolategsl.hxx"
@@ -43,6 +49,7 @@
 %include "../src/phycosmo.hxx"
 %include "../src/kolmogorov_iters.hxx"
 %include "../src/kolmogorov_spec.hxx"
+%include "../src/kolmogorov.hxx"
 %include "../src/kolmogorov_wrap.hxx"
 
 %extend BNLib::ConstUDD {

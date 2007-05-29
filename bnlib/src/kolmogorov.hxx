@@ -20,6 +20,31 @@
 */
 namespace BNLib {
 
+  // Forwards
+  class KolStructureFn;
+  class RDist;
+
+  /** 
+      \brief Calculate the four corners of the grid on which
+      Kolmogorov turbulence is to be calculated.
+      
+      This function is general to both power law or broken power law
+      structure functions.
+      
+      \param sfn is the structure function that defines the turbulence
+      properties (e.g., thick screen or thin screen).
+      
+      \param rfn Normal distribution random number generator. Will be
+      sampled six times.
+
+  */
+  void KolmogorovCorners( double *OUTalpha,
+			  double *OUTbeta,
+			  double *OUTgamma,
+			  double *OUTdelta,
+			  KolStructureFn & sfn,
+			  RDist &rfn);
+
   /**
      Construct a Kolmogorov random field on a NxN grid using the
      algorithm of Lane et al 2002 (1992WRM.....2..209L).

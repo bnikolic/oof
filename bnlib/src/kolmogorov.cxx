@@ -7,13 +7,46 @@
 
 #include "kolmogorov.hxx"
 #include "kolmogorov_iters.hxx"
+#include "kolmogorov_spec.hxx"
+
+#include "bnrandom.hxx"
 
 #include <cmath>
 
+
 namespace BNLib {
+
+
+  void KolmogorovCorners( double *alpha,
+			  double *beta,
+			  double *gamma,
+			  double *delta,
+			  KolStructureFn & sfn,
+			  RDist &rfn)
+  {
+
+    const double SigmaC=sqrt ( sfn(1.0) - 0.5 * sfn(sqrt(2.0))   );
+    const double SigmaD=sqrt ( 2.0* ( sfn(sqrt(2.0)) - sfn(1.0)) );
+
+    const double Rad = rfn.sample() * SigmaD;
+    const double Rbg = rfn.sample() * SigmaD;
+
+
+    *alpha = rfn.sample() * SigmaC + 0.5 * Rad;
+    *beta  = rfn.sample() * SigmaC + 0.5 * Rbg;
+    *gamma = rfn.sample() * SigmaC - 0.5 * Rbg;
+    *delta = rfn.sample() * SigmaC - 0.5 * Rad;
+
+  }
 
   /** Generate the four corner samples of the Kolmogorov
       platform. Will use six random samples from the normvect.
+
+      KolmogorovCorners is the generalised version and should be used
+      in the future.
+      
+      \bug This is a special case function -- use the generalised
+      version KolmogorovCorners.
       
    */
   void KPCorners( double * alpha,

@@ -107,7 +107,11 @@ def PlotPowerLaws():
 # pylab.plot( [x[1] for x in ss] ) ; pylab.plot( [ 6.88 * ( x[0]/ 2050.0 )**(5.0/3) for x in ss] ) ; pylab.show()
         
         
-        
+def TestKolmogorovCorners():
+
+    rfn=pybnlib.NormDistZM(1.0)
+    sfn=pybnlib.KolPowerLawFn(pybnlib.KolPowerLawFn.D3Thin)
+    print pybnlib.KolmogorovCorners(sfn, rfn)
     
     
     
