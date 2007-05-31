@@ -55,11 +55,20 @@ namespace BNLib {
      
      \param normvect a vector of std normal distributed random samples
      of length NxN+2
+
+     \bug This is the non-generalised version which will be retired --
+     use the generalised version
      
   */
   void KolmogorovPlatform( size_t N,
 			   double * grid,
 			   const double * normvect);
+
+
+  void KolmogorovPlatform( size_t N,
+			   double * grid,
+			   KolStructureFn & sfn,
+			   RDist &rfn);
 
   
 }

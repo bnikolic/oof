@@ -170,5 +170,95 @@ namespace BNLib {
 
   }
 
+  void KolmogorovPlatform( size_t N,
+			   double * grid,
+			   KolStructureFn & sfn,
+			   RDist &rfn)
+  {
+    /*
+    (alpha)               (beta)
+
+    
+    (gamma)                (delta)
+
+    */
+    KolmogorovCorners( grid,
+		       grid + (N-1),
+		       grid + N*(N-1),
+		       grid + N*N - 1,
+		       sfn,
+		       rfn);
+
+    for ( size_t o =0 ;  
+	  ( ((size_t)1) << (o+1) ) < N  ; 
+	  ++o )
+    {
+      // First the centre cells...
+      CenterIter ci(N, o);
+      while ( ci.inBounds() )
+      {
+	size_t i,j;
+	ci.getc( i,j);
+
+	double newval = 0.25 * ( getParentVal( grid, ci , CenterIter::TL) +
+				 getParentVal( grid, ci , CenterIter::TR) +
+				 getParentVal( grid, ci , CenterIter::BL) +
+				 getParentVal( grid, ci , CenterIter::BR)  ) +
+	  
+	  rfn.sample() * pow( sfn( ci.sideDist() / M_SQRT2 ) -
+			      1.0 / 4 * sfn(ci.sideDist()  )  -
+			      1.0 / 8 * sfn(ci.sideDist() * M_SQRT2),
+			      0.5);
+	
+	grid[j*N+i] = newval;
+	ci.next();
+      }
+      
+      // Next the "edge" cells
+      EdgeIter ei(N,o);
+      while (ei.inBounds() )
+      {
+	size_t i,j;
+	ei.getc( i,j);
+	double newval=0;
+
+	// Do the calculation....
+	if ( ei.isHEdge() )
+	{
+	  newval = 0.5 * ( getParentVal( grid, ei , EdgeIter::L) +
+			   getParentVal( grid, ei , EdgeIter::R) ) +
+	    rfn.sample() * pow ( 0.4471 * pow(ei.parentDist(), 5.0/3.0) , 
+				 0.5 );
+	}
+	else if ( ei.isVEdge())
+	{
+	  newval = 0.5 * ( getParentVal( grid, ei , EdgeIter::T) +
+			   getParentVal( grid, ei , EdgeIter::B) ) +
+	    rfn.sample() * pow ( 0.4471 * pow(ei.parentDist(), 5.0/3.0) , 
+				 0.5 );
+
+	}
+	else
+	{
+	  // not an edge, use four parents as normal.
+	  newval = 0.25 * ( getParentVal( grid, ei , EdgeIter::T) + 
+			    getParentVal( grid, ei , EdgeIter::B) + 
+			    getParentVal( grid, ei , EdgeIter::L) +
+			    getParentVal( grid, ei , EdgeIter::R)  ) +
+	  rfn.sample() * pow( sfn( ei.sideDist() / M_SQRT2 ) -
+			      1.0 / 4 * sfn(ci.sideDist()  )  -
+			      1.0 / 8 * sfn(ci.sideDist() * M_SQRT2),
+			      0.5);
+	  
+	}
+
+	grid[j*N+i] = newval;
+	ei.next();
+
+      }
+
+    }
+
+  }    
 
 }

@@ -48,6 +48,8 @@ namespace BNLib {
     KolCellIteratorBase( size_t N, 
 			 size_t o);
 
+    virtual ~KolCellIteratorBase() {} ;
+
     // ---------------   Public interface --------------------
 
     /**
@@ -61,6 +63,12 @@ namespace BNLib {
        return false when all points have been iterated over.
     */
     bool inBounds(void) const;    
+
+    /**
+       Return the lenght of the side of the cell currently being
+       considered.
+    */
+    virtual double sideDist(void) const  = 0 ;
 
 
   };
@@ -109,6 +117,8 @@ namespace BNLib {
        Return normalised distance to the parent points.
     */
     double parentDist(void) const;
+
+    double sideDist(void) const;
 
     /**
        Iterate to the next point
@@ -180,6 +190,8 @@ namespace BNLib {
        Return normalised distance to the parent points.
     */
     double parentDist(void) const;
+
+    double sideDist(void) const;
 
   };
 

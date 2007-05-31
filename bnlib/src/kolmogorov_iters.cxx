@@ -102,6 +102,23 @@ namespace BNLib {
     return pow( d2, 0.5) / ( double(N)-1) ;
   }
 
+  double CenterIter::sideDist(void) const
+  {
+    
+    size_t tli , tlj;
+    size_t tri , trj;
+
+    getParent( tli, tlj,
+	       TL);
+
+    getParent( tri, trj,
+	       TR);
+
+    return (tri-tli)/ (double(N)-1);
+
+
+  }
+
   void CenterIter::next(void)
   {
     if ( i + delta >= N )
@@ -212,6 +229,11 @@ namespace BNLib {
   {
     return origin/ (double (N-1));
     
+  }
+
+  double EdgeIter::sideDist(void) const
+  {
+    return parentDist() * 2.0;
   }
 
 
