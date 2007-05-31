@@ -4,7 +4,7 @@
 # Testing script for Kolmogorov phase screen generation
 #
 # Setting python path if necessary:
-# sys.path.extend(["/import/appcs/bn204/p/bnprog-devel-main/"+x for x in ["bin", "lib"] ])
+# import sys; sys.path.extend(["/import/appcs/bn204/p/bnprog-devel-main/"+x for x in ["bin", "lib"] ])
 # or
 # import sys ; sys.path.extend(["/home/bnikolic/p/bnprog-devel-main/"+x for x in ["bin", "lib"] ])
 
@@ -62,6 +62,32 @@ def GenKolmogorov(N,
             res[i,j]=grid[j*N+i]
 
     return res
+
+def GenKolmogorovV2(N,
+                    seed=None):
+
+    grid=pybnlib.doubleArray( N*N)
+
+    rfn=pybnlib.NormDistZM(1.0)
+    if seed != None:
+        rfn.reseed(seed)
+    else:
+        rfn.reseed(pybnlib.TimeSeed())
+    sfn=pybnlib.KolPowerLawFn(pybnlib.KolPowerLawFn.D3Thick)
+
+    pybnlib.KolmogorovPlatform(N,
+                               grid,
+                               sfn,
+                               rfn)
+
+    res=numarray.zeros( (N,N),
+                        numarray.Float64)
+    for j in range(N):
+        for i in range(N):
+            res[i,j]=grid[j*N+i]
+
+    return res
+    
 
 
 def Structure(a):

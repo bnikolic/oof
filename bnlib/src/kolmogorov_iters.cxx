@@ -233,9 +233,14 @@ namespace BNLib {
 
   double EdgeIter::sideDist(void) const
   {
-    return parentDist() * 2.0;
+    if ( isEdge()  )
+    {
+      return parentDist() * 2.0;
+    }
+    else
+    {
+      return parentDist() * M_SQRT2;
+    }
   }
-
-
 
 }
