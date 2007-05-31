@@ -46,6 +46,17 @@ def MarkEiter( grid,
 
     MarkGIter( grid, o , pybnlib.EdgeIter)
 
+def CopyToNA(grid,
+             N):
+
+    res=numarray.zeros( (N,N),
+                        numarray.Float64)
+    for j in range(N):
+        for i in range(N):
+            res[i,j]=grid[j*N+i]
+
+    return res
+    
 def GenKolmogorov(N,
                   seed=0):
 
@@ -54,17 +65,11 @@ def GenKolmogorov(N,
     pybnlib.KolmogorovPlatform(N,
                                grid,
                                seed)
-
-    res=numarray.zeros( (N,N),
-                        numarray.Float64)
-    for j in range(N):
-        for i in range(N):
-            res[i,j]=grid[j*N+i]
-
-    return res
+    return CopyToNA(grid,N)
 
 def GenKolmogorovV2(N,
-                    seed=None):
+                    seed=None,
+                    sfn=pybnlib.KolPowerLawFn(pybnlib.KolPowerLawFn.D3Thick)):
 
     grid=pybnlib.doubleArray( N*N)
 
@@ -73,20 +78,14 @@ def GenKolmogorovV2(N,
         rfn.reseed(seed)
     else:
         rfn.reseed(pybnlib.TimeSeed())
-    sfn=pybnlib.KolPowerLawFn(pybnlib.KolPowerLawFn.D3Thick)
 
     pybnlib.KolmogorovPlatform(N,
                                grid,
                                sfn,
                                rfn)
 
-    res=numarray.zeros( (N,N),
-                        numarray.Float64)
-    for j in range(N):
-        for i in range(N):
-            res[i,j]=grid[j*N+i]
-
-    return res
+    return CopyToNA(grid,N)
+    
     
 
 
@@ -140,7 +139,17 @@ def TestKolmogorovCorners():
     sfn=pybnlib.KolPowerLawFn(pybnlib.KolPowerLawFn.D3Thin)
     print pybnlib.KolmogorovCorners(sfn, rfn)
     
-    
+
+def BreakIllustration(seed=11):
+
+    for x in [1 , 2 , 4, 8, 16 , 25]:
+        pylab.clf()
+        m4=GenKolmogorovV2(1025, seed,  pybnlib.Kol3DBreakLaw(1.0/x) )
+        pylab.matshow(m4)
+        pylab.savefig("temp/breakill-%i.png" % x)
+        
+        
+        
     
 
     
