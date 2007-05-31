@@ -142,11 +142,11 @@ def TestKolmogorovCorners():
 
 def BreakIllustration(seed=11):
 
-    for x in [1 , 2 , 4, 8, 16 , 25]:
+    for x in [1 , 2 , 4, 8, 16 , 25, 100]:
         pylab.clf()
         m4=GenKolmogorovV2(1025, seed,  pybnlib.Kol3DBreakLaw(1.0/x) )
         pylab.matshow(m4)
-        pylab.savefig("temp/breakill-%i.png" % x)
+        pylab.savefig("temp/breakill-%03i.png" % x)
         
         
         
