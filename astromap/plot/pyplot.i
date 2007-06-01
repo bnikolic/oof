@@ -44,10 +44,8 @@
 
 namespace std {
    %template(DoubleVector) vector<double>; 
+   %template(SizeTVector) vector<size_t>; 
 }
-
-%apply double * OUTPUT { double * OUTsfn,
-			 double * OUTcount }
 
 
 %include "../src/astromap.hxx"

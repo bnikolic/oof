@@ -31,10 +31,14 @@ namespace AstroMap {
 			std::vector<double> & OUTsfn,
 			std::vector<size_t> & OUTcount );
 
+  /** Wrap the version taking std::vector<double> so that it stores
+      the result in the supplied C-vecotrs.
+   */
   void  RndStructureFn( const Map & m,
 			size_t samples_px,
 			double * OUTsfn,
-			double * OUTcount );
+			double * OUTcount,
+			size_t   n);
   
 
 }

@@ -47,7 +47,21 @@ namespace AstroMap {
   void  RndStructureFn( const Map & m,
 			size_t samples_px,
 			double * OUTsfn,
-			double * OUTcount );
+			double * OUTcount,
+			size_t   n)
+  {
+    std::vector<double>  sfn;
+    std::vector<size_t>  count;
+
+    RndStructureFn( m, samples_px, sfn, count);
+
+    for (size_t i =0 ; i < n && i < sfn.size() ; ++i )
+    {
+      OUTsfn[i]=sfn[i];
+      OUTcount[i]=count[i];
+    }
+
+  }
 
 
 }
