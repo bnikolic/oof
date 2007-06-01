@@ -9,6 +9,7 @@
 #include "../src/lcmaps.hxx"
 #include "../src/convolve.hxx"
 #include "../src/fresneltrans.hxx"
+#include "../src/mapstructure.hxx"
 
 #include "../src/coordsys/coordsys.hxx"
 #include "../src/coordsys/lincordsys.hxx"
@@ -35,13 +36,19 @@
 %}
 
 %include "typemaps.i"
+%include "carrays.i"
 %include "std_vector.i"
 %include "std_complex.i"
 
+%array_class( double , doubleArray);
 
 namespace std {
    %template(DoubleVector) vector<double>; 
 }
+
+%apply double * OUTPUT { double * OUTsfn,
+			 double * OUTcount }
+
 
 %include "../src/astromap.hxx"
 %include "../src/astromapio.hxx"
@@ -51,6 +58,7 @@ namespace std {
 %include "../src/lcmaps.hxx"
 %include "../src/convolve.hxx"
 %include "../src/fresneltrans.hxx"
+%include "../src/mapstructure.hxx"
 
 %include "../src/coordsys/coordsys.hxx"
 %include "../src/coordsys/lincordsys.hxx"
