@@ -84,6 +84,12 @@ namespace AstroMap {
     BNLib::KolmogorovPlatform(m.nx, &m[0], 0);
   }
 
+  void KolmogorovMap( Map &m,
+		      double w)
+  {
+    BNLib::BrkKolmogorovPlatform(m.nx, &m[0], w, 0);
+  }
+
 }
 
 

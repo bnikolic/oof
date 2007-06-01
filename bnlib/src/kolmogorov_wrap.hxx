@@ -26,6 +26,11 @@ namespace BNLib {
 			   double * grid,
 			   unsigned long seed = 0 );
 
+  void BrkKolmogorovPlatform( size_t N,
+			      double * grid,
+			      double w,
+			      unsigned long seed = 0 );
+
 
 }
 

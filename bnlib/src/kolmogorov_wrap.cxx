@@ -9,6 +9,7 @@
 #include "kolmogorov_wrap.hxx"
 
 #include "kolmogorov.hxx"
+#include "kolmogorov_spec.hxx"
 #include "bnrandom.hxx"
 
 
@@ -35,6 +36,26 @@ namespace BNLib {
 			grid,
 			&normvect[0] );
     
+  }
+
+  void BrkKolmogorovPlatform( size_t N,
+			      double * grid,
+			      double w,
+			      unsigned long seed  )
+  {
+    if ( seed == 0)
+    {
+      seed = TimeSeed();
+    }
+
+    NormDistZM rfn(1.0 );
+    Kol3DBreakLaw sfn(w);
+    
+    KolmogorovPlatform( N,
+			grid,
+			sfn,
+			rfn);
+
   }
 
   

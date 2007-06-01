@@ -45,6 +45,12 @@ namespace AstroMap {
   /** Assign a Kolmogorov distribution the the supplied map */
   void KolmogorovMap( Map &m );
 
+  /** Assign a broken-power law Kolmogorov distribuition: below
+      normalised length w the law is assumed to be thick-screen (5/3)
+      above w it is thin-screen (2/3).
+  */
+  void KolmogorovMap( Map &m,
+		      double w);
 }
 
 

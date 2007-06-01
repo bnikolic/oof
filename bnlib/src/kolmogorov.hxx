@@ -65,6 +65,13 @@ namespace BNLib {
 			   const double * normvect);
 
 
+  /**
+     Construct a Kolmogorov random field but with an arbitary
+     structure function.
+
+     \param rfn normal distribution random number generator.
+
+  */
   void KolmogorovPlatform( size_t N,
 			   double * grid,
 			   KolStructureFn & sfn,
