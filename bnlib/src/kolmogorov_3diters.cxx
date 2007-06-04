@@ -18,6 +18,12 @@ namespace BNLib {
   {
 
   }
+  bool K3DIterBase::inBounds(void)
+  {
+    return ( i < Nx &&
+	     j < Ny &&
+	     k < Nz );
+  }
 
   void K3DIterBase::getc( size_t & iOUT,
 			  size_t & jOUT,
@@ -28,18 +34,61 @@ namespace BNLib {
     kOUT=k;
   }
 
+  size_t K3DIterBase::getd( dirs d)
+  {
+    if ( d== D_X)
+    {
+      return Nx;
+    }
+    else if ( d==D_Y )
+    {
+      return Ny ; 
+    }
+    else if ( d== D_Z)
+    {
+      return Nz ;
+    }
+    else 
+    {
+      throw "Unknown dimension";
+    }
+	      
+  }
+
   K3DCenterItertor::K3DCenterItertor( size_t Nx, size_t Ny, size_t Nz , 
 				      size_t o ) :
     
     K3DIterBase( Nx, Ny, Nz, o)
   {
-    // Need to set i,j,k to the appropriat first value.
+    i= origin( D_X);
+    j= origin( D_Y);
+    k= origin( D_Z);
+  }
 
+  size_t K3DCenterItertor::origin(dirs d)
+  {
+    return getd(d) >> (o+1);
+  }
+
+  size_t K3DCenterItertor::delta(dirs d)
+  {
+    return getd(d) >> o;
   }
 
   void K3DCenterItertor::next(void)
   {
-    // Need to update i,j,k
-  }
+    i += delta(D_X);
+    if ( i >= getd(D_X) )
+    {
+      i = origin(D_X);
 
+      j += delta(D_Y);
+      if ( j >= getd(D_Y) )
+      {
+	j=origin(D_Y);
+	k+= delta(D_Z);
+      }
+    }
+  }
+  
 }

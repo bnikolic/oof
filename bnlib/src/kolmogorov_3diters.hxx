@@ -29,14 +29,24 @@ namespace BNLib {
   */
   class K3DIterBase {
 
+  protected:
+
     size_t i,j,k;
     
   public:
 
+    // ----------------  Public types ---------------------
+    
+    /**
+       Just define the names of the dimensions so that we can easily
+       acess them.
+     */
+    enum dirs {D_X, D_Y , D_Z};
+
     // ----------------  Public Data -----------------------    
 
     /** \brief Length in the first index direction
-    */
+     */
     const size_t Nx;
     /** \brief Length in the second index direction
      */
@@ -71,6 +81,14 @@ namespace BNLib {
 	       size_t & jOUT,
 	       size_t & kOUT );
 
+    /** \brief Get the dimension in the specified direction
+     */
+    size_t getd( dirs d);
+
+    /** \brief False if no more iteration left to do 
+     */
+    bool inBounds(void);
+
     /** \brief Iterate to the next position 
      */
     virtual void next(void)  = 0 ;
@@ -81,12 +99,23 @@ namespace BNLib {
     public K3DIterBase
   {
 
+  public:
+
+    // ----------------  Public Data -----------------------    
+
     
     // ----------------   Constructors / Destructors ----------
 
     K3DCenterItertor( size_t Nx, size_t Ny, size_t Nz , size_t o );
 
     // ---------------   Public interface --------------------
+    
+    /**
+       Return the origin to use in the specified direction.
+     */
+    size_t origin(dirs d);
+
+    size_t delta(dirs d);
 
     // Inherited from K3DIterBase
     virtual void next(void);

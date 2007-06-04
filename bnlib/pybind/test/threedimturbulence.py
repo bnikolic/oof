@@ -7,6 +7,8 @@
 import vtk
 from vtk.util.colors import *
 
+import pybnlib
+
 def MkCube( cx, cy, cz, l ):
     CubeModel = vtk.vtkCubeSource()
     CubeModel.SetCenter(cx, cy ,cz)
@@ -36,6 +38,19 @@ def Edges(cm,
     CubeEdges.GetProperty().SetSpecularPower(10)
 
     return CubeEdges
+
+def Solid(cm,
+          cl=red):
+
+    sm= vtk.vtkPolyDataMapper()
+    sm.SetInputConnection(cm.GetOutputPort())
+    a = vtk.vtkActor()
+    a.SetMapper(sm)
+    a.GetProperty().SetDiffuseColor(cl)
+    a.GetProperty().SetSpecular(.4)
+    a.GetProperty().SetSpecularPower(10)
+
+    return a
 
 
 def Render( al ):
@@ -68,6 +83,26 @@ def Il1():
     c3=Edges(MkCube(0.25,0.25,0.25, 0.5),cl=blue)
     c4=Edges(MkCube(0.365,0.365,0.365, 0.25), cl=red)
     Render( [c1,c3,c4])
+
+def Il2(N,o):
+
+    c1=Edges(MkCube(0.5,0.5,0.5, 1))
+
+    sl = []
+    ci=pybnlib.K3DCenterItertor(N,N,N, o)
+    while ci.inBounds():
+        i,j,k= ci.getc()
+        sl.append( Solid(MkCube(1.0 / (N-1) * i,
+                                1.0 / (N-1) * j,
+                                1.0 / (N-1) * k,
+                                1.0 / (N-1) )))
+        ci.next()
+
+    
+    Render( [c1]+sl)
+                   
+
+    
     
 
 #import sys; sys.path.extend(["/import/appcs/bn204/p/bnprog-devel-main/"+x for x in ["bin", "lib"] ])
