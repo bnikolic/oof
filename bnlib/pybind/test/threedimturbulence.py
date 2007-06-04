@@ -69,4 +69,7 @@ def Il1():
     c4=Edges(MkCube(0.365,0.365,0.365, 0.25), cl=red)
     Render( [c1,c3,c4])
     
-    
+
+#import sys; sys.path.extend(["/import/appcs/bn204/p/bnprog-devel-main/"+x for x in ["bin", "lib"] ])
+#import pybnlib
+

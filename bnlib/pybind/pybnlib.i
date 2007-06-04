@@ -19,6 +19,7 @@
 #include "../src/kolmogorov_iters.hxx"
 #include "../src/kolmogorov_spec.hxx"
 #include "../src/kolmogorov_wrap.hxx"
+#include "../src/kolmogorov_3diters.hxx"
 
 %}
 
@@ -27,7 +28,8 @@
 
 %array_class( double , doubleArray);
 
-%apply size_t & OUTPUT { size_t &iOUT, size_t &jOUT };
+%apply size_t & OUTPUT { size_t &iOUT, size_t &jOUT, size_t &kOUT };
+
 %apply double * OUTPUT { double * OUTalpha, 
 			 double *OUTbeta,
 			 double *OUTgamma,
@@ -51,6 +53,7 @@
 %include "../src/kolmogorov_spec.hxx"
 %include "../src/kolmogorov.hxx"
 %include "../src/kolmogorov_wrap.hxx"
+%include "../src/kolmogorov_3diters.hxx"
 
 %extend BNLib::ConstUDD {
 	
