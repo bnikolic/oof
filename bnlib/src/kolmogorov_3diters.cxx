@@ -155,6 +155,67 @@ namespace BNLib {
     }
   }
 
+
+  K3EdgeIter::K3EdgeIter( size_t Nx, size_t Ny, size_t Nz , 
+			  size_t o ) :
+    
+    K3DIterBase( Nx, Ny, Nz, o)
+  {
+    i= origin( D_X);
+    j= 0;
+    k= 0;
+  }
+
+  size_t K3EdgeIter::origin(dirs d)
+  {
+    return getd(d) >> (o+1);
+  }
+
+  size_t K3EdgeIter::delta(dirs d)
+  {
+    return origin(d) << 1;
+  }
+
+  void K3EdgeIter::next(void)
+  {
+    const size_t jdelta = delta(D_Y) >> 1;
+    const size_t kdelta = delta(D_Z) >> 1;
+
+    // First do the increments
+    i += delta(D_X);
+    if ( i >= getd(D_X) )
+    {
+      j += jdelta;
+
+      if ( j >= getd(D_Y) )
+      {
+	k+= kdelta;
+      }
+    }
+    
+    // Now reset
+
+    if ( j >= getd(D_Y) )
+    {
+      j=0;
+    }
+
+    if ( i >= getd(D_X) ) 
+    {
+      if ( (j/jdelta +  k / kdelta ) & 1 )
+      {
+	i = 0;
+      }
+      else
+      {
+	i = origin(D_X);
+      }
+    }
+
+
+
+  }
+
   
   
 }
