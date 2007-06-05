@@ -90,5 +90,62 @@ namespace BNLib {
       }
     }
   }
+
+  K3FaceIter::K3FaceIter( size_t Nx, size_t Ny, size_t Nz , 
+			  size_t o ) :
+    
+    K3DIterBase( Nx, Ny, Nz, o)
+  {
+    i= origin( D_X);
+    j= origin( D_Y);
+    k= 0;
+  }
+
+  size_t K3FaceIter::origin(dirs d)
+  {
+    return getd(d) >> (o+1);
+  }
+
+  size_t K3FaceIter::delta(dirs d)
+  {
+    return origin(d) << 1;
+  }
+
+  void K3FaceIter::next(void)
+  {
+    i += delta(D_X);
+    if ( i >= getd(D_X) )
+    {
+      i -= getd(D_X);
+
+      if ( (k / (delta(D_Z) >> 1) ) & 1  )
+      {
+	j += delta(D_Y) >> 1;
+      }
+      else
+      {
+	j += delta(D_Y);
+      }
+
+
+      if ( j >= getd(D_Y) )
+      {
+	k+= delta(D_Z) >> 1;
+	if ( (k / (delta(D_Z) >> 1) ) & 1 )
+	{
+	  i = origin(D_X);
+	  j = 0;
+	}
+	else
+	{
+	  i= origin( D_X);
+	  j= origin( D_Y);
+	}
+
+      }
+    }
+  }
+
+  
   
 }

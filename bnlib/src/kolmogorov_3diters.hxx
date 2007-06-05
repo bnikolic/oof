@@ -123,5 +123,37 @@ namespace BNLib {
   };
 
 
+  /**
+     The second iterator over the 3D cube, that does the faces first.
+   */
+  class K3FaceIter :
+    public K3DIterBase
+  {
+
+  public:
+
+    // ----------------  Public Data -----------------------    
+
+    
+    // ----------------   Constructors / Destructors ----------
+
+    K3FaceIter( size_t Nx, size_t Ny, size_t Nz , 
+		size_t o );
+
+    // ---------------   Public interface --------------------
+    
+    /**
+       Return the origin to use in the specified direction.
+     */
+    size_t origin(dirs d);
+
+    size_t delta(dirs d);
+
+    // Inherited from K3DIterBase
+    virtual void next(void);
+
+  };
+
+
 }
 #endif

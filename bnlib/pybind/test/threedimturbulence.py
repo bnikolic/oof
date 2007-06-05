@@ -89,15 +89,41 @@ def Il2(N,o):
     c1=Edges(MkCube(0.5,0.5,0.5, 1))
 
     sl = []
+    # Put cubes at all of the corners
+    for x,y,z in [ (0,0,0),
+                   (1,0,0),
+                   (0,1,0),
+                   (0,0,1),
+                   (1,1,0),
+                   (1,0,1),
+                   (0,1,1),
+                   (1,1,1)]:
+        sl.append( Solid(MkCube(x*(N-1.0)/N+ 0.5 / (N),
+                                y*(N-1.0)/N+ 0.5 / (N),
+                                z*(N-1.0)/N+ 0.5 / (N),
+                                1.0 / (N) ),
+                         cl=black))
+
     ci=pybnlib.K3DCenterItertor(N,N,N, o)
     while ci.inBounds():
         i,j,k= ci.getc()
-        sl.append( Solid(MkCube(1.0 / (N-1) * i,
-                                1.0 / (N-1) * j,
-                                1.0 / (N-1) * k,
-                                1.0 / (N-1) )))
+        sl.append( Solid(MkCube(1.0 / (N) * (i+0.5),
+                                1.0 / (N) * (j+0.5),
+                                1.0 / (N) * (k+0.5),
+                                1.0 / (N) )))
         ci.next()
 
+    fi=pybnlib.K3FaceIter(N,N,N, o)
+    while fi.inBounds():
+        i,j,k= fi.getc()
+        sl.append( Solid(MkCube(1.0 / (N) * (i+0.5),
+                                1.0 / (N) * (j+0.5),
+                                1.0 / (N) * (k+0.5),
+                                1.0 / (N) ),
+                         cl=blue))
+        print i,j,k
+        fi.next()        
+        
     
     Render( [c1]+sl)
                    
