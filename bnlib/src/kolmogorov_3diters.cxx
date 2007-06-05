@@ -113,44 +113,51 @@ namespace BNLib {
 
   void K3FaceIter::next(void)
   {
+    const size_t kdelta = delta(D_Z) >> 1;
+    size_t jdelta;
+    if (   k / kdelta   & 1 )
+    {
+      jdelta = delta(D_Z) >> 1;
+    }
+    else
+    {
+      jdelta= delta(D_Z);
+    }
+
     i += delta(D_X);
+
     if ( i >= getd(D_X) )
     {
-      size_t jdelta;
-      if ( (k / (delta(D_Z) >> 1) ) & 1  )
-      {
-	jdelta = delta(D_Y) >> 1;
-      }
-      else
-      {
-	jdelta = delta(D_Y);
-      }
-
       j += jdelta;
 
-      if ( (j/jdelta ) & 1 )
+      if ( j >= getd(D_Y) )      
       {
-	i = 0;
+	k += kdelta;
+      }
+    }
+    
+    // now reset if necessary
+    if ( j >= getd(D_Y) )      
+    {
+      if ( k/kdelta & 1 )
+      {
+	j =0;
       }
       else
+      {
+	j = origin(D_Y);
+      }
+    }
+
+    if ( i >= getd(D_X) )
+    {
+      if ( j/jdelta + k/kdelta & 1 )
       {
 	i = origin(D_X);
       }
-
-      if ( j >= getd(D_Y) )
+      else
       {
-	k+= delta(D_Z) >> 1;
-	if ( (k / (delta(D_Z) >> 1) ) & 1 )
-	{
-	  i = origin(D_X);
-	  j = 0;
-	}
-	else
-	{
-	  i= origin( D_X);
-	  j= origin( D_Y);
-	}
-
+	i = 0;
       }
     }
   }
