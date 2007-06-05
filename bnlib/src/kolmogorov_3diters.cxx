@@ -116,17 +116,26 @@ namespace BNLib {
     i += delta(D_X);
     if ( i >= getd(D_X) )
     {
-      i -= getd(D_X);
-
+      size_t jdelta;
       if ( (k / (delta(D_Z) >> 1) ) & 1  )
       {
-	j += delta(D_Y) >> 1;
+	jdelta = delta(D_Y) >> 1;
       }
       else
       {
-	j += delta(D_Y);
+	jdelta = delta(D_Y);
       }
 
+      j += jdelta;
+
+      if ( (j/jdelta ) & 1 )
+      {
+	i = 0;
+      }
+      else
+      {
+	i = origin(D_X);
+      }
 
       if ( j >= getd(D_Y) )
       {

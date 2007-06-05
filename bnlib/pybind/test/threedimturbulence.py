@@ -84,7 +84,8 @@ def Il1():
     c4=Edges(MkCube(0.365,0.365,0.365, 0.25), cl=red)
     Render( [c1,c3,c4])
 
-def Il2(N,o):
+def Il2(N,o,
+        doface=True):
 
     c1=Edges(MkCube(0.5,0.5,0.5, 1))
 
@@ -113,16 +114,17 @@ def Il2(N,o):
                                 1.0 / (N) )))
         ci.next()
 
-    fi=pybnlib.K3FaceIter(N,N,N, o)
-    while fi.inBounds():
-        i,j,k= fi.getc()
-        sl.append( Solid(MkCube(1.0 / (N) * (i+0.5),
-                                1.0 / (N) * (j+0.5),
-                                1.0 / (N) * (k+0.5),
-                                1.0 / (N) ),
-                         cl=blue))
-        print i,j,k
-        fi.next()        
+    if doface:
+        fi=pybnlib.K3FaceIter(N,N,N, o)
+        while fi.inBounds():
+            i,j,k= fi.getc()
+            sl.append( Solid(MkCube(1.0 / (N) * (i+0.5),
+                                    1.0 / (N) * (j+0.5),
+                                    1.0 / (N) * (k+0.5),
+                                    1.0 / (N) ),
+                             cl=blue))
+            print i,j,k
+            fi.next()        
         
     
     Render( [c1]+sl)
