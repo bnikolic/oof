@@ -84,11 +84,26 @@ def Il1():
     c4=Edges(MkCube(0.365,0.365,0.365, 0.25), cl=red)
     Render( [c1,c3,c4])
 
-def Il2(N,o,
-        doface=True,
-        doedge=True):
+def Il2(N,ol,
+        dofacel=True,
+        doedgel=True):
+
+    """
+    For example, show cubes necessary to calculte parents by:
+
+    Il2(5,[0,1], dofacel=[True,False],doedgel=[True,False])
+    """
 
     c1=Edges(MkCube(0.5,0.5,0.5, 1))
+
+    if type(ol) != list :
+        ol = [ol]
+
+    if type(dofacel) != list:
+        dofacel = [dofacel]
+
+    if type(doedgel) != list:
+        doedgel =[doedgel]
 
     sl = []
     # Put cubes at all of the corners
@@ -106,40 +121,41 @@ def Il2(N,o,
                                 1.0 / (N) ),
                          cl=black))
 
-    ci=pybnlib.K3DCenterItertor(N,N,N, o)
-    while ci.inBounds():
-        i,j,k= ci.getc()
-        sl.append( Solid(MkCube(1.0 / (N) * (i+0.5),
-                                1.0 / (N) * (j+0.5),
-                                1.0 / (N) * (k+0.5),
-                                1.0 / (N) )))
-        ci.next()
-
-    if doface:
-        fi=pybnlib.K3FaceIter(N,N,N, o)
-        while fi.inBounds():
-            i,j,k= fi.getc()
+    for o,doface, doedge in zip(ol, dofacel, doedgel):
+        ci=pybnlib.K3DCenterItertor(N,N,N, o)
+        while ci.inBounds():
+            i,j,k= ci.getc()
             sl.append( Solid(MkCube(1.0 / (N) * (i+0.5),
                                     1.0 / (N) * (j+0.5),
                                     1.0 / (N) * (k+0.5),
-                                    1.0 / (N) ),
-                             cl=blue))
-            print i,j,k
-            fi.next()
+                                    1.0 / (N) )))
+            ci.next()
 
-    if doedge:
-        print "***EDGE***"
-        ei=pybnlib.K3EdgeIter(N,N,N, o)
-        while ei.inBounds():
-            i,j,k= ei.getc()
-            sl.append( Solid(MkCube(1.0 / (N) * (i+0.5),
-                                    1.0 / (N) * (j+0.5),
-                                    1.0 / (N) * (k+0.5),
-                                    1.0 / (N) ),
-                             cl=red))
-            print i,j,k
-            ei.next()                    
-        
+        if doface:
+            fi=pybnlib.K3FaceIter(N,N,N, o)
+            while fi.inBounds():
+                i,j,k= fi.getc()
+                sl.append( Solid(MkCube(1.0 / (N) * (i+0.5),
+                                        1.0 / (N) * (j+0.5),
+                                        1.0 / (N) * (k+0.5),
+                                        1.0 / (N) ),
+                                 cl=blue))
+                print i,j,k
+                fi.next()
+
+        if doedge:
+            print "***EDGE***"
+            ei=pybnlib.K3EdgeIter(N,N,N, o)
+            while ei.inBounds():
+                i,j,k= ei.getc()
+                sl.append( Solid(MkCube(1.0 / (N) * (i+0.5),
+                                        1.0 / (N) * (j+0.5),
+                                        1.0 / (N) * (k+0.5),
+                                        1.0 / (N) ),
+                                 cl=green))
+                print i,j,k
+                ei.next()                    
+
     
     Render( [c1]+sl)
                    
