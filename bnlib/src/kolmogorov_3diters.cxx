@@ -185,8 +185,20 @@ namespace BNLib {
 
   void K3EdgeIter::next(void)
   {
-    const size_t jdelta = delta(D_Y) >> 1;
+
     const size_t kdelta = delta(D_Z) >> 1;
+    const size_t jdenom = delta(D_Y) >> 1;
+
+    size_t jdelta;
+    
+    if ( k /kdelta  & 1 )
+    {
+      jdelta = delta(D_Y);
+    }
+    else
+    {
+      jdelta = delta(D_Y) >> 1;
+    }
 
     // First do the increments
     i += delta(D_X);
@@ -209,7 +221,7 @@ namespace BNLib {
 
     if ( i >= getd(D_X) ) 
     {
-      if ( (j/jdelta +  k / kdelta ) & 1 )
+      if ( (j/jdenom +  k / kdelta ) & 1 )
       {
 	i = 0;
       }

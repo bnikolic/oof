@@ -86,7 +86,9 @@ def Il1():
 
 def Il2(N,ol,
         dofacel=True,
-        doedgel=True):
+        doedgel=True,
+        shrink=1.0,
+        lim=None):
 
     """
     For example, show cubes necessary to calculte parents by:
@@ -100,10 +102,10 @@ def Il2(N,ol,
         ol = [ol]
 
     if type(dofacel) != list:
-        dofacel = [dofacel]
+        dofacel = [dofacel for x in ol]
 
     if type(doedgel) != list:
-        doedgel =[doedgel]
+        doedgel =[doedgel for x in ol]
 
     sl = []
     # Put cubes at all of the corners
@@ -118,28 +120,30 @@ def Il2(N,ol,
         sl.append( Solid(MkCube(x*(N-1.0)/N+ 0.5 / (N),
                                 y*(N-1.0)/N+ 0.5 / (N),
                                 z*(N-1.0)/N+ 0.5 / (N),
-                                1.0 / (N) ),
+                                1.0 / (N)  * shrink),
                          cl=black))
 
     for o,doface, doedge in zip(ol, dofacel, doedgel):
         ci=pybnlib.K3DCenterItertor(N,N,N, o)
         while ci.inBounds():
             i,j,k= ci.getc()
-            sl.append( Solid(MkCube(1.0 / (N) * (i+0.5),
-                                    1.0 / (N) * (j+0.5),
-                                    1.0 / (N) * (k+0.5),
-                                    1.0 / (N) )))
+            if lim== None or ( i < lim[0] and j < lim[1] and k < lim[2] ):
+                sl.append( Solid(MkCube(1.0 / (N) * (i+0.5),
+                                        1.0 / (N) * (j+0.5),
+                                        1.0 / (N) * (k+0.5),
+                                        1.0 / (N) * shrink)))
             ci.next()
 
         if doface:
             fi=pybnlib.K3FaceIter(N,N,N, o)
             while fi.inBounds():
                 i,j,k= fi.getc()
-                sl.append( Solid(MkCube(1.0 / (N) * (i+0.5),
-                                        1.0 / (N) * (j+0.5),
-                                        1.0 / (N) * (k+0.5),
-                                        1.0 / (N) ),
-                                 cl=blue))
+                if lim== None or ( i < lim[0] and j < lim[1] and k < lim[2] ):                
+                    sl.append( Solid(MkCube(1.0 / (N) * (i+0.5),
+                                            1.0 / (N) * (j+0.5),
+                                            1.0 / (N) * (k+0.5),
+                                            1.0 / (N) * shrink),
+                                     cl=blue))
                 print i,j,k
                 fi.next()
 
@@ -148,11 +152,12 @@ def Il2(N,ol,
             ei=pybnlib.K3EdgeIter(N,N,N, o)
             while ei.inBounds():
                 i,j,k= ei.getc()
-                sl.append( Solid(MkCube(1.0 / (N) * (i+0.5),
-                                        1.0 / (N) * (j+0.5),
-                                        1.0 / (N) * (k+0.5),
-                                        1.0 / (N) ),
-                                 cl=green))
+                if lim== None or ( i < lim[0] and j < lim[1] and k < lim[2] ):
+                    sl.append( Solid(MkCube(1.0 / (N) * (i+0.5),
+                                            1.0 / (N) * (j+0.5),
+                                            1.0 / (N) * (k+0.5),
+                                            1.0 / (N) * shrink),
+                                     cl=green))
                 print i,j,k
                 ei.next()                    
 
