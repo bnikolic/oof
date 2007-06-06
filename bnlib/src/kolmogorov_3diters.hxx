@@ -20,12 +20,22 @@
 #define __BNLIB_KOLMOGOROV3DITERS_HXX__
 
 #include <cstddef> 
+#include <vector>
 
 namespace BNLib {
+
+  struct K3DParent {
+
+    size_t i,j,k;
+
+  };
 
   /**
      Base class for Mid-point displacement iterators over three
      dimensions.
+     
+     \bug This approach is probably too unstructured to make work
+     reliably. Begin work on a different approach.
   */
   class K3DIterBase {
 
@@ -93,6 +103,18 @@ namespace BNLib {
      */
     virtual void next(void)  = 0 ;
 
+    /** \brief Get the parents of this position.
+	
+    I.e., these are the positions which need to be interpolated to get
+    the non-random part of the current position.
+     */
+    virtual void ParentList( std::vector<K3DParent> & vOUT) =0;
+
+    /**
+       Return parents as a copy of the vector. (for SWIG use)
+    */
+    std::vector<K3DParent> CopyParentList(void);
+
   };
 
   class K3DCenterItertor :
@@ -117,8 +139,10 @@ namespace BNLib {
 
     size_t delta(dirs d);
 
+
     // Inherited from K3DIterBase
     virtual void next(void);
+    virtual void ParentList( std::vector<K3DParent> & vOUT);
 
   };
 
@@ -151,6 +175,36 @@ namespace BNLib {
 
     // Inherited from K3DIterBase
     virtual void next(void);
+    virtual void ParentList( std::vector<K3DParent> & vOUT);
+
+  };
+
+  /**
+     As K3FaceIter, but make use of functionality of K3DCenterItertor.
+   */
+  class K3FaceIterV2 :
+    public K3DIterBase
+  {
+    size_t fcount;
+    K3DCenterItertor ci;
+
+    void UpdateFace(void);
+
+  public:
+
+    // ----------------  Public Data -----------------------    
+
+    
+    // ----------------   Constructors / Destructors ----------
+
+    K3FaceIterV2( size_t Nx, size_t Ny, size_t Nz , 
+		size_t o );
+
+    // ---------------   Public interface --------------------
+    
+    // Inherited from K3DIterBase
+    virtual void next(void);
+    virtual void ParentList( std::vector<K3DParent> & vOUT);
 
   };
 
@@ -183,6 +237,37 @@ namespace BNLib {
 
     // Inherited from K3DIterBase
     virtual void next(void);
+    virtual void ParentList( std::vector<K3DParent> & vOUT);
+
+  };
+
+  /**
+     Similar to K3EdgeIter but use Center iterators
+   */
+  class K3EdgeIterV2 :
+    public K3DIterBase
+  {
+    
+    size_t ecount;
+    K3DCenterItertor ci;
+
+    void UpdateEdge(void);
+
+  public:
+
+    // ----------------  Public Data -----------------------    
+
+    
+    // ----------------   Constructors / Destructors ----------
+
+    K3EdgeIterV2( size_t Nx, size_t Ny, size_t Nz , 
+		  size_t o );
+
+    // ---------------   Public interface --------------------
+    
+    // Inherited from K3DIterBase
+    virtual void next(void);
+    virtual void ParentList( std::vector<K3DParent> & vOUT);
 
   };
 

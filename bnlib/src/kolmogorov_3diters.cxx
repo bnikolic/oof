@@ -55,6 +55,13 @@ namespace BNLib {
 	      
   }
 
+  std::vector<K3DParent> K3DIterBase::CopyParentList(void)
+  {
+    std::vector<K3DParent>  v;
+    ParentList(v);
+    return v;
+  }
+
   K3DCenterItertor::K3DCenterItertor( size_t Nx, size_t Ny, size_t Nz , 
 				      size_t o ) :
     
@@ -90,6 +97,21 @@ namespace BNLib {
       }
     }
   }
+
+  void K3DCenterItertor::ParentList( std::vector<K3DParent> & vOUT)
+  {
+    vOUT.resize(8);
+
+    for (size_t l =0 ; l < 8 ; ++l )
+    {
+      vOUT[l].i = i + ( l & 1 ? 1 : -1 )  * origin(D_X);
+      vOUT[l].j = j + ( l & 2 ? 1 : -1 )  * origin(D_Y);
+      vOUT[l].k = k + ( l & 4 ? 1 : -1 )  * origin(D_Z);
+    }
+
+  }
+
+
 
   K3FaceIter::K3FaceIter( size_t Nx, size_t Ny, size_t Nz , 
 			  size_t o ) :
@@ -162,6 +184,85 @@ namespace BNLib {
 	i = 0;
       }
     }
+  }
+
+  void K3FaceIter::ParentList( std::vector<K3DParent> & vOUT)
+  {
+    vOUT.resize(8);
+
+    for (size_t l =0 ; l < 8 ; ++l )
+    {
+
+    }
+
+  }
+
+  K3FaceIterV2::K3FaceIterV2( size_t Nx, 
+			      size_t Ny, 
+			      size_t Nz , 
+			      size_t o ) :
+    
+    K3DIterBase( Nx, Ny, Nz, o),
+    fcount(0),
+    ci( Nx, Ny, Nz, o)
+  {
+    UpdateFace();
+  }
+  
+  void K3FaceIterV2::UpdateFace(void)
+  {
+    size_t di, dj, dk ;
+    ci.getc( di,dj,dk);
+
+    switch (fcount)
+    {
+    case 0 :
+    case 1 :
+      i = di + ( fcount  ? 1 : -1 ) * ci.origin(D_X);
+      j = dj;
+      k = dk;
+      break;
+    case 2 :
+    case 3 :
+      i = di;
+      j = dj + ( fcount % 2 ? 1 : -1 ) * ci.origin(D_Y);
+      k = dk;
+      break;
+    case 4 :
+    case 5 :
+      i = di;
+      j = dj;
+      k = dk + ( fcount % 4 ? 1 : -1 ) * ci.origin(D_Z);
+      break;
+    default:
+      throw "Logic error";
+    }
+  }
+
+  void K3FaceIterV2::next(void)
+  {
+    if ( fcount > 4 )
+    {
+      fcount = 0;
+      ci.next();
+    }
+    else
+    {
+      ++fcount;
+    }
+    UpdateFace()    ;
+
+  }
+
+  void K3FaceIterV2::ParentList( std::vector<K3DParent> & vOUT)
+  {
+    vOUT.resize(8);
+
+    for (size_t l =0 ; l < 8 ; ++l )
+    {
+
+    }
+
   }
 
 
@@ -237,6 +338,105 @@ namespace BNLib {
 
   }
 
-  
+  void K3EdgeIter::ParentList( std::vector<K3DParent> & vOUT)
+  {
+    vOUT.resize(8);
+  }  
+
+  K3EdgeIterV2::K3EdgeIterV2( size_t Nx, size_t Ny, size_t Nz , 
+			      size_t o ) :
+    
+    K3DIterBase( Nx, Ny, Nz, o),
+    ecount(0),
+    ci(Nx, Ny, Nz, o)
+  {
+    UpdateEdge();
+  }
+
+  void K3EdgeIterV2::UpdateEdge(void)
+  {
+    int kf    = ecount /9 ;
+    int jf    = (ecount - kf*9) /3 ;
+
+    int imult = ((int)ecount % 3) -1;
+
+    int jmult =  jf -1;
+
+    int kmult = ecount/4 -1;
+
+    if ( kmult == 0 )
+    {
+      switch (ecount % 4 )
+      {
+      case 0:
+	imult = 1; 
+	jmult = 1;
+	break;
+      case 1:
+	imult = 1; 
+	jmult = -1;
+	break;
+      case 2:
+	imult = -1; 
+	jmult = 1;
+	break;
+      case 3:
+	imult = -1; 
+	jmult = -1;
+	break;
+      }
+    }
+    else
+    {
+      switch (ecount % 4) 
+      {
+      case 0:
+	imult = 1; 
+	jmult = 0;
+	break;
+      case 1:
+	imult = -1; 
+	jmult = 0;
+	break;
+      case 2:
+	imult = 0; 
+	jmult = 1;
+	break;
+      case 3:
+	imult = 0; 
+	jmult = -1;
+	break;
+      }
+    }
+
+    
+    size_t di, dj, dk ;
+    ci.getc( di,dj,dk);
+
+    i = di + imult * ci.origin(D_X);
+    j = dj + jmult * ci.origin(D_Y);
+    k = dk + kmult * ci.origin(D_Z);
+    
+  }
+
+  void K3EdgeIterV2::next(void)
+  {
+    if ( ecount > 10 )
+    {
+      ecount = 0;
+      ci.next();
+    }
+    else
+    {
+      ++ecount;
+    }
+    UpdateEdge()    ;
+
+  }
+
+  void K3EdgeIterV2::ParentList( std::vector<K3DParent> & vOUT)
+  {
+    vOUT.resize(8);
+  }  
   
 }

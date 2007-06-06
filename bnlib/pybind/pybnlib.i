@@ -25,6 +25,7 @@
 
 %include "carrays.i"
 %include "typemaps.i"
+%include "std_vector.i"
 
 %array_class( double , doubleArray);
 
@@ -34,6 +35,10 @@
 			 double *OUTbeta,
 			 double *OUTgamma,
 			 double *OUTdelta};
+
+namespace std {
+   %template(K3DParentV) vector<BNLib::K3DParent>; 
+}
 
 %include "../src/unaryfn.hxx"
 %include "../src/unaryfnutils.hxx"
