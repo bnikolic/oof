@@ -54,6 +54,13 @@ namespace BNLib {
     }
 	      
   }
+  
+  void K3DIterBase::setOutOfBounds(void)
+  {
+    i= getd(D_X);
+    j= getd(D_Y);
+    k= getd(D_Z);
+  }
 
   std::vector<K3DParent> K3DIterBase::CopyParentList(void)
   {
@@ -138,6 +145,12 @@ namespace BNLib {
     const size_t kdelta = delta(D_Z) >> 1;
     const size_t jdenom = delta(D_Y) >> 1;
 
+    if ( kdelta == 0)
+    {
+      setOutOfBounds();
+      return;
+    }
+
     size_t jdelta;
     if (   k / kdelta   & 1 )
     {
@@ -146,6 +159,12 @@ namespace BNLib {
     else
     {
       jdelta= delta(D_Y);
+    }
+
+    if (  jdelta ==0 )
+    {
+      setOutOfBounds();
+      return;
     }
 
     i += delta(D_X);
@@ -256,12 +275,70 @@ namespace BNLib {
 
   void K3FaceIterV2::ParentList( std::vector<K3DParent> & vOUT)
   {
-    vOUT.resize(8);
+    vOUT.resize(0);
 
-    for (size_t l =0 ; l < 8 ; ++l )
+    // Center of current is always a parent.
+    K3DParent cntr;
+    ci.getc( cntr.i, cntr.j, cntr.k );
+    vOUT.push_back(cntr);
+    
+    // Then the four on the current face.
+    for (size_t l =0 ; l < 4 ; ++l )
     {
+      K3DParent p;
 
+      switch (fcount)
+      {
+      case 0:
+      case 1:
+	p.i = i ;
+	p.j = j + ci.origin(D_Y) * ( l & 2 ? -1 : 1 ) ;
+	p.k = k + ci.origin(D_Z) * ( l & 1 ? -1 : 1 ) ;
+	break;
+      case 2:
+      case 3:
+	p.i = i + ci.origin(D_X) * ( l & 1 ? -1 : 1 ) ;
+	p.j = j ;
+	p.k = k + ci.origin(D_Z) * ( l & 2 ? -1 : 1 ) ;
+	break;
+      case 4:
+      case 5:
+	p.i = i + ci.origin(D_X) * ( l & 1 ? -1 : 1 ) ;
+	p.j = j + ci.origin(D_Y) * ( l & 2 ? -1 : 1 ) ;
+	p.k = k;
+	break;      
+      default:
+	throw "Logic error";
+      }
+      vOUT.push_back(p);
     }
+
+    // Finaly the oposite center
+    K3DParent opp;
+    ci.getc( opp.i, opp.j, opp.k );
+
+    switch (fcount)
+    {
+    case 0 :
+    case 1 :
+      opp.i +=  ( fcount  ? 1 : -1 ) * ci.delta(D_X);
+      break;
+    case 2 :
+    case 3 :
+      opp.j +=  ( fcount % 2 ? 1 : -1 ) * ci.delta(D_Y);
+      break;
+    case 4 :
+    case 5 :
+      opp.k +=  ( fcount % 4 ? 1 : -1 ) * ci.delta(D_Z);
+      break;
+    default:
+      throw "Logic error";
+    }
+
+    
+      
+    vOUT.push_back(opp);      
+      
 
   }
 
@@ -355,12 +432,9 @@ namespace BNLib {
 
   void K3EdgeIterV2::UpdateEdge(void)
   {
-    int kf    = ecount /9 ;
-    int jf    = (ecount - kf*9) /3 ;
+    int imult ;
 
-    int imult = ((int)ecount % 3) -1;
-
-    int jmult =  jf -1;
+    int jmult ;
 
     int kmult = ecount/4 -1;
 
@@ -384,6 +458,8 @@ namespace BNLib {
 	imult = -1; 
 	jmult = -1;
 	break;
+      default:
+	throw "logic error";
       }
     }
     else
@@ -406,10 +482,10 @@ namespace BNLib {
 	imult = 0; 
 	jmult = -1;
 	break;
+      default:
+	throw "logic error";
       }
     }
-
-    
     size_t di, dj, dk ;
     ci.getc( di,dj,dk);
 
@@ -436,7 +512,35 @@ namespace BNLib {
 
   void K3EdgeIterV2::ParentList( std::vector<K3DParent> & vOUT)
   {
-    vOUT.resize(8);
+    vOUT.resize(0);
+
+    for ( size_t l = 0 ; l < 6 ; ++l )
+    {
+      K3DParent p;
+      p.i=i;
+      p.j=j;
+      p.k=k;
+      
+      switch (l)
+      {
+      case 0 :
+      case 1 :
+	p.i += ( l  ? 1 : -1 ) * ci.origin(D_X);
+	break;
+      case 2 :
+      case 3 :
+	p.j += ( l % 2 ? 1 : -1 ) * ci.origin(D_Y);
+	break;
+      case 4 :
+      case 5 :
+	p.k +=  ( l % 4 ? 1 : -1 ) * ci.origin(D_Z);
+	break;
+      default:
+	throw "Logic error";
+      }
+
+      vOUT.push_back(p);
+    }
   }  
   
 }

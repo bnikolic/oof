@@ -99,6 +99,9 @@ namespace BNLib {
      */
     bool inBounds(void);
 
+    /** \brief Set current point out of bounds */
+    void setOutOfBounds(void);
+
     /** \brief Iterate to the next position 
      */
     virtual void next(void)  = 0 ;

@@ -161,22 +161,55 @@ def Il2(N,ol,
                 ei=pybnlib.K3EdgeIterV2(N,N,N, o)
             else:
                 ei=pybnlib.K3EdgeIter(N,N,N, o)
+            cnt=0
             while ei.inBounds():
                 i,j,k= ei.getc()
-                if lim== None or ( i < lim[0] and j < lim[1] and k < lim[2] ):
+                if ( ( lim== None or ( i < lim[0] and j < lim[1] and k < lim[2] )) and
+                     ( (not type(doedge)==int) or cnt < doedge) and
+                     ( type(doedge)==bool or ( type(doedge)==tuple) and cnt >= doedge[0] and cnt < doedge[1] ) ):
+                    
                     sl.append( Solid(MkCube(1.0 / (N) * (i+0.5),
                                             1.0 / (N) * (j+0.5),
                                             1.0 / (N) * (k+0.5),
                                             1.0 / (N) * shrink),
                                      cl=green))
-                print i,j,k
-                ei.next()                    
+                    print i,j,k
+                ei.next()
+                cnt +=1
 
     
     Render( [c1]+sl)
                    
 
-    
+
+def ShowParents(it,
+                shrink=0.5):
+
+    c1=Edges(MkCube(0.5,0.5,0.5, 1))
+    sl=[]
+
+    N=it.Nx
+
+    # Drow the current pos
+    ci,cj,ck = it.getc()
+    sl.append( Solid(MkCube(1.0 / (N) * (ci+0.5),
+                                1.0 / (N) * (cj+0.5),
+                                1.0 / (N) * (ck+0.5),
+                                1.0 / (N) * shrink),
+                         cl=red))
+
+    parentl = it.CopyParentList()
+
+    for pr in parentl :
+        sl.append( Solid(MkCube(1.0 / (N) * (pr.i+0.5),
+                                1.0 / (N) * (pr.j+0.5),
+                                1.0 / (N) * (pr.k+0.5),
+                                1.0 / (N) * shrink),
+                         cl=green))
+
+    Render( [c1]+sl)
+
+    pass
     
 
 #import sys; sys.path.extend(["/import/appcs/bn204/p/bnprog-devel-main/"+x for x in ["bin", "lib"] ])
