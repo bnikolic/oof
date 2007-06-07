@@ -9,6 +9,8 @@ from vtk.util.colors import *
 
 import pybnlib
 
+import numarray
+
 def MkCube( cx, cy, cz, l ):
     CubeModel = vtk.vtkCubeSource()
     CubeModel.SetCenter(cx, cy ,cz)
@@ -210,6 +212,117 @@ def ShowParents(it,
     Render( [c1]+sl)
 
     pass
+
+
+def CheckParents(a, it ):
+
+    i,j,k= it.getc()    
+    pl = it.CopyParentList()
+
+    for pr in pl :
+        if pr.i < it.Nx and pr.j < it.Ny and pr.k < it.Nz:
+            if not a[pr.i, pr.j, pr.k ] :
+                print i,j,k , "has no parent" ,pr.i, pr.j, pr.k 
+
+def CheckCoverage(N, omax):
+
+    a= numarray.zeros( (N,N,N), numarray.Bool)
+
+    # Starting points
+    for x,y,z in [ (0,0,0),
+                   (N-1,0,0),
+                   (0,N-1,0),
+                   (0,0,N-1),
+                   (N-1,N-1,0),
+                   (N-1,0,N-1),
+                   (0,N-1,N-1),
+                   (N-1,N-1,N-1)]:
+        a[x,y,z] = True 
+
+    # Iterations
+    for  o in range(omax):
+
+        ci=pybnlib.K3DCenterItertor(N,N,N, o)
+        while ci.inBounds():
+            i,j,k= ci.getc()
+            CheckParents(a, ci)
+            a[i,j,k]=True
+            ci.next()
+
+        fi=pybnlib.K3FaceIterV2(N,N,N, o)
+        while fi.inBounds():
+            i,j,k= fi.getc()
+            CheckParents(a, fi)
+            a[i,j,k]=True
+            fi.next()
+            
+        ei=pybnlib.K3EdgeIterV2(N,N,N, o)
+        while ei.inBounds():
+            i,j,k= ei.getc()
+            CheckParents(a, ei)
+            a[i,j,k]=True
+            ei.next()
+
+    return a
+
+
+# Linear system generation
+def itoJ(i,N):
+
+    return 2*i/(2*N-3)
+
+def itoJK(i,N):
+
+    J=itoJ(i,N)
+    K=i - J*(2*N-5) /2
+
+    return J,K
+    
+def GenLinSystem(a):
+
+    n=len(a)
+    N=n*(n-1) /2 
+    rhs=numarray.zeros(N )
+    a  = numarray.zeros( ( N,N) )
+    c= 0
+
+    for i in range(n):
+        for j in range (i+1,n) :
+            x = numarray.zeros(len(a) )
+            x[i]=1
+            x[j]=-1
+            rhs[c]=((a*x)**2).sum()
+            for k in range(N):
+                J,K = itoJK(c,n)
+                a[k,c] = (x[J] - x[K]) **2
+            c+=1
+    return a, rhs
+
+def Selve1():
+
+    a=[ [ 1,1,1,0,0,0  ],
+        [ 1,0,0,1,1,0  ],
+        [ 0,1,0,1,0,1  ],
+        [ 0,0,1,0,1,1  ],
+        [ 0,1,1,1,1,0  ],
+        [ 1,0,1,1,0,1  ] ]
+
+    rhs = [9, 1 ,1 ,1 , 4 , 4]
+
+a=[ [ 1,1,1,0,0,0  ],
+    [ 1,0,0,1,1,0  ],
+    [ 0,1,0,1,0,1  ],
+    [ 0,0,1,0,1,1  ],
+    [ 0,1,1,1,1,0  ],
+    [ 1,0,1,1,0,1  ] ]
+
+rhs = [9, 1 ,1 ,1 , 4 , 4]    
+
+    
+
+        
+
+    
     
 
 #import sys; sys.path.extend(["/import/appcs/bn204/p/bnprog-devel-main/"+x for x in ["bin", "lib"] ])
