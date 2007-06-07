@@ -10,6 +10,7 @@ from vtk.util.colors import *
 import pybnlib
 
 import numarray
+import numarray.linear_algebra as la
 
 def MkCube( cx, cy, cz, l ):
     CubeModel = vtk.vtkCubeSource()
@@ -271,12 +272,16 @@ def itoJ(i,N):
 
     return 2*i/(2*N-3)
 
-def itoJK(i,N):
-    i=i+1
-    J=itoJ(i,N)
-    K=i - J*(2*N-5) /2
+def JKtoi(J,K,N):
 
-    return J,K
+    return J*(N-2) - J*(J-1)/2 + K -1
+
+def itoJK(i,N):
+
+    J=itoJ(i,N)
+    K=i - J*(2*N-3-J) /2
+
+    return J,K+1
     
 def GenLinSystem(poly):
 
@@ -292,7 +297,6 @@ def GenLinSystem(poly):
         rhs[c]=(poly*x).sum()**2
         for k in range(N):
             J,K = itoJK(k,n)
-            print J, K
             a[c,k] = (x[J] - x[K]) **2
         c+=1
 
@@ -302,7 +306,6 @@ def GenLinSystem(poly):
             x[i]=1
             x[j]=1
             rhs[c]=(poly*x).sum()**2
-            print rhs
             for k in range(N):
                 J,K = itoJK(k,n)
                 a[c,k] = (x[J] - x[K]) **2
