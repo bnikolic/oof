@@ -272,30 +272,45 @@ def itoJ(i,N):
     return 2*i/(2*N-3)
 
 def itoJK(i,N):
-
+    i=i+1
     J=itoJ(i,N)
     K=i - J*(2*N-5) /2
 
     return J,K
     
-def GenLinSystem(a):
+def GenLinSystem(poly):
 
-    n=len(a)
+    n=len(poly)
     N=n*(n-1) /2 
     rhs=numarray.zeros(N )
     a  = numarray.zeros( ( N,N) )
     c= 0
 
     for i in range(n):
+        x = numarray.zeros(len(poly) )
+        x[i]=1
+        rhs[c]=(poly*x).sum()**2
+        for k in range(N):
+            J,K = itoJK(k,n)
+            print J, K
+            a[c,k] = (x[J] - x[K]) **2
+        c+=1
+
+    for i in range(n):
         for j in range (i+1,n) :
-            x = numarray.zeros(len(a) )
+            x = numarray.zeros(n )
             x[i]=1
-            x[j]=-1
-            rhs[c]=((a*x)**2).sum()
+            x[j]=1
+            rhs[c]=(poly*x).sum()**2
+            print rhs
             for k in range(N):
-                J,K = itoJK(c,n)
-                a[k,c] = (x[J] - x[K]) **2
+                J,K = itoJK(k,n)
+                a[c,k] = (x[J] - x[K]) **2
             c+=1
+            if c >= N:
+                break
+        if c >= N:
+            break
     return a, rhs
 
 def Selve1():
