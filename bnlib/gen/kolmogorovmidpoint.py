@@ -104,7 +104,12 @@ def PlainKolmogorovSpec3D(x):
 
     return 6.88 * (x)**(5.0/3)
 
-def MidPointVariance(pos, parlist):
+def PlainKolmogorovSpec2D(x):
+
+    return 6.88 * (x)**(2.0/3)
+
+def MidPointVariance(pos, parlist,
+                     klaw=PlainKolmogorovSpec3D):
 
     "Calculate the variance due to interpolation to form the mid-point"
 
@@ -118,30 +123,24 @@ def MidPointVariance(pos, parlist):
     d=numarray.array(d)
     # Weights that make up the linear interpolation
     w = d/d.sum()
-    print w
 
     poly = numarray.zeros(n, numarray.Float64)
     poly[0] = 1
     poly -= w
 
-    print poly
 
     a,r=GenLinSystem(poly)
-    print a, r
     # This is the factorisation which allows to directly substitude
     # the defining structure function into the equations.
     solution=la.solve_linear_equations(a,r)
 
-    print solution
-    
     
     # distances between the supplied points
     parentdists=PairDists(parlist)
 
-    varlist=[ PlainKolmogorovSpec3D(x) for x in parentdists]
+    varlist=[ klaw(x) for x in parentdists]
     varlist=numarray.array(varlist)
 
-    print varlist
 
     return (varlist*solution).sum()
     
