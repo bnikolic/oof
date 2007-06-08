@@ -167,3 +167,46 @@ pl2= numarray.array( [ [1, 0, 0],
                       ])
 
 
+def Corner3D():
+
+    "Calculate the variances for the corner point generation"
+
+    a = [ [ 2, 3.0/4 , 0.5 ],
+          [2,  1.5   , 0.5 ],
+          [2, 3.0/4  ,  1]]
+    a=numarray.array(a)
+    f=PlainKolmogorovSpec2D
+
+    r=numarray.array( [ f(1), f(2.0**0.5), f(3.0**0.5)])
+    return la.solve_linear_equations(a,r)
+
+def RotateList(l):
+
+    return [l[-1]]+l[:-1]
+
+def CubeFaceDiagonals():
+
+    res = []
+    for k in [0,1]:
+        res.append( [ [0,0,k] , [1,1,k] ])
+        res.append( [ [1,0,k] , [0,1,k] ])
+
+    for r in [0,1]:
+        for j in range(4):
+            res.append( [ RotateList(res[j+r*4][i]) for i in [0,1] ])
+
+    return res
+
+    
+        
+def PrintCubeFaceDiagonals():
+
+    fd= CubeFaceDiagonals()
+
+    for x in fd:
+        print "{ %i, %i, %i,  %i, %i, %i }, " % (
+            tuple(x[0]+x[1]))
+
+    
+
+    
