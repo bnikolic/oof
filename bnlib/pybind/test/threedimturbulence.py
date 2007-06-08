@@ -4,6 +4,8 @@
 # Investigate how to do three dimensional turbulence by the mid-point
 # displacement method.
 
+import math
+
 import vtk
 from vtk.util.colors import *
 
@@ -270,7 +272,15 @@ def CheckCoverage(N, omax):
 # Linear system generation
 def itoJ(i,N):
 
-    return 2*i/(2*N-3)
+    if i == 0 :
+        return 0
+    
+    lb=(2*N-1)
+    la=-1
+    lc=-2*i
+
+    return int(( -b + math.sqrt( lb **2 - 4 * la * lc) ) / 2 / la + 1)
+
 
 def JKtoi(J,K,N):
 
@@ -295,20 +305,22 @@ def GenLinSystem(poly):
         x = numarray.zeros(len(poly) )
         x[i]=1
         rhs[c]=(poly*x).sum()**2
-        for k in range(N):
-            J,K = itoJK(k,n)
-            a[c,k] = (x[J] - x[K]) **2
+        for J in range(0,n-1):
+            for K in range(J+1,n):
+                k = JKtoi(J,K,n)
+                a[c,k] = (x[J] - x[K]) **2
         c+=1
 
     for i in range(n):
         for j in range (i+1,n) :
             x = numarray.zeros(n )
             x[i]=1
-            x[j]=1
+            x[j]=2
             rhs[c]=(poly*x).sum()**2
-            for k in range(N):
-                J,K = itoJK(k,n)
-                a[c,k] = (x[J] - x[K]) **2
+            for J in range(0,n-1):
+                for K in range(J+1,n):
+                    k = JKtoi(J,K,n)
+                    a[c,k] = (x[J] - x[K]) **2
             c+=1
             if c >= N:
                 break
@@ -346,3 +358,10 @@ rhs = [9, 1 ,1 ,1 , 4 , 4]
 #import sys; sys.path.extend(["/import/appcs/bn204/p/bnprog-devel-main/"+x for x in ["bin", "lib"] ])
 #import pybnlib
 
+p2=numarray.array([3,-1, -1, -1])
+
+# Symetric  cube:
+p3=numarray.array([7,-1, -1, -1, -1 ,-1, -1 , -1])
+a,r=GenLinSystem(p3)
+x=la.solve_linear_equations(a,r)
+r2=la.mlab.innerproduct(a,x)
