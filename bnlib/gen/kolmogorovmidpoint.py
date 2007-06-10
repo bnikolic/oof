@@ -171,14 +171,30 @@ def Corner3D():
 
     "Calculate the variances for the corner point generation"
 
-    a = [ [ 2, 3.0/4 , 0.5 ],
-          [2,  1.5   , 0.5 ],
-          [2, 3.0/4  ,  1]]
+    a = [ [ 2, 3.0/2 , 0.5 ],
+          [ 2, 2.0   , 0.5 ],
+          [ 2, 3.0/2 ,  1  ]]
     a=numarray.array(a)
     f=PlainKolmogorovSpec2D
 
     r=numarray.array( [ f(1), f(2.0**0.5), f(3.0**0.5)])
+    print r
     return la.solve_linear_equations(a,r)
+
+def Corner3DV2():
+
+    "Experimetal -- look for better initialisation"
+
+    a = [ [ 2, 3.0/2 , 0.5 ],
+          [ 2, 3.0   , 0.5 ],
+          [ 0, 3.0/2 ,  1  ]]
+    a=numarray.array(a)
+    f=PlainKolmogorovSpec2D
+
+    r=numarray.array( [ f(1), f(2.0**0.5), f(3.0**0.5)])
+    print r
+    return la.solve_linear_equations(a,r)
+
 
 def RotateList(l):
 

@@ -20,6 +20,7 @@
 #include "../src/kolmogorov_spec.hxx"
 #include "../src/kolmogorov_wrap.hxx"
 #include "../src/kolmogorov_3diters.hxx"
+#include "../src/kolmogorov_3d.hxx"
 
 %}
 
@@ -59,6 +60,7 @@ namespace std {
 %include "../src/kolmogorov.hxx"
 %include "../src/kolmogorov_wrap.hxx"
 %include "../src/kolmogorov_3diters.hxx"
+%include "../src/kolmogorov_3d.hxx"
 
 %extend BNLib::ConstUDD {
 	
