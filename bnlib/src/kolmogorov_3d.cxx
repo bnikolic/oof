@@ -74,9 +74,12 @@ namespace BNLib {
     const size_t N2 = int(pow(N,2));
     
     const double vrtexstddev = 0;
-    const double facediagstddev  = 1.54413161;
-    const double bodydiagstddev  = 2.46685105;
-
+    const double facediagstddev  = 1.09186593;
+    
+    const double bodydiagstddev  = 2.8520905;
+    const double bodydiag_even_stddev  = 0.71572797;
+    
+    /*
     for (size_t l =0 ; l < 8 ; ++l)
     {
       size_t dx= cubevertices[l].i * (N-1) + 
@@ -85,6 +88,8 @@ namespace BNLib {
       cube[dx] = vrtexstddev * rfn.sample();
     }
     
+    */
+
     for (size_t l = 0 ; l < 12 ; ++l)
     {
       double f = facediagstddev * rfn.sample() * 0.5;
@@ -104,6 +109,7 @@ namespace BNLib {
     for (size_t l = 0 ; l < 4 ; ++l)
     {
       double f = bodydiagstddev * rfn.sample() * 0.5;
+      double g = bodydiag_even_stddev * rfn.sample() ;
       
       size_t dx1 = cubebodydiagas[l].i1 *(N-1) +
 	cubebodydiagas[l].j1 *N *(N-1) + 
@@ -114,6 +120,9 @@ namespace BNLib {
 
       cube[dx1] += f;
       cube[dx2] -= f;
+
+      cube[dx1] += g;
+      cube[dx2] += g;
     }
 
   }
