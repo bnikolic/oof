@@ -284,6 +284,16 @@ namespace BNLib {
 
   };
 
+  /**
+     \brief Average the values of parents for a cube.
+     
+     Only fully symetric cubes supported.
+   */
+  double KAverageParents( const double * cube,
+			  size_t N,
+			  const  std::vector<K3DParent> & pv);
+  
+
 
 }
 #endif

@@ -8,6 +8,8 @@
 
 #include "kolmogorov_3diters.hxx"
 
+#include <cmath>
+
 namespace BNLib {
 
   K3DIterBase::K3DIterBase( size_t Nx, size_t Ny, size_t Nz , size_t o ):
@@ -569,5 +571,20 @@ namespace BNLib {
       vOUT.push_back(p);
     }
   }  
+
+  double KAverageParents( const double * cube,
+			  size_t N,
+			  const  std::vector<K3DParent> & pv)
+  {
+    double res = 0;
+    const size_t N2 = (size_t)pow(N,2);
+    for (size_t i = 0; i < pv.size() ; ++ i )
+    {
+      size_t dx=pv[i].i +pv[i].j*N + pv[i].k *N2;
+      res += cube[dx];
+    }
+    return res / pv.size();
+
+  }
   
 }

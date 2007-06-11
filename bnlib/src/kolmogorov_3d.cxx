@@ -13,6 +13,7 @@
 #include <cmath>
 
 #include "bnrandom.hxx"
+#include "kolmogorov_3diters.hxx"
 
 namespace BNLib {
 
@@ -133,9 +134,70 @@ namespace BNLib {
   {
 
     KolmogorovCorners3D(cube, N, rfn);
-    
+    const size_t N2 = (size_t)pow(N,2);
+
+    for( size_t o =0 ; ( ((size_t)1) << (o+1) ) < N  ; ++o )
+    {
+      
+      K3DCenterItertor ci(N,N,N, o);
+      while ( ci.inBounds() )
+      {
+	std::vector<K3DParent> pv;
+
+	size_t i,j, k;
+	ci.getc( i,j, k);
+	size_t dx= k* N2 + j *N + i;
+
+	ci.ParentList(pv);
+
+	double val = KAverageParents(cube, N, pv);
+
+
+      }
+
+    }
   }
 
+
+  double  KMidPointVar_CI( size_t np,
+			   size_t o)
+  {
+    
+    double res;
+    switch (np)
+    {
+    case 8:
+      res=2.06434648615;
+      break;
+    default:
+      throw "Logic error: center cell iterator should always have eight parents";
+    }
+    res = res * pow ( 1.0 / ( 1 << o) , 2.0/ 6.0);
+    return res;
+  }
+
+  double  KMidPointVar_FI( size_t np,
+			   size_t o)
+  {
+    
+    double res;
+    switch (np)
+    {
+    case 8:
+      res=;
+      break;
+    default:
+      throw "Logic error";
+    }
+    res = res * pow ( 1.0 / ( 1 << o) , 2.0/ 6.0);
+    return res;
+  }
+
+
+
+  
+
+    
 
 }
 

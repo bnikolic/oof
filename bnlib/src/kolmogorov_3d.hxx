@@ -34,6 +34,25 @@ namespace BNLib {
   void Kolmogorov3D( double * cube,
 		     size_t N,
 		     RDist &rfn);
+
+  /**
+     Compute the required mid-point standard deviation for the case of
+     3-dimensional Kolmogorov turbulence for the center-cell iterator.
+     
+     \param np the the number of parents from which the mid-point was
+     constrcted.
+     
+     \param o The iteration order.
+  */
+  double  KMidPointVar_CI( size_t np,
+			   size_t o);
+
+  double  KMidPointVar_FI( size_t np,
+			   size_t o);
+
+  double  KMidPointVar_EI( size_t np,
+			   size_t o);
+
 }
 
 

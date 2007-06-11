@@ -68,20 +68,24 @@ def GenLinSystem(poly):
     for i in range(n):
         if c >= N:
                 break
-        x = numarray.zeros(len(poly) )
+        x = numarray.zeros(n,
+                           numarray.Float64 )
         x[i]=1
         rhs[c]=(poly*x).sum()**2
+        print poly, x  , rhs[c]        
         FillMtrxRow( a, x, c)
         c+=1
 
-    for i in range(n):
+    for i in range(n-1):
         if c >= N:
             break
         for j in range (i+1,n) :
-            x = numarray.zeros(n )
+            x = numarray.zeros(n,
+                               numarray.Float64 )
             x[i]=1
             x[j]=2
             rhs[c]=(poly*x).sum()**2
+            print poly, x  , rhs[c]
             FillMtrxRow( a, x, c)
             c+=1
             if c >= N:
@@ -137,9 +141,10 @@ def MidPointVariance(pos, parlist,
     solution=la.solve_linear_equations(a,r)
 
     print solution
-    
+
     # distances between the supplied points
     parentdists=PairDists(parlist)
+    print parentdists
 
     varlist=[ klaw(x) for x in parentdists]
     varlist=numarray.array(varlist)
@@ -147,20 +152,57 @@ def MidPointVariance(pos, parlist,
 
     interpvar= (varlist*solution).sum()
 
-    print "Variance of the interpolated point:", interpvar
+    print "Interpoalted variance" , interpvar
 
     p1toposdist= ((parlist[0]-pos)**2).sum() **0.5
-    print  p1toposdist
+
     requiredvar = klaw( p1toposdist)
 
-    print requiredvar
 
     return requiredvar -interpvar
     
     
+def ShowRequiredVariances():
 
+    "Print the required variances for the 3d kolmogorov case"
+
+    print "Normal eight parents at vertices of the cube"
+
+    c8= numarray.array( [0.5, 0.5, 0.5])
+    p8= numarray.array( [ [1, 0, 0],
+                          [1, 1, 0],
+                          [0, 1, 0],
+                          [0, 0, 0],
+                          [1, 0, 1],
+                          [1, 1, 1],
+                          [0, 1, 1],
+                          [0, 0, 1]
+                          ])
+    print 8 , MidPointVariance( c8, p8)**0.5
+
+    print "Normal six parent for face iterator"
+
+    fc6 = numarray.array( [0.5, 0.5, 1])
+    fp6 = numarray.array( [ [0.5, 0.5, 0.5],
+                            [0, 0, 1],
+                            [0, 1, 1],
+                            [1, 0, 1],
+                            [1, 1, 1],
+                            [0.5, 0.5, 1.5] ])
+    print 6,  MidPointVariance( fc6, fp6)**0.5
     
     
+    
+c8= numarray.array( [0.5, 0.5, 0.5])
+p8= numarray.array( [ [1, 0, 0],
+                      [1, 1, 0],
+                      [0, 1, 0],
+                      [0, 0, 0],
+                      [1, 0, 1],
+                      [1, 1, 1],
+                      [0, 1, 1],
+                    [0, 0, 1]
+                      ])
 
 c1= numarray.array( [0.5, 0.5, 0])
 pl= numarray.array( [ [1, 0, 0],
@@ -168,16 +210,7 @@ pl= numarray.array( [ [1, 0, 0],
                       [0, 1, 0],
                       [0, 0, 0]])
 
-c2= numarray.array( [0.5, 0.5, 0.5])
-pl2= numarray.array( [ [1, 0, 0],
-                      [1, 1, 0],
-                      [0, 1, 0],
-                      [0, 0, 0],
-                      [1, 0, 1],
-                      [1, 1, 1],
-                      [0, 1, 1],
-                      [0, 0, 1]
-                      ])
+
 
 
 def Corner3D():
