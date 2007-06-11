@@ -29,67 +29,59 @@ def JKtoi(J,K,N):
 
     return J*(N-2) - J*(J-1)/2 + K -1
 
+def CJKtoi(J,K,N):
+    return J*(N-2) - J*(J-1)/2 + K -1
 
+def PJKtoi(J,K,N):
+    return (2*J*N - J*J - J) / 2 +K 
+    
 def GenLinSystem(poly):
 
     """
     Generates the linear system which allows factorisation of
     something like:
-
+    
     (a1 * a+ a2 *b + a3 *c ....) ^2 into:
     c1(a-b)^2 + c2(a-c)^2
-
+    
     For the two dimensional bilinear interpolator, get something like:
-
+    
     p2 = numarray.array([3,-1,-1,-1])
 
-    which may be solved by:
-    a,r=GenLinSystem(p2)
-    la.solve_linear_equations(a,r)
+     which may be solved by:
+     a,r=GenLinSystem(p2)
+     la.solve_linear_equations(a,r)
 
-    """
-
+     """
+    
     n=len(poly)
 
-    def FillMtrxRow(a,x, c):
-        for J in range(0,n-1):
-            for K in range(J+1,n):
-                k = JKtoi(J,K,n)
-                a[c,k] = (x[J] - x[K]) **2
-    
     # number of pairings
-    N=n*(n-1) /2 
-    rhs = numarray.zeros(N ,numarray.Float64)
-    a   = numarray.zeros( ( N,N) ,numarray.Float64)
-    c= 0
+    NC=n*(n-1) /2
+    NP=n*(n+1) /2
 
-    # Generate the constraings by substitution into the defining
-    # equations... Not very clever but should work sufficiently well.
-    for i in range(n):
-        if c >= N:
-                break
-        x = numarray.zeros(n,
-                           numarray.Float64 )
-        x[i]=1
-        rhs[c]=(poly*x).sum()**2
-        print poly, x  , rhs[c]        
-        FillMtrxRow( a, x, c)
-        c+=1
+    # The linear system
+    rhs = numarray.zeros(NP ,
+                         numarray.Float64)
+    a   = numarray.zeros( ( NP,NC) ,
+                          numarray.Float64)
 
-    for i in range(n-1):
-        if c >= N:
-            break
-        for j in range (i+1,n) :
-            x = numarray.zeros(n,
-                               numarray.Float64 )
-            x[i]=1
-            x[j]=2
-            rhs[c]=(poly*x).sum()**2
-            print poly, x  , rhs[c]
-            FillMtrxRow( a, x, c)
-            c+=1
-            if c >= N:
-                break
+    for i in range(0, n-1):
+        for j in range (i+1, n):
+            cdx = CJKtoi(i,j,n)
+            a[ PJKtoi(i,i,n) , cdx ] =1
+            a[ PJKtoi(i,j,n) , cdx ] =-2
+            a[ PJKtoi(j,j,n) , cdx ] =1
+
+    # right hand side
+    for i in range(0, n):
+        for j in range (i, n):
+            pdx=PJKtoi(i,j,n)
+            if i == j:
+                rhs[pdx]= poly[i]**2
+            else:
+                rhs[pdx]= 2 * poly[i] * poly[j]
+
     return a, rhs
 
 
@@ -138,7 +130,7 @@ def MidPointVariance(pos, parlist,
     a,r=GenLinSystem(poly)
     # This is the factorisation which allows to directly substitude
     # the defining structure function into the equations.
-    solution=la.solve_linear_equations(a,r)
+    solution=la.linear_least_squares(a,r)[0]
 
     print solution
 
@@ -271,4 +263,5 @@ def PrintCubeFaceDiagonals():
 
     
 
-    
+
+
