@@ -114,9 +114,19 @@ namespace BNLib {
     virtual void ParentList( std::vector<K3DParent> & vOUT) =0;
 
     /**
+       \brief Return only those parents actually within the cube grid.
+    */
+    virtual void FilteredParentList(std::vector<K3DParent> & vOUT);
+
+    /**
        Return parents as a copy of the vector. (for SWIG use)
     */
     std::vector<K3DParent> CopyParentList(void);
+
+    std::vector<K3DParent> CopyFilteredParentList(void);
+    
+
+
 
   };
 

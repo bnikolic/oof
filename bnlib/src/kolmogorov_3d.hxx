@@ -27,6 +27,13 @@ namespace BNLib {
   void KolmogorovCorners3D(double *cube,
 			   size_t N,
 			   RDist &rfn);
+
+  /**
+     Generate 3d komogorov turbulence on Ncubed grid
+  */
+  void Kolmogorov3D( double * cube,
+		     size_t N,
+		     RDist &rfn);
 }
 
 

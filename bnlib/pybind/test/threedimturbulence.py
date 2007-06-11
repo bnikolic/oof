@@ -217,17 +217,21 @@ def ShowParents(it,
     pass
 
 
-def CheckParents(a, it ):
+def CheckParents(a, it,
+                 filtered=False ):
 
-    i,j,k= it.getc()    
-    pl = it.CopyParentList()
+    i,j,k= it.getc()
+    if not filtered :
+        pl = it.CopyParentList()
+    else:
+        pl = it.CopyFilteredParentList()
 
     for pr in pl :
         if pr.i < it.Nx and pr.j < it.Ny and pr.k < it.Nz:
             if not a[pr.i, pr.j, pr.k ] :
                 print i,j,k , "has no parent" ,pr.i, pr.j, pr.k 
 
-def CheckCoverage(N, omax):
+def CheckCoverage(N, omax, filtered=False):
 
     a= numarray.zeros( (N,N,N), numarray.Bool)
 
@@ -248,21 +252,21 @@ def CheckCoverage(N, omax):
         ci=pybnlib.K3DCenterItertor(N,N,N, o)
         while ci.inBounds():
             i,j,k= ci.getc()
-            CheckParents(a, ci)
+            CheckParents(a, ci, filtered=filtered)
             a[i,j,k]=True
             ci.next()
 
         fi=pybnlib.K3FaceIterV2(N,N,N, o)
         while fi.inBounds():
             i,j,k= fi.getc()
-            CheckParents(a, fi)
+            CheckParents(a, fi,filtered=filtered)
             a[i,j,k]=True
             fi.next()
             
         ei=pybnlib.K3EdgeIterV2(N,N,N, o)
         while ei.inBounds():
             i,j,k= ei.getc()
-            CheckParents(a, ei)
+            CheckParents(a, ei,filtered=filtered)
             a[i,j,k]=True
             ei.next()
 

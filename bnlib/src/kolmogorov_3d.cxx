@@ -127,6 +127,15 @@ namespace BNLib {
 
   }
 
+  void Kolmogorov3D( double * cube,
+		     size_t N,
+		     RDist &rfn)
+  {
+
+    KolmogorovCorners3D(cube, N, rfn);
+    
+  }
+
 
 }
 
