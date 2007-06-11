@@ -66,6 +66,8 @@ def GenLinSystem(poly):
     # Generate the constraings by substitution into the defining
     # equations... Not very clever but should work sufficiently well.
     for i in range(n):
+        if c >= N:
+                break
         x = numarray.zeros(len(poly) )
         x[i]=1
         rhs[c]=(poly*x).sum()**2
@@ -73,6 +75,8 @@ def GenLinSystem(poly):
         c+=1
 
     for i in range(n):
+        if c >= N:
+            break
         for j in range (i+1,n) :
             x = numarray.zeros(n )
             x[i]=1
@@ -82,8 +86,6 @@ def GenLinSystem(poly):
             c+=1
             if c >= N:
                 break
-        if c >= N:
-            break
     return a, rhs
 
 
@@ -109,7 +111,7 @@ def PlainKolmogorovSpec2D(x):
     return 6.88 * (x)**(2.0/3)
 
 def MidPointVariance(pos, parlist,
-                     klaw=PlainKolmogorovSpec3D):
+                     klaw=PlainKolmogorovSpec2D):
 
     "Calculate the variance due to interpolation to form the mid-point"
 
@@ -134,6 +136,7 @@ def MidPointVariance(pos, parlist,
     # the defining structure function into the equations.
     solution=la.solve_linear_equations(a,r)
 
+    print solution
     
     # distances between the supplied points
     parentdists=PairDists(parlist)
@@ -142,7 +145,17 @@ def MidPointVariance(pos, parlist,
     varlist=numarray.array(varlist)
 
 
-    return (varlist*solution).sum()
+    interpvar= (varlist*solution).sum()
+
+    print "Variance of the interpolated point:", interpvar
+
+    p1toposdist= ((parlist[0]-pos)**2).sum() **0.5
+    print  p1toposdist
+    requiredvar = klaw( p1toposdist)
+
+    print requiredvar
+
+    return requiredvar -interpvar
     
     
 

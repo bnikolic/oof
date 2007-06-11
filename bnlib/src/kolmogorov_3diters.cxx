@@ -72,7 +72,9 @@ namespace BNLib {
     for (size_t i =0 ; i < vtemp.size() ; ++i)
     {
       const K3DParent &p = vtemp[i];
-      if (p.i < Nx and p.j < Ny and p.k < Nz )
+      if (p.i >=0 and p.i < Nx and 
+	  p.j >=0 and p.j < Ny and 
+	  p.k >=0 and p.k < Nz )
       {
 	vOUT.push_back(p);
       }
