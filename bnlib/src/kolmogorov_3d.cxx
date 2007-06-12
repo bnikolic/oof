@@ -11,6 +11,7 @@
 #include "kolmogorov_3d.hxx"
 
 #include <cmath>
+#include <iostream>
 
 #include "bnrandom.hxx"
 #include "kolmogorov_3diters.hxx"
@@ -148,12 +149,61 @@ namespace BNLib {
 	ci.getc( i,j, k);
 	size_t dx= k* N2 + j *N + i;
 
-	ci.ParentList(pv);
+	ci.FilteredParentList(pv);
 
 	double val = KAverageParents(cube, N, pv);
 
+	val += KMidPointVar_CI( pv.size(), o ) * rfn.sample();
+
+	cube[dx]=val;
+
+	ci.next();
 
       }
+
+      K3FaceIterV2 fi(N,N,N, o);
+      while ( fi.inBounds() )
+      {
+	std::vector<K3DParent> pv;
+
+	size_t i,j, k;
+	fi.getc( i,j, k);
+	size_t dx= k* N2 + j *N + i;
+
+	fi.FilteredParentList(pv);
+
+	double val = KAverageParents(cube, N, pv);
+
+	val += KMidPointVar_FI( pv.size(), o ) * rfn.sample();
+
+	cube[dx]=val;
+
+	fi.next();
+
+      }
+
+      K3EdgeIterV2 ei(N,N,N, o);
+      while ( ei.inBounds() )
+      {
+	std::vector<K3DParent> pv;
+
+	size_t i,j, k;
+	ei.getc( i,j, k);
+	size_t dx= k* N2 + j *N + i;
+
+	ei.FilteredParentList(pv);
+	
+	double val = KAverageParents(cube, N, pv);
+
+	val += KMidPointVar_EI( pv.size(), o ) * rfn.sample();
+
+	cube[dx]=val;
+
+	ei.next();
+
+      }
+
+      
 
     }
   }
@@ -183,8 +233,35 @@ namespace BNLib {
     double res;
     switch (np)
     {
-    case 8:
-      res=;
+    case 6:
+      res= 1.29278759904;
+      break;
+    case 5:
+      res= 1.35819897457;
+      break;
+    default:
+      std::cerr<<"Received "<<np<<" parents"<<std::endl;
+      throw "Logic error";
+    }
+    res = res * pow ( 1.0 / ( 1 << o) , 2.0/ 6.0);
+    return res;
+  }
+
+  double  KMidPointVar_EI( size_t np,
+			   size_t o)
+  {
+    
+    double res;
+    switch (np)
+    {
+    case 6:
+      res= 1.39304529911;
+      break;
+    case 5:
+      res= 1.40696258599;
+      break;
+    case 4:
+      res= 1.42135665233;
       break;
     default:
       throw "Logic error";
@@ -192,6 +269,8 @@ namespace BNLib {
     res = res * pow ( 1.0 / ( 1 << o) , 2.0/ 6.0);
     return res;
   }
+
+  
 
 
 

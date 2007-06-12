@@ -132,11 +132,8 @@ def MidPointVariance(pos, parlist,
     # the defining structure function into the equations.
     solution=la.linear_least_squares(a,r)[0]
 
-    print solution
-
     # distances between the supplied points
     parentdists=PairDists(parlist)
-    print parentdists
 
     varlist=[ klaw(x) for x in parentdists]
     varlist=numarray.array(varlist)
@@ -144,7 +141,6 @@ def MidPointVariance(pos, parlist,
 
     interpvar= (varlist*solution).sum()
 
-    print "Interpoalted variance" , interpvar
 
     p1toposdist= ((parlist[0]-pos)**2).sum() **0.5
 
@@ -182,7 +178,42 @@ def ShowRequiredVariances():
                             [1, 1, 1],
                             [0.5, 0.5, 1.5] ])
     print 6,  MidPointVariance( fc6, fp6)**0.5
+
+    print "Face iterator, five parent"
+    fc5 = numarray.array( [0.5, 0.5, 1])
+    fp5 = numarray.array( [ [0.5, 0.5, 0.5],
+                            [0, 0, 1],
+                            [0, 1, 1],
+                            [1, 0, 1],
+                            [1, 1, 1] ])
+    print 5,  MidPointVariance( fc5, fp5)**0.5
+
+    print "Edge iterator : "
+    ec6 = numarray.array( [0.5, 1, 1])
+    ep6 = numarray.array( [ [0, 1, 1],
+                            [1, 1, 1],
+                            [0.5, 0.5, 1],
+                            [0.5, 1.5, 1],
+                            [0.5, 1, 0.5],
+                            [0.5, 1, 1.5] ])
+    ep5 = numarray.array( [ [0, 1, 1],
+                            [1, 1, 1],
+                            [0.5, 0.5, 1],
+                            [0.5, 1.5, 1],
+                            [0.5, 1, 0.5]
+                            ])
+
+    ep4 = numarray.array( [ [0, 1, 1],
+                            [1, 1, 1],
+                            [0.5, 0.5, 1],
+                            [0.5, 1, 0.5]
+                            ])
+    print 6,  MidPointVariance( ec6, ep6)**0.5
+    print 5,  MidPointVariance( ec6, ep5)**0.5
+    print 4,  MidPointVariance( ec6, ep4)**0.5    
     
+
+
     
     
 c8= numarray.array( [0.5, 0.5, 0.5])
