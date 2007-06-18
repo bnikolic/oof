@@ -47,9 +47,17 @@ namespace BNLib {
   double  KMidPointVar_CI( size_t np,
 			   size_t o);
 
+  /**
+     \brief As KMidPointVar_CI, but for the face iterator
+
+  */
   double  KMidPointVar_FI( size_t np,
 			   size_t o);
 
+  /**
+     \brief As KMidPointVar_CI, but for the edge iterator
+
+  */
   double  KMidPointVar_EI( size_t np,
 			   size_t o);
 
