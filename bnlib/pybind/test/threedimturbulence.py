@@ -6,6 +6,8 @@
 
 import math
 
+from setup import *
+
 import vtk
 from vtk.util.colors import *
 

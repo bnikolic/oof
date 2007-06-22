@@ -31,11 +31,11 @@ namespace AstroMap {
       {
 	for (size_t c = 0 ; c < samples_px ; ++ c)
 	{
-	  size_t rj = (size_t) floor( m.ny * rfn.sample() );
-	  size_t ri = (size_t) floor( m.nx * rfn.sample() );
+	  int rj = (size_t) floor( m.ny * rfn.sample() );
+	  int ri = (size_t) floor( m.nx * rfn.sample() );
 	  
-	  size_t d =  (size_t) sqrt( pow( j-rj, 2) +
-				     pow( i-ri, 2) );
+	  size_t d =  (size_t) sqrt( pow( (int)j-rj, 2) +
+				     pow( (int)i-ri, 2) );
 	  
 	  
 	  OUTsfn[d] += pow( m.get(i,j) - m.get(ri, rj) , 2);

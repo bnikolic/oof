@@ -8,12 +8,24 @@ import sys; sys.path.extend(["/import/appcs/bn204/p/bnprog-devel-main/"+x for x 
 
 from setup import *
 
+import pyplot
 import pybnlib
 import numarray
 import numpy
 from  matplotlib import pylab
 
 
+def GenKMap( npix):
+
+    "Generate a map with Kolmogorov Turbulunce"
+
+    if ( not (npix & 1 ) ):
+        raise "number of pixels must be odd (and 2^n+1 )"
+    
+    m1=pyplot.Map(npix, npix)
+    pyplot.KolmogorovMap(m1,0.000001)
+
+    return m1
 
 
 def GenK(N,usenumpy=False):
@@ -38,4 +50,24 @@ def Animate(g):
         y= numarray.sum(x, axis=0)
         pylab.matshow( y)
         pylab.savefig("temp/3dturb-%03i.png" % i)
-        
+
+
+def MapFromA(a):
+    m=pyplot.Map(a.shape[0], a.shape[1])
+    for i in range( a.shape[0]):
+        for j in range( a.shape[1] ):
+            m.set(i,j, a[i,j])
+    return m
+
+def SfnFromM(m):
+
+    "Converts an array to AstroMap::Map and calculates structure fn"
+
+    sfn=pyplot.DoubleVector()
+    count=pyplot.SizeTVector()
+    pyplot.RndStructureFn( m, 10 ,
+                           sfn, count)
+
+    return ( numarray.array(sfn[1:]),
+             numarray.array(count[1:]))
+    

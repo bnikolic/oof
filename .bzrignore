@@ -143,3 +143,4 @@ CVS
 *config.status.lineno*
 *configure.lineno*
 *config/compile*
+./bnlib/pybind/test/temp
