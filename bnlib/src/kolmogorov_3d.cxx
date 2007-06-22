@@ -59,7 +59,7 @@ namespace BNLib {
 			   RDist &rfn)
   {
     
-    const size_t N2 = int(pow(N,2));
+    const size_t N2 = size_t(pow(N,2));
     
     const double facediagstddev  = 1.09186593;
     

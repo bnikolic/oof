@@ -130,6 +130,9 @@ namespace BNLib {
 
   };
 
+  /** \brief A class to iterate of centre of cells when generating 3D
+      Kolmogorov turbulence.
+  */
   class K3DCenterItertor :
     public K3DIterBase
   {
@@ -161,39 +164,8 @@ namespace BNLib {
 
 
   /**
-     The second iterator over the 3D cube, that does the faces first.
-   */
-  class K3FaceIter :
-    public K3DIterBase
-  {
-
-  public:
-
-    // ----------------  Public Data -----------------------    
-
-    
-    // ----------------   Constructors / Destructors ----------
-
-    K3FaceIter( size_t Nx, size_t Ny, size_t Nz , 
-		size_t o );
-
-    // ---------------   Public interface --------------------
-    
-    /**
-       Return the origin to use in the specified direction.
-     */
-    size_t origin(dirs d);
-
-    size_t delta(dirs d);
-
-    // Inherited from K3DIterBase
-    virtual void next(void);
-    virtual void ParentList( std::vector<K3DParent> & vOUT);
-
-  };
-
-  /**
-     As K3FaceIter, but make use of functionality of K3DCenterItertor.
+     \brief An iterator for cell faces. For generation of 3D
+     Kolmogorov turbulence.
    */
   class K3FaceIterV2 :
     public K3DIterBase
@@ -221,41 +193,9 @@ namespace BNLib {
 
   };
 
-  /**
-     The third and hopefully final iterator over the 3D cube, that
-     does the edges first.
-   */
-  class K3EdgeIter :
-    public K3DIterBase
-  {
+  /** \brief An iterator for cell edges. For generation of 3D
+      Kolmogorov turbulence.
 
-  public:
-
-    // ----------------  Public Data -----------------------    
-
-    
-    // ----------------   Constructors / Destructors ----------
-
-    K3EdgeIter( size_t Nx, size_t Ny, size_t Nz , 
-		size_t o );
-
-    // ---------------   Public interface --------------------
-    
-    /**
-       Return the origin to use in the specified direction.
-     */
-    size_t origin(dirs d);
-
-    size_t delta(dirs d);
-
-    // Inherited from K3DIterBase
-    virtual void next(void);
-    virtual void ParentList( std::vector<K3DParent> & vOUT);
-
-  };
-
-  /**
-     Similar to K3EdgeIter but use Center iterators
    */
   class K3EdgeIterV2 :
     public K3DIterBase
