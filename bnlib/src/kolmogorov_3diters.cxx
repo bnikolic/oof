@@ -36,7 +36,7 @@ namespace BNLib {
     kOUT=k;
   }
 
-  size_t K3DIterBase::getd( dirs d)
+  size_t K3DIterBase::getd( dirs d) const
   {
     if ( d== D_X)
     {
@@ -108,14 +108,30 @@ namespace BNLib {
     k= origin( D_Z);
   }
 
-  size_t K3DCenterItertor::origin(dirs d)
+  size_t K3DCenterItertor::origin(dirs d) const
   {
     return getd(d) >> (o+1);
   }
 
-  size_t K3DCenterItertor::delta(dirs d)
+  size_t K3DCenterItertor::delta(dirs d) const
   {
     return getd(d) >> o;
+  }
+
+  bool K3DCenterItertor::firstDir(dirs d) const
+  {
+    if ( d == D_X )
+    {
+      return (i == origin(D_X) ) ;
+    }
+    else if ( d == D_Y)
+    {
+      return (j == origin(D_Y) ) ;
+    }
+    else
+    {
+      return (k == origin(D_Z) ) ;
+    }
   }
 
   void K3DCenterItertor::next(void)
@@ -158,6 +174,28 @@ namespace BNLib {
   {
     UpdateFace();
   }
+
+  bool K3FaceIterV2::pSkipFace(const K3DCenterItertor & ci,
+			       size_t fcount)
+  {
+    if ( fcount == 0 && ( ! ci.firstDir(D_X) ) )
+    {
+      return true;
+    }
+    else if ( fcount == 2 && ( ! ci.firstDir(D_Y) ))
+    {
+      return true;
+    }
+    else if ( fcount == 4 && ( ! ci.firstDir(D_Z) ))
+    {
+      return true;
+    }
+    else
+    {
+      return false;
+    }
+
+  }
   
   void K3FaceIterV2::UpdateFace(void)
   {
@@ -191,15 +229,22 @@ namespace BNLib {
 
   void K3FaceIterV2::next(void)
   {
-    if ( fcount > 4 )
-    {
-      fcount = 0;
-      ci.next();
-    }
-    else
-    {
-      ++fcount;
-    }
+    do {
+
+      if ( fcount > 4 )
+      {
+	fcount = 0;
+	ci.next();
+	break;
+      }
+      else
+      {
+	++fcount;
+      }
+      
+    } while ( pSkipFace( ci, fcount));
+
+
     UpdateFace()    ;
 
   }

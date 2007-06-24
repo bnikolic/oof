@@ -93,7 +93,7 @@ namespace BNLib {
 
     /** \brief Get the dimension in the specified direction
      */
-    size_t getd( dirs d);
+    size_t getd( dirs d) const;
 
     /** \brief False if no more iteration left to do 
      */
@@ -123,10 +123,11 @@ namespace BNLib {
     */
     std::vector<K3DParent> CopyParentList(void);
 
+    /**
+       Return FilteredParentList as copy of the vector. (for SWIG use)
+    */
     std::vector<K3DParent> CopyFilteredParentList(void);
     
-
-
 
   };
 
@@ -151,9 +152,13 @@ namespace BNLib {
     /**
        Return the origin to use in the specified direction.
      */
-    size_t origin(dirs d);
+    size_t origin(dirs d) const;
 
-    size_t delta(dirs d);
+    size_t delta(dirs d) const;
+
+    /** \brief Are we on the first position in the direction d?
+     */
+    bool firstDir(dirs d) const;
 
 
     // Inherited from K3DIterBase
@@ -173,6 +178,11 @@ namespace BNLib {
     size_t fcount;
     K3DCenterItertor ci;
 
+    /**
+       Update the position i,j,k on the basis of the current value of
+       fcount (i.e., on the basis of the face that we are currently
+       on).
+     */
     void UpdateFace(void);
 
   public:
@@ -186,7 +196,14 @@ namespace BNLib {
 		size_t o );
 
     // ---------------   Public interface --------------------
-    
+
+    /**
+       Should a face be skipped because it would have been filled in
+       by a previous iteration?
+    */
+    static bool pSkipFace(const K3DCenterItertor & ci,
+			  size_t fcount);
+
     // Inherited from K3DIterBase
     virtual void next(void);
     virtual void ParentList( std::vector<K3DParent> & vOUT);
