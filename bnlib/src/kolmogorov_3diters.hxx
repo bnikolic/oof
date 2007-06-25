@@ -264,7 +264,8 @@ namespace BNLib {
      Only fully symetric cubes supported.
    */
   double KAverageParents( const double * cube,
-			  size_t N,
+			  size_t Nx,
+			  size_t Ny,
 			  const  std::vector<K3DParent> & pv);
   
 

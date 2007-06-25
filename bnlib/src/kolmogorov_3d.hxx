@@ -36,6 +36,18 @@ namespace BNLib {
 		     RDist &rfn);
 
   /**
+     Generated 3d Kolmogorov turbuluence on a Nx by Ny by Nz grid.
+     
+     \param cube is the pre-allocated output array of size Nx times Ny
+     times Nz.
+   */
+  void Kolmogorov3D( double * cube,
+		     size_t Nx,
+		     size_t Ny,
+		     size_t Nz,
+		     RDist &rfn);
+
+  /**
      Compute the required mid-point standard deviation for the case of
      3-dimensional Kolmogorov turbulence for the center-cell iterator.
      

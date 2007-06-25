@@ -107,25 +107,47 @@ namespace BNLib {
 		     size_t N,
 		     RDist &rfn)
   {
+    Kolmogorov3D( cube, N,N,N,
+		  rfn);
+  }
 
-    KolmogorovCorners3D(cube, N, rfn);
-    const size_t N2 = (size_t)pow(N,2);
+  void Kolmogorov3D( double * cube,
+		     size_t Nx,
+		     size_t Ny,
+		     size_t Nz,
+		     RDist &rfn)
+  {
+    // Order of iteration (if using subgrid method than this will not
+    // start at 0, hence out of the for loop)
+    size_t o =0
 
-    for( size_t o =0 ; ( ((size_t)1) << (o+1) ) < N  ; ++o )
+    if (Nx == Ny && Nx == Nz )
+    {
+      KolmogorovCorners3D(cube, Nx, rfn);
+    }
+    else
+    {
+      // Need to create a subgrid.
+
+    }
+
+    const size_t N2 = Nx*Ny;
+
+    for(  ; ( ((size_t)1) << (o+1) ) < Nx  ; ++o )
     {
       
-      K3DCenterItertor ci(N,N,N, o);
+      K3DCenterItertor ci(Nx,Ny,Nz, o);
       while ( ci.inBounds() )
       {
 	std::vector<K3DParent> pv;
 
 	size_t i,j, k;
 	ci.getc( i,j, k);
-	size_t dx= k* N2 + j *N + i;
+	size_t dx= k* N2 + j *Nx + i;
 
 	ci.FilteredParentList(pv);
 
-	double val = KAverageParents(cube, N, pv);
+	double val = KAverageParents(cube, Nx, Ny, pv);
 
 	val += KMidPointVar_CI( pv.size(), o ) * rfn.sample();
 
@@ -135,18 +157,18 @@ namespace BNLib {
 
       }
 
-      K3FaceIterV2 fi(N,N,N, o);
+      K3FaceIterV2 fi(Nx,Ny,Nz, o);
       while ( fi.inBounds() )
       {
 	std::vector<K3DParent> pv;
 
 	size_t i,j, k;
 	fi.getc( i,j, k);
-	size_t dx= k* N2 + j *N + i;
+	size_t dx= k* N2 + j *Nx + i;
 
 	fi.FilteredParentList(pv);
 
-	double val = KAverageParents(cube, N, pv);
+	double val = KAverageParents(cube, Nx, Ny, pv);
 
 	val += KMidPointVar_FI( pv.size(), o ) * rfn.sample();
 
@@ -156,18 +178,18 @@ namespace BNLib {
 
       }
 
-      K3EdgeIterV2 ei(N,N,N, o);
+      K3EdgeIterV2 ei(Nx,Ny,Nz, o);
       while ( ei.inBounds() )
       {
 	std::vector<K3DParent> pv;
 
 	size_t i,j, k;
 	ei.getc( i,j, k);
-	size_t dx= k* N2 + j *N + i;
+	size_t dx= k* N2 + j *Nx + i;
 
 	ei.FilteredParentList(pv);
 	
-	double val = KAverageParents(cube, N, pv);
+	double val = KAverageParents(cube, Nx, Ny, pv);
 
 	val += KMidPointVar_EI( pv.size(), o ) * rfn.sample();
 
