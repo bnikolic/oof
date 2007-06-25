@@ -12,7 +12,6 @@
 
 #include <cmath>
 #include <vector>
-#include <iostream>
 
 #include "bnrandom.hxx"
 #include "kolmogorov_3diters.hxx"
@@ -140,7 +139,7 @@ namespace BNLib {
 	mag = (Nx-1) / (Ny -1 );
       }
       
-      size_t Nsub = ( 1 << mag) +1;
+      size_t Nsub = mag +1;
       
       std::vector<double> subgrid ( Nsub*Nsub*Nsub);
       o=Kolmogorov3D( & subgrid[0],
@@ -262,7 +261,6 @@ namespace BNLib {
       res= 1.35819897457;
       break;
     default:
-      std::cerr<<"Received "<<np<<" parents"<<std::endl;
       throw "Logic error";
     }
     res = res * pow ( 1.0 / ( 1 << o) , 2.0/ 6.0);
