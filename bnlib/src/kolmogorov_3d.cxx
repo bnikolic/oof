@@ -11,6 +11,7 @@
 #include "kolmogorov_3d.hxx"
 
 #include <cmath>
+#include <vector>
 #include <iostream>
 
 #include "bnrandom.hxx"
@@ -103,15 +104,15 @@ namespace BNLib {
 
   }
 
-  void Kolmogorov3D( double * cube,
-		     size_t N,
-		     RDist &rfn)
+  size_t Kolmogorov3D( double * cube,
+		       size_t N,
+		       RDist &rfn)
   {
-    Kolmogorov3D( cube, N,N,N,
-		  rfn);
+    return Kolmogorov3D( cube, N,N,N,
+			 rfn);
   }
 
-  void Kolmogorov3D( double * cube,
+  size_t Kolmogorov3D( double * cube,
 		     size_t Nx,
 		     size_t Ny,
 		     size_t Nz,
@@ -119,7 +120,7 @@ namespace BNLib {
   {
     // Order of iteration (if using subgrid method than this will not
     // start at 0, hence out of the for loop)
-    size_t o =0
+    size_t o =0;
 
     if (Nx == Ny && Nx == Nz )
     {
@@ -128,6 +129,33 @@ namespace BNLib {
     else
     {
       // Need to create a subgrid.
+
+      unsigned mag;
+      if ( Ny > Nz )
+      {
+	mag = (Nx-1) / (Nz -1 );
+      }
+      else
+      {
+	mag = (Nx-1) / (Ny -1 );
+      }
+      
+      size_t Nsub = ( 1 << mag) +1;
+      
+      std::vector<double> subgrid ( Nsub*Nsub*Nsub);
+      o=Kolmogorov3D( & subgrid[0],
+		      Nsub,
+		      rfn);
+
+      KMagnifyGrid( & subgrid[0],
+		    Nsub,
+		    cube,
+		    Nx,
+		    Ny,
+		    Nz);
+
+      
+
 
     }
 
@@ -198,10 +226,8 @@ namespace BNLib {
 	ei.next();
 
       }
-
-      
-
     }
+    return o;
   }
 
 
