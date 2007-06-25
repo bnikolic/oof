@@ -61,6 +61,23 @@ namespace BNLib {
   double  KMidPointVar_EI( size_t np,
 			   size_t o);
 
+  /**
+     Magnify the grid od by placing the values on dd. Magnification
+     factor is Nx/N. Ny,Nz may be samller than Nx in which case data
+     points from the original grid are discarded.
+     
+     \param og original grid, of total length pow(N,3)
+     \param N  linear size of the original grid
+     \param dd destination grid
+     \param Nx,Ny,Nz linear sizes of the destination grid in the X,Y, and Z directions respectivey.
+   */
+  void KMagnifyGrid(double *og,
+		    const size_t N,
+		    double *dd,
+		    const size_t Nx,
+		    const size_t Ny,
+		    const size_t Nz);
+
 }
 
 

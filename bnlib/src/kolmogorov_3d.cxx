@@ -244,6 +244,45 @@ namespace BNLib {
     return res;
   }
 
+  void KMagnifyGrid(double *og,
+		    const size_t N,
+		    double *dd,
+		    const size_t Nx,
+		    const size_t Ny,
+		    const size_t Nz)
+  {
+    
+    // Magnification
+    unsigned mag = (Nx-1)/(N-1);
+
+    for (size_t ok =0 ; ok < N ; ++ ok)
+    {
+      const size_t k = mag * ok ;
+      if ( k >= Nz )
+      {
+	break;
+      }
+      for (size_t oj=0 ; oj < N ; ++ oj)
+      {
+	const size_t j = mag * oj;
+	if ( j >= Ny )
+	{
+	  break;
+	}
+	for (size_t oi = 0 ; oi < N ; ++ oi )
+	{
+	  const size_t i = mag * oi;
+	  if ( i >= Nx)
+	  {
+	    break;
+	  }
+	  dd[i+ j * Nx + k *Nx*Ny] = og[oi+oj*N+ok*N*N];
+	}
+      }
+    }
+
+  }
+
   
 
 
