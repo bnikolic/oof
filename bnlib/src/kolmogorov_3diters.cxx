@@ -103,49 +103,49 @@ namespace BNLib {
     
     K3DIterBase( Nx, Ny, Nz, o)
   {
-    i= origin( D_X);
-    j= origin( D_Y);
-    k= origin( D_Z);
+    i= origin();
+    j= origin();
+    k= origin();
   }
 
-  size_t K3DCenterItertor::origin(dirs d) const
+  size_t K3DCenterItertor::origin(void) const
   {
-    return getd(d) >> (o+1);
+    return getd(D_X) >> (o+1);
   }
 
-  size_t K3DCenterItertor::delta(dirs d) const
+  size_t K3DCenterItertor::delta(void) const
   {
-    return getd(d) >> o;
+    return getd(D_X) >> o;
   }
 
   bool K3DCenterItertor::firstDir(dirs d) const
   {
     if ( d == D_X )
     {
-      return (i == origin(D_X) ) ;
+      return (i == origin() ) ;
     }
     else if ( d == D_Y)
     {
-      return (j == origin(D_Y) ) ;
+      return (j == origin() ) ;
     }
     else
     {
-      return (k == origin(D_Z) ) ;
+      return (k == origin() ) ;
     }
   }
 
   void K3DCenterItertor::next(void)
   {
-    i += delta(D_X);
+    i += delta();
     if ( i >= getd(D_X) )
     {
-      i = origin(D_X);
+      i = origin();
 
-      j += delta(D_Y);
+      j += delta();
       if ( j >= getd(D_Y) )
       {
-	j=origin(D_Y);
-	k+= delta(D_Z);
+	j=origin();
+	k+= delta();
       }
     }
   }
@@ -156,9 +156,9 @@ namespace BNLib {
 
     for (size_t l =0 ; l < 8 ; ++l )
     {
-      vOUT[l].i = i + ( l & 1 ? 1 : -1 )  * origin(D_X);
-      vOUT[l].j = j + ( l & 2 ? 1 : -1 )  * origin(D_Y);
-      vOUT[l].k = k + ( l & 4 ? 1 : -1 )  * origin(D_Z);
+      vOUT[l].i = i + ( l & 1 ? 1 : -1 )  * origin();
+      vOUT[l].j = j + ( l & 2 ? 1 : -1 )  * origin();
+      vOUT[l].k = k + ( l & 4 ? 1 : -1 )  * origin();
     }
 
   }
@@ -206,21 +206,21 @@ namespace BNLib {
     {
     case 0 :
     case 1 :
-      i = di + ( fcount  ? 1 : -1 ) * ci.origin(D_X);
+      i = di + ( fcount  ? 1 : -1 ) * ci.origin();
       j = dj;
       k = dk;
       break;
     case 2 :
     case 3 :
       i = di;
-      j = dj + ( fcount % 2 ? 1 : -1 ) * ci.origin(D_Y);
+      j = dj + ( fcount % 2 ? 1 : -1 ) * ci.origin();
       k = dk;
       break;
     case 4 :
     case 5 :
       i = di;
       j = dj;
-      k = dk + ( fcount % 4 ? 1 : -1 ) * ci.origin(D_Z);
+      k = dk + ( fcount % 4 ? 1 : -1 ) * ci.origin();
       break;
     default:
       throw "Logic error";
@@ -268,19 +268,19 @@ namespace BNLib {
       case 0:
       case 1:
 	p.i = i ;
-	p.j = j + ci.origin(D_Y) * ( l & 2 ? -1 : 1 ) ;
-	p.k = k + ci.origin(D_Z) * ( l & 1 ? -1 : 1 ) ;
+	p.j = j + ci.origin() * ( l & 2 ? -1 : 1 ) ;
+	p.k = k + ci.origin() * ( l & 1 ? -1 : 1 ) ;
 	break;
       case 2:
       case 3:
-	p.i = i + ci.origin(D_X) * ( l & 1 ? -1 : 1 ) ;
+	p.i = i + ci.origin() * ( l & 1 ? -1 : 1 ) ;
 	p.j = j ;
-	p.k = k + ci.origin(D_Z) * ( l & 2 ? -1 : 1 ) ;
+	p.k = k + ci.origin() * ( l & 2 ? -1 : 1 ) ;
 	break;
       case 4:
       case 5:
-	p.i = i + ci.origin(D_X) * ( l & 1 ? -1 : 1 ) ;
-	p.j = j + ci.origin(D_Y) * ( l & 2 ? -1 : 1 ) ;
+	p.i = i + ci.origin() * ( l & 1 ? -1 : 1 ) ;
+	p.j = j + ci.origin() * ( l & 2 ? -1 : 1 ) ;
 	p.k = k;
 	break;      
       default:
@@ -297,15 +297,15 @@ namespace BNLib {
     {
     case 0 :
     case 1 :
-      opp.i +=  ( fcount  ? 1 : -1 ) * ci.delta(D_X);
+      opp.i +=  ( fcount  ? 1 : -1 ) * ci.delta();
       break;
     case 2 :
     case 3 :
-      opp.j +=  ( fcount % 2 ? 1 : -1 ) * ci.delta(D_Y);
+      opp.j +=  ( fcount % 2 ? 1 : -1 ) * ci.delta();
       break;
     case 4 :
     case 5 :
-      opp.k +=  ( fcount % 4 ? 1 : -1 ) * ci.delta(D_Z);
+      opp.k +=  ( fcount % 4 ? 1 : -1 ) * ci.delta();
       break;
     default:
       throw "Logic error";
@@ -397,9 +397,9 @@ namespace BNLib {
     size_t di, dj, dk ;
     ci.getc( di,dj,dk);
 
-    i = di + imult * ci.origin(D_X);
-    j = dj + jmult * ci.origin(D_Y);
-    k = dk + kmult * ci.origin(D_Z);
+    i = di + imult * ci.origin();
+    j = dj + jmult * ci.origin();
+    k = dk + kmult * ci.origin();
     
   }
 
@@ -466,15 +466,15 @@ namespace BNLib {
       {
       case 0 :
       case 1 :
-	p.i += ( l  ? 1 : -1 ) * ci.origin(D_X);
+	p.i += ( l  ? 1 : -1 ) * ci.origin();
 	break;
       case 2 :
       case 3 :
-	p.j += ( l % 2 ? 1 : -1 ) * ci.origin(D_Y);
+	p.j += ( l % 2 ? 1 : -1 ) * ci.origin();
 	break;
       case 4 :
       case 5 :
-	p.k +=  ( l % 4 ? 1 : -1 ) * ci.origin(D_Z);
+	p.k +=  ( l % 4 ? 1 : -1 ) * ci.origin();
 	break;
       default:
 	throw "Logic error";

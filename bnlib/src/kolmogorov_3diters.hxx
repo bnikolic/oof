@@ -150,11 +150,12 @@ namespace BNLib {
     // ---------------   Public interface --------------------
     
     /**
-       Return the origin to use in the specified direction.
+       Return the origin to use. Calculated always from the size of
+       the D_X direction.
      */
-    size_t origin(dirs d) const;
+    size_t origin(void) const;
 
-    size_t delta(dirs d) const;
+    size_t delta(void) const;
 
     /** \brief Are we on the first position in the direction d?
      */
