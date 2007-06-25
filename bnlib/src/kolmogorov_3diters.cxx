@@ -329,13 +329,11 @@ namespace BNLib {
     UpdateEdge();
   }
 
-  void K3EdgeIterV2::UpdateEdge(void)
+  void K3EdgeIterV2::CalcIJKMult( int & imult, 
+				  int & jmult,
+				  int & kmult) const
   {
-    int imult ;
-
-    int jmult ;
-
-    int kmult = ecount/4 -1;
+    kmult = ecount/4 -1;
 
     if ( kmult == 0 )
     {
@@ -385,6 +383,17 @@ namespace BNLib {
 	throw "logic error";
       }
     }
+
+  }
+
+  void K3EdgeIterV2::UpdateEdge(void)
+  {
+    int imult ;
+    int jmult ;
+    int kmult ;
+
+    CalcIJKMult( imult, jmult, kmult);
+
     size_t di, dj, dk ;
     ci.getc( di,dj,dk);
 
@@ -394,17 +403,50 @@ namespace BNLib {
     
   }
 
-  void K3EdgeIterV2::next(void)
+  bool K3EdgeIterV2::pSkipEdge(void) const
   {
-    if ( ecount > 10 )
+    
+    int imult ;
+    int jmult ;
+    int kmult ;
+
+    CalcIJKMult( imult, jmult, kmult);    
+
+    if ( imult == -1 && ( ! ci.firstDir(D_X) ) )
     {
-      ecount = 0;
-      ci.next();
+      return true;
+    }
+    else if ( jmult == -1 && ( ! ci.firstDir(D_Y) ) )
+    {
+      return true;
+    }
+    else if  ( kmult == -1 && ( ! ci.firstDir(D_Z) ) )
+    {
+      return true;
     }
     else
     {
-      ++ecount;
+      return false;
     }
+  }
+
+  void K3EdgeIterV2::next(void)
+  {
+
+    do {
+      
+      if ( ecount > 10 )
+      {
+	ecount = 0;
+	ci.next();
+	break;
+      }
+      else
+      {
+	++ecount;
+      }
+    }
+    while  ( pSkipEdge() );
     UpdateEdge()    ;
 
   }

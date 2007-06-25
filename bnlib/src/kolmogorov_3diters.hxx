@@ -234,6 +234,22 @@ namespace BNLib {
 		  size_t o );
 
     // ---------------   Public interface --------------------
+
+    /**
+       Calculates the offset of the current point as multiples of the
+       "origin" distance.
+
+       \param  imult,jmlut,kmlut Output parameters
+    */
+    void CalcIJKMult( int & imult, 
+		      int & jmult,
+		      int & kmult) const;
+
+    /**
+       Should an edge be skipped because it would have been filled in
+       by a previous iteration?
+    */
+    bool pSkipEdge(void) const ;
     
     // Inherited from K3DIterBase
     virtual void next(void);
