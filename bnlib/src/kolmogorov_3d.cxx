@@ -52,6 +52,10 @@ namespace BNLib {
     { 1, 1, 0,  0, 0, 1 } 
   };
 
+  static void K3CheckParams( size_t Nx,
+			     size_t Ny,
+			     size_t Nz);
+
 
 
   void KolmogorovCorners3D(double *cube,
@@ -115,8 +119,11 @@ namespace BNLib {
 		     size_t Nx,
 		     size_t Ny,
 		     size_t Nz,
-		     RDist &rfn)
+		     RDist &rfn) throw (const char *)
   {
+
+    K3CheckParams(Nx,Ny,Nz);
+
     // Order of iteration (if using subgrid method than this will not
     // start at 0, hence out of the for loop)
     size_t o =0;
@@ -331,11 +338,46 @@ namespace BNLib {
 
   
 
+  bool pTwoNPlustOne(unsigned n)
+  {
+    // must be odd 
+    if (  not ( n  & 1 )  ) 
+    {
+      return false ;
+    }
 
-
-  
-
+    // look for first non zero bit
+    do 
+    {
+      n = n >> 1;
+    } while (  not (n & 1 ) );
     
+    // all remaining bits must now be zero
+    if ( n >> 1   )
+    {
+      // other non zero bits
+      return false;
+    }
+    else
+    {
+      return true;
+    }
+
+  }
+
+  static void K3CheckParams( size_t Nx,
+			     size_t Ny,
+			     size_t Nz)
+  {
+    
+    if ( not ( pTwoNPlustOne(Nx) && 
+	       pTwoNPlustOne(Ny) &&
+	       pTwoNPlustOne(Nz) )) 
+    {
+      throw "Parameters to 3d Kolmogorov generation must be of form 2^n+1";
+    }
+
+  }
 
 }
 

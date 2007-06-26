@@ -50,7 +50,7 @@ namespace BNLib {
 		       size_t Nx,
 		       size_t Ny,
 		       size_t Nz,
-		       RDist &rfn);
+		       RDist &rfn) throw (const char *);
 
   /**
      Compute the required mid-point standard deviation for the case of
@@ -95,6 +95,12 @@ namespace BNLib {
 		    const size_t Nx,
 		    const size_t Ny,
 		    const size_t Nz);
+
+  /** \brief
+      Returns true if the supplied unsigned int is of form 2^n +1 
+  */
+  bool pTwoNPlustOne(unsigned n);
+  
 
 }
 
