@@ -1,7 +1,9 @@
-/*
-  Bojan Nikolic
+/**
+   \file phycosmo.hxx
+   
+   Bojan Nikolic <bn204@mrao.cam.ac.uk>, <bojan@bnikolic.co.uk>
 
-  Some simple cosmology routines
+   Some simple cosmology routines
 */
 
 #ifndef _BNLIB_PHYCOSMO_HXX__

@@ -1,7 +1,9 @@
-/*
-  Bojan Nikolic
-
-  Declares a simple unary function class 
+/**
+   \file unaryfn.hxx
+   
+   Bojan Nikolic <bn204@mrao.cam.ac.uk>, <bojan@bnikolic.co.uk>
+   
+   Declares a simple unary function class 
 
 */
 #ifndef _BNLIB_UNARYFN_HXX___

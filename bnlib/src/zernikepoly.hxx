@@ -1,7 +1,7 @@
-/*
+/**
   \file zernikepoly.hxx
 
-  Bojan Nikolic
+  Bojan Nikolic <bn204@mrao.cam.ac.uk>, <bojan@bnikolic.co.uk>
 
   Zernike Polynomial functions
 */

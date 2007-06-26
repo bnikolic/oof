@@ -1,6 +1,7 @@
-/*
-  Bojan Nikolic
+/**
+   \file zernikepoly.cxx
 
+   Bojan Nikolic <bn204@mrao.cam.ac.uk>, <bojan@bnikolic.co.uk>
 */
 
 #include "zernikepoly.hxx"

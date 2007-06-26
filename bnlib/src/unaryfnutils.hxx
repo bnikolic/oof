@@ -1,7 +1,9 @@
-/*
-  Bojan Nikolic
+/**
+   \file unaryfnutils.hxx
+   
+   Bojan Nikolic <bn204@mrao.cam.ac.uk>, <bojan@bnikolic.co.uk>
   
-  Some simple usefuly unary functions 
+   Some simple usefuly unary functions 
 */
 #ifndef _BNLIB_UNARYFNUTILS_HXX__
 #define _BNLIB_UNARYFNUTILS_HXX__

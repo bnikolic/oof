@@ -40,6 +40,11 @@ namespace BNLib {
      
      \param cube is the pre-allocated output array of size Nx times Ny
      times Nz.
+
+     \param Nx,Ny,Nz lenghts in the Nx,Ny,Nz directions. Direction Nx
+     must not be smaller than then two other directions.
+
+     \return The maximum order used + 1
    */
   size_t Kolmogorov3D( double * cube,
 		       size_t Nx,
@@ -49,7 +54,8 @@ namespace BNLib {
 
   /**
      Compute the required mid-point standard deviation for the case of
-     3-dimensional Kolmogorov turbulence for the center-cell iterator.
+     3-dimensional Kolmogorov turbulence for the center-cell
+     iterator. See bnlib/gen/kolmogorovmidpoint.py 
      
      \param np the the number of parents from which the mid-point was
      constrcted.

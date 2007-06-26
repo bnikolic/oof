@@ -44,6 +44,11 @@ def GenK(N,usenumpy=False):
     return res
 
 def GenKV2(Nx,Ny,Nz):
+
+    """
+    Plot projections as
+    pylab.matshow(numarray.sum( g, axis=0))  
+    """
     grid=pybnlib.doubleArray( Nx*Ny*Nz)
     rfn=pybnlib.NormDistZM(1.0)
     pybnlib.Kolmogorov3D( grid, Nx,Ny,Nz, rfn)
