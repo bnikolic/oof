@@ -144,3 +144,5 @@ CVS
 *configure.lineno*
 *config/compile*
 ./bnlib/pybind/test/temp
+./dust/doc/Doxyfile
+./dust/config/compile

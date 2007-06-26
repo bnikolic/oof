@@ -21,6 +21,7 @@
 #include "../src/kolmogorov_wrap.hxx"
 #include "../src/kolmogorov_3diters.hxx"
 #include "../src/kolmogorov_3d.hxx"
+#include "../src/kernels_3d.hxx"
 
 %}
 
@@ -39,6 +40,9 @@
 
 namespace std {
    %template(K3DParentV) vector<BNLib::K3DParent>; 
+   %template(Displacement3DV) vector<BNLib::Displacement3D>;
+   %template(doubleV) vector<double>;
+   %template(Position3DV) vector<BNLib::Position3D>;
 }
 
 %include "../src/unaryfn.hxx"
@@ -61,6 +65,7 @@ namespace std {
 %include "../src/kolmogorov_wrap.hxx"
 %include "../src/kolmogorov_3diters.hxx"
 %include "../src/kolmogorov_3d.hxx"
+%include "../src/kernels_3d.hxx"
 
 %extend BNLib::ConstUDD {
 	

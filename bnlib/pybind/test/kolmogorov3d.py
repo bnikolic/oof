@@ -94,3 +94,12 @@ def SfnFromM(m):
     return ( numarray.array(sfn[1:]),
              numarray.array(count[1:]))
     
+def GenKernel():
+
+    dv=pybnlib.Displacement3DV()
+    ddv=pybnlib.doubleV()
+    pybnlib.GenZCylinder( dv, ddv, 3, 2)
+    ext=pybnlib.Extnent3D()
+    ext.i=ext.j=ext.k=65
+    pv=pybnlib.Position3DV(1)    
+    return dv, ddv, ext, pv , pybnlib.doubleV()
