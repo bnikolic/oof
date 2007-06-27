@@ -12,6 +12,7 @@ def GenerateKolmogorov3D( Nx,Ny,Nz):
     grid=pybnlib.doubleArray( Nx*Ny*Nz)
     rfn=pybnlib.NormDistZM(1.0)
     pybnlib.Kolmogorov3D( grid, Nx,Ny,Nz, rfn)
-    return grid
+    return ( grid,
+             ( Nx,Ny,Nz) )
 
 
