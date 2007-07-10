@@ -121,3 +121,27 @@ def PlotTurbulenceIllustr(a):
         pylab.clf()
         pylab.matshow(suba)
         pylab.savefig("temp/turb3d-sum%03i.eps" % x)
+
+def GridSliceToAstroMap(gs, s ):
+
+    "Convert a slice of a turbulence cube to astromap type"
+
+    """
+    Most convenient to use a square grid, e.g.,
+    g=kolmogorovutils.GenerateKolmogorov3D( 129, 129, 129)
+
+    """
+
+    Nx, Ny = gs[1][0:2]
+    am=pyplot.Map(Nx, Ny)
+
+    offset = s * Nx * Ny
+
+    for j in range(Ny): 
+        for i in range(Nx):
+            am.set(i,j, gs[0][offset+ j*Nx + i])
+
+    return am
+
+                   
+
