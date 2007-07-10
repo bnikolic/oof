@@ -4,8 +4,6 @@
 # Testing script for 3D Kolmogorov turbulence
 #
 
-import sys; sys.path.extend(["/import/appcs/bn204/p/bnprog-devel-main/"+x for x in ["bin", "lib"] ])
-
 from setup import *
 
 import pyplot
@@ -13,6 +11,8 @@ import pybnlib
 import numarray
 import numpy
 from  matplotlib import pylab
+
+import kolmogorovutils
 
 
 def GenKMap( npix):
@@ -103,3 +103,21 @@ def GenKernel():
     ext.i=ext.j=ext.k=65
     pv=pybnlib.Position3DV(1)    
     return dv, ddv, ext, pv , pybnlib.doubleV()
+
+def PlotTurbulenceIllustr(a):
+
+    """
+    Can generate the grid with
+    g=kolmogorovutils.GenerateKolmogorov3D( 1025, 129, 129)
+    a=kolmogorovutils.GridToNumarray(g)
+
+    """
+
+    for x in [1,10,100]:
+
+        suba= numarray.sum(a[:,:,0:x], axis=2)
+
+        suba.transpose()
+        pylab.clf()
+        pylab.matshow(suba)
+        pylab.savefig("temp/turb3d-sum%03i.eps" % x)
