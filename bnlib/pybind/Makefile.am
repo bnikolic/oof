@@ -6,7 +6,7 @@ EXTRA_DIST = config/swig.am
 BUILT_SOURCES = pybnlib.py pybnlib.cxx 
 bin_SCRIPTS =  pybnlib.py
 
-dist_bin_SCRIPTS =  bin/kolmogorovutils.py
+dist_bin_SCRIPTS =  bin/kolmogorovutils.py bin/kernel3dutils.py
 
 lib_LTLIBRARIES = _pybnlib.la 
 
