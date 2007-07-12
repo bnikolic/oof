@@ -111,6 +111,45 @@ namespace BNLib {
 
   }
 
+  void GenGaussCylinder( std::vector<Displacement3D> & dps,
+			 std::vector<double> & coeffs,
+			 double r_px,
+			 size_t zextent_px,
+			 size_t rextent_px,
+			 double zh_start,
+			 double zh_increment)
+  {
+    dps.resize(0);
+    coeffs.resize(0);
+
+    Displacement3D dp;
+    for ( size_t z =0 ; z < zextent_px ; ++z )
+    {
+      double zhat = zh_start + z * zh_increment;
+      // Radius squared of the gaussian at this z
+      double g_r_px_2  = r_px*r_px * ( 1 + pow(zhat,2) );
+      
+      dp.k=z;
+      for ( int j = - ( (int) rextent_px ) ; j < ( (int) rextent_px ) ; ++j )
+      {
+	dp.j = j;
+	for ( int i = - ( (int) rextent_px ) ; i < ( (int) rextent_px ) ; ++i )
+	{
+	  int r2 = i*i + j*j;
+	  dp.i = i;
+	  dps.push_back(dp);
+	  coeffs.push_back( exp( -0.5 *  r2 / g_r_px_2 ));
+	}
+
+      }
+
+
+    }
+    
+
+
+  }
+
 
 }
 

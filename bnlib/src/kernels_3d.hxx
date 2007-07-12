@@ -72,6 +72,20 @@ namespace BNLib {
 		     double r_px,
 		     size_t zextent );
 
+  /** \brief Generate a gaussian-cylindrical kernel in z-direction
+
+  if z iz the slice, then radius of gaussian used is r`=r_px * sqrt( 1 + (zhstart+z*zh_increment))
+
+  
+  */
+  void GenGaussCylinder( std::vector<Displacement3D> & dps,
+			 std::vector<double> & coeffs,
+			 double r_px,
+			 size_t zextent_px,
+			 size_t rextent_px,
+			 double zh_start,
+			 double zh_increment);
+
 }
 
 #endif
