@@ -1,7 +1,8 @@
-/*
-  Copyright:
-  Bojan Nikolic
+/**
+   \file gaussian.cxx
 
+   Copyright:
+   Bojan Nikolic  <bn204@mrao.cam.ac.uk>, <bojan@bnikolic.co.uk> 
 */
 
 #include "gaussian.hxx"

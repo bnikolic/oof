@@ -1,9 +1,10 @@
-/*
-  Copyright:
-  Bojan Nikolic
-
-
-  Support for Gaussian  fns
+/**
+   \file gaussian.hxx
+   
+   Copyright:
+   Bojan Nikolic  <bn204@mrao.cam.ac.uk>, <bojan@bnikolic.co.uk> 
+   
+   Support for Gaussian  functions
 */
 
 #ifndef _BNLIB_GAUSSIAN_HXX__
