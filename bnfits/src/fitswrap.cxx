@@ -134,6 +134,7 @@ namespace BNFits {
   }
 
   void FitsF::CreateTbl(size_t nrows, char * extname)
+    throw(BNFits::FIOExc)
   {
     int status = 0;
     

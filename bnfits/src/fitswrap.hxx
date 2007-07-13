@@ -60,7 +60,8 @@ namespace BNFits {
     /* --------- Creating tables  ------------- */
 
     /*! Create an empty table */
-    void CreateTbl(size_t nrows, char * extname);
+    void CreateTbl(size_t nrows, char * extname)
+      throw(BNFits::FIOExc);
     
     
 
