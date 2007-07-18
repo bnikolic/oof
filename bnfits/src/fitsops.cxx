@@ -152,7 +152,10 @@ namespace BNFits {
 
     
     size_t nrows = NRows(f1);
-    
+
+    // Unfortunetely cfitsio is hopeless on 64-bit machines....
+    width = width *2;
+
     std::valarray<char> data  ( width * repeat * nrows);
 
     // Read input data
