@@ -39,4 +39,11 @@ More notes:
 			SWIGFLAGS="-I${BNPREFIX}/include" \
 			LDFLAGS="-L${BNPREFIX}/lib"\
 			 --prefix=${BNPREFIX} 
+on laptop:
+	export set PGPLOTDIR=/home/bnikolic/p/std/pgplot/
+	./configure 	CPPFLAGS="-I${BNPREFIX}/include -I${PGPLOTDIR}" \
+			CFLAGS="-I${BNPREFIX}/include -I${PGPLOTDIR} " \
+			SWIGFLAGS="-I${BNPREFIX}/include -I${PGPLOTDIR}" \
+			LDFLAGS="-L${BNPREFIX}/lib -L${PGPLOTDIR}"\
+			 --prefix=${BNPREFIX} 
 

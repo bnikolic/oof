@@ -16,6 +16,10 @@ AC_PROG_LIBTOOL
 AC_PROG_CC
 AC_PROG_CXX
 
+AC_CHECK_HEADERS( cpgplot.h , 
+		  [echo "Found pgplot"],
+		  [AC_MSG_ERROR("Error: No pgplot!!!!" ) ]    )
+
 AM_PATH_PYTHON(2.3)
 
 AC_PATH_X()
