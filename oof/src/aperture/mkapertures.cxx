@@ -1,8 +1,8 @@
-/*!
-  Bojan Nikolic
-  $Id: mkapertures.cxx,v 1.2 2005/08/15 22:14:16 bnikolic Exp $
+/**
+   \file mkapertures.cxx
+   
+   Bojan Nikolic  <bn204@mrao.cam.ac.uk>, <bojan@bnikolic.co.uk>
 
-  Functions to make apertures...
 */
 
 #include "mkapertures.hxx"
