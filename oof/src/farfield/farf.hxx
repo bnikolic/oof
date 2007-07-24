@@ -18,7 +18,7 @@ namespace AstroMap {
 namespace OOF {
 
   /*! Calculates the far field from an aperture
-   *  representation. Subclasses can add observation-depemdant
+   *  representation. Subclasses can add observation-dependant
    *  features like chopping or convolution for a known source extent.
    */
   class FarF : public Minim::Model {
@@ -39,20 +39,24 @@ namespace OOF {
 
     // ------------ Constructors/Destructors ---------------
 
-    /*! Construct the FFTFactory using the sample map */
+    /** Main aim is just initalise the FFTFact using the dimensions of
+      apmapsample and wevel as wavelength. Content of apmapsample is
+      not used. */
     FarF ( AstroMap::Map & apmapsample, double wavel );
 
 
     // ------------ Member functions -----------------------
 
-    /*! Calculate the far-field power from the supplied aperture
-      amplitude and phase distributions */
+    /**
+       \brief Calculate the far-field power from the supplied aperture
+       amplitude and phase distributions 
+    */
     virtual void Power ( const AstroMap::Map & amp, const AstroMap::Map & phase, 
 			 AstroMap::Map & res);
 
     /**
-       Calculate the far field amplitude pattern of the aperture-plane
-       pair (amp, phase).
+       \brief Calculate the far field amplitude pattern of the
+       aperture-plane pair (amp, phase).
     */
     virtual void Amplitude ( const AstroMap::Map & amp, const AstroMap::Map & phase, 
     			     AstroMap::Map & res);
