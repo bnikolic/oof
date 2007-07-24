@@ -1,8 +1,9 @@
-/*!
-  Bojan Nikolic
-  $Id: aperturemod.hxx,v 1.5 2005/08/21 21:46:53 bnikolic Exp $
+/**
+   \file aperturemod.hxx
+   
+   Bojan Nikolic <bn204@mrao.cam.ac.uk>, <bojan@bnikolic.co.uk>
 
-  Aperture model
+   Aperture model
 */
 #ifndef __OOF_APERTUREMOD_HXX__
 #define __OOF_APERTUREMOD_HXX__
@@ -57,7 +58,9 @@ namespace OOF {
   public:
 
     // ------ Constructors & Destructors   -----------------
-    
+
+    /** This class takes ownership of phasemodel and amplimodel.
+     */
     ApertureMod( PhaseMod * phasemodel,
 		 AmpliMod * amplimodel,
 		 double wavel,
@@ -67,9 +70,12 @@ namespace OOF {
     virtual ~ApertureMod();
 
     // ------ Member Functions  ----------------------------
-    
+
+    /** \brief Recalculate and return pointer to the phase map.
+     */
     const AstroMap::Map * getphase(void);
 
+    /** \brief Recalculate and return pointer to amplitude map */
     const AstroMap::Map * getamp(void);
 
     void ZeroTilt(void);
