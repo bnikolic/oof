@@ -29,7 +29,7 @@ namespace AstroMap {
 
 
     /*! Add a map the lc set */
-    void AddMap (Map &m) ;
+    void AddMap (const Map &m) ;
     
     /*! Calculate the linear combination and store the results in the
       supplied map res. */

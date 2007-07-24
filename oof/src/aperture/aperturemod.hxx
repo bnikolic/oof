@@ -53,6 +53,14 @@ namespace OOF {
      */
     AstroMap::Map * mamp;
 
+    /// Should not be able to copy
+    ApertureMod( const ApertureMod & a): wavel(0) {};
+    
+    /// Should not be able to assign
+    const ApertureMod & operator= (const ApertureMod &a)
+    {
+      return * this;
+    }
     
 
   public:

@@ -9,7 +9,7 @@
 
 namespace AstroMap {
   
-  void LCMaps::AddMap (Map &m) 
+  void LCMaps::AddMap (const Map &m) 
   {
     maps.push_back(m);
     coeffs.push_back(0);
