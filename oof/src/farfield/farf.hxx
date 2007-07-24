@@ -35,6 +35,14 @@ namespace OOF {
      *  coordinate systems on the results maps */
     const double wavel;
 
+    /** Non trivial copy constructor as we may own a pointer. If
+	f_other is destroyed then this object will be invalid.
+    */
+    FarF ( const FarF & f_other );
+
+    /** This will raise an exception ... no way to copy */
+    const FarF & operator= (const FarF & f_other);
+
   public:
 
     // ------------ Constructors/Destructors ---------------
@@ -44,6 +52,7 @@ namespace OOF {
       not used. */
     FarF ( AstroMap::Map & apmapsample, double wavel );
 
+    ~FarF(void);
 
     // ------------ Member functions -----------------------
 

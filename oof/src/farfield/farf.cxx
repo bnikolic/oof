@@ -25,6 +25,28 @@ namespace OOF {
   {
   }
 
+  FarF::FarF ( const FarF & f_other ) :
+    wavel(f_other.wavel)
+  {
+    ffown = false;
+    ff = f_other.ff;
+
+  }
+  
+  const FarF & FarF::operator= (const FarF & f_other)
+  {
+    throw "Can not copy OOF::FarF";
+    return * this;
+  }
+
+  FarF::~FarF(void)
+  {
+    if ( ffown)
+    {
+      delete ff;
+    }
+  }
+
 
   void FarF::Power ( const AstroMap::Map & amp, 
 		     const AstroMap::Map & phase, 
