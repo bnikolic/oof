@@ -160,6 +160,14 @@ namespace AstroMap {
       }
   }
 
+  void MapDSEval::Calc( Map const &m, std::vector<double> & res)
+  {
+    for (unsigned i =0 ; i < lcs.size() ; ++i )
+      {
+	res[i] = (*lcs[i])(m);
+      }
+  }
+
 }
 
 

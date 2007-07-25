@@ -12,8 +12,7 @@
 #define _ASTROMAP_MAPDSEVAL_HXX__
 
 #include <valarray>
-
-
+#include <vector>
 
 namespace AstroMap {
 
@@ -120,6 +119,11 @@ namespace AstroMap {
       array res.
     */
     void Calc( Map const &m, std::valarray<double> & res);
+
+    /** Provide an interface to calc that uses standard
+	vectors... better for use in python.
+     */
+    void Calc( Map const &m, std::vector<double> & res);
 
   };
 
