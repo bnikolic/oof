@@ -49,7 +49,7 @@ namespace AstroMap {
   }
 
 
-  Map & Map::operator= (const Map & m) 
+  const Map & Map::operator= (const Map & m) 
   {
     ENFORCE( nx == m.nx && ny == m.ny );
 

@@ -102,6 +102,9 @@ namespace std {
      void add ( Map const & m ) {
 	(*self) += m;
      }
+     void copy( Map const & m ) {
+	(*self) = m ;
+     }
 
     double getv  ( unsigned x, unsigned y) {
 	return 	self->get(x,y);

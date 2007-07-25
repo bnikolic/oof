@@ -51,7 +51,12 @@ namespace AstroMap {
     ~Map();
     
     /* ------ Operators    -------*/
-    Map & operator= (const Map & m);
+
+    /**
+       Can make copies, but only of maps with the same
+       dimensions. Otherwise an exception will be raised.
+    */
+    const Map & operator= (const Map & m);
 
     /* ----  Element access  ---------------- */
     
