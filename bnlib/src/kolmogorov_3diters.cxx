@@ -287,6 +287,7 @@ namespace BNLib {
     ci.getc( parents[0].i, parents[0].j, parents[0].k );
     
     // Then the four on the current face.
+    const size_t o = ci.origin();
     for (size_t l =0 ; l < 4 ; ++l )
     {
       K3DParent & p = parents[l+1];
@@ -296,19 +297,19 @@ namespace BNLib {
       case 0:
       case 1:
 	p.i = i ;
-	p.j = j + ci.origin() * ( l & 2 ? -1 : 1 ) ;
-	p.k = k + ci.origin() * ( l & 1 ? -1 : 1 ) ;
+	p.j = j + o * ( l & 2 ? -1 : 1 ) ;
+	p.k = k + o * ( l & 1 ? -1 : 1 ) ;
 	break;
       case 2:
       case 3:
-	p.i = i + ci.origin() * ( l & 1 ? -1 : 1 ) ;
+	p.i = i + o * ( l & 1 ? -1 : 1 ) ;
 	p.j = j ;
-	p.k = k + ci.origin() * ( l & 2 ? -1 : 1 ) ;
+	p.k = k + o * ( l & 2 ? -1 : 1 ) ;
 	break;
       case 4:
       case 5:
-	p.i = i + ci.origin() * ( l & 1 ? -1 : 1 ) ;
-	p.j = j + ci.origin() * ( l & 2 ? -1 : 1 ) ;
+	p.i = i + o * ( l & 1 ? -1 : 1 ) ;
+	p.j = j + o * ( l & 2 ? -1 : 1 ) ;
 	p.k = k;
 	break;      
       default:
