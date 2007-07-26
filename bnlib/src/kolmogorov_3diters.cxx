@@ -27,15 +27,6 @@ namespace BNLib {
 	     k < Nz );
   }
 
-  void K3DIterBase::getc( size_t & iOUT,
-			  size_t & jOUT,
-			  size_t & kOUT )
-  {
-    iOUT=i; 
-    jOUT=j;
-    kOUT=k;
-  }
-
   size_t K3DIterBase::getd( dirs d) const
   {
     if ( d== D_X)

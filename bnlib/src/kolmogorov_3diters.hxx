@@ -90,7 +90,10 @@ namespace BNLib {
     */
     void getc( size_t & iOUT,
 	       size_t & jOUT,
-	       size_t & kOUT );
+	       size_t & kOUT )
+    {
+      iOUT=i;     jOUT=j;    kOUT=k;
+    }
 
     /** \brief Get the dimension in the specified direction
      */
