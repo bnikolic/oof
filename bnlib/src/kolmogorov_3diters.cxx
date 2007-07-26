@@ -478,6 +478,7 @@ namespace BNLib {
 
   const K3DParent * K3EdgeIterV2::ParentListP(void) 
   {
+    const size_t o = ci.origin();
     for ( size_t l = 0 ; l < 6 ; ++l )
     {
       K3DParent & p = parents[l];
@@ -489,15 +490,15 @@ namespace BNLib {
       {
       case 0 :
       case 1 :
-	p.i += ( l  ? 1 : -1 ) * ci.origin();
+	p.i += ( l  ? 1 : -1 ) * o;
 	break;
       case 2 :
       case 3 :
-	p.j += ( l % 2 ? 1 : -1 ) * ci.origin();
+	p.j += ( l % 2 ? 1 : -1 ) * o;
 	break;
       case 4 :
       case 5 :
-	p.k +=  ( l % 4 ? 1 : -1 ) * ci.origin();
+	p.k +=  ( l % 4 ? 1 : -1 ) * o;
 	break;
       default:
 	throw "Logic error";
