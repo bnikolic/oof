@@ -172,18 +172,18 @@ namespace BNLib {
       
       {
 	K3DCenterItertor ci(Nx,Ny,Nz, o);
-	std::vector<K3DParent> cpv ( ci.nParents() );
 	while ( ci.inBounds() )
 	{
 	  size_t i,j, k;
 	  ci.getc( i,j, k);
 	  size_t dx= k* N2 + j *Nx + i;
+
+	  size_t np;
+	  const K3DParent * cpv = ci.FilteredParentP(np);
+
+	  double val = KAverageParents(cube, Nx, Ny, cpv, np);
 	  
-	  ci.FilteredParentList(cpv);
-	  
-	  double val = KAverageParents(cube, Nx, Ny, cpv);
-	  
-	  val += KMidPointVar_CI( cpv.size(), o ) * rfn.sample();
+	  val += KMidPointVar_CI( np, o ) * rfn.sample();
 	  
 	  cube[dx]=val;
 	  
@@ -194,19 +194,19 @@ namespace BNLib {
 
       {
 	K3FaceIterV2 fi(Nx,Ny,Nz, o);
-	std::vector<K3DParent> fpv ( fi.nParents() );
 	while ( fi.inBounds() )
 	{
 
 	  size_t i,j, k;
 	  fi.getc( i,j, k);
 	  size_t dx= k* N2 + j *Nx + i;
+
+	  size_t np;
+	  const K3DParent * fpv = fi.FilteredParentP(np);
 	  
-	  fi.FilteredParentList(fpv);
+	  double val = KAverageParents(cube, Nx, Ny, fpv, np);
 	  
-	  double val = KAverageParents(cube, Nx, Ny, fpv);
-	  
-	  val += KMidPointVar_FI( fpv.size(), o ) * rfn.sample();
+	  val += KMidPointVar_FI( np, o ) * rfn.sample();
 	  
 	  cube[dx]=val;
 	  
@@ -217,18 +217,18 @@ namespace BNLib {
 
       {
 	K3EdgeIterV2 ei(Nx,Ny,Nz, o);
-	std::vector<K3DParent> epv ( ei.nParents() );
 	while ( ei.inBounds() )
 	{
 	  size_t i,j, k;
 	  ei.getc( i,j, k);
 	  size_t dx= k* N2 + j *Nx + i;
 	  
-	  ei.FilteredParentList(epv);
+	  size_t np;
+	  const K3DParent * epv = ei.FilteredParentP(np);
 	  
-	  double val = KAverageParents(cube, Nx, Ny, epv);
+	  double val = KAverageParents(cube, Nx, Ny, epv, np);
 	  
-	  val += KMidPointVar_EI( epv.size(), o ) * rfn.sample();
+	  val += KMidPointVar_EI( np, o ) * rfn.sample();
 	  
 	  cube[dx]=val;
 	  

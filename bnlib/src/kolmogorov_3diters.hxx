@@ -312,6 +312,22 @@ namespace BNLib {
 			  size_t Nx,
 			  size_t Ny,
 			  const  std::vector<K3DParent> & pv);
+
+  /**
+     \brief Average the values of parents for a cube.
+
+     Uses pointers to parent array to elimate need for memory
+     allocation.
+
+     \param pv the array of parents
+     \param np number of parants in array pv
+     
+  */
+  double KAverageParents( const double * cube,
+			  size_t Nx,
+			  size_t Ny,
+			  const  K3DParent * pv,
+			  size_t np);
   
 
 

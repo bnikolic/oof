@@ -509,14 +509,26 @@ namespace BNLib {
 			  size_t Ny,
 			  const  std::vector<K3DParent> & pv)
   {
+    return KAverageParents(cube, Nx, Ny,
+			   & pv[0], 
+			   pv.size() );
+
+  }
+
+  double KAverageParents( const double * cube,
+			  size_t Nx,
+			  size_t Ny,
+			  const  K3DParent * pv,
+			  size_t np)
+  {
     double res = 0;
     const size_t N2 = Nx*Ny;
-    for (size_t i = 0; i < pv.size() ; ++ i )
+    for (size_t i = 0; i < np ; ++ i )
     {
       size_t dx=pv[i].i +pv[i].j*Nx + pv[i].k *N2;
       res += cube[dx];
     }
-    return res / pv.size();
+    return res / np;
 
   }
   
