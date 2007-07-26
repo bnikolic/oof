@@ -86,6 +86,19 @@ namespace BNLib {
 			 double zh_start,
 			 double zh_increment);
 
+  /** \brief Fill out a vector of Displacement3D from sepratre vectors
+      containing i,j,k components.
+
+      Speeds up some slow python access.
+
+      Filling starts from index start.
+  */
+  void FillDisplacement3D ( std::vector<Displacement3D> & dps,
+			    size_t start,
+			    const std::vector<double>  & i_v,
+			    const std::vector<double>  & j_v,
+			    const std::vector<double>  & k_v);
+
 }
 
 #endif
