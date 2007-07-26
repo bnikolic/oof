@@ -153,11 +153,12 @@ namespace BNLib {
 			    const std::vector<double>  & j_v,
 			    const std::vector<double>  & k_v)
   {
-    for (size_t l =start ; l < i_v.size() ; ++l )
+
+    for (size_t l =0 ; l < i_v.size() ; ++l )
     {
-      dps[l].i = (int) i_v[l];
-      dps[l].j = (int) j_v[l];
-      dps[l].k = (int) k_v[l];
+      dps[start+l].i = (int) i_v[l];
+      dps[start+l].j = (int) j_v[l];
+      dps[start+l].k = (int) k_v[l];
     }
     
   }
