@@ -12,6 +12,7 @@
 
 #include <cmath>
 #include <vector>
+#include <map>
 
 #include "bnrandom.hxx"
 #include "kolmogorov_3diters.hxx"
@@ -115,6 +116,32 @@ namespace BNLib {
 			 rfn);
   }
 
+  /** Cache values of variances.
+  */
+  class VarianceCache {
+    size_t o;
+    double  (* fn )(size_t, size_t)  ;
+    std::map<size_t, double> varmap;
+  public:
+    VarianceCache(size_t o,
+		  double (*fn)(size_t, size_t)) : o(o), fn(fn) {};
+    
+    double operator() (size_t np )
+    {
+      double v;
+      if ( varmap.count(np) )
+      { 
+	v= varmap[np];
+      }
+      else
+      {
+	v=fn(np, o);
+	varmap[np]=v;
+      }
+      return v;
+    }
+  };
+
   size_t Kolmogorov3D( double * cube,
 		     size_t Nx,
 		     size_t Ny,
@@ -172,6 +199,7 @@ namespace BNLib {
       
       {
 	K3DCenterItertor ci(Nx,Ny,Nz, o);
+	VarianceCache cvc(o, KMidPointVar_CI);
 	while ( ci.inBounds() )
 	{
 	  size_t i,j, k;
@@ -183,7 +211,7 @@ namespace BNLib {
 
 	  double val = KAverageParents(cube, Nx, Ny, cpv, np);
 	  
-	  val += KMidPointVar_CI( np, o ) * rfn.sample();
+	  val += cvc( np ) * rfn.sample();
 	  
 	  cube[dx]=val;
 	  
@@ -194,6 +222,7 @@ namespace BNLib {
 
       {
 	K3FaceIterV2 fi(Nx,Ny,Nz, o);
+	VarianceCache fvc(o, KMidPointVar_FI);
 	while ( fi.inBounds() )
 	{
 
@@ -206,7 +235,7 @@ namespace BNLib {
 	  
 	  double val = KAverageParents(cube, Nx, Ny, fpv, np);
 	  
-	  val += KMidPointVar_FI( np, o ) * rfn.sample();
+	  val += fvc( np ) * rfn.sample();
 	  
 	  cube[dx]=val;
 	  
@@ -217,6 +246,7 @@ namespace BNLib {
 
       {
 	K3EdgeIterV2 ei(Nx,Ny,Nz, o);
+	VarianceCache evc(o, KMidPointVar_EI);
 	while ( ei.inBounds() )
 	{
 	  size_t i,j, k;
@@ -227,8 +257,8 @@ namespace BNLib {
 	  const K3DParent * epv = ei.FilteredParentP(np);
 	  
 	  double val = KAverageParents(cube, Nx, Ny, epv, np);
-	  
-	  val += KMidPointVar_EI( np, o ) * rfn.sample();
+
+	  val += evc( np ) * rfn.sample();
 	  
 	  cube[dx]=val;
 	  
