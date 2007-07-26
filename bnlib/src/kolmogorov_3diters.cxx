@@ -79,22 +79,24 @@ namespace BNLib {
 
   void K3DIterBase::FilteredParentList(std::vector<K3DParent> & vOUT)
   {
-    vOUT.resize(0);
+    const size_t np =nParents() ;
+    vOUT.resize(np);
 
-    std::vector<K3DParent> vtemp;
-    ParentList(vtemp);
+    const K3DParent * pparents = ParentListP();
 
-    for (size_t i =0 ; i < vtemp.size() ; ++i)
+    size_t j=0;
+    for (size_t i =0 ; i < np ; ++i)
     {
-      const K3DParent &p = vtemp[i];
+      const K3DParent &p = pparents[i];
       if (p.i >=0 and p.i < Nx and 
 	  p.j >=0 and p.j < Ny and 
 	  p.k >=0 and p.k < Nz )
       {
-	vOUT.push_back(p);
+	vOUT[j] = p;
+	++j;
       }
     }
-    
+    vOUT.resize(j);
   }
 
   std::vector<K3DParent> K3DIterBase::CopyParentList(void)
