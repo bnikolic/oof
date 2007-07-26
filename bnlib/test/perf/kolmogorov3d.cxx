@@ -1,6 +1,10 @@
 
+#include <iostream>
+
 #include "../../src/kolmogorov_3d.hxx"
 #include "../../src/bnrandom.hxx"
+
+
 
 int main(void)
 {
@@ -18,6 +22,9 @@ int main(void)
 		Ny,
 		Nz,
 		dist);
+
+  for(size_t i =0 ; i< 10 ; ++i)
+    std::cout<<cube[i]<<" ";
   
   
   delete[] cube;
