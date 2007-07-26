@@ -181,10 +181,19 @@ namespace BNLib {
     /**
        Return the origin to use. Calculated always from the size of
        the D_X direction.
-     */
-    size_t origin(void) const;
 
-    size_t delta(void) const;
+       Inline for speed.
+     */
+    size_t origin(void) const
+    {
+      return Nx >> (o+1);
+    }
+
+    /// Inline for speed
+    size_t delta(void) const
+    {
+      return Nx >> o;
+    }
 
     /** \brief Are we on the first position in the direction d?
      */

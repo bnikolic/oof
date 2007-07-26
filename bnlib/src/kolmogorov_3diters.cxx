@@ -107,16 +107,6 @@ namespace BNLib {
     k= origin();
   }
 
-  size_t K3DCenterItertor::origin(void) const
-  {
-    return Nx >> (o+1);
-  }
-
-  size_t K3DCenterItertor::delta(void) const
-  {
-    return Nx >> o;
-  }
-
   bool K3DCenterItertor::firstDir(dirs d) const
   {
     if ( d == D_X )
