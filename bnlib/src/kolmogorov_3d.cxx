@@ -170,67 +170,71 @@ namespace BNLib {
     for(  ; ( ((size_t)1) << (o+1) ) < Nx  ; ++o )
     {
       
-      K3DCenterItertor ci(Nx,Ny,Nz, o);
-      while ( ci.inBounds() )
       {
-	std::vector<K3DParent> pv;
-
-	size_t i,j, k;
-	ci.getc( i,j, k);
-	size_t dx= k* N2 + j *Nx + i;
-
-	ci.FilteredParentList(pv);
-
-	double val = KAverageParents(cube, Nx, Ny, pv);
-
-	val += KMidPointVar_CI( pv.size(), o ) * rfn.sample();
-
-	cube[dx]=val;
-
-	ci.next();
-
+	K3DCenterItertor ci(Nx,Ny,Nz, o);
+	std::vector<K3DParent> cpv ( ci.nParents() );
+	while ( ci.inBounds() )
+	{
+	  size_t i,j, k;
+	  ci.getc( i,j, k);
+	  size_t dx= k* N2 + j *Nx + i;
+	  
+	  ci.FilteredParentList(cpv);
+	  
+	  double val = KAverageParents(cube, Nx, Ny, cpv);
+	  
+	  val += KMidPointVar_CI( cpv.size(), o ) * rfn.sample();
+	  
+	  cube[dx]=val;
+	  
+	  ci.next();
+	  
+	}
       }
 
-      K3FaceIterV2 fi(Nx,Ny,Nz, o);
-      while ( fi.inBounds() )
       {
-	std::vector<K3DParent> pv;
+	K3FaceIterV2 fi(Nx,Ny,Nz, o);
+	std::vector<K3DParent> fpv ( fi.nParents() );
+	while ( fi.inBounds() )
+	{
 
-	size_t i,j, k;
-	fi.getc( i,j, k);
-	size_t dx= k* N2 + j *Nx + i;
-
-	fi.FilteredParentList(pv);
-
-	double val = KAverageParents(cube, Nx, Ny, pv);
-
-	val += KMidPointVar_FI( pv.size(), o ) * rfn.sample();
-
-	cube[dx]=val;
-
-	fi.next();
-
+	  size_t i,j, k;
+	  fi.getc( i,j, k);
+	  size_t dx= k* N2 + j *Nx + i;
+	  
+	  fi.FilteredParentList(fpv);
+	  
+	  double val = KAverageParents(cube, Nx, Ny, fpv);
+	  
+	  val += KMidPointVar_FI( fpv.size(), o ) * rfn.sample();
+	  
+	  cube[dx]=val;
+	  
+	  fi.next();
+	  
+	}
       }
 
-      K3EdgeIterV2 ei(Nx,Ny,Nz, o);
-      while ( ei.inBounds() )
       {
-	std::vector<K3DParent> pv;
-
-	size_t i,j, k;
-	ei.getc( i,j, k);
-	size_t dx= k* N2 + j *Nx + i;
-
-	ei.FilteredParentList(pv);
-	
-	double val = KAverageParents(cube, Nx, Ny, pv);
-
-	val += KMidPointVar_EI( pv.size(), o ) * rfn.sample();
-
-	cube[dx]=val;
-
-	ei.next();
-
+	K3EdgeIterV2 ei(Nx,Ny,Nz, o);
+	std::vector<K3DParent> epv ( ei.nParents() );
+	while ( ei.inBounds() )
+	{
+	  size_t i,j, k;
+	  ei.getc( i,j, k);
+	  size_t dx= k* N2 + j *Nx + i;
+	  
+	  ei.FilteredParentList(epv);
+	  
+	  double val = KAverageParents(cube, Nx, Ny, epv);
+	  
+	  val += KMidPointVar_EI( epv.size(), o ) * rfn.sample();
+	  
+	  cube[dx]=val;
+	  
+	  ei.next();
+	  
+	}
       }
     }
     return o;
