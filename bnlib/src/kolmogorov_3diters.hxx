@@ -95,10 +95,6 @@ namespace BNLib {
       iOUT=i;     jOUT=j;    kOUT=k;
     }
 
-    /** \brief Get the dimension in the specified direction
-     */
-    size_t getd( dirs d) const;
-
     /** \brief False if no more iteration left to do 
      */
     bool inBounds(void);

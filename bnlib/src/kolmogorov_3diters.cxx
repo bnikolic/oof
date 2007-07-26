@@ -27,32 +27,11 @@ namespace BNLib {
 	     k < Nz );
   }
 
-  size_t K3DIterBase::getd( dirs d) const
-  {
-    if ( d== D_X)
-    {
-      return Nx;
-    }
-    else if ( d==D_Y )
-    {
-      return Ny ; 
-    }
-    else if ( d== D_Z)
-    {
-      return Nz ;
-    }
-    else 
-    {
-      throw "Unknown dimension";
-    }
-	      
-  }
-  
   void K3DIterBase::setOutOfBounds(void)
   {
-    i= getd(D_X);
-    j= getd(D_Y);
-    k= getd(D_Z);
+    i= Nx;
+    j= Ny;
+    k= Nz;
   }
 
   void K3DIterBase::ParentList( std::vector<K3DParent> & vOUT) 
@@ -130,12 +109,12 @@ namespace BNLib {
 
   size_t K3DCenterItertor::origin(void) const
   {
-    return getd(D_X) >> (o+1);
+    return Nx >> (o+1);
   }
 
   size_t K3DCenterItertor::delta(void) const
   {
-    return getd(D_X) >> o;
+    return Nx >> o;
   }
 
   bool K3DCenterItertor::firstDir(dirs d) const
@@ -157,12 +136,12 @@ namespace BNLib {
   void K3DCenterItertor::next(void)
   {
     i += delta();
-    if ( i >= getd(D_X) )
+    if ( i >= Nx )
     {
       i = origin();
 
       j += delta();
-      if ( j >= getd(D_Y) )
+      if ( j >= Ny )
       {
 	j=origin();
 	k+= delta();
