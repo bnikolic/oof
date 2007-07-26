@@ -76,13 +76,13 @@ namespace BNLib {
       vOUT[i]= parents[i];
     }
   }
-
-  void K3DIterBase::FilteredParentList(std::vector<K3DParent> & vOUT)
+  const K3DParent * K3DIterBase::FilteredParentP(size_t & np_filtered)
   {
     const size_t np =nParents() ;
-    vOUT.resize(np);
-
     const K3DParent * pparents = ParentListP();
+    
+    // Result goes here. Derived classes have allocated enough space.
+    K3DParent * res= FilteredParentBuffer();
 
     size_t j=0;
     for (size_t i =0 ; i < np ; ++i)
@@ -92,11 +92,25 @@ namespace BNLib {
 	  p.j >=0 and p.j < Ny and 
 	  p.k >=0 and p.k < Nz )
       {
-	vOUT[j] = p;
+	res[j] = p;
 	++j;
       }
     }
-    vOUT.resize(j);
+    np_filtered=j;
+    return res;
+  }
+
+  void K3DIterBase::FilteredParentList(std::vector<K3DParent> & vOUT)
+  {
+    size_t np_filt;
+    const K3DParent * filt_p = FilteredParentP(np_filt);
+    vOUT.resize(np_filt);
+
+    for ( size_t i =0 ; i< np_filt ; ++i )
+    {
+      vOUT[i]=filt_p[i];
+    }
+
   }
 
   std::vector<K3DParent> K3DIterBase::CopyParentList(void)

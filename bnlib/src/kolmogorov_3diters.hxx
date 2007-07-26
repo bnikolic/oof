@@ -42,6 +42,7 @@ namespace BNLib {
   protected:
 
     size_t i,j,k;
+
     
   public:
 
@@ -123,10 +124,25 @@ namespace BNLib {
     */
     virtual const K3DParent * ParentListP(void) = 0;
 
+  protected:
+    /** \brief Return pointer to buffer big enough to contain all
+	possible parents 
+    */
+    virtual K3DParent *  FilteredParentBuffer(void) = 0;
+  public:
+
     /**
        \brief Return only those parents actually within the cube grid.
     */
     virtual void FilteredParentList(std::vector<K3DParent> & vOUT);
+
+    /** \brief Return pointer to array of only those parents actually
+	within the cube grid. 
+
+	This should be substantially faster than
+	FilteredParentList. Number of parents goes into parameter np
+    */
+    virtual const K3DParent * FilteredParentP(size_t & np);
 
     /**
        Return parents as a copy of the vector. (for SWIG use)
@@ -150,6 +166,7 @@ namespace BNLib {
 
     static const size_t np =8;
     K3DParent parents[np];
+    K3DParent filtParents[np];
 
   public:
 
@@ -178,6 +195,7 @@ namespace BNLib {
     // Inherited from K3DIterBase
     virtual void next(void);
     virtual const K3DParent * ParentListP(void) ;
+    virtual K3DParent *  FilteredParentBuffer() { return filtParents; } ;
     virtual size_t nParents(void) const   {  return np; }
 
   };
@@ -202,6 +220,7 @@ namespace BNLib {
 
     static const size_t np =6;
     K3DParent parents[np];
+    K3DParent filtParents[np];
 
   public:
 
@@ -225,6 +244,7 @@ namespace BNLib {
     // Inherited from K3DIterBase
     virtual void next(void);
     virtual const K3DParent * ParentListP(void)  ;
+    virtual K3DParent *  FilteredParentBuffer() { return filtParents; } ;
     virtual size_t nParents(void) const   {  return np; }
 
   };
@@ -244,6 +264,7 @@ namespace BNLib {
 
     static const size_t np =6;
     K3DParent parents[np];
+    K3DParent filtParents[np];
 
   public:
 
@@ -276,6 +297,7 @@ namespace BNLib {
     // Inherited from K3DIterBase
     virtual void next(void);
     virtual const K3DParent * ParentListP(void)  ;
+    virtual K3DParent *  FilteredParentBuffer() { return filtParents; } ;
     virtual size_t nParents(void) const   {  return np; }
 
 
