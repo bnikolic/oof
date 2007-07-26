@@ -181,11 +181,12 @@ namespace BNLib {
 
   const K3DParent * K3DCenterItertor::ParentListP(void) 
   {
+    const size_t o = origin();
     for (size_t l =0 ; l < np ; ++l )
     {
-      parents[l].i = i + ( l & 1 ? 1 : -1 )  * origin();
-      parents[l].j = j + ( l & 2 ? 1 : -1 )  * origin();
-      parents[l].k = k + ( l & 4 ? 1 : -1 )  * origin();
+      parents[l].i = i + ( l & 1 ? 1 : -1 )  * o;
+      parents[l].j = j + ( l & 2 ? 1 : -1 )  * o;
+      parents[l].k = k + ( l & 4 ? 1 : -1 )  * o;
     }
 
     return parents;
