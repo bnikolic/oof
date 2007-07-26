@@ -1,0 +1,6 @@
+simple build:
+
+g++ kolmogorov3d.cxx ../../src/.libs/libbnlib.so -o kolmogorov3d
+export set LD_LIBRARY_PATH=../../src/.libs
+
+
