@@ -64,6 +64,19 @@ namespace BNLib {
     k= getd(D_Z);
   }
 
+  void K3DIterBase::ParentList( std::vector<K3DParent> & vOUT) 
+  {
+    const size_t np =nParents() ;
+    const K3DParent * parents= ParentListP();
+
+    vOUT.resize(np);
+
+    for( size_t i =0 ; i < np ; ++i )
+    {
+      vOUT[i]= parents[i];
+    }
+  }
+
   void K3DIterBase::FilteredParentList(std::vector<K3DParent> & vOUT)
   {
     vOUT.resize(0);
@@ -150,18 +163,20 @@ namespace BNLib {
     }
   }
 
-  void K3DCenterItertor::ParentList( std::vector<K3DParent> & vOUT)
+  const K3DParent * K3DCenterItertor::ParentListP(void) 
   {
-    vOUT.resize(8);
-
-    for (size_t l =0 ; l < 8 ; ++l )
+    for (size_t l =0 ; l < np ; ++l )
     {
-      vOUT[l].i = i + ( l & 1 ? 1 : -1 )  * origin();
-      vOUT[l].j = j + ( l & 2 ? 1 : -1 )  * origin();
-      vOUT[l].k = k + ( l & 4 ? 1 : -1 )  * origin();
+      parents[l].i = i + ( l & 1 ? 1 : -1 )  * origin();
+      parents[l].j = j + ( l & 2 ? 1 : -1 )  * origin();
+      parents[l].k = k + ( l & 4 ? 1 : -1 )  * origin();
     }
 
+    return parents;
+
   }
+
+
 
   K3FaceIterV2::K3FaceIterV2( size_t Nx, 
 			      size_t Ny, 
@@ -248,20 +263,16 @@ namespace BNLib {
     UpdateFace()    ;
 
   }
-
-  void K3FaceIterV2::ParentList( std::vector<K3DParent> & vOUT)
+  const K3DParent * K3FaceIterV2::ParentListP(void) 
   {
-    vOUT.resize(0);
 
     // Center of current is always a parent.
-    K3DParent cntr;
-    ci.getc( cntr.i, cntr.j, cntr.k );
-    vOUT.push_back(cntr);
+    ci.getc( parents[0].i, parents[0].j, parents[0].k );
     
     // Then the four on the current face.
     for (size_t l =0 ; l < 4 ; ++l )
     {
-      K3DParent p;
+      K3DParent & p = parents[l+1];
 
       switch (fcount)
       {
@@ -286,11 +297,10 @@ namespace BNLib {
       default:
 	throw "Logic error";
       }
-      vOUT.push_back(p);
     }
 
     // Finaly the oposite center
-    K3DParent opp;
+    K3DParent & opp = parents[5];
     ci.getc( opp.i, opp.j, opp.k );
 
     switch (fcount)
@@ -310,11 +320,8 @@ namespace BNLib {
     default:
       throw "Logic error";
     }
-
     
-      
-    vOUT.push_back(opp);      
-      
+    return parents;
 
   }
 
@@ -451,13 +458,11 @@ namespace BNLib {
 
   }
 
-  void K3EdgeIterV2::ParentList( std::vector<K3DParent> & vOUT)
+  const K3DParent * K3EdgeIterV2::ParentListP(void) 
   {
-    vOUT.resize(0);
-
     for ( size_t l = 0 ; l < 6 ; ++l )
     {
-      K3DParent p;
+      K3DParent & p = parents[l];
       p.i=i;
       p.j=j;
       p.k=k;
@@ -479,9 +484,8 @@ namespace BNLib {
       default:
 	throw "Logic error";
       }
-
-      vOUT.push_back(p);
     }
+    return parents;
   }  
 
   double KAverageParents( const double * cube,

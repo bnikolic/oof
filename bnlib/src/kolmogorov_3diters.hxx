@@ -111,7 +111,17 @@ namespace BNLib {
     I.e., these are the positions which need to be interpolated to get
     the non-random part of the current position.
      */
-    virtual void ParentList( std::vector<K3DParent> & vOUT) =0;
+    virtual void ParentList( std::vector<K3DParent> & vOUT) ;
+
+    /** \brief Return the number of parents that this iterator has
+     */
+    virtual size_t nParents(void) const =0;
+
+    /** \brief Return const pointer to list of parents
+
+    Reduces un-necessary allocation of vectors.
+    */
+    virtual const K3DParent * ParentListP(void) = 0;
 
     /**
        \brief Return only those parents actually within the cube grid.
@@ -137,6 +147,9 @@ namespace BNLib {
   class K3DCenterItertor :
     public K3DIterBase
   {
+
+    static const size_t np =8;
+    K3DParent parents[np];
 
   public:
 
@@ -164,7 +177,8 @@ namespace BNLib {
 
     // Inherited from K3DIterBase
     virtual void next(void);
-    virtual void ParentList( std::vector<K3DParent> & vOUT);
+    virtual const K3DParent * ParentListP(void) ;
+    virtual size_t nParents(void) const   {  return np; }
 
   };
 
@@ -185,6 +199,9 @@ namespace BNLib {
        on).
      */
     void UpdateFace(void);
+
+    static const size_t np =6;
+    K3DParent parents[np];
 
   public:
 
@@ -207,7 +224,8 @@ namespace BNLib {
 
     // Inherited from K3DIterBase
     virtual void next(void);
-    virtual void ParentList( std::vector<K3DParent> & vOUT);
+    virtual const K3DParent * ParentListP(void)  ;
+    virtual size_t nParents(void) const   {  return np; }
 
   };
 
@@ -223,6 +241,9 @@ namespace BNLib {
     K3DCenterItertor ci;
 
     void UpdateEdge(void);
+
+    static const size_t np =6;
+    K3DParent parents[np];
 
   public:
 
@@ -254,7 +275,9 @@ namespace BNLib {
     
     // Inherited from K3DIterBase
     virtual void next(void);
-    virtual void ParentList( std::vector<K3DParent> & vOUT);
+    virtual const K3DParent * ParentListP(void)  ;
+    virtual size_t nParents(void) const   {  return np; }
+
 
   };
 
