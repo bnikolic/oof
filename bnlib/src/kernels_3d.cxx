@@ -22,10 +22,25 @@ namespace BNLib {
 		    const size_t PN,
 		    double * out )
   {
+    
+    // We need these to check if each point is within the grid
+    // dimensions.
+    const int Nx = (int) ext.i;
+    const int Ny = (int) ext.j;
+    const int Nz = (int) ext.k;
+
+    // Need these for the indexing
+    const size_t sNx = ext.i;
+    const size_t sNxNy = ext.i *ext.j;
 
     for ( size_t pcounter = 0 ; pcounter < PN ; ++pcounter )
     {
       const Position3D & cp = pos[pcounter] ;
+
+      const int cpi = cp.i;
+      const int cpj = cp.j;
+      const int cpk = cp.k;
+
       double res= 0;
       double csum = 0;
       
@@ -34,16 +49,16 @@ namespace BNLib {
 	const  Displacement3D &  cd = dps[ccounter];
 	
 	int i,j,k;
-	i = cp.i + cd.i;
-	j = cp.j + cd.j;
-	k = cp.k + cd.k;
+	i = cpi + cd.i;
+	j = cpj + cd.j;
+	k = cpk + cd.k;
 
-	if ( i >= 0 && i < (int) ext.i  &&
-	     j >= 0 && j < (int) ext.j  &&
-	     k >= 0 && k < (int) ext.k   )
+	if ( i >= 0 && i < Nx  &&
+	     j >= 0 && j < Ny  &&
+	     k >= 0 && k < Nz )
 	{
 	  csum += coeffs[ccounter];
-	  res += coeffs[ccounter] * cube[ i + j * ext.i + k * ext.i *ext.j ] ;
+	  res +=  coeffs[ccounter] * cube[ i + j * sNx + k * sNxNy] ;
 	}
       }
 
