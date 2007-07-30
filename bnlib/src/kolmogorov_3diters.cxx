@@ -10,6 +10,8 @@
 
 #include <cmath>
 
+#include "kolmogorov_3diters_t.hxx"
+
 namespace BNLib {
 
   K3DIterBase::K3DIterBase( size_t Nx, size_t Ny, size_t Nz , size_t o ):
@@ -484,15 +486,6 @@ namespace BNLib {
 			  const  K3DParent * pv,
 			  size_t np)
   {
-    double res = 0;
-    const size_t N2 = Nx*Ny;
-    for (size_t i = 0; i < np ; ++ i )
-    {
-      size_t dx=pv[i].i +pv[i].j*Nx + pv[i].k *N2;
-      res += cube[dx];
-    }
-    return res / np;
-
+    return TKAverageParents( cube, Nx, Ny, pv ,np);
   }
-  
 }
