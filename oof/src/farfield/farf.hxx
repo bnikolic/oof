@@ -70,6 +70,14 @@ namespace OOF {
     virtual void Amplitude ( const AstroMap::Map & amp, const AstroMap::Map & phase, 
     			     AstroMap::Map & res);
 
+    /**
+       \brief Calculate far-field amplitude and phase patterhs
+    */
+    virtual void AmpPhase( const AstroMap::Map & ap_amp, 
+			   const AstroMap::Map & ap_phase, 
+			   AstroMap::Map & ff_amp,
+			   AstroMap::Map & ff_phase);
+
     // ------ Inherited functions rom Minim::Model ---------
     virtual    void     AddParams ( std::vector< Minim::DParamCtr > &pars );    
     

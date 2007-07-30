@@ -67,6 +67,18 @@ namespace OOF {
     Power( amp, phase, res);
     res.sqrt();
   }
+
+  void FarF::AmpPhase( const AstroMap::Map & ap_amp, 
+		       const AstroMap::Map & ap_phase, 
+		       AstroMap::Map & ff_amp,
+		       AstroMap::Map & ff_phase)
+  {
+    ff->fftamphi(ap_amp, ap_phase , ff_amp, ff_phase);    
+
+    SetFarFCS( ap_amp , wavel , ff_amp);    
+    SetFarFCS( ap_amp , wavel , ff_phase);    
+
+  }
   
   void     FarF::AddParams ( std::vector< Minim::DParamCtr > &pars )
   {

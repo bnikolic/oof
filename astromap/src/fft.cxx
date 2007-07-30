@@ -92,9 +92,9 @@ namespace AstroMap {
     }
     
     
-    /// Takes aplitude and phase map, does transform, puts the result
-    /// into supplied maps.
-    void AmpPhi(Map &Amp, Map &Phi) {
+    void AmpPhi(const Map &Amp, const Map &Phi,
+		Map & resAmp, Map & resPhi ) 
+    {
 
       Transform (Amp, Phi);
 
@@ -106,12 +106,16 @@ namespace AstroMap {
 	{
 	  for (unsigned j=0 ; j < ny ; j++ ) 
 	    {
-	    Amp[i*nx + j] = sqrt ( pow(fftScratch[i*nx + j].re,2) + pow(fftScratch[i*nx + j].im , 2) ) ;
-	    Phi[i*nx + j] = atan2( fftScratch[i*nx + j].im, fftScratch[i*nx + j].re ) ;
+	      resAmp[i*nx + j] = sqrt ( pow(fftScratch[i*nx + j].re,2) + pow(fftScratch[i*nx + j].im , 2) ) ;
+	      resPhi[i*nx + j] = atan2( fftScratch[i*nx + j].im, fftScratch[i*nx + j].re ) ;
 	  
 	}
       }
       
+    }
+    
+    void AmpPhi(Map &Amp, Map &Phi) {
+      AmpPhi(Amp, Phi, Amp, Phi);
     }
     
     /// As AmpPhi, but result stored in map ResPower.
@@ -151,6 +155,13 @@ namespace AstroMap {
 
   void FFTFact::fftamphi(Map &Amp, Map &Phi) {
     ip->AmpPhi(Amp, Phi);
+  }
+
+  void FFTFact::fftamphi(const Map &Amp, const Map &Phi,
+			 Map &resAmp, Map &resPhi)
+  {
+    ip->AmpPhi(Amp, Phi,
+	       resAmp, resPhi);
   }
 
   void FFTFact::FFTAmpPh_Power( const Map  &Amp, const Map &Ph , Map &ResPower) {
