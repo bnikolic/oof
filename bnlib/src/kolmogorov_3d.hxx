@@ -53,6 +53,15 @@ namespace BNLib {
 		       RDist &rfn) throw (const char *);
 
   /**
+     As Kolmogorov3D, but generate on single precision ("float") grid.
+   */
+  size_t Kolmogorov3DF( float * cube,
+			size_t Nx,
+			size_t Ny,
+			size_t Nz,
+			RDist &rfn);
+
+  /**
      Compute the required mid-point standard deviation for the case of
      3-dimensional Kolmogorov turbulence for the center-cell
      iterator. See bnlib/gen/kolmogorovmidpoint.py 

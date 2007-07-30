@@ -16,6 +16,7 @@
 
 #include "bnrandom.hxx"
 #include "kolmogorov_3diters.hxx"
+#include "kolmogorov_3diters_t.hxx"
 
 namespace BNLib {
 
@@ -58,10 +59,10 @@ namespace BNLib {
 			     size_t Nz);
 
 
-
-  void KolmogorovCorners3D(double *cube,
-			   size_t N,
-			   RDist &rfn)
+  template<class T>
+  void TKolmogorovCorners3D(T *cube,
+			    size_t N,
+			    RDist &rfn)
   {
     
     const size_t N2 = size_t(pow(N,2));
@@ -108,6 +109,13 @@ namespace BNLib {
 
   }
 
+  void KolmogorovCorners3D(double *cube,
+			   size_t N,
+			   RDist &rfn)
+  {
+    return TKolmogorovCorners3D(cube, N, rfn);
+  }
+
   size_t Kolmogorov3D( double * cube,
 		       size_t N,
 		       RDist &rfn)
@@ -142,11 +150,53 @@ namespace BNLib {
     }
   };
 
-  size_t Kolmogorov3D( double * cube,
-		     size_t Nx,
-		     size_t Ny,
-		     size_t Nz,
-		     RDist &rfn) throw (const char *)
+  template<class T>
+  void TKMagnifyGrid(T *og,
+		     const size_t N,
+		     T *dd,
+		     const size_t Nx,
+		     const size_t Ny,
+		     const size_t Nz)
+  {
+    
+    // Magnification
+    unsigned mag = (Nx-1)/(N-1);
+
+    for (size_t ok =0 ; ok < N ; ++ ok)
+    {
+      const size_t k = mag * ok ;
+      if ( k >= Nz )
+      {
+	break;
+      }
+      for (size_t oj=0 ; oj < N ; ++ oj)
+      {
+	const size_t j = mag * oj;
+	if ( j >= Ny )
+	{
+	  break;
+	}
+	for (size_t oi = 0 ; oi < N ; ++ oi )
+	{
+	  const size_t i = mag * oi;
+	  if ( i >= Nx)
+	  {
+	    break;
+	  }
+	  dd[i+ j * Nx + k *Nx*Ny] = og[oi+oj*N+ok*N*N];
+	}
+      }
+    }
+
+  }
+
+
+  template<class T>
+  size_t TKolmogorov3D( T * cube,
+			size_t Nx,
+			size_t Ny,
+			size_t Nz,
+			RDist &rfn) throw (const char *)
   {
 
     K3CheckParams(Nx,Ny,Nz);
@@ -157,7 +207,7 @@ namespace BNLib {
 
     if (Nx == Ny && Nx == Nz )
     {
-      KolmogorovCorners3D(cube, Nx, rfn);
+      TKolmogorovCorners3D(cube, Nx, rfn);
     }
     else
     {
@@ -175,17 +225,19 @@ namespace BNLib {
       
       size_t Nsub = mag +1;
       
-      std::vector<double> subgrid ( Nsub*Nsub*Nsub);
-      o=Kolmogorov3D( & subgrid[0],
-		      Nsub,
-		      rfn);
+      std::vector<T> subgrid ( Nsub*Nsub*Nsub);
+      o=TKolmogorov3D( & subgrid[0],
+		       Nsub,
+		       Nsub,
+		       Nsub,
+		       rfn);
 
-      KMagnifyGrid( & subgrid[0],
-		    Nsub,
-		    cube,
-		    Nx,
-		    Ny,
-		    Nz);
+      TKMagnifyGrid( & subgrid[0],
+		     Nsub,
+		     cube,
+		     Nx,
+		     Ny,
+		     Nz);
 
       
 
@@ -209,7 +261,7 @@ namespace BNLib {
 	  size_t np;
 	  const K3DParent * cpv = ci.FilteredParentP(np);
 
-	  double val = KAverageParents(cube, Nx, Ny, cpv, np);
+	  double val = TKAverageParents(cube, Nx, Ny, cpv, np);
 	  
 	  val += cvc( np ) * rfn.sample();
 	  
@@ -233,7 +285,7 @@ namespace BNLib {
 	  size_t np;
 	  const K3DParent * fpv = fi.FilteredParentP(np);
 	  
-	  double val = KAverageParents(cube, Nx, Ny, fpv, np);
+	  double val = TKAverageParents(cube, Nx, Ny, fpv, np);
 	  
 	  val += fvc( np ) * rfn.sample();
 	  
@@ -256,7 +308,7 @@ namespace BNLib {
 	  size_t np;
 	  const K3DParent * epv = ei.FilteredParentP(np);
 	  
-	  double val = KAverageParents(cube, Nx, Ny, epv, np);
+	  double val = TKAverageParents(cube, Nx, Ny, epv, np);
 
 	  val += evc( np ) * rfn.sample();
 	  
@@ -268,6 +320,24 @@ namespace BNLib {
       }
     }
     return o;
+  }
+
+  size_t Kolmogorov3D( double * cube,
+		     size_t Nx,
+		     size_t Ny,
+		     size_t Nz,
+		     RDist &rfn) throw (const char *)
+  {
+    return TKolmogorov3D(cube, Nx, Ny, Nz, rfn);
+  }
+
+  size_t Kolmogorov3DF( float * cube,
+			size_t Nx,
+			size_t Ny,
+			size_t Nz,
+			RDist &rfn)
+  {
+    return TKolmogorov3D(cube, Nx, Ny, Nz, rfn);
   }
 
 
@@ -331,6 +401,7 @@ namespace BNLib {
     return res;
   }
 
+
   void KMagnifyGrid(double *og,
 		    const size_t N,
 		    double *dd,
@@ -338,39 +409,10 @@ namespace BNLib {
 		    const size_t Ny,
 		    const size_t Nz)
   {
-    
-    // Magnification
-    unsigned mag = (Nx-1)/(N-1);
-
-    for (size_t ok =0 ; ok < N ; ++ ok)
-    {
-      const size_t k = mag * ok ;
-      if ( k >= Nz )
-      {
-	break;
-      }
-      for (size_t oj=0 ; oj < N ; ++ oj)
-      {
-	const size_t j = mag * oj;
-	if ( j >= Ny )
-	{
-	  break;
-	}
-	for (size_t oi = 0 ; oi < N ; ++ oi )
-	{
-	  const size_t i = mag * oi;
-	  if ( i >= Nx)
-	  {
-	    break;
-	  }
-	  dd[i+ j * Nx + k *Nx*Ny] = og[oi+oj*N+ok*N*N];
-	}
-      }
-    }
-
-  }
-
-  
+    return TKMagnifyGrid  (og, N,
+			   dd, 
+			   Nx,Ny,Nz);
+  }  
 
   bool pTwoNPlustOne(unsigned n)
   {
