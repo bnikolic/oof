@@ -101,13 +101,22 @@ namespace AstroMap {
       unsigned  nx=Amp.nx;    
       unsigned  ny=Amp.ny;
 
+      int mul = ( docenter == FFTFact::center ? -1 : 1 ) ;
       
       for (unsigned i =0 ; i < nx ; i++ ) 
 	{
 	  for (unsigned j=0 ; j < ny ; j++ ) 
 	    {
 	      resAmp[i*nx + j] = sqrt ( pow(fftScratch[i*nx + j].re,2) + pow(fftScratch[i*nx + j].im , 2) ) ;
-	      resPhi[i*nx + j] = atan2( fftScratch[i*nx + j].im, fftScratch[i*nx + j].re ) ;
+	      
+	      if (i+j & 1) 
+	      {	      
+		resPhi[i*nx + j] = atan2( fftScratch[i*nx + j].im *mul, fftScratch[i*nx + j].re*mul ) ;
+	      }
+	      else
+	      {
+		resPhi[i*nx + j] = atan2( fftScratch[i*nx + j].im, fftScratch[i*nx + j].re ) ;
+	      }
 	  
 	}
       }
