@@ -102,6 +102,11 @@ namespace std {
      void add ( Map const & m ) {
 	(*self) += m;
      }
+
+     void add ( double x ) {
+	(*self) += x;
+     }
+
      void copy( Map const & m ) {
 	(*self) = m ;
      }
