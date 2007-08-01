@@ -178,7 +178,25 @@ namespace BNLib {
     
   }
 
+  void ZFlatten( const double * cube,
+		 const Extnent3D & ext,
+		 size_t zstart,
+		 size_t zend,
+		 double * res)
+  {
 
+    const size_t Nx = ext.i;
+    const size_t Ny = ext.j;
+    const size_t NxNy = Nx*Ny;
+
+    for (size_t z = zstart  ; z< zend ; ++z)
+    {
+      for ( size_t i = 0 ; i < NxNy ; ++i)
+      {
+	res[i] +=  cube[NxNy*z + i] ;
+      }
+    }
+  }
 }
 
 

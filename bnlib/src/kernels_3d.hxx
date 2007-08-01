@@ -99,6 +99,19 @@ namespace BNLib {
 			    const std::vector<double>  & j_v,
 			    const std::vector<double>  & k_v);
 
+  /** \brief Sum a rangle of horizontal slices of a cube
+      
+  \param cube Cube to be flattened
+  \param ext  Extent of this cube
+  \param zstart,zend range of slices to include in the sum
+  \param res  store results in this array. Must be of size ext.i*ext.j
+  */
+  void ZFlatten( const double * cube,
+		 const Extnent3D & ext,
+		 size_t zstart,
+		 size_t zend,
+		 double * res);
+
 }
 
 #endif

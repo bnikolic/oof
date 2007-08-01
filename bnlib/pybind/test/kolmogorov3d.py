@@ -122,6 +122,40 @@ def PlotTurbulenceIllustr(a):
         pylab.matshow(suba)
         pylab.savefig("temp/turb3d-sum%03i.eps" % x)
 
+def PlotTurbulenceIllustrZFlat(g):
+
+
+    "Like PlotTurbulenceIllustr but use the ZFlatten routine"
+
+    Nx, Ny, Nz = g[1]
+
+    ext=pybnlib.Extnent3D()
+    ext.i=Nx
+    ext.j=Ny
+    ext.k=Nz
+
+    for x in [1,10,100]:
+        res=pybnlib.doubleArray( Nx*Ny)
+        pybnlib.ZFlatten( g[0],
+                          ext,
+                          0,
+                          x,
+                          res)
+
+        na=kolmogorovutils.GridToNumarray( (res, (Nx,Ny,1)))
+        na=na[:,:,0]
+        na.transpose()
+        pylab.clf()
+        pylab.matshow(na)
+        pylab.savefig("temp/turb3d-zflatsum%03i.eps" % x)
+        
+                          
+        
+        
+        
+
+    
+
 def GridSliceToAstroMap(gs, s ):
 
     "Convert a slice of a turbulence cube to astromap type"
