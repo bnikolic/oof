@@ -96,16 +96,19 @@ namespace AstroMap {
 
   public:
 
-    /** Setups the interpolators so that heycan be evaluated
-	quickly. 
+    /** \brief Setups the interpolators so that they can be evaluated
+	quickly.
 	
 	\param ds The positions to interpolate to. All calls to Calc
 	will be apropriate for these positions only.
 
 	\param msample Map dimensions are figured out from this.
 
-	\param fwhm_px, extent_px define the Gaussian interpolation
-	kernel used.
+	\param fwhm_px define the Gaussian interpolation kernel used.
+
+	\param extent_px extent of the kernel in pixels. The kernel
+	will extend from centre-extent to centre+extent inclusive, so
+	extent_px=1 implies a 3x3 kernel.
     */
     MapDSEval( DataSeries const & ds , 
 	       Map const & msample,
