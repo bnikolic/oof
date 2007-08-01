@@ -8,6 +8,8 @@
 #ifndef _ASTROMAP_MAPOPS_HXX__
 #define _ASTROMAP_MAPOPS_HXX__
 
+#include <complex>
+
 namespace AstroMap {
 
   // Forwards
@@ -41,6 +43,16 @@ namespace AstroMap {
    *  values replicated to fill up the bigger map.
    */
   Map *  IntZoom( Map &m, unsigned scale);
+
+  /** \brief Calculate the complex sum from amplitude and phase maps.
+      
+  \f[ \sum_j A_j e^{i \phi_j}
+  \f]
+  \param amp amplitude map (\f$ A\f$)
+  \param phase phase map   (\f$ \phi\f$)
+   */
+  std::complex<double> ComplexSum( const Map & amp,
+				   const Map & phase);
 
   /** Assign a Kolmogorov distribution the the supplied map */
   void KolmogorovMap( Map &m );

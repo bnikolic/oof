@@ -79,6 +79,20 @@ namespace AstroMap {
 
   }
 
+  std::complex<double> ComplexSum( const Map & amp,
+				   const Map & phase)
+  {
+    std::complex<double> res(0,0);
+    std::complex<double> imag(0,1);
+    for ( size_t i =0 ; i < amp.size() ; ++i)
+    {
+      res += amp[i]*exp( imag * phase[i]);
+    }
+    
+    return res;
+  }
+  
+
   void KolmogorovMap( Map &m )
   {
     BNLib::KolmogorovPlatform(m.nx, &m[0], 0);
