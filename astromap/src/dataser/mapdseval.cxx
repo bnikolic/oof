@@ -134,11 +134,18 @@ namespace AstroMap {
     return new MapPixLC( vindex, vcoeff);
   }
 
+  MapDSEvalBase::~MapDSEvalBase()
+  {
+    for (unsigned i =0 ; i < lcs.size() ; ++i )
+      delete lcs[i];
+  }
+
   MapDSEval::MapDSEval( DataSeries const & ds , 
 			Map const & msample,
-			double fwhm_px, double extent_px):
-    lcs(ds.size() )
+			double fwhm_px, double extent_px)
   {
+
+    lcs.resize(ds.size() );
 
     for (unsigned i =0 ; i < ds.size() ; ++i )
       lcs[i] = MkGaussCoffs( ds[i].dX, ds[i].dY, 
@@ -146,13 +153,7 @@ namespace AstroMap {
 			     fwhm_px, extent_px );
   }
 
-  MapDSEval::~MapDSEval()
-  {
-    for (unsigned i =0 ; i < lcs.size() ; ++i )
-      delete lcs[i];
-  }
-
-  void MapDSEval::Calc( Map const &m, std::valarray<double> & res)
+  void MapDSEvalBase::Calc( Map const &m, std::valarray<double> & res)
   {
     for (unsigned i =0 ; i < lcs.size() ; ++i )
       {
@@ -160,7 +161,7 @@ namespace AstroMap {
       }
   }
 
-  void MapDSEval::Calc( Map const &m, std::vector<double> & res)
+  void MapDSEvalBase::Calc( Map const &m, std::vector<double> & res)
   {
     for (unsigned i =0 ; i < lcs.size() ; ++i )
       {

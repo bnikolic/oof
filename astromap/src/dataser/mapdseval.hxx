@@ -83,6 +83,37 @@ namespace AstroMap {
 			     double radius);
   
 
+  /**
+     Allow easy storage of pre-computed linear-combination
+     coefficients so that multiple interpolations from maps with same
+     coordinate systems can be obtained quickly.
+     
+  */
+  class MapDSEvalBase {
+
+  protected:
+    
+    std::valarray<MapPixLC *> lcs;    
+
+  public:
+
+    ~MapDSEvalBase();
+
+    /*! 
+      Interpolate the supplied map m to the position in the
+      dataseries supplied in constructor and return the result in the
+      array res.
+    */
+    void Calc( Map const &m, 
+	       std::valarray<double> & res);
+
+    /** Provide an interface to calc that uses standard
+	vectors... better for use in python.
+     */
+    void Calc( Map const &m, 
+	       std::vector<double> & res);
+
+  };
   
   /** 
     Interpolates a map using a gaussian kernel onto the positions
@@ -90,9 +121,9 @@ namespace AstroMap {
     to re-use kernel coefficients as the input map changes --
     significantly saving time.
   */
-  class MapDSEval {
-    
-    std::valarray<MapPixLC *> lcs;
+  class MapDSEval:
+    public MapDSEvalBase
+  {
 
   public:
 
@@ -114,19 +145,6 @@ namespace AstroMap {
 	       Map const & msample,
 	       double fwhm_px, double extent_px);
 
-    ~MapDSEval();
-
-    /*! 
-      Interpolate the supplied map m to the position in the
-      dataseries supplied in constructor and return the result in the
-      array res.
-    */
-    void Calc( Map const &m, std::valarray<double> & res);
-
-    /** Provide an interface to calc that uses standard
-	vectors... better for use in python.
-     */
-    void Calc( Map const &m, std::vector<double> & res);
 
   };
 
