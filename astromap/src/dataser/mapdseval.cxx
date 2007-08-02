@@ -172,11 +172,18 @@ namespace AstroMap {
   MapPixLC *  NearestPixelLC( double cx, double cy,
 			      const Map & msample)
   {
-    // The pixel coordinates
-    double px, py;
-    msample.cs->worldtopx( cx  , cy , px, py);
+    
+    int px; int py;
 
-    return NULL;
+    GetNearestPixel( msample, cx, cy, px, py);
+
+    std::valarray<double> vcoeff(1);
+    vcoeff[0] = 1.0;
+    
+    std::valarray<unsigned> vindex(1);
+    vindex[0] = py * msample.nx + px;
+
+    return new MapPixLC(vindex, vcoeff);
 
   }
 
