@@ -90,8 +90,8 @@ namespace AstroMap {
 
     for (unsigned i =0 ; i < pxl.size() ; ++i ) 
       {
-	int currpx = (*pxl.px)[i];
-	int currpy = (*pxl.py)[i];	
+	int currpx = pxl.px[i];
+	int currpy = pxl.py[i];	
 
 	double currcoeff = gfn (currpx, currpy );
 	totcoeff += currcoeff ;
@@ -118,8 +118,8 @@ namespace AstroMap {
 
     for (unsigned i =0 ; i < pxl.size() ; ++i ) 
     {
-	int currpx = (*pxl.px)[i];
-	int currpy = (*pxl.py)[i];	
+	int currpx = pxl.px[i];
+	int currpy = pxl.py[i];	
 	
 	if ( pow( currpx - px,2 ) + pow( currpy-py,2) < pow(radius,2))
 	{
@@ -167,6 +167,28 @@ namespace AstroMap {
       {
 	res[i] = (*lcs[i])(m);
       }
+  }
+
+  MapPixLC *  NearestPixelLC( double cx, double cy,
+			      const Map & msample)
+  {
+    // The pixel coordinates
+    double px, py;
+    msample.cs->worldtopx( cx  , cy , px, py);
+
+    return NULL;
+
+  }
+
+  MapDSNearest::MapDSNearest( DataSeries const & ds , 
+			      Map const & msample)
+  {
+    lcs.resize(ds.size());
+
+    for (unsigned i =0 ; i < ds.size() ; ++i )
+      lcs[i] = NearestPixelLC( ds[i].dX, ds[i].dY, 
+			       msample);
+
   }
 
 }

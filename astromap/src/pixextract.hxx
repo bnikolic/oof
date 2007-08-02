@@ -17,17 +17,23 @@ namespace AstroMap {
   // Forwards
   class Map;
 
+  /**
+     \brief Return the nearest in-bounds pixel in map m to the world
+     coordinates (cx,cy)
+  */
+  void GetNearestPixel( const Map & m,
+			double cx, double cy,
+			int & pxOUT, int & pyOUT );
+
   /** Stores a list of pixel positions
-      
-  \bug The use of std::auto_ptr here seems like a bad choice.
   */
   struct PixListInt {
 
     /*! x-position of each pixel.  */
-    std::auto_ptr< std::valarray<int> > px;
+    std::valarray<int>  px;
 
     /*! y-position of each pixel */
-    std::auto_ptr< std::valarray<int> > py;
+    std::valarray<int> py;
 
     /*--- Constructors & Destructors ----*/
     PixListInt(size_t npix);

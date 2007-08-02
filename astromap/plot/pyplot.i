@@ -21,6 +21,8 @@
 #include "../src/dataser/dstomap.hxx"
 #include "../src/dataser/mapdseval.hxx"
 
+#include "../src/pixextract.hxx"
+
 #include "binaryfn.hxx"
 #include "tophat.hxx"
 #include "zernikepoly.hxx"
@@ -47,6 +49,7 @@ namespace std {
    %template(SizeTVector) vector<size_t>; 
 }
 
+%apply int & OUTPUT { int &pxOUT, int &pyOUT };
 
 %include "../src/astromap.hxx"
 %include "../src/astromapio.hxx"
@@ -67,6 +70,7 @@ namespace std {
 %include "../src/dataser/dsfileops.hxx"
 %include "../src/dataser/dstomap.hxx"
 %include "../src/dataser/mapdseval.hxx"
+%include "../src/pixextract.hxx"
 
 %include "binaryfn.hxx"
 %include "tophat.hxx"
@@ -139,7 +143,6 @@ namespace std {
 		self->coeffs[i]=c;
 	}
 }
-
 
 void cpgldev(void);
 int cpgbeg(int unit, const char *file, int nxsub, int nysub);

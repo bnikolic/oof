@@ -147,6 +147,26 @@ namespace AstroMap {
 
 
   };
+  
+  /**
+     For each position in the supplied data series, return the closest
+     pixel in the supplied maps. In contrast to MapDSEval no
+     interpolation of any kind is done.
+   */
+  class MapDSNearest :
+    public MapDSEvalBase
+  {
+
+  public:
+    /**
+       \param msample used only to determine the dimensions and the
+       coordinate system.
+    */
+    MapDSNearest( DataSeries const & ds , 
+		  Map const & msample);
+
+
+  };
 
 
 }
