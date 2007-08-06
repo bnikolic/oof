@@ -1,23 +1,24 @@
-/*
-  Bojan Nikolic
-
+/**
+   \file pixextract.cxx
+   Bojan Nikolic <bojan@bnikolic.co.uk> , <bn204@mrao.cam.ac.uk>
 */
 
 #include "pixextract.hxx"
 
 #include "astromap.hxx"
+#include "coordsys/coordsys.hxx"
 
 namespace AstroMap {
 
   PixListInt::PixListInt(size_t npix):
-    px ( new std::valarray<int>(npix)),
-    py ( new std::valarray<int>(npix))
+    px ( npix),
+    py ( npix)
   {
   }
 
   PixListInt::PixListInt(const PixListInt &p):
-    px ( new std::valarray<int> (* (p.px) ) ),
-    py ( new std::valarray<int> (* (p.py) ) )
+    px ( p.px ),
+    py ( p.py )
   {
   }
 
@@ -57,8 +58,8 @@ namespace AstroMap {
     for (int i (xmin) ; i  <= xmax ; ++i )
       for (int j (ymin) ; j  <= ymax ; ++j )
 	{
-	  (*res.px)[count] = i;
-	  (*res.py)[count] = j;
+	  res.px[count] = i;
+	  res.py[count] = j;
 	  count++;
 	}
 
@@ -68,7 +69,31 @@ namespace AstroMap {
 
   size_t PixListInt::size(void) 
   {
-    return px->size();
+    return px.size();
+  }
+
+  void GetNearestPixel( const Map & m,
+			double cx, double cy,
+			int & pxOUT, int & pyOUT )
+  {
+    double px, py;
+    m.cs->worldtopx( cx  , cy , px, py);
+
+    int i_px = lrint(px);
+    if (i_px < 0 )
+      i_px=0;
+    if (i_px >= (int) m.nx)
+      i_px = m.nx-1;
+
+    int i_py = lrint(py);
+    if (i_py < 0 )
+      i_py=0;
+    if (i_py >= (int) m.ny)
+      i_py = m.ny-1;
+
+    pxOUT=i_px;
+    pyOUT=i_py;
+
   }
 
 }

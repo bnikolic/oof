@@ -36,18 +36,18 @@ namespace AstroMap {
 	
 	double totc(0);
 
-	for (unsigned j (0) ; j < pxl.px->size() ; ++j ) 
+	for (unsigned j (0) ; j < pxl.px.size() ; ++j ) 
 	  {
-	    totc += gfn ((*pxl.px)[j],(*pxl.py)[j]);
+	    totc += gfn (pxl.px[j],pxl.py[j]);
 	  }
 	
 	if ( totc > 0 )
 	  {
 	    // Iterate of the pixels in the pixel list
-	    for (unsigned j (0) ; j < pxl.px->size() ; j++ ) 
+	    for (unsigned j (0) ; j < pxl.px.size() ; j++ ) 
 	      {
-		int currpx = (*pxl.px)[j];
-		int currpy = (*pxl.py)[j];
+		int currpx = pxl.px[j];
+		int currpy = pxl.py[j];
 
 		double currweight = gfn (currpx,currpy ) * ds[i].ufnu / totc;
 

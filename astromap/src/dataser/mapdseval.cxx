@@ -90,8 +90,8 @@ namespace AstroMap {
 
     for (unsigned i =0 ; i < pxl.size() ; ++i ) 
       {
-	int currpx = (*pxl.px)[i];
-	int currpy = (*pxl.py)[i];	
+	int currpx = pxl.px[i];
+	int currpy = pxl.py[i];	
 
 	double currcoeff = gfn (currpx, currpy );
 	totcoeff += currcoeff ;
@@ -118,8 +118,8 @@ namespace AstroMap {
 
     for (unsigned i =0 ; i < pxl.size() ; ++i ) 
     {
-	int currpx = (*pxl.px)[i];
-	int currpy = (*pxl.py)[i];	
+	int currpx = pxl.px[i];
+	int currpy = pxl.py[i];	
 	
 	if ( pow( currpx - px,2 ) + pow( currpy-py,2) < pow(radius,2))
 	{
@@ -167,6 +167,35 @@ namespace AstroMap {
       {
 	res[i] = (*lcs[i])(m);
       }
+  }
+
+  MapPixLC *  NearestPixelLC( double cx, double cy,
+			      const Map & msample)
+  {
+    
+    int px; int py;
+
+    GetNearestPixel( msample, cx, cy, px, py);
+
+    std::valarray<double> vcoeff(1);
+    vcoeff[0] = 1.0;
+    
+    std::valarray<unsigned> vindex(1);
+    vindex[0] = py * msample.nx + px;
+
+    return new MapPixLC(vindex, vcoeff);
+
+  }
+
+  MapDSNearest::MapDSNearest( DataSeries const & ds , 
+			      Map const & msample)
+  {
+    lcs.resize(ds.size());
+
+    for (unsigned i =0 ; i < ds.size() ; ++i )
+      lcs[i] = NearestPixelLC( ds[i].dX, ds[i].dY, 
+			       msample);
+
   }
 
 }
