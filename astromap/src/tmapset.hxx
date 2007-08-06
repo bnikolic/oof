@@ -33,6 +33,26 @@ namespace AstroMap {
 
   }
 
+  template<class FnT> void TWorldAdd(Map &m , FnT &fn )
+  {
+    double wx;
+    double wy;
+
+    for (unsigned px (0) ; px < m.nx ; ++px)
+      {
+	for (unsigned py(0) ; py < m.ny ; ++py )
+	  {
+	    // Get the world coordinates of this pixel
+	    m.cs->pxtoworld(px , py , wx, wy );
+
+	    m.get(px, py ) += fn(wx, wy);
+	    
+	  }
+
+      }
+
+  }
+
 
   template<class FnT> void TWorldSet(Map &m , FnT &fn , const std::valarray<bool> &  mask )
   {

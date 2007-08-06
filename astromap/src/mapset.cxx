@@ -16,6 +16,11 @@ namespace AstroMap {
     TWorldSet( m  , fn);
   }
 
+  void WorldAdd(Map &m , BNLib::BinaryDD &fn )
+  {
+    TWorldAdd(m, fn);
+  }
+
   void WorldSet(Map &m , BNLib::BinaryDD &fn, std::valarray<bool> const &mask )
   {
     TWorldSet( m  , fn, mask);

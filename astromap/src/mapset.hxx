@@ -18,6 +18,9 @@ namespace AstroMap {
    *  coordinates of each pixel 
    */
   void WorldSet(Map &m , BNLib::BinaryDD &fn );
+  
+  /** \brief Like WorldSet, but add to existing values */
+  void WorldAdd(Map &m , BNLib::BinaryDD &fn );
 
   /*! Additionally, must supplied of pixels to actually set.
    */
