@@ -197,6 +197,55 @@ namespace BNLib {
       }
     }
   }
+
+  void SkewFlatten( const double * cube,
+		    const Extnent3D & ext,
+		    size_t zstart,
+		    size_t zend,
+		    double cx, 
+		    double cy,
+		    double dx,
+		    double dy,
+		    double * res)
+  {
+    const size_t Nx = ext.i;
+    const size_t Ny = ext.j;
+    const size_t NxNy = Nx*Ny;
+
+    for (size_t z = zstart  ; z< zend ; ++z)
+    {
+      for ( size_t j = 0 ; j < Ny ; ++j )
+      {
+	double y = j + cy + dy * (z-zstart);
+	int y_low = (int) floor(y);
+
+	for ( size_t i = 0 ; i < Nx ; ++i)
+	{
+	  double x = i + cx + dx * (z - zstart);
+	  int x_low = (int) floor(x);
+
+	  if ( x_low < 0 ||
+	       x_low +1 >= (int) Nx ||
+	       y_low < 0 ||
+	       y_low +1 >= (int) Ny )
+	  {
+	    res[j*Nx+i] = nan("NaN");
+	  }
+	  else
+	  {
+	    res[j*Nx+i] = 
+	      (x-x_low + y - y_low)/2 * cube[NxNy*z + Nx*(y_low+1)+ x_low+1] +
+	      (x_low +1 - x + y - y_low)/2 * cube[NxNy*z + Nx*(y_low+1)+ x_low] +
+	      (x-x_low + y_low+1 - y )/2 * cube[NxNy*z + Nx*(y_low)+ x_low+1] +
+	      (x_low+1-x + y_low+1 - y )/2 * cube[NxNy*z + Nx*(y_low)+ x_low];
+	  }
+	}
+	
+      }
+    }
+
+  }
+  
 }
 
 

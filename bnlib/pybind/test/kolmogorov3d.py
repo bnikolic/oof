@@ -127,20 +127,10 @@ def PlotTurbulenceIllustrZFlat(g):
 
     "Like PlotTurbulenceIllustr but use the ZFlatten routine"
 
-    Nx, Ny, Nz = g[1]
-
-    ext=pybnlib.Extnent3D()
-    ext.i=Nx
-    ext.j=Ny
-    ext.k=Nz
+    Nx, Ny, Nz = g[1]    
 
     for x in [1,10,100]:
-        res=pybnlib.doubleArray( Nx*Ny)
-        pybnlib.ZFlatten( g[0],
-                          ext,
-                          0,
-                          x,
-                          res)
+        res=ZFlatten(g,x)
 
         na=kolmogorovutils.GridToNumarray( (res, (Nx,Ny,1)))
         na=na[:,:,0]
@@ -149,9 +139,34 @@ def PlotTurbulenceIllustrZFlat(g):
         pylab.matshow(na)
         pylab.savefig("temp/turb3d-zflatsum%03i.eps" % x)
         
-                          
-        
-        
+
+def MkExtent(g):
+
+    Nx, Ny, Nz = g[1]
+
+    ext=pybnlib.Extnent3D()
+    ext.i=Nx
+    ext.j=Ny
+    ext.k=Nz
+
+    return ext
+    
+def ZFlatten(g,x):
+
+    Nx, Ny, Nz = g[1]
+
+    ext=pybnlib.Extnent3D()
+    ext.i=Nx
+    ext.j=Ny
+    ext.k=Nz
+
+    res=pybnlib.doubleArray( Nx*Ny)
+    pybnlib.ZFlatten( g[0],
+                      ext,
+                      0,
+                      x,
+                      res)
+    return res
         
 
     

@@ -112,6 +112,29 @@ namespace BNLib {
 		 size_t zend,
 		 double * res);
 
+  /** \brief Sum close-to horisontal slices
+      
+  Use this to simulate non-vertical sight lines through the
+  cube. Linear interpolation is used. Parameters like ZFlatten plus
+  the following.
+
+  \param cx offset at zstart in the x direction
+  \param cy offset at zstart in the y direction
+  \param dx change in x offset per slice in z direction
+  \param dy change in y offset per sliec in z direction
+
+  */
+  void SkewFlatten( const double * cube,
+		    const Extnent3D & ext,
+		    size_t zstart,
+		    size_t zend,
+		    double cx, 
+		    double cy,
+		    double dx,
+		    double dy,
+		    double * res);
+
+
 }
 
 #endif
