@@ -226,7 +226,7 @@ namespace BNLib {
 
 	  if ( x == i && y== j)
 	  {
-	    res[j*Nx+i] = cube[NxNy*z + Nx*j+ i];
+	    res[j*Nx+i] += cube[NxNy*z + Nx*j+ i];
 	  }
 	  else if ( x_low < 0 ||
 	       x_low +1 >= (int) Nx ||
@@ -237,7 +237,7 @@ namespace BNLib {
 	  }
 	  else
 	  {
-	    res[j*Nx+i] = 
+	    res[j*Nx+i] += 
 	      (x-x_low + y - y_low)/2 * cube[NxNy*z + Nx*(y_low+1)+ x_low+1] +
 	      (x_low +1 - x + y - y_low)/2 * cube[NxNy*z + Nx*(y_low+1)+ x_low] +
 	      (x-x_low + y_low+1 - y )/2 * cube[NxNy*z + Nx*(y_low)+ x_low+1] +
