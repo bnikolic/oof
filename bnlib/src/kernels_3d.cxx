@@ -224,7 +224,11 @@ namespace BNLib {
 	  double x = i + cx + dx * (z - zstart);
 	  int x_low = (int) floor(x);
 
-	  if ( x_low < 0 ||
+	  if ( x == i && y== j)
+	  {
+	    res[j*Nx+i] = cube[NxNy*z + Nx*j+ i];
+	  }
+	  else if ( x_low < 0 ||
 	       x_low +1 >= (int) Nx ||
 	       y_low < 0 ||
 	       y_low +1 >= (int) Ny )

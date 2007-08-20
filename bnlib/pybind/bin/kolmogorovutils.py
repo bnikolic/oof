@@ -31,6 +31,17 @@ def GridToNumarray( gs):
 
     return res
 
+def MkExtent(g):
 
+    "Return the Extnent3D structure from a grid list with dims in second element"
+
+    Nx, Ny, Nz = g[1]
+
+    ext=pybnlib.Extnent3D()
+    ext.i=Nx
+    ext.j=Ny
+    ext.k=Nz
+
+    return ext
 
 
