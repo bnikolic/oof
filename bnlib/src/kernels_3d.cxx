@@ -238,10 +238,10 @@ namespace BNLib {
 	  else
 	  {
 	    res[j*Nx+i] += 
-	      (x-x_low + y - y_low)/2 * cube[NxNy*z + Nx*(y_low+1)+ x_low+1] +
-	      (x_low +1 - x + y - y_low)/2 * cube[NxNy*z + Nx*(y_low+1)+ x_low] +
-	      (x-x_low + y_low+1 - y )/2 * cube[NxNy*z + Nx*(y_low)+ x_low+1] +
-	      (x_low+1-x + y_low+1 - y )/2 * cube[NxNy*z + Nx*(y_low)+ x_low];
+	      (x-x_low)  * ( y - y_low    ) * cube[NxNy*z + Nx*(y_low+1)+ x_low+1] +
+	      (x_low+1-x)* ( y - y_low    ) * cube[NxNy*z + Nx*(y_low+1)+ x_low] +
+	      (x-x_low ) * ( y_low+1 - y  ) * cube[NxNy*z + Nx*(y_low)+ x_low+1] +
+	      (x_low+1-x)* ( y_low+1 - y  ) * cube[NxNy*z + Nx*(y_low)+ x_low];
 	  }
 	}
 	
