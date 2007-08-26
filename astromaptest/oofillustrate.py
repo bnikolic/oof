@@ -3,6 +3,8 @@
 #
 # Make illustrations for an OOF talk
 
+from setup import *
+
 import pybnlib
 import pyplot
 import pyoof
@@ -37,7 +39,7 @@ def PlotZern(nmax=6):
             zfn=pybnlib.ZernPoly(n,l)
             pyplot.WorldSet( m , zfn)
             m.mult( mask)
-
+            #pdb.set_trace()
             implot.plotmap( m,
                             fout="plots/ZPoly-%i%i.png/PNG" % (n,l),
                             colmap="heat")

@@ -86,6 +86,12 @@ namespace AstroMap {
 		   std::vector<double> &g,
 		   std::vector<double> &b)
   {
+    
+    if ( access(fname, R_OK) )
+    {
+      std::cerr<<"Warning: file "<<fname<<" is not readable"<<std::endl;
+      throw "Can not acess colour map";
+    }
 
     std::ifstream  ifile (fname);
 
