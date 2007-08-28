@@ -21,7 +21,8 @@ def MkSimpleTel():
 
     return tel1
 
-def PlotZern(nmax=6):
+def PlotZern(nmax=6,
+             contour=False):
 
     npix = 512
     tel1 = MkSimpleTel()
@@ -39,10 +40,15 @@ def PlotZern(nmax=6):
             zfn=pybnlib.ZernPoly(n,l)
             pyplot.WorldSet( m , zfn)
             m.mult( mask)
-            #pdb.set_trace()
+            if contour:
+                contours=implot.MkChopContours(m, ctype="lin", nlevels=5)
+            else:
+                contours=None
             implot.plotmap( m,
                             fout="plots/ZPoly-%i%i.png/PNG" % (n,l),
-                            colmap="heat")
+                            colmap="heat",
+                            contours=contours,
+                            contcolour=0)
 
 
 def ZPAll():
