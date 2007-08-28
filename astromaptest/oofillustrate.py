@@ -159,3 +159,16 @@ def WhyDefocus(npix=256, zn=7, err=1):
                         bbox=[-0.007, 0.007, -0.007,0.007])
                         
     
+def FarFRes( apmod, wl):
+
+    farf= pyoof.FarF ( apmod.getphase(),wl )
+
+    mamp = pyplot.Map( apmod.getphase() )
+    mphase = pyplot.Map( apmod.getphase() )
+    mpower = pyplot.Map( apmod.getphase() )
+
+
+    farf.Power( apmod.getamp(), apmod.getphase(),  mpower)
+    farf.AmpPhase( apmod.getamp(), apmod.getphase(),  mamp, mphase)
+
+    return mamp, mphase, mpower

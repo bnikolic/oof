@@ -28,12 +28,29 @@ namespace OOF {
     return res.release();
   }
 
+  TelGeometry * MkALMANoSec(void)
+  {
+    std::auto_ptr<CassegrainGeo> res ( new CassegrainGeo() );
+
+    res->PrimRadius = 6.0   ;
+    res->PrimF      = 4.8   ;
+    res->SecRadius  = 0;
+    res->CasF       = 96.0  ;
+
+
+    return res.release();
+  }
+
   TelGeometry * TelSwitch(const char * telname )
   {
     
     if ( ! strcmp( telname , "ALMA" )  )
       {
 	return MkALMA() ;
+      }
+    if ( ! strcmp( telname , "ALMANoSec" )  )
+      {
+	return MkALMANoSec() ;
       }
     else if ( !strcmp (telname, "APEX") ) 
       {
