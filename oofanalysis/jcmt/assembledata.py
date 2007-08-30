@@ -48,8 +48,8 @@ def JCMTArrayToHDU(ar,
                                  ar.shape[1]/2.0 * pixsize_arcsecs, pixsize_arcsecs)
 
     # Convert to radians
-    dx *= math.pi / 180
-    dy *= math.pi / 180
+    dx *= math.pi / 180 / 3600
+    dy *= math.pi / 180 / 3600
 
     coldefs = [
         pyfits.Column ( "DX",   "E",   "radians",
@@ -79,7 +79,8 @@ def JCMTRecAPrimary():
     res.header.update("freq" ,   3e8/850e-6 )
     res.header.update("chopthr", 160)     #need to fix this            
         
-    res.header.update("telesc", "JCMT")
+    #res.header.update("telesc", "JCMT")
+    res.header.update("telesc", "ALMA")
     res.header.update("objsize", 0.0)
     res.header.update("obstype", "AZCHOP")
     res.header.update("Recv", "RECA")
