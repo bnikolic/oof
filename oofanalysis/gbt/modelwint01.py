@@ -11,6 +11,8 @@ import pickle
 
 from itertools import izip
 
+from setup import *
+
 import pyfits
 from  matplotlib import pylab
 
@@ -275,10 +277,13 @@ def PlotClosure():
     measuredir= "oofout0911/s6-l-db-000/z5"
     corrdir   = "oofout0911/s29-l-db-000/z5"
 
-    phase1 = oofplot.PlotZernFile( os.path.join(measuredir ,
-                                       "fitpars.fits"),
-                                   "plots/measuresfc.eps/CPS",
-                                   phaserange=[-1.2,1.2])
+    for x in [ "plots/measuresfc.eps/CPS",
+               "plots/measuresfc.ong/PNG"  ] :
+        phase1 = oofplot.PlotZernFile( os.path.join(measuredir ,
+                                                    "fitpars.fits"),
+                                       x,
+                                       phaserange=[-1.2,1.2])
+    
     i1    = oofplot.PlotIllumFile( os.path.join(measuredir ,
                                                 "fitpars.fits"),
                                    "plots/measureamp.eps.eps/CPS")
@@ -286,10 +291,12 @@ def PlotClosure():
     print "Unweighted RMS  " , pyplot.MapRMS(phase1)
     print "RMS measured : " , pyplot.MapRMS(phase1, i1)
 
-    phase2= oofplot.PlotZernFile( os.path.join(corrdir ,
-                                              "fitpars.fits"),
-                                 "plots/corrmeasuresfc.eps/CPS",
-                                  phaserange=[-1.2,1.2]                                  )
+    for x in [ "plots/corrmeasuresfc.eps/CPS",
+               "plots/corrmeasuresfc.png/PNG"]:
+        phase2= oofplot.PlotZernFile( os.path.join(corrdir ,
+                                                   "fitpars.fits"),
+                                      x,
+                                      phaserange=[-1.2,1.2])
     i2    = oofplot.PlotIllumFile( os.path.join(corrdir ,
                                                 "fitpars.fits"),
                                    "plots/corrmeasureamp.eps/CPS")
