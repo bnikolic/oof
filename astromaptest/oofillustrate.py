@@ -116,7 +116,10 @@ def GenTable(nmax=21):
   """ % ( n, l, zn, oofn, n, l , zn, zn , zn)
   
     
-def WhyDefocus(npix=256, zn=7, err=1):
+def WhyDefocus(npix=256, zn=7, err=1,
+               rnoise=0,
+               pref="plots",
+               valrange=[0,3e5]):
 
     tel1 = MkSimpleTel()
     m = pyplot.Map(npix, npix)
@@ -149,19 +152,28 @@ def WhyDefocus(npix=256, zn=7, err=1):
         farf.Power( apmod.getamp(), apmod.getphase(),  m)
         farf.Power( apmodperf.getamp(), apmodperf.getphase(),  mperf)
 
-        
+        #use this to add random noise:
+        if cdz == 0:
+            maxlevel=mperf.max()
+
+        if rnoise != 0:
+            mnoise=pyplot.Map(npix, npix)
+            pyplot.NormDist(mnoise, maxlevel * rnoise)
+            m.add(mnoise)
         
         implot.plotmap( m,
                         colmap="heat",
-                        fout="plots/LWhydefocux-zn%i-dz%g.png/PNG" % ( zn , cdz ),
+                        fout=os.path.join(pref,
+                                          "LWhydefocux-zn%i-dz%g.png/PNG" % ( zn , cdz ) ),
                         bbox=[-0.007, 0.007, -0.007,0.007],
-                        valrange=[0,3e5])
+                        valrange=valrange)
 
         mperf.mult(-1)
         m.add(mperf)
         implot.plotmap( m,
                         colmap="heat",
-                        fout="plots/LDiffWhydefocux-zn%i-dz%g.png/PNG" % ( zn , cdz ),
+                        fout=os.path.join(pref,
+                                          "LDiffWhydefocux-zn%i-dz%g.png/PNG" % ( zn , cdz )),
                         bbox=[-0.007, 0.007, -0.007,0.007])
                         
     
