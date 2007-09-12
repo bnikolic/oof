@@ -278,7 +278,7 @@ def PlotClosure():
     corrdir   = "oofout0911/s29-l-db-000/z5"
 
     for x in [ "plots/measuresfc.eps/CPS",
-               "plots/measuresfc.ong/PNG"  ] :
+               "plots/measuresfc.png/PNG"  ] :
         phase1 = oofplot.PlotZernFile( os.path.join(measuredir ,
                                                     "fitpars.fits"),
                                        x,

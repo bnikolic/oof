@@ -6,6 +6,8 @@
 import os
 import re
 
+from setup import *
+
 import oofplot
 import pyplot
 
@@ -35,30 +37,33 @@ def Red( dirin, sno):
 
 def Plot():
 
-    p1=oofplot.PlotZernFile( "oofoutday/s456-l-db-000/z5/fitpars.fits" ,
-                             "plots/sfcs0411-456.eps/CPS" )
+    for ext in [ ".eps/CPS",
+                 ".png/PNG"  ]:
 
-    print "RMS:", pyplot.MapRMS(p1)
+        p1=oofplot.PlotZernFile( "oofoutday/s456-l-db-000/z5/fitpars.fits" ,
+                                 "plots/sfcs0411-456" + ext )
 
-    p1=oofplot.PlotZernFile( "oofoutday/s471-l-db-000/z5/fitpars.fits" ,
-                             "plots/sfcs0411-471.eps/CPS" )
+        print "RMS:", pyplot.MapRMS(p1)
 
-    print "RMS:", pyplot.MapRMS(p1)
+        p1=oofplot.PlotZernFile( "oofoutday/s471-l-db-000/z5/fitpars.fits" ,
+                                 "plots/sfcs0411-471" + ext )
 
-    p1=oofplot.PlotZernFile( "oofoutday/s471-l-db-000/z5/offsetpars.fits" ,
-                             "plots/sfcs0411-471-offset.eps/CPS" )
+        print "RMS:", pyplot.MapRMS(p1)
 
-    print "RMS:", pyplot.MapRMS(p1)
+        p1=oofplot.PlotZernFile( "oofoutday/s471-l-db-000/z5/offsetpars.fits" ,
+                                 "plots/sfcs0411-471-offset" + ext )
 
-    p1=oofplot.PlotZernFile( "oofoutday/s492-l-db-000/z5/fitpars.fits" ,
-                             "plots/sfcs0411-492.eps/CPS" )
+        print "RMS:", pyplot.MapRMS(p1)
 
-    print "RMS:", pyplot.MapRMS(p1)
+        p1=oofplot.PlotZernFile( "oofoutday/s492-l-db-000/z5/fitpars.fits" ,
+                                 "plots/sfcs0411-492" + ext)
 
-    p1=oofplot.PlotZernFile( "oofoutday/s492-l-db-000/z5/offsetpars.fits" ,
-                             "plots/sfcs0411-492-offset.eps/CPS" )
+        print "RMS:", pyplot.MapRMS(p1)
 
-    print "RMS:", pyplot.MapRMS(p1)
+        p1=oofplot.PlotZernFile( "oofoutday/s492-l-db-000/z5/offsetpars.fits" ,
+                                 "plots/sfcs0411-492-offset" + ext )
+
+        print "RMS:", pyplot.MapRMS(p1)
 
 
 #oofplot.PlotDir("oofoutday/s471-l-db-000/z5",bbox=[-0.6e-3, 0.4e-3, -0.5e-3, 0.5e-3],
