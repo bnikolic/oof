@@ -152,7 +152,11 @@ def PlotMapsSet(r,
     
 def MPIfRIllus():
 
-    r=RandomSurface(5,0.2,2)
+    r0=RandomSurface(5,0,3)
+    PlotMapsSet(r0, pref="plots/mpifr-pfctsfc",
+                eqrange=True)
+    
+    r=RandomSurface(5,0.2,3)
     PlotMapsSet(r, pref="plots/mpifr-rsfc",
                 eqrange=True)
     NoisyfySet(r, 0.01)
