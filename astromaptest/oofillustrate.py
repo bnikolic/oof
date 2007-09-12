@@ -141,7 +141,8 @@ def WhyDefocus(npix=256, zn=7, err=1,
                               4)
 
     ammperf=pybnmin1.ModelDesc( apmodperf.downcast() )
-
+    
+    bbox= [-0.005, 0.005, -0.005,0.005]
     for cdz in [ 0 , 0.5  , 1 , 2 , 5]:
         amm.getbyname("z4" ).setp(cdz)
         ammperf.getbyname("z4" ).setp(cdz)
@@ -164,8 +165,8 @@ def WhyDefocus(npix=256, zn=7, err=1,
         implot.plotmap( m,
                         colmap="heat",
                         fout=os.path.join(pref,
-                                          "LWhydefocux-zn%i-dz%g.png/PNG" % ( zn , cdz ) ),
-                        bbox=[-0.007, 0.007, -0.007,0.007],
+                                          "LWhydefocux-zn%i-dz%g-n%g.png/PNG" % ( zn , cdz, rnoise ) ),
+                        bbox=bbox,
                         valrange=valrange)
 
         mperf.mult(-1)
@@ -173,8 +174,8 @@ def WhyDefocus(npix=256, zn=7, err=1,
         implot.plotmap( m,
                         colmap="heat",
                         fout=os.path.join(pref,
-                                          "LDiffWhydefocux-zn%i-dz%g.png/PNG" % ( zn , cdz )),
-                        bbox=[-0.007, 0.007, -0.007,0.007])
+                                          "LDiffWhydefocux-zn%i-dz%g-n%g.png/PNG" % ( zn , cdz, rnoise )),
+                        bbox=bbox)
                         
     
 def FarFRes( apmod, wl):
