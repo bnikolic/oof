@@ -7,6 +7,8 @@
 
 import os
 
+import numarray.random_array
+
 from setup import *
 
 import pyplot
@@ -59,9 +61,9 @@ def ModelMaps(apmod,
     return res
     
 
-def ZernPower(zn , dz):
 
-    ""
+def MkApModel(znmax,
+              npix=512):
 
     npix = 512
     tel1 = MkTalkTel()
@@ -69,8 +71,17 @@ def ZernPower(zn , dz):
     apmod = pyoof.MkSimpleAp( tel1,
                               1e-3,
                               npix,
-                              5,
+                              znmax,
                               4)
+    return apmod
+    
+    
+
+def ZernPower(zn , dz):
+
+    ""
+
+    apmod=MkApModel(5)
 
     amm=pybnmin1.ModelDesc( apmod.downcast() )
     amm.getbyname("z%i" % zn).setp(1)
@@ -79,16 +90,54 @@ def ZernPower(zn , dz):
 
     return modmaps
 
+def RandomSurface( znmax , stddev=0.5,dz=1):
+
+    apmod=MkApModel(znmax)
+
+    amm=pybnmin1.ModelDesc( apmod.downcast() )
+
+    n=amm.NTotParam()
+
+    v=numarray.random_array.normal(0,stddev, n-2)
+    for i,x in enumerate(v) :
+        print i
+        amm.getbyname("z%i" % i).setp(x)
+
+    print "Aperture RMS is :" , pyplot.MapRMS(apmod.getphase())
+    modmaps=ModelMaps(apmod, dz)
+
+    return modmaps
+
+def NoisyfySet(r,
+               therm_noise):
+
+    maxlevel=r[0].max()
+    for m in r:
+        mnoise=pyplot.Map( m.nx, m.ny)
+        pyplot.NormDist(mnoise, maxlevel * therm_noise)
+        m.add(mnoise)
+        
+    
+
 def PlotMapsSet(r,
                 pref="plots/temp",
                 post=".png/PNG",
-                s=4e-4):
+                s=4e-4,
+                eqrange=False):
 
     "Plot a set of model maps"
 
     """
-    s: bounding box scale
+    s:       bounding box scale
+    eqrange: if true, plot all maps to same range
     """
+
+    if eqrange:
+        lmax= [ m.max() for m in r]
+        lmin= [ m.min() for m in r]
+        valrange=[ min(lmin), max(lmax) ]
+    else:
+        valrange=None
 
     for i,mid  in enumerate( ["infoc",
                               "-ve",
@@ -96,10 +145,18 @@ def PlotMapsSet(r,
         implot.plotmap(r[i],
                        bbox=[x * s for x in [-1,1,-1,1]] ,
                        fout=pref+mid+post,
-                       colmap="heat")
+                       colmap="heat",
+                       valrange=valrange)
         
 
     
+def MPIfRIllus():
 
+    r=RandomSurface(5,0.2,2)
+    PlotMapsSet(r, pref="plots/mpifr-rsfc",
+                eqrange=True)
+    NoisyfySet(r, 0.01)
+    PlotMapsSet(r, pref="plots/mpifr-rsfc-noise100",
+                eqrange=False)    
 
 #implot.plotmap(r[1], bbox=[x * 4e-4 for x in [-1,1,-1,1]] , colmap="heat")

@@ -146,3 +146,4 @@ CVS
 ./bnlib/pybind/test/temp
 ./dust/doc/Doxyfile
 ./dust/config/compile
+./oofanalysis/simulation/plots
