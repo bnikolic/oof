@@ -5,6 +5,8 @@
 
 import string
 
+from setup import *
+
 import pyxplot
 from pyx import *
 from pyxplot import graph
@@ -98,11 +100,10 @@ def PlotGain( d,
 
     goff  = c.insert(pyxplot.graph.graphxy(width=pyxplot.MNRAS_SC,
                                            ypos =gon.height+0.5,
-                                           x=gon.axes["x"].createlinkaxis(),
-                                          y=pyxplot.axis(r"$\eta_{\rm a}$",
-                                                         xmin=mineff, xmax=maxeff),
+                                           x=graph.axis.linkedaxis(gon.axes["x"]),
+                                           y=pyxplot.axis(r"$\eta_{\rm a}$",
+                                                          xmin=mineff, xmax=maxeff),
                                            ))
-
 
     goff.plot(ProcD(rcpnone),
              [ graph.style.symbol(graph.style.symbol.changesquare),
@@ -112,6 +113,40 @@ def PlotGain( d,
 
 
     c.writetofile("plots/gaincurve.eps")
+    c.writetofile("plots/gaincurve.pdf")
+
+    gon=pyxplot.graph.graphxy(width=pyxplot.MNRAS_SC,
+                              x=pyxplot.axis(r"$E\,$(degrees)",
+                                             xmin=0, xmax=90) ,
+                              y=pyxplot.axis(r"$\eta_{\rm a}$",
+                                             xmin=mineff, xmax=maxeff),
+                              )
+    
+    gon.plot(ProcD(rcpv1),
+             [ graph.style.symbol(graph.style.symbol.changesquare,
+                                  symbolattrs=[deco.filled()]
+                                  ),
+               graph.style.errorbar()
+               ]
+             )
+             
+    gon.writetofile("plots/gaincurve_on.pdf")
+
+    goff  = pyxplot.graph.graphxy(width=pyxplot.MNRAS_SC,
+                                  x=pyxplot.axis(r"$E\,$(degrees)",
+                                                 xmin=0, xmax=90) ,
+                                  y=pyxplot.axis(r"$\eta_{\rm a}$",
+                                                 xmin=mineff, xmax=maxeff),
+                                  )
+
+    goff.plot(ProcD(rcpnone),
+             [ graph.style.symbol(graph.style.symbol.changesquare),
+               graph.style.errorbar()
+               ]
+             )
+    goff.writetofile("plots/gaincurve_off.pdf")    
+    
+  
 
 
 
