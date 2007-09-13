@@ -5,6 +5,9 @@
 
 import pickle
 from itertools import izip
+
+from setup import *
+
 import ooffitconv
 
 
@@ -40,6 +43,7 @@ def plot(pname, width=8):
     unit.set(xscale=1)
     
     g.writetofile("model/%s.eps" % pname)
+    g.writetofile("model/%s.pdf" % pname)    
 
 
 def doplot():
