@@ -5,6 +5,8 @@
 
 import math
 
+from setup import *
+
 
 import pyfits
 import numarray
@@ -31,8 +33,12 @@ def PlotDSs():
     pylab.plot( d.field("time"),
                 d.field("fnu") )
 
+    pylab.xlabel("Time (h)")
+    pylab.ylabel("Tb")    
+
     pylab.savefig("plots/s114-ds.png")
     pylab.savefig("plots/s114-ds.eps")
+    pylab.savefig("plots/s114-ds.pdf")    
     pylab.clf()
 
     pylab.clf()
@@ -41,10 +47,27 @@ def PlotDSs():
 
     pylab.plot( d.field("time")[100:500],
                 d.field("fnu") [100:500])
+    pylab.xlabel("Time (h)")
+    pylab.ylabel("Tb")    
 
     pylab.savefig("plots/s114-ds-zoom.png")
+    pylab.savefig("plots/s114-ds-zoom.pdf")    
+
 
     pylab.clf()
+
+    d=pyfits.open(dbds)[1].data
+
+    pylab.plot( d.field("time")[2700:3100],
+                d.field("fnu") [2700:3100])
+    pylab.xlabel("Time (h)")
+    pylab.ylabel("Tb")        
+
+    pylab.savefig("plots/s114-ds-zoom2.png")
+    pylab.savefig("plots/s114-ds-zoom2.pdf")
+
+
+    pylab.clf()    
 
     d=pyfits.open(origds)[1].data
 

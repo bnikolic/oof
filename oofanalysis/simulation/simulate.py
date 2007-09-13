@@ -98,6 +98,9 @@ def RandomSurface( znmax , stddev=0.5,dz=1):
 
     n=amm.NTotParam()
 
+    #Set taper to -12 db @edge
+    amm.getbyname("sigma").setp(0.36)
+
     v=numarray.random_array.normal(0,stddev, n-2)
     for i,x in enumerate(v) :
         print i
