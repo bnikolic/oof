@@ -124,13 +124,15 @@ def ElHist():
 
     res.sort()
 
-    pyxplot.histogram( [ ( res , "" ) ],
-                       "plots/el-hist.eps",
-                       width=pyxplot.THESIS ,
-                       key=None ,
-                       nbins=9,
-                       xax=pyxplot.axis(r"$\theta\,$(deg)", xmin=0 , xmax=90)
-                       )
+    for fnameout in [ "plots/el-hist.eps",
+                      "plots/el-hist.pdf"]:
+        pyxplot.histogram( [ ( res , "" ) ],
+                           fnameout,
+                           width=pyxplot.THESIS ,
+                           key=None ,
+                           nbins=9,
+                           xax=pyxplot.axis(r"$\theta\,$(deg)", xmin=0 , xmax=90)
+                           )
 
 
     

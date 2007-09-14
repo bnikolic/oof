@@ -152,6 +152,68 @@ def PlotMapsSet(r,
                        valrange=valrange)
         
 
+def PlotAperture(apmod,
+                 pref,
+                 post=".png/PNG"):
+
+    s=12
+    implot.plotmap(pyplot.Map(apmod.getphase()),
+                   bbox=[x * s for x in [-1,1,-1,1]] ,
+                   fout=pref+"-phase"+post ,
+                   colmap="heat",
+                   valrange=None)
+
+    implot.plotmap(pyplot.Map(apmod.getamp()),
+                   bbox=[x * s for x in [-1,1,-1,1]] ,
+                   fout=pref+"-amp"+post ,
+                   colmap="heat",
+                   valrange=None)
+
+def IllustratePerfectAp():
+
+    apmod=MkApModel(2)
+    amm=pybnmin1.ModelDesc( apmod.downcast() )
+
+    #Set taper to -12 db @edge
+    amm.getbyname("sigma").setp(0.36)
+    amm.getbyname("z0").setp(1)
+
+    PlotAperture(apmod,
+                 "plots/perfectap")
+
+def IllustratePerfectApFFT():
+
+    apmod=MkApModel(2)
+    amm=pybnmin1.ModelDesc( apmod.downcast() )
+
+    #Set taper to -12 db @edge
+    amm.getbyname("sigma").setp(0.36)
+    amm.getbyname("z0").setp(1)
+
+    farf=pyoof.FarF ( apmod.getphase(),
+                      1e-3)
+
+    fa= pyplot.Map(apmod.getphase().nx,apmod.getphase().ny)
+    fp= pyplot.Map(apmod.getphase().nx,apmod.getphase().ny)
+
+    farf.AmpPhase( apmod.getamp(),
+                   apmod.getphase(),
+                   fa,
+                   fp)
+    s=4e-4
+    implot.plotmap(fa,
+                   bbox=[x * s for x in [-1,1,-1,1]] ,
+                   fout="plots/perfect_farf_a.png/PNG",
+                   colmap="heat",
+                   valrange=None )
+    implot.plotmap(fp,
+                   bbox=[x * s for x in [-1,1,-1,1]] ,
+                   fout="plots/perfect_farf_p.png/PNG",
+                   colmap="heat",
+                   valrange=None )    
+    
+
+    
     
 def MPIfRIllus():
 
