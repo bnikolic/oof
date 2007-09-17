@@ -90,7 +90,11 @@ def ZernPower(zn , dz):
 
     return modmaps
 
-def RandomSurface( znmax , stddev=0.5,dz=1):
+def RandomSurface( znmax , stddev=0.5,
+                   dzlist=[1.0] ):
+
+    if type(dzlist ) != list:
+        dzlist = [dzlist]
 
     apmod=MkApModel(znmax)
 
@@ -107,9 +111,16 @@ def RandomSurface( znmax , stddev=0.5,dz=1):
         amm.getbyname("z%i" % i).setp(x)
 
     print "Aperture RMS is :" , pyplot.MapRMS(apmod.getphase())
-    modmaps=ModelMaps(apmod, dz)
 
-    return modmaps
+    res= []
+    for dz in dzlist:
+        modmaps=ModelMaps(apmod, dz)
+        res.append(modmaps)
+
+    if len(res) == 1:
+        return res[0], apmod
+    else :
+        return res, apmod
 
 def NoisyfySet(r,
                therm_noise):
@@ -154,14 +165,24 @@ def PlotMapsSet(r,
 
 def PlotAperture(apmod,
                  pref,
-                 post=".png/PNG"):
+                 post=".png/PNG",
+                 contour=False):
 
     s=12
+
+    if contour:
+        contours=implot.MkChopContours(pyplot.Map(apmod.getphase()),
+                                       ctype="lin", nlevels=5)
+    else:
+        contours=None    
+
     implot.plotmap(pyplot.Map(apmod.getphase()),
                    bbox=[x * s for x in [-1,1,-1,1]] ,
                    fout=pref+"-phase"+post ,
                    colmap="heat",
-                   valrange=None)
+                   valrange=None,
+                   contours=contours,
+                   contcolour=0)
 
     implot.plotmap(pyplot.Map(apmod.getamp()),
                    bbox=[x * s for x in [-1,1,-1,1]] ,
@@ -217,15 +238,46 @@ def IllustratePerfectApFFT():
     
 def MPIfRIllus():
 
-    r0=RandomSurface(5,0,3)
+    r0, apmod=RandomSurface(5,0,3)
     PlotMapsSet(r0, pref="plots/mpifr-pfctsfc",
                 eqrange=True)
-    
-    r=RandomSurface(5,0.2,3)
+
+    r, apmod=RandomSurface(5,0.2,3)
     PlotMapsSet(r, pref="plots/mpifr-rsfc",
                 eqrange=True)
+    PlotAperture(apmod ,
+                 "plots/mpifr-aperture-rsfc",
+                 contour=True)
+    
     NoisyfySet(r, 0.01)
     PlotMapsSet(r, pref="plots/mpifr-rsfc-noise100",
-                eqrange=False)    
+                eqrange=False)
+
+def GBTWkSpIllus():
+
+    dzlist = [1, 2,3,5,7,10 ]
+
+    r, apmod=RandomSurface(5,0.2, dzlist)
+
+    PlotAperture(apmod ,
+                 "plots/oofwk-aperture-rsfc",
+                 contour=True)    
+
+    for i, dz in enumerate(dzlist):
+        PlotMapsSet(r[i], pref=("plots/oofwk-%g-rsfc" % dz),
+                    eqrange=True,
+                    s=6e-4)
+    
+        NoisyfySet(r[i], 0.01)
+        PlotMapsSet(r[i],
+                    pref=("plots/oofwk-%g-rsfc-noise100" % dz),
+                    eqrange=False,
+                    s=6e-4)
+
+        NoisyfySet(r[i], 0.02)
+        PlotMapsSet(r[i],
+                    pref=("plots/oofwk-%g-rsfc-noise220" % dz),
+                    eqrange=False,
+                    s=6e-4)        
 
 #implot.plotmap(r[1], bbox=[x * 4e-4 for x in [-1,1,-1,1]] , colmap="heat")
