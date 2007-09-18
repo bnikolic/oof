@@ -1,8 +1,7 @@
-/*
-  Bojan Nikolic
-  $Id: dstomap.hxx,v 1.2 2005/07/26 21:18:47 bnikolic Exp $
-
-  Drizzle a dataseries into a map
+/**
+   \file dstomap.hxx
+   Bojan Nikolic <bojan@bnikolic.co.uk> , <bn204@mrao.cam.ac.uk>
+   Drizzle a dataseries into a map
 */
 
 #ifndef _ASTROMAP_DSTOMAP_HXX__

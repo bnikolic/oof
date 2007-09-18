@@ -1,10 +1,9 @@
-/*
-  Bojan Nikolic
-  $Id: datapoint.hxx,v 1.2 2005/07/02 20:38:09 bnikolic Exp $
+/**
+   \file datapoint.hxx
+   Bojan Nikolic <bojan@bnikolic.co.uk> , <bn204@mrao.cam.ac.uk>
 
-  DataPoint: a vale and vale error associted  with a 2D position
+   DataPoint: a value and value error associted  with a 2D position
 */
-
 #ifndef _ASTROMAP_DATAPOINT_HXX___
 #define _ASTROMAP_DATAPOINT_HXX___
 
