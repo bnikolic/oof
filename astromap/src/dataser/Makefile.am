@@ -6,7 +6,8 @@ libdataser_la_SOURCES= dataseries.hxx dataseries.cxx \
 			datapoint.cxx datapoint.hxx \
 			dsfileops.cxx dsfileops.hxx \
 			dstomap.hxx   dstomap.cxx \
-			mapdseval.cxx mapdseval.hxx
+			mapdseval.cxx mapdseval.hxx \
+			mapdsutils.cxx mapdsutils.hxx
 
 
 libdataser_la_CFLAGS = -Wall
@@ -15,4 +16,4 @@ libdataser_la_CPPFLAGS = -Wall
 libdataser_la_LIBADD = 
 
 include_HEADERS =  dataseries.hxx datapoint.hxx dsfileops.hxx  \
-	        	dstomap.hxx mapdseval.hxx
+	        	dstomap.hxx mapdseval.hxx mapdsutils.hxx
