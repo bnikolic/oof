@@ -44,8 +44,5 @@ def DataSeriesToOOFTable(ds):
         if 0:
             d.field("UFNu")[i] =  ds.getp(i).ufnu
 
-    
-        
-
     return tabout
 

@@ -15,7 +15,10 @@ import pyplot
 import pyoof
 import pybnmin1
 
+import iofits4
 import implot
+import oofdataio
+import oofreduce
 
 
 
@@ -131,8 +134,50 @@ def NoisyfySet(r,
         pyplot.NormDist(mnoise, maxlevel * therm_noise)
         m.add(mnoise)
         
-    
 
+def SaveSet( rlist, dzlist,
+             fnameout):
+
+    tabs=[]
+    for r,dz in zip (rlist, dzlist):
+        ds=pyplot.MapToDSPoss(r)
+        me=pyplot.MapDSNearest(ds, r)
+        me.Calc(r, ds)
+        tabs.append( oofdataio.DataSeriesToOOFTable(ds))
+        tabs[-1].header.update("dz",dz)
+
+    fout=iofits4.PrepFitsOut("")
+    fout[0].header.update("telesc", "ALMA")
+    fout[0].header.update("freq", 3e8/1e-3)    
+    fout.extend(tabs)
+    iofits4.Write( fout,
+                   fnameout ,
+                   overwrite=1)
+    
+    
+def CropFile(fnamein, s ):
+
+    """
+    s=4e-4 is good ...
+    """
+
+    fnameout=fnamein[:-5]+"-crop.fits"
+    print fnameout
+
+    def selfn(d):
+        m1 = numarray.logical_and( d.field("dX") > -s,
+                                   d.field("dX") < s)
+        m2 = numarray.logical_and( d.field("dY") > -s,
+                                   d.field("dY") < s)
+        return numarray.logical_and(m1,m2)
+
+    iofits4.TableSelect(fnamein,
+                        fnameout,
+                        rowselfn= selfn)
+    
+                                   
+                                                                   
+    
 def PlotMapsSet(r,
                 pref="plots/temp",
                 post=".png/PNG",
