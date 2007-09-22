@@ -169,6 +169,16 @@ namespace AstroMap {
       }
   }
 
+  void MapDSEvalBase::Calc( Map const &m, 
+			    DataSeries & res)
+  {
+
+    for (unsigned i =0 ; i < lcs.size() ; ++i )
+    {
+      res[i].fnu = (*lcs[i])(m);
+    }
+  }
+
   MapPixLC *  NearestPixelLC( double cx, double cy,
 			      const Map & msample)
   {

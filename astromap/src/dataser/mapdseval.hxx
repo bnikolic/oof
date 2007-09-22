@@ -112,6 +112,13 @@ namespace AstroMap {
      */
     void Calc( Map const &m, 
 	       std::vector<double> & res);
+    
+    /**
+       Store the evaluated interpolations into a the "fnu" element of
+       a dataseries structure -- useful for simulations etc.
+    */
+    void Calc( Map const &m, 
+	       DataSeries & res);
 
   };
   

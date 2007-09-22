@@ -134,6 +134,11 @@ namespace std {
 	{
 	 	return (*self)[i];
 	}
+	
+	size_t length(void)
+	{
+		return self->size();
+	}	
 
 
 }
