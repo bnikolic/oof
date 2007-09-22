@@ -14,6 +14,7 @@ from setup import *
 import pyplot
 import pyoof
 import pybnmin1
+import pyfits
 
 import iofits4
 import implot
@@ -198,21 +199,43 @@ def CropFile(fnamein, s ):
     iofits4.TableSelect(fnamein,
                         fnameout,
                         rowselfn= selfn)
+
+def NoisifyFile(fnamein, fnameout,
+                fnoise_therm):
+    
+    fin=pyfits.open(fnamein)
+    
+    nlevel=fnoise_therm * fin[1].data.field("fnu").max()
+
+    for i in range(1,len(fin)) :
+        l=len(fin[i].data.field("fnu"))
+        nv=fin[i].data.field("fnu")+  numarray.random_array.normal(0,
+                                                                   nlevel,
+                                                                   l)
+        fin[i].data.field("fnu").setreal(nv)
+
+    iofits4.Write( fin, fnameout , overwrite=1)
     
                                    
-def GenSimSet(dirout):
+def GenSimSet(dirout,
+              stddev=0.0):
 
     dz=2e-3
 
     fnameout=os.path.join(dirout, "sim.fits")
 
-    res, apmod=RandomSurface(4, dzlist=dz,  propdefoc=True)
+    res, apmod=RandomSurface(4, dzlist=dz,  propdefoc=True,
+                             stddev=stddev)
 
     SaveSet( res,
              [0 , -dz, dz],
              fnameout)
 
-    CropFile(fnameout, 6e-4)
+    CropFile(fnameout, 10e-4)
+
+    PlotAperture(apmod,
+                 os.path.join(dirout, "aperture"))
+                 
     
 def PlotMapsSet(r,
                 pref="plots/temp",
@@ -359,6 +382,20 @@ def GBTWkSpIllus():
         PlotMapsSet(r[i],
                     pref=("plots/oofwk-%g-rsfc-noise220" % dz),
                     eqrange=False,
-                    s=6e-4)        
+                    s=6e-4)
+
+def PlotNoiseSims():
+
+    for x in ["01", "05", "10"]:
+        m1=pyplot.FitsMapLoad( "oofout/sim-%s-000/z4/aperture.fits" % x,
+                               2)
+
+        implot.plotmap(m1,
+                       bbox=[xm * 6 for xm in [-1,1,-1,1]] ,
+                       fout="plots/noise%sz4ap.png/PNG" % x,
+                       colmap="heat",
+                       valrange=[-1.0,1.0] )    
+
+    
 
 #implot.plotmap(r[1], bbox=[x * 4e-4 for x in [-1,1,-1,1]] , colmap="heat")
