@@ -19,6 +19,7 @@ import iofits4
 import implot
 import oofdataio
 import oofreduce
+import oofplot
 
 
 
@@ -28,11 +29,7 @@ def MkTalkTel():
     Toy telescope for use in talks
     """
     
-    tel1=pyoof.PrimeFocusGeo()                         
-    tel1.PrimRadius=10
-    tel1.PrimF=1
-
-    return tel1
+    return pyoof.MkALMA()
 
 
 def ModelMaps(apmod,
@@ -62,6 +59,29 @@ def ModelMaps(apmod,
     amm.getbyname("z4" ).setp(z4orig)
     
     return res
+
+def DefocModelMaps(apmod, dz, telgeo):
+
+    "Generate defocus model maps with proper defocus"
+
+    farf= pyoof.FarF ( apmod.getphase(),
+                       1e-3)
+
+    res = []
+    for cdz in [ 0 , dz, -1* dz]:
+        m=pyplot.Map( apmod.getamp().nx,
+                      apmod.getamp().ny)
+        mp=pyplot.Map( apmod.getphase() )
+
+        od=pyoof.ObsDefocus(telgeo, apmod.getamp(), cdz,
+                            1e-3)
+        od.DePhase(mp)
+                            
+        farf.Power( apmod.getamp(), mp,
+                    m)
+        res.append(m)
+    
+    return res    
     
 
 
@@ -94,7 +114,8 @@ def ZernPower(zn , dz):
     return modmaps
 
 def RandomSurface( znmax , stddev=0.5,
-                   dzlist=[1.0] ):
+                   dzlist=[1.0],
+                   propdefoc=False):
 
     if type(dzlist ) != list:
         dzlist = [dzlist]
@@ -117,7 +138,10 @@ def RandomSurface( znmax , stddev=0.5,
 
     res= []
     for dz in dzlist:
-        modmaps=ModelMaps(apmod, dz)
+        if propdefoc:
+            modmaps=DefocModelMaps(apmod, dz, MkTalkTel())
+        else:
+            modmaps=ModelMaps(apmod, dz)
         res.append(modmaps)
 
     if len(res) == 1:
@@ -176,7 +200,19 @@ def CropFile(fnamein, s ):
                         rowselfn= selfn)
     
                                    
-                                                                   
+def GenSimSet(dirout):
+
+    dz=2e-3
+
+    fnameout=os.path.join(dirout, "sim.fits")
+
+    res, apmod=RandomSurface(4, dzlist=dz,  propdefoc=True)
+
+    SaveSet( res,
+             [0 , -dz, dz],
+             fnameout)
+
+    CropFile(fnameout, 6e-4)
     
 def PlotMapsSet(r,
                 pref="plots/temp",

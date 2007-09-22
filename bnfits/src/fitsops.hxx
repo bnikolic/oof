@@ -32,6 +32,9 @@ namespace BNFits {
   /*! Return the dimension of the image */
   std::vector<long> ImgDims(FitsF & file);
 
+  /*! As above but avoid silly copy */
+  void ImgDims(FitsF & file, std::vector<long> & res);
+
   /*! Copy a column from file f1 to file f2 */
   void CopyCol( FitsF &f1,
 		FitsF &f2,

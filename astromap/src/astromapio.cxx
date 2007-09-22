@@ -23,7 +23,14 @@ namespace AstroMap {
 
     try {
       // Get the dimensions of the map;
-      std::vector<long> imgdims = ImgDims(fin);
+
+      std::vector<long> imgdims;
+      ImgDims(fin, imgdims);
+
+      if ( imgdims.size() < 2)
+      {
+	throw FIOExc("none" , "Zero dimensions in image", 0);
+      }
 
       // Load the coordinate system
       CoordSys * cs = FitsCSLoad( fin );

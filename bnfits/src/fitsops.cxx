@@ -78,6 +78,19 @@ namespace BNFits {
     return res;
   }
 
+  void ImgDims(FitsF & file, 
+	       std::vector<long> & res)
+  {
+    int status;
+    unsigned naxis = NAxis(file);
+    res.resize(naxis);
+    fits_get_img_size( file, 
+		       naxis,
+		       &res[0],
+		       &status);
+
+  }
+
   void CopyCol( FitsF &f1,
 		FitsF &f2,
 		unsigned incolnum,

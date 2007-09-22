@@ -51,6 +51,9 @@ def plotmap(mapp,
 
     """
 
+    # Reinterpret as definitely pyplot type
+    mapp=pyplot.Map(mapp)
+
     if pgbeg:
         pyplot.cpgbeg(0,fout,0,0)
         pyplot.cpgpap(width,1.0)
