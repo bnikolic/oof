@@ -24,11 +24,11 @@ dbds=os.path.join( dd11, "s%i-l-db.fits" %sno )
 
 #pyfits.open(dbds)[1].data.field("fnu")
 
-def PlotDSs():
+def PlotDSs(hdu=1):
 
     pylab.clf()
 
-    d=pyfits.open(dbds)[1].data
+    d=pyfits.open(dbds)[hdu].data
 
     pylab.plot( d.field("time"),
                 d.field("fnu") )
@@ -36,10 +36,9 @@ def PlotDSs():
     pylab.xlabel("Time (h)")
     pylab.ylabel("Tb")    
 
-    pylab.savefig("plots/s114-ds.png")
-    pylab.savefig("plots/s114-ds.eps")
-    pylab.savefig("plots/s114-ds.pdf")    
-    pylab.clf()
+    for ext  in ["png" , "eps", "pdf" ] :
+        pylab.savefig("plots/s%i-%i-ds.%s" % (sno, hdu, ext) )
+
 
     pylab.clf()
 
