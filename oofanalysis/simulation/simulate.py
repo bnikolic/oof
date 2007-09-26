@@ -396,6 +396,21 @@ def PlotNoiseSims():
                        colmap="heat",
                        valrange=[-1.0,1.0] )    
 
+def PlotCorrelationMatrix(dirin):
+
+    from matplotlib import pylab
+    
+    fnamein=os.path.join(dirin, "cvmatrix.csv")
+    fnameout=os.path.join(dirin,"plots", "cvmatrix.png")    
+
+    m=bnmin1io.LoadCVSFile(fnamein)
+    pylab.clf()
+    pylab.matshow(m)
+    pylab.colorbar()
+    pylab.savefig(fnameout)
+
+
+
     
 
 #implot.plotmap(r[1], bbox=[x * 4e-4 for x in [-1,1,-1,1]] , colmap="heat")

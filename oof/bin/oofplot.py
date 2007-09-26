@@ -20,7 +20,8 @@ import oofcol
 def PlotDir(dirnamein, bbox=None, hardcopy=False, odir="plots",
             fwhm=None , extent = None, npix= None,
             ncont=None,
-            decorate=True):
+            decorate=True,
+            obsdir=None):
 
     "Make all the relevant plots"
 
@@ -28,9 +29,15 @@ def PlotDir(dirnamein, bbox=None, hardcopy=False, odir="plots",
 
     If( hardcopy) make hardcopy friendly plots
 
-    """
+    if obsdir is set look for observed data sets here
 
-    obsdsfname=  oofcol.getpar(dirnamein,  "fitinfo.fits", "obsfilename")
+    """
+    if obsdir != None:
+        rname=        obsdsfname=  oofcol.getpar(dirnamein,  "fitinfo.fits", "obsfilename")
+        obsdsfname=  os.path.join( obsdir, os.path.basename(rname))
+    else:
+        obsdsfname=  oofcol.getpar(dirnamein,  "fitinfo.fits", "obsfilename")
+        
     npix= npix or int(oofcol.getpar(dirnamein,  "fitinfo.fits", "npix") )
     oversample= float( oofcol.getpar(dirnamein,  "fitinfo.fits", "oversample") )
     fwhm=fwhm or float(oofcol.getpar(dirnamein,  "fitinfo.fits", "ds_fwhm") )
