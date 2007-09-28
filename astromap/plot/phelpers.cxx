@@ -53,10 +53,10 @@ namespace AstroMap {
     const double cmax = 0.9;
 
     std::vector<double> lum (4);
-    lum[0] = 0;     lum[1] = locut;     lum[2] = hicut;     lum[4] = 1;
+    lum[0] = 0;     lum[1] = locut;     lum[2] = hicut;     lum[3] = 1;
 
     std::vector<double> cval (4);
-    cval[0] = cmax;     cval[1] = cmax;     cval[2] = cmin;     cval[4] = cmin;
+    cval[0] = cmax;     cval[1] = cmax;     cval[2] = cmin;     cval[3] = cmin;
 
     SetColourTable( lum, cval, cval , cval, 1, 0.5);
     
