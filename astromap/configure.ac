@@ -3,7 +3,7 @@ AC_INIT(ASTROMAP, 1.0.2 , bojan@bnikolic.co.uk)
 AC_CONFIG_AUX_DIR(config)
 
 
-AM_INIT_AUTOMAKE(ASTROMAP, 1.0.2, bojan@bnikolic.co.uk)
+AM_INIT_AUTOMAKE(ASTROMAP, 1.0.3, bojan@bnikolic.co.uk)
 
 AC_LIBTOOL_DLOPEN
 AC_DISABLE_STATIC
