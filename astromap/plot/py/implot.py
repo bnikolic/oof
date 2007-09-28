@@ -50,6 +50,8 @@ def plotmap(mapp,
 
 
     """
+    mapp  = pyplot.Map(mapp)
+    mapp.cs= mapp.cs.Clone()
 
     if pgbeg:
         pyplot.cpgbeg(0,fout,0,0)

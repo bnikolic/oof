@@ -81,3 +81,31 @@
 	return self;
 	}
 }
+%extend AstroMap::CoordSys {
+
+  double  x_pxtoworld(double px , double py ) {
+	double wx; double wy;
+	(*self).pxtoworld(px, py , wx , wy);
+	return wx;
+	}
+
+  double  y_pxtoworld(double px , double py ) {
+	double wx; double wy;
+	(*self).pxtoworld(px, py , wx , wy);
+	return wy;
+	}
+
+  double  x_worldtopx(double wx, double wy ) {
+	double px ; double py;
+	(*self).worldtopx( wx , wy, px, py );
+	return px;
+	}
+
+  double  y_worldtopx(double wx, double wy ) {
+	double px ; double py;
+	(*self).worldtopx( wx , wy, px, py );
+	return py;
+	}
+
+
+}
