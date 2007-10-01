@@ -135,4 +135,15 @@ make install &&\
 cd ..
 
 
+* Just make sure all is compiled and installed:
 
+(cd bnlib && make install)
+(cd bnfits && make install)
+(cd astromap && make install)
+(cd bnmin1 && make install)
+(cd oof && make install)
+
+* For distribution :
+
+(cd astromap && make dist-bzip2)
+(cd oof && make dist-bzip2)
