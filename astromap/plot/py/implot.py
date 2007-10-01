@@ -50,6 +50,8 @@ def plotmap(mapp,
 
 
     """
+    mapp  = pyplot.Map(mapp)
+    mapp.cs= mapp.cs.Clone()
 
     # Reinterpret as definitely pyplot type
     mapp=pyplot.Map(mapp)
