@@ -1,8 +1,8 @@
-/*!
-  Bojan Nikolic
-  $Id: dsfileops.hxx,v 1.1 2005/07/02 20:38:09 bnikolic Exp $
-
-  input  / output operations on dataseries
+/**
+   \file dsfileops.hxx
+   
+   Bojan Nikolic <bojan@bnikolic.co.uk> , <bn204@mrao.cam.ac.uk>
+   input  / output operations on dataseries
 
 */
 

@@ -21,36 +21,37 @@ def pb(oc,i):
 
 
 oldlmm = []
-for nzern in range(1,2):
+if 0 :
+    for nzern in range(1,2):
 
-    print "Nzern = %i " % nzern
+        print "Nzern = %i " % nzern
 
-    oc=oofreduce.MkObsCompare("/home/bnikolic/temp/s114-l-db.fits", nzern=nzern)
+        oc=oofreduce.MkObsCompare("/home/bnikolic/temp/s114-l-db.fits", nzern=nzern)
 
-    lmm=pybnmin1.LMMin(oc.downcast())
+        lmm=pybnmin1.LMMin(oc.downcast())
 
-    m1 = pybnmin1.ChiSqMonitor()
-    m1.thisown = 0
-    lmm.AddMon( m1)
+        m1 = pybnmin1.ChiSqMonitor()
+        m1.thisown = 0
+        lmm.AddMon( m1)
 
-    lmm.getbyname("beamgainf").dofit=1
-
-
-    if len(oldlmm) != 0 :
-        bnmin1io.FLoad(lmm, oldlmm[-1])
-    
-    lmm.solve()
-
-    pyoof.WriteAperture(oc, "!t5.%iap.fits"%nzern)
-
-    fitname = "t5.%ifit.fits" % nzern
-    bnmin1io.FSave(lmm, fitname)
-    oldlmm.append(fitname)
+        lmm.getbyname("beamgainf").dofit=1
 
 
+        if len(oldlmm) != 0 :
+            bnmin1io.FLoad(lmm, oldlmm[-1])
+
+        lmm.solve()
+
+        pyoof.WriteAperture(oc, "!t5.%iap.fits"%nzern)
+
+        fitname = "t5.%ifit.fits" % nzern
+        bnmin1io.FSave(lmm, fitname)
+        oldlmm.append(fitname)
 
 
-if 0:
+
+
+if 1:
     tel1=pyoof.TelSwitch("GBT")
     m = pyplot.Map(128,128)
     pyplot.MkApCS(m, 70)

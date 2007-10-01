@@ -1,8 +1,9 @@
-/*
-  Bojan Nikolic
-  $Id: dataseries.hxx,v 1.5 2005/09/06 00:18:28 bnikolic Exp $
+/**
+   \file dataseries.hxx
 
-  Data series support
+   Bojan Nikolic <bojan@bnikolic.co.uk> , <bn204@mrao.cam.ac.uk>
+
+   Data series support
 */
 
 #ifndef _ASTROMAP_DATASERIES_HXX__

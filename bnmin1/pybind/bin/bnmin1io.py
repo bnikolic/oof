@@ -5,6 +5,7 @@
 
 import pickle
 import math
+import string
 
 import pyfits
 import numarray
@@ -142,7 +143,22 @@ def CVCVSWrite(cvm, m , fnameout , norm=0, wikiform=0 ):
         fout.write(linesep)
         
 
-    
+def LoadCVSFile(fnamein):
+
+    r=[]
+
+    for l in open(fnamein):
+        ld= string.split(l, ",")
+        if ld[0] == " ":
+            print ld[1:]
+        else:
+            rr=[ float(x) for x in ld[1:] ]
+            r.append(rr)
+
+    return numarray.array(r)
+            
+        
+        
         
 
 
