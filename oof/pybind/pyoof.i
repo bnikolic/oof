@@ -109,3 +109,48 @@
 
 
 }
+
+%extend AstroMap::Map {
+
+    double min() {
+	return (*self).min();
+	}
+
+    double max() {
+	return (*self).max();
+	}
+
+    double sum() {
+	return (*self).sum();
+	}
+
+     void mult ( Map const & m ) {
+	(*self) *= m;
+     }
+
+     void mult ( double m ) {
+	(*self) *= m;
+     }
+
+     void add ( Map const & m ) {
+	(*self) += m;
+     }
+
+     void add ( double x ) {
+	(*self) += x;
+     }
+
+     void copy( Map const & m ) {
+	(*self) = m ;
+     }
+
+    double getv  ( unsigned x, unsigned y) {
+	return 	self->get(x,y);
+     } 
+
+     void set  ( unsigned x, unsigned y, double val) {
+	self->get(x,y)=val;
+     }
+	
+
+}

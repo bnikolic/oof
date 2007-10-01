@@ -29,7 +29,13 @@ namespace AstroMap {
 
       if ( imgdims.size() < 2)
       {
-	throw FIOExc("none" , "Zero dimensions in image", 0);
+	throw FIOExc("none" , "Too few dimensions in image", 0);
+      }
+      
+      if ( imgdims[0] == 0 || imgdims[1]  ==0 )
+      {
+	throw FIOExc(FName(fin) , 
+		     "Zero length dimension in image", 0);
       }
 
       // Load the coordinate system

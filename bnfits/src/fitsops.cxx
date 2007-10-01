@@ -65,15 +65,9 @@ namespace BNFits {
 
   std::vector<long> ImgDims(FitsF & file)
   {
-    int status;
-    unsigned naxis = NAxis(file);
-
-    std::vector<long> res(naxis);
-
-    fits_get_img_size( file, 
-		       naxis,
-		       &res[0],
-		       &status);
+   
+    std::vector<long> res;
+    ImgDims(file, res);
     
     return res;
   }
@@ -81,13 +75,21 @@ namespace BNFits {
   void ImgDims(FitsF & file, 
 	       std::vector<long> & res)
   {
-    int status;
+    int status = 0 ;
     unsigned naxis = NAxis(file);
+
     res.resize(naxis);
-    fits_get_img_size( file, 
-		       naxis,
-		       &res[0],
-		       &status);
+
+    if ( fits_get_img_size( file, 
+			    naxis,
+			    &res[0],
+			    &status) )
+    {
+      throw (FIOExc(FName(file) ,
+		    "Could not retrieve the dimensions of the image.",
+		    status ));
+
+    }
 
   }
 
