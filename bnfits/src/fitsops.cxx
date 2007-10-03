@@ -65,7 +65,7 @@ namespace BNFits {
 
   std::vector<long> ImgDims(FitsF & file)
   {
-    int status;
+    int status = 0;
     unsigned naxis = NAxis(file);
 
     std::vector<long> res(naxis);
