@@ -47,6 +47,23 @@ namespace BNLib {
     { 0, 1, 1,  1, 1, 0 }
   };
 
+  /** Define edges on the cube
+   */
+  static edge cubeedges[12] = {
+    {0,0,0, 1,0,0 },
+    {0,0,0, 0,1,0 },
+    {1,1,0, 1,0,0 },
+    {1,1,0, 0,1,0 },
+    {0,0,1, 1,0,1 },
+    {0,0,1, 0,1,1 },
+    {1,1,1, 1,0,1 },
+    {1,1,1, 0,1,1 },
+    {0,0,0, 0,0,1 },
+    {1,0,0, 1,0,1 },
+    {0,1,0, 0,1,1 },
+    {1,1,0, 1,1,1 } };
+
+
   static edge cubebodydiagas[4] = {
     { 0, 0, 0,  1, 1, 1 }, 
     { 1, 0, 0,  0, 1, 1 }, 
@@ -109,11 +126,84 @@ namespace BNLib {
 
   }
 
+  template<class T>
+  void TKolmogorovCorners3DV2(T *cube,
+			      size_t N,
+			      RDist &rfn)
+  {
+    
+    const size_t N2 = size_t(pow(N,2));
+
+    const double edgestddev      = 0.50455385;
+    const double facediagstddev  = 1.67713741;
+    const double bodydiagstddev  = 2.30686591;
+
+    // Iterate on edges first
+    for (size_t l = 0 ; l < 12 ; ++l)
+    {
+      double f = edgestddev * rfn.sample() * 0.5;
+      
+      size_t dx1 = cubeedges[l].i1 *(N-1) + 
+	cubeedges[l].j1 *N *(N-1) + 
+	cubeedges[l].k1 *N2 *(N-1);
+
+      size_t dx2 = cubeedges[l].i2 *(N-1) +
+	cubeedges[l].j2 *N *(N-1) + 
+	cubeedges[l].k2 *N2*(N-1);
+      
+      // Note that we are making this an "even" process, i.e. both
+      // points connected by the edge are assigned with same sign
+      cube[dx1] += f;
+      cube[dx2] += f;      
+
+    }
+    
+    for (size_t l = 0 ; l < 12 ; ++l)
+    {
+      double f = facediagstddev * rfn.sample() * 0.5;
+      
+      size_t dx1 = cubefacediags[l].i1 *(N-1) + 
+	cubefacediags[l].j1 *N *(N-1) + 
+	cubefacediags[l].k1 *N2 *(N-1);
+
+      size_t dx2 = cubefacediags[l].i2 *(N-1) +
+	cubefacediags[l].j2 *N *(N-1) + 
+	cubefacediags[l].k2 *N2*(N-1);
+
+      cube[dx1] += f;
+      cube[dx2] -= f;
+    }
+
+    for (size_t l = 0 ; l < 4 ; ++l)
+    {
+      double f = bodydiagstddev * rfn.sample() * 0.5;
+      
+      size_t dx1 = cubebodydiagas[l].i1 *(N-1) +
+	cubebodydiagas[l].j1 *N *(N-1) + 
+	cubebodydiagas[l].k1 *N2*(N-1) ;
+      size_t dx2 = cubebodydiagas[l].i2 * (N-1) +
+	cubebodydiagas[l].j2 * N * (N-1) + 
+	cubebodydiagas[l].k2 * N2 * (N-1);
+
+      cube[dx1] += f;
+      cube[dx2] -= f;
+
+    }
+
+  }
+
   void KolmogorovCorners3D(double *cube,
 			   size_t N,
 			   RDist &rfn)
   {
     return TKolmogorovCorners3D(cube, N, rfn);
+  }
+
+  void KolmogorovCorners3DV2(double *cube,
+			   size_t N,
+			   RDist &rfn)
+  {
+    return TKolmogorovCorners3DV2(cube, N, rfn);
   }
 
   size_t Kolmogorov3D( double * cube,
