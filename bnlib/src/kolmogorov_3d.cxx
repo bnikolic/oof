@@ -83,56 +83,6 @@ namespace BNLib {
   {
     
     const size_t N2 = size_t(pow(N,2));
-    
-    const double facediagstddev  = 1.09186593;
-    
-    const double bodydiagstddev  = 2.8520905;
-    const double bodydiag_even_stddev  = 0.71572797;
-    
-    for (size_t l = 0 ; l < 12 ; ++l)
-    {
-      double f = facediagstddev * rfn.sample() * 0.5;
-      
-      size_t dx1 = cubefacediags[l].i1 *(N-1) + 
-	cubefacediags[l].j1 *N *(N-1) + 
-	cubefacediags[l].k1 *N2 *(N-1);
-
-      size_t dx2 = cubefacediags[l].i2 *(N-1) +
-	cubefacediags[l].j2 *N *(N-1) + 
-	cubefacediags[l].k2 *N2*(N-1);
-
-      cube[dx1] += f;
-      cube[dx2] -= f;
-    }
-
-    for (size_t l = 0 ; l < 4 ; ++l)
-    {
-      double f = bodydiagstddev * rfn.sample() * 0.5;
-      double g = bodydiag_even_stddev * rfn.sample() ;
-      
-      size_t dx1 = cubebodydiagas[l].i1 *(N-1) +
-	cubebodydiagas[l].j1 *N *(N-1) + 
-	cubebodydiagas[l].k1 *N2*(N-1) ;
-      size_t dx2 = cubebodydiagas[l].i2 * (N-1) +
-	cubebodydiagas[l].j2 * N * (N-1) + 
-	cubebodydiagas[l].k2 * N2 * (N-1);
-
-      cube[dx1] += f;
-      cube[dx2] -= f;
-
-      cube[dx1] += g;
-      cube[dx2] += g;
-    }
-
-  }
-
-  template<class T>
-  void TKolmogorovCorners3DV2(T *cube,
-			      size_t N,
-			      RDist &rfn)
-  {
-    
-    const size_t N2 = size_t(pow(N,2));
 
     const double edgestddev      = 1.23589948;
     const double facediagstddev  = 1.43145595;
@@ -197,13 +147,6 @@ namespace BNLib {
 			   RDist &rfn)
   {
     return TKolmogorovCorners3D(cube, N, rfn);
-  }
-
-  void KolmogorovCorners3DV2(double *cube,
-			   size_t N,
-			   RDist &rfn)
-  {
-    return TKolmogorovCorners3DV2(cube, N, rfn);
   }
 
   size_t Kolmogorov3D( double * cube,
