@@ -264,6 +264,22 @@ def Corner3DV2():
     print r
     return la.solve_linear_equations(a,r)
 
+def Corner3DV3():
+
+    "Test only"
+
+    # This corresponds to even term on edges and odd terms on face
+    # diagonals and body diagonals.
+    a = [ [ 0,     3.0/2 , 0.5 ],
+          [ 3.0/2, 2.0   , 0.5 ],
+          [ 3.0/2, 3.0/2 ,  1  ]]
+    a=numarray.array(a)
+    f=PlainKolmogorovSpec2D
+
+    r=numarray.array( [ f(1), f(2.0**0.5), f(3.0**0.5)])
+    print r
+    return la.solve_linear_equations(a,r)
+
 
 def RotateList(l):
 
