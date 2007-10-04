@@ -270,9 +270,9 @@ def Corner3DV3():
 
     # This corresponds to even term on edges and odd terms on face
     # diagonals and body diagonals.
-    a = [ [ 0,     3.0/2 , 0.5 ],
-          [ 3.0/2, 2.0   , 0.5 ],
-          [ 3.0/2, 3.0/2 ,  1  ]]
+    a = [ [ 1.0  ,     3.0/2 , 1.0/2 ],
+          [ 3.0/2, 2.0   , 1.0/2 ],
+          [ 3.0/2, 3.0/2 ,  1.0  ]]
     a=numarray.array(a)
     f=PlainKolmogorovSpec2D
 

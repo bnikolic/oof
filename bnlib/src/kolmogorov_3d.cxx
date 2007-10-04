@@ -134,9 +134,9 @@ namespace BNLib {
     
     const size_t N2 = size_t(pow(N,2));
 
-    const double edgestddev      = 0.50455385;
-    const double facediagstddev  = 1.67713741;
-    const double bodydiagstddev  = 2.30686591;
+    const double edgestddev      = 1.23589948;
+    const double facediagstddev  = 1.43145595;
+    const double bodydiagstddev  = 2.13492543;
 
     // Iterate on edges first
     for (size_t l = 0 ; l < 12 ; ++l)
