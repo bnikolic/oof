@@ -19,6 +19,12 @@ namespace BNLib {
   class RDist;
 
   /**
+     Allow user to pass options to the 3d generation routine.
+   */
+  enum Kolmgorov3DOptions { KInitialEFB =0 ,
+			    KInitialFBB =1 };
+
+  /**
      Set up the eight initial corner values for 3d turbulence
      generation.
 
@@ -50,7 +56,8 @@ namespace BNLib {
 		       size_t Nx,
 		       size_t Ny,
 		       size_t Nz,
-		       RDist &rfn) throw (const char *);
+		       RDist &rfn,
+		       Kolmgorov3DOptions opt=KInitialEFB) throw (const char *);
 
   /**
      As Kolmogorov3D, but generate on single precision ("float") grid.

@@ -8,13 +8,14 @@
 import pybnlib
 
 def GenerateKolmogorov3D( Nx,Ny,Nz,
-                          seed=None):
+                          seed=None,
+                          opt=pybnlib.KInitialEFB):
 
     grid=pybnlib.doubleArray( Nx*Ny*Nz)
     rfn=pybnlib.NormDistZM(1.0)
     if seed != None:
         rfn.reseed(seed)
-    pybnlib.Kolmogorov3D( grid, Nx,Ny,Nz, rfn)
+    pybnlib.Kolmogorov3D( grid, Nx,Ny,Nz, rfn, opt)
     return ( grid,
              ( Nx,Ny,Nz) )
 
