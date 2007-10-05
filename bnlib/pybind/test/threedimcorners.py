@@ -47,13 +47,18 @@ def DoCompare(ver="V1"):
     print "    Got : %f " % ( Sfn( 0 , 2, ver=ver )[0] )
     print "    Got : %f " % ( Sfn( 6 , 8, ver=ver )[0] )
     print "    Got : %f " % ( Sfn( 24 , 26, ver=ver )[0] )
+    print "    Got : %f " % ( Sfn( 0 , 18, ver=ver )[0] )    
     
     print "*** face diagonal: expect,  " , PlainKolmogorovSpec2D( 2.0**0.5)
     print "    Got : %f " % ( Sfn( 0 , 8, ver=ver )[0] )
-    print "    Got : %f " % ( Sfn( 18 , 26, ver=ver )[0] )    
+    print "    Got : %f " % ( Sfn( 2 , 6, ver=ver )[0] )    
+    print "    Got : %f " % ( Sfn( 18 , 26, ver=ver )[0] )
+    print "    Got : %f " % ( Sfn( 20 , 24, ver=ver )[0] )        
 
     print "*** body diagonal: expect,  " , PlainKolmogorovSpec2D( 3.0**0.5)
-    print "    Got : %f " % ( Sfn( 0 , 26, ver=ver )[0] )    
+    print "    Got : %f " % ( Sfn( 0 , 26, ver=ver )[0] )
+    print "    Got : %f " % ( Sfn( 8 , 18, ver=ver )[0] )
+    print "    Got : %f " % ( Sfn( 2 , 24, ver=ver )[0] )    
 
     
 
