@@ -43,11 +43,14 @@ def getpar(dirin, parfile , parname, extno=1,
 
     dat=pyfits.open(fnamein)[extno].data
 
-    sres = dat.field(parcol).search(parname)
-    if len( sres[0] ) == 0:
-        raise "Parameter %s not found" % parname
+    parmask = ( dat.field(parcol) == parname )
 
-    parindex = sres[0][0]
+    if sum(parmask)  == 0:
+        raise "Parameter %s not found" % parname
+    elif sum(parmask) > 1:
+        raise "More then one parameter %s found" % parname
+
+    parindex = parmask.argmax()
 
     return dat.field(valcol)[parindex]
 
