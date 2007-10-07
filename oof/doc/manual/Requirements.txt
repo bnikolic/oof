@@ -1,8 +1,9 @@
 
 Required compilers:
 
-* C, C++ and Fortran compilers are required. It appears that gfortran
-  4.1 *does not work*, so g77 is required.
+* C, C++ and Fortran compilers are required. GCC versions 3 and 4 in
+  routines use. It appears that gfortran 4.1 *does not work*, so g77
+  is required.
 
 Pre-required packages for the OOF holography software:
 
@@ -23,3 +24,14 @@ Pre-required packages for the OOF holography software:
 * Boost C++ libraries v. 1.30.0 or later
 
 * CFitsIO
+
+Following Python Libraries:
+
+* numarray
+
+* pyfits
+
+  ** Note: Problems have been reported with pyfits + numpy. If pyfits
+     V1.1 and numpy is installed then pyfits will use numpy by
+     default. This is the pyfits+numpy configuration and it is not
+     backward compatible with pyfits+numarray

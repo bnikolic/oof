@@ -1,0 +1,6 @@
+
+(cd astromap && make dist-bzip2)
+(cd oof && make dist-bzip2)
+
+
+
