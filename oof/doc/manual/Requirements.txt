@@ -1,4 +1,8 @@
 
+Build system:
+
+* Standard autotools build system is used (autoconf/automake/libtool). 
+
 Required compilers:
 
 * C, C++ and Fortran compilers are required. GCC versions 3 and 4 in
@@ -7,7 +11,7 @@ Required compilers:
 
 Pre-required packages for the OOF holography software:
 
-* Python 2.4
+* Python 2.4 or later
 
 * FFTW v.2 
 

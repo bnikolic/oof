@@ -1,4 +1,7 @@
 
+(cd bnlib    && make dist-bzip2)
+(cd bnfits   && make dist-bzip2)
+(cd bnmin1   && make dist-bzip2)
 (cd astromap && make dist-bzip2)
 (cd oof && make dist-bzip2)
 

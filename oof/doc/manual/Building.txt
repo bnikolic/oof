@@ -95,45 +95,6 @@ cd ..
 User Build:
 
 
-export set OOFPREFIX=/home/bn204/d/p/bnprog-oof-disttest
-export set PYTHON=python2.4
-
-export set CPPFLAGS="${CPPFLAGS} -I${OOFPREFIX}/include"
-export set CFLAGS="${CFLAGS} -I${OOFPREFIX}/include" 
-export set SWIGFLAGS="-I${OOFPREFIX}/include" 
-export set LDFLAGS="${LDFLAGS} -L${OOFPREFIX}/lib -L/usr/lib64"
-
-tar xvjf BNLIB-1.0.tar.bz2 && \
-cd BNLIB-1.0  && \
-./configure --prefix=${OOFPREFIX} && \
-make install &&\
-cd ..
-
-tar xvjf BNFITS-1.0.tar.bz2 && \
-cd BNFITS-1.0 && \
-./configure --prefix=${OOFPREFIX} && \
-make install &&\
-cd ..
-
-tar xvjf ASTROMAP-1.0.2.tar.bz2 && \
-cd ASTROMAP-1.0.2 && \
-./configure --prefix=${OOFPREFIX} && \
-make &&\
-make install &&\
-cd ..
-
-tar xvjf BNMIN1-1.0.tar.bz2 && \
-cd BNMIN1-1.0  && \
-./configure --prefix=${OOFPREFIX} && \
-make install &&\
-cd ..
-
-tar xvjf OOF-1.0.1.tar.bz2 && \
-cd OOF-1.0.1  && \
-./configure --prefix=${OOFPREFIX} && \
-make install &&\
-cd ..
-
 
 * Just make sure all is compiled and installed:
 
