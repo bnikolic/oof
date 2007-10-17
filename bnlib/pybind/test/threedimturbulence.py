@@ -95,8 +95,7 @@ def Il2(N,ol,
         dofacel=True,
         doedgel=True,
         shrink=1.0,
-        lim=None,
-        usev2=False):
+        lim=None):
 
     """
     For example, show cubes necessary to calculte parents by:
@@ -143,11 +142,7 @@ def Il2(N,ol,
             ci.next()
 
         if doface:
-            if usev2 :
-                fi=pybnlib.K3FaceIterV2(N,N,N, o)
-            else:
-                fi=pybnlib.K3FaceIter(N,N,N, o)
-            
+            fi=pybnlib.K3FaceIterV2(N,N,N, o)
             cnt =0             
             while fi.inBounds():
                 i,j,k= fi.getc()
@@ -164,10 +159,7 @@ def Il2(N,ol,
 
         if doedge:
             print "***EDGE***"
-            if usev2 :
-                ei=pybnlib.K3EdgeIterV2(N,N,N, o)
-            else:
-                ei=pybnlib.K3EdgeIter(N,N,N, o)
+            ei=pybnlib.K3EdgeIterV2(N,N,N, o)
             cnt=0
             while ei.inBounds():
                 i,j,k= ei.getc()
