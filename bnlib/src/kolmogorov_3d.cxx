@@ -289,6 +289,8 @@ namespace BNLib {
 			Kolmgorov3DOptions opt) throw (const char *)
   {
 
+    memset( cube, 0 , Nx*Ny*Nz*sizeof(T) );
+
     K3CheckParams(Nx,Ny,Nz);
 
     // Order of iteration (if using subgrid method than this will not
