@@ -363,3 +363,8 @@ p3=numarray.array([7,-1, -1, -1, -1 ,-1, -1 , -1])
 a,r=GenLinSystem(p3)
 x=la.solve_linear_equations(a,r)
 r2=la.mlab.innerproduct(a,x)
+
+
+#ps=vtk.vtkPoints()
+#ps.InsertPoint(0,1.1,1,1)
+#et=vtk.vtkEdgeTable()
