@@ -9,12 +9,14 @@ import numarray
 
 from setup import *
 
+import pybnlib
 import kolmogorovutils
 
 def FaceStructure(n=100):
     res=[]
     for seed in range(1,n):
-        g=kolmogorovutils.GridToNumarray(kolmogorovutils.GenerateKolmogorov3D(5,5,5, seed  ))
+        g=kolmogorovutils.GridToNumarray(kolmogorovutils.GenerateKolmogorov3D(5,5,5,
+                                                                              seed))
 
         s1= (g[2,2,4]- g[2,2,0])**2
         s2= (g[2,4,2]- g[2,0,2])**2
@@ -25,7 +27,8 @@ def FaceStructure(n=100):
 def EdgeStructure(n=1000):
     res=[]
     for seed in range(1,n):
-        g=kolmogorovutils.GridToNumarray(kolmogorovutils.GenerateKolmogorov3D(5,5,5, seed  ))
+        g=kolmogorovutils.GridToNumarray(kolmogorovutils.GenerateKolmogorov3D(5,5,5,
+                                                                              seed))
 
         s1= (g[2,0,4]- g[2,0,0])**2
         s2= (g[2,4,0]- g[2,0,0])**2

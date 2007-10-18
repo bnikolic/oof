@@ -299,13 +299,14 @@ namespace BNLib {
 
     if (Nx == Ny && Nx == Nz )
     {
-      if ( opt  == KInitialEFB )
-      {
-	TKolmogorovCorners3D(cube, Nx, rfn);
-      }
-      else if ( opt == KInitialFBB )
+
+      if ( opt & KInitialFBB )
       {
 	TKolmogorovCorners3DFBB(cube, Nx, rfn);
+      }
+      else
+      {
+	TKolmogorovCorners3D(cube, Nx, rfn);
       }
     }
     else
@@ -361,7 +362,16 @@ namespace BNLib {
 	  size_t np;
 	  const K3DParent * cpv = ci.FilteredParentP(np);
 
-	  double val = TKAverageParents(cube, Nx, Ny, cpv, np);
+	  double val;
+	  if ( opt & KWeightedInterp ) 
+	  {
+	    K3DParent cp = {i,j,k};
+	    val = TKWeightedAverageParents(cube, Nx, Ny, cpv, cp, np);
+	  }
+          else
+	  {
+	    val = TKAverageParents(cube, Nx, Ny, cpv, np);
+	  }
 	  
 	  val += cvc( np ) * rfn.sample();
 	  
@@ -385,7 +395,16 @@ namespace BNLib {
 	  size_t np;
 	  const K3DParent * fpv = fi.FilteredParentP(np);
 	  
-	  double val = TKAverageParents(cube, Nx, Ny, fpv, np);
+	  double val;
+	  if ( opt & KWeightedInterp ) 
+	  {
+	    K3DParent cp = {i,j,k};
+	    val = TKWeightedAverageParents(cube, Nx, Ny, fpv, cp, np);
+	  }
+          else
+	  {
+	    val= TKAverageParents(cube, Nx, Ny, fpv, np);
+	  }
 	  
 	  val += fvc( np ) * rfn.sample();
 	  
@@ -408,7 +427,16 @@ namespace BNLib {
 	  size_t np;
 	  const K3DParent * epv = ei.FilteredParentP(np);
 	  
-	  double val = TKAverageParents(cube, Nx, Ny, epv, np);
+	  double val;
+	  if ( opt & KWeightedInterp ) 
+	  {
+	    K3DParent cp = {i,j,k};
+	    val = TKWeightedAverageParents(cube, Nx, Ny, epv, cp, np);
+	  }
+          else
+	  {
+	    val = TKAverageParents(cube, Nx, Ny, epv, np);
+	  }
 
 	  val += evc( np ) * rfn.sample();
 	  

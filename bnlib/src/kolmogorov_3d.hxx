@@ -22,7 +22,8 @@ namespace BNLib {
      Allow user to pass options to the 3d generation routine.
    */
   enum Kolmgorov3DOptions { KInitialEFB =0 ,
-			    KInitialFBB =1 };
+			    KInitialFBB =1,
+                            KWeightedInterp = 2};
 
   /**
      Set up the eight initial corner values for 3d turbulence
