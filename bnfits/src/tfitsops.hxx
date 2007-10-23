@@ -1,8 +1,8 @@
-/*
-  Bojan Nikolic
-  $Id: tfitsops.hxx,v 1.7 2006/04/02 19:55:12 bnikolic Exp $
-
-  Templated fits file operations 
+/**
+   \file tfitsops.hxx
+   Bojan Nikolic <bojan@bnikolic.co.uk>
+   
+   Templated fits file operations 
 */
 
 #ifndef _BNFITS_TFITSOPS_HXX__
@@ -39,11 +39,6 @@ namespace BNFits {
     int status =0;
 
     std::vector<long> imgdims = ImgDims( file);
-
-    long firstpix[2];
-    firstpix[0]=1;
-    firstpix[1]=1;
-
     std::valarray<long> fpixel(  imgdims.size() );
     fpixel = 1;
 
@@ -54,7 +49,6 @@ namespace BNFits {
     if ( fits_write_pix( file,
 			 datatype,
 			 &fpixel[0],
-			 //firstpix,
 			 data.size(),
 			 &data[0],
 			 &status ) )
