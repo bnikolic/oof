@@ -58,7 +58,7 @@ namespace AstroMap {
       }
   }
 
-  Map * FitsMapLoad ( const char * fnamein, int extno) 
+  Map * FitsMapLoad ( const char * fnamein, int extno) throw (BNFits::FIOExc)
   {
     using namespace BNFits;
     

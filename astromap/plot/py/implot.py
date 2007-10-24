@@ -158,8 +158,12 @@ def PlotSynthesisFile(fnamein,
 
     if not colour:
         plotmap(m1, fnameout,
-                contours=MkSynthesisContours(m1, nlevels=7))
+                contours=MkSynthesisContours(m1, nlevels=nc))
     else:
+        if fnameout.find("png") > 0 :
+            contcolour=1
+        else:
+            contcolour=0            
         plotmap(m1, fnameout, colmap="heat",
-                contours=MkSynthesisContours(m1, nlevels=7),
-                contcolour=0)
+                contours=MkSynthesisContours(m1, nlevels=nc),
+                contcolour=contcolour)

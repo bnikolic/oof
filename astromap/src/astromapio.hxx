@@ -7,8 +7,10 @@
 #define __ASTROMAP_ASTROMAPIO_HXX__
 
 #include <bnfits_fwd.hxx>
+#include <fitserr.hxx>
 
 #include <vector>
+
 
 namespace AstroMap {
 
@@ -19,7 +21,7 @@ namespace AstroMap {
 
   Map * FitsMapLoad ( BNFits::FitsF &fout );
 
-  Map * FitsMapLoad ( const char * fnamein, int extno);
+  Map * FitsMapLoad ( const char * fnamein, int extno) throw (BNFits::FIOExc);
 
   // Writing routines
 
