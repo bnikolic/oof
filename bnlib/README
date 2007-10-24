@@ -6,6 +6,10 @@ libtoolize
 automake-1.9 -a
 autoconf
 
+aclocal 
+libtoolize
+automake -a 
+autoconf
 
 configure as:
 

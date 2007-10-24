@@ -1,5 +1,4 @@
-# Bojan Nikolic
-# $Id: implot.py,v 1.13 2006/06/06 20:10:46 bnikolic Exp $
+# Bojan Nikolic <bojan@bnikolic.co.uk>
 #
 # Routines for plotting maps
 
@@ -128,3 +127,39 @@ def MkChopContours( m, step=0.5 , nlevels=5, ctype="log"):
         contours.extend( [ m.min() * i/float(nlevels) for i in range(nlevels)  ] )
 
     return contours
+
+def MkSynthesisContours( m , step=0.5, nlevels=5):
+
+    "Make contours which look good on synthesis maps"
+
+    """
+    Positive and negatives scales are identical
+    """
+
+    contours =       [ m.max() * step**i for i in range(nlevels)  ]
+    contours.extend( [ -m.max() * step**i for i in range(nlevels)  ])
+
+    return contours
+
+def PlotSynthesisFile(fnamein,
+                      fnameout,
+                      nc=7,
+                      ext=1,
+                      colour=False):
+
+    "Plot an aperture synthesis map from file"
+    
+    """
+    nc is the number of contours
+    """
+
+    m1=pyplot.FitsMapLoad(fnamein ,
+                          ext)
+
+    if not colour:
+        plotmap(m1, fnameout,
+                contours=MkSynthesisContours(m1, nlevels=7))
+    else:
+        plotmap(m1, fnameout, colmap="heat",
+                contours=MkSynthesisContours(m1, nlevels=7),
+                contcolour=0)
