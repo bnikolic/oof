@@ -1,7 +1,7 @@
 /*
   \file astromap.hxx
 
-  Bojan Nikolic
+  Bojan Nikolic <bojan@bnikolic.co.uk>, <bn204@mrao.cam.ac.uk>
 
 */
 #ifndef _ASTROMAP_ASTROMAP_HXX__
@@ -79,6 +79,9 @@ namespace AstroMap {
     /// In-place square root of the elements
     void sqrt(void);    
 
+    /// Return the maximum value in the map that is finite, i.e., not
+    /// a nan or inf
+    void min_max_fin(double & minval, double &maxval);
 
   };
 

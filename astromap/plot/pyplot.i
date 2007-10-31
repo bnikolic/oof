@@ -51,6 +51,7 @@ namespace std {
 }
 
 %apply int & OUTPUT { int &pxOUT, int &pyOUT };
+%apply double & OUTPUT { double & minval, double & maxval};
 
 %include "../src/astromap.hxx"
 %include "../src/astromapio.hxx"

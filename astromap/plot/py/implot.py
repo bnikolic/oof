@@ -75,11 +75,11 @@ def plotmap(mapp,
         pyplot.SetFileColourTab(colmap)
 
     if valrange == None:
-        valrange = (mapp.min() , mapp.max() )
+        valrange = mapp.min_max_fin()
     if valrange[0] == None:valrange[0]= mapp.min()         
     if valrange[1] == None:valrange[1]= mapp.max() 
         
-        
+    print valrange
     if plotwedge:
         pyplot.cpgwedg("RI",1,2, valrange[0] , valrange[1], " ")
         

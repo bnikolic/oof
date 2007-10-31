@@ -78,6 +78,34 @@ namespace AstroMap {
     (*dynamic_cast<MapBase * >(this)) = std::sqrt(*this);    
   }
 
+  void Map::min_max_fin(double & minval, double &maxval)
+  {
+    double rmax, rmin;
+    size_t i =0 ;
+    while ( ! std::isfinite (  (*this)[i] ) )
+    {
+      ++i;
+    }
+    rmax=rmin=  (*this)[i] ;
+
+    for (  ; i < size() ; ++i)
+    {
+      double x = (*this)[i];
+      if ( std::isfinite ( x ) && x < rmin )
+      {
+	rmin= x;
+      }
+      if ( std::isfinite ( x ) && x > rmax )
+      {
+	rmax=x;
+      }
+      
+    }
+    minval=rmin;
+    maxval=rmax;
+
+  }
+
   Map * Clone (Map &m)
   {
     return new Map( m.nx, m.ny, m.cs->Clone());
