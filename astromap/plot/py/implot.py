@@ -145,20 +145,34 @@ def PlotSynthesisFile(fnamein,
                       fnameout,
                       nc=7,
                       ext=1,
-                      colour=False):
+                      colour=False,
+                      zoom=None):
 
     "Plot an aperture synthesis map from file"
     
     """
     nc is the number of contours
+
+    if zoom > 1, plot only that fraction of the map
     """
 
     m1=pyplot.FitsMapLoad(fnamein ,
                           ext)
 
+    if  zoom > 1:
+        zoom = 1.0 /zoom
+        mapp=m1
+        bbox=[ mapp.cs.x_pxtoworld(mapp.nx * 0.5 * (1-zoom) ,mapp.ny * 0.5 * (1-zoom)),
+               mapp.cs.x_pxtoworld(mapp.nx * 0.5 * (1+zoom) ,mapp.ny * 0.5 * (1-zoom)),
+               mapp.cs.y_pxtoworld(mapp.nx * 0.5 * (1-zoom) ,mapp.ny * 0.5 * (1-zoom)),
+               mapp.cs.y_pxtoworld(mapp.nx * 0.5 * (1-zoom) ,mapp.ny * 0.5 * (1+zoom))]
+    else:
+        bbox=None
+    
     if not colour:
         plotmap(m1, fnameout,
-                contours=MkSynthesisContours(m1, nlevels=nc))
+                contours=MkSynthesisContours(m1, nlevels=nc),
+                bbox=bbox)
     else:
         if fnameout.find("png") > 0 :
             contcolour=1
@@ -166,4 +180,5 @@ def PlotSynthesisFile(fnamein,
             contcolour=0            
         plotmap(m1, fnameout, colmap="heat",
                 contours=MkSynthesisContours(m1, nlevels=nc),
-                contcolour=contcolour)
+                contcolour=contcolour,
+                bbox=bbox)
