@@ -1,5 +1,4 @@
-# Bojan Nikolic
-# $Id: oofreduce.py,v 1.16 2005/09/12 01:07:35 bnikolic Exp $
+# Bojan Nikolic <bojan@bnikolic.co.uk>,   <bn204@mrao.cam.ac.uk>
 #
 # Main OOF reduction script
 

@@ -1,7 +1,4 @@
-#
-# Bojan Nikolic
-#
-# $Id: ooffitconv.py,v 1.6 2006/02/18 19:30:03 bnikolic Exp $
+# Bojan Nikolic <bojan@bnikolic.co.uk>,   <bn204@mrao.cam.ac.uk>
 #
 # Routines to convert OOF fits between various formats
 

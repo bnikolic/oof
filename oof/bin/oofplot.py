@@ -1,5 +1,4 @@
-# Bojan Nikolic
-# $Id: oofplot.py,v 1.18 2007/01/13 16:50:45 bnikolic Exp $
+# Bojan Nikolic <bojan@bnikolic.co.uk>,   <bn204@mrao.cam.ac.uk>
 #
 # Various utilities for plotting OOF data
 

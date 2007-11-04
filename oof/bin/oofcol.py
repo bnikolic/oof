@@ -1,5 +1,4 @@
-# Bojan Nikolic
-# $Id: oofcol.py,v 1.4 2006/03/04 16:18:09 bnikolic Exp $
+# Bojan Nikolic <bojan@bnikolic.co.uk>,   <bn204@mrao.cam.ac.uk>
 #
 # Various routines to help with collating oof data
 
