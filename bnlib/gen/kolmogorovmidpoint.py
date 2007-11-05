@@ -188,6 +188,14 @@ def ShowRequiredVariances():
                             [1, 1, 1] ])
     print 5,  MidPointVariance( fc5, fp5)**0.5
 
+    print "Face iterator, four parent"
+    fc4 = numarray.array( [0.5, 0.5, 1])
+    fp4 = numarray.array( [ [0, 0, 1],
+                            [0, 1, 1],
+                            [1, 0, 1],
+                            [1, 1, 1] ])
+    print 4,  MidPointVariance( fc4, fp4)**0.5    
+
     print "Edge iterator : "
     ec6 = numarray.array( [0.5, 1, 1])
     ep6 = numarray.array( [ [0, 1, 1],

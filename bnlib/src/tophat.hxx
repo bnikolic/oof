@@ -1,7 +1,9 @@
-/*
-  Bojan Nikolic
+/**
+   \file tophat.hxx
+   
+   Bojan Nikolic <bn204@mrao.cam.ac.uk>, <bojan@bnikolic.co.uk>
 
-  A 2-d tophat functions
+   A 2-d tophat functions
 */
 
 #ifndef _BNLIB_TOPHAT_HXX__

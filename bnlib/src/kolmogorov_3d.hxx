@@ -26,10 +26,11 @@ namespace BNLib {
                             KWeightedInterp = 2};
 
   /**
-     Set up the eight initial corner values for 3d turbulence
+     \brief Set up the eight initial corner values for 3d turbulence
      generation.
 
-     In this instance only support a fully symetric cube.
+     In this instance only support a fully symetric cube. This uses
+     the Edge-Face-Body algorithm.
   */
   void KolmogorovCorners3D(double *cube,
 			   size_t N,

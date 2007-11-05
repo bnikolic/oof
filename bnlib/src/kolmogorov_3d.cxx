@@ -163,7 +163,8 @@ namespace BNLib {
       cube[dx2] += f;      
 
     }
-    
+
+    // Next iterate on body diagonals
     for (size_t l = 0 ; l < 12 ; ++l)
     {
       double f = facediagstddev * rfn.sample() * 0.5;
@@ -179,7 +180,8 @@ namespace BNLib {
       cube[dx1] += f;
       cube[dx2] -= f;
     }
-
+    
+    // Finally on body diagonals
     for (size_t l = 0 ; l < 4 ; ++l)
     {
       double f = bodydiagstddev * rfn.sample() * 0.5;
