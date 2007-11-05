@@ -66,6 +66,26 @@ def BodyCorner(n, samples):
         
            
          
+def FaceStruct(n, samples):
+
+    h=n/2
+    n1=n-1
+
+    l = [ [ [h,h,n1] , [h,h,0] ]
+          ]
+    return CubeStructure( n, samples, l )
+
+def FaceQStruct(n , samples):
+
+    q = n/4
+    h = n/2
+
+    l = [ [ [h,h, h+q] , [h,h,h-q] ]
+          ]
+    return CubeStructure( n, samples, l )
+    
+    
+    
 
 def FaceStructure(n=100):
     res=[]
