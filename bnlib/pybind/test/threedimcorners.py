@@ -4,10 +4,9 @@
 #
 # Test the three dimensional corner geration function
 
-
-import sys ; sys.path.extend(["/home/bnikolic/p/bnprog-devel-main/"+x for x in ["bin", "lib"] ])
-
 import numarray
+
+from setup import *
 
 import pybnlib
 
