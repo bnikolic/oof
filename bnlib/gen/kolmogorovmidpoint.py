@@ -309,6 +309,37 @@ def PrintCubeFaceDiagonals():
             tuple(x[0]+x[1]))
 
     
+def MatrixToTex(a):
 
+    "Format a matrix for inclusion into Tex"
+
+    rows, cols= a.shape
+
+    print ( r"\begin{array}{%s}" % ( "c" * cols ) )
+
+    for i in range(rows):
+        out = ""
+        for j in range(cols):
+            out += ( " %g " % a[i,j])
+            if j != cols-1:
+                out +=   "&"
+            else:
+                out +=   r"\\"
+        print out
+
+    print ( r"\end{array}")
+
+def VectorToTex(v):
+
+    print ( r"\begin{array}{c}" )
+
+    for i in range(len(v)):
+        print (r"%g \\" % v[i] )
+
+    print ( r"\end{array}")
+    
+    
+
+            
 
 
