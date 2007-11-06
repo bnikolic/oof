@@ -1,8 +1,9 @@
-/*
-  Bojan Nikolic
+/**
+   \file lcmaps.hxx
 
-  
-  Linear combinations of maps
+   Bojan Nikolic <bojan@bnikolic.co.uk> , <bn204@mrao.cam.ac.uk>
+
+   Linear combinations of maps
 */
 #ifndef _ASTROMAP_LCMAPS_HXX__
 #define _ASTROMAP_LCMAPS_HXX__

@@ -1,7 +1,9 @@
-/*
-  Bojan Nikolic
+/**
+   \file convolve.hxx
 
-  Tools for convolving maps together
+   Bojan Nikolic <bojan@bnikolic.co.uk> , <bn204@mrao.cam.ac.uk>
+
+   Tools for convolving maps together
 
 */
 #ifndef _ASTROMAP_CONVOLVE_HXX__

@@ -1,4 +1,4 @@
-/*
+/**
   \file astromap.hxx
 
   Bojan Nikolic <bojan@bnikolic.co.uk>, <bn204@mrao.cam.ac.uk>

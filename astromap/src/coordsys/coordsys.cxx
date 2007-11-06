@@ -1,6 +1,6 @@
-/*
-  Bojan Nikolic
-  $Id: coordsys.cxx,v 1.1 2005/06/09 13:44:22 bnikolic Exp $
+/**
+   \file coordsys.cxx
+   Bojan Nikolic <bojan@bnikolic.co.uk> , <bn204@mrao.cam.ac.uk>
 
 */
 

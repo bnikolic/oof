@@ -1,7 +1,7 @@
 /**
    \file pixiterators.hxx
 
-   Bojan Nikolic
+   Bojan Nikolic <bojan@bnikolic.co.uk> , <bn204@mrao.cam.ac.uk>
 
    Iterating on pixels 
 */

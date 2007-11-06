@@ -1,7 +1,9 @@
-/*
-  Bojan Nikolic
+/**
+   \file tmapset.hxx
 
-  Templated functions to set maps
+   Bojan Nikolic <bojan@bnikolic.co.uk> , <bn204@mrao.cam.ac.uk>
+
+   Templated functions to set maps
 */
 
 #ifndef _ASTROMAP_TMAPSET_HXX__

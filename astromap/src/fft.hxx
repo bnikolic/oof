@@ -1,7 +1,9 @@
-/*
-  Bojan Nikolic
+/**
+   \file fft.hxx
+   
+   Bojan Nikolic <bojan@bnikolic.co.uk> , <bn204@mrao.cam.ac.uk>
 
-  Support for FFT's
+   Support for FFT's
 
 */
 #ifndef _AstroMap_FFT_HXX__

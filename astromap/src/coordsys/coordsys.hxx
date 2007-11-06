@@ -1,7 +1,7 @@
-/*
-  Bojan Nikolic
-  $Id: coordsys.hxx,v 1.4 2005/07/03 16:15:06 bnikolic Exp $
-
+/**
+   \file   coordsys.hxx
+   
+   Bojan Nikolic <bojan@bnikolic.co.uk> , <bn204@mrao.cam.ac.uk>
   
 */
 #ifndef _ASTROMAP_COORDSYS_HXX__

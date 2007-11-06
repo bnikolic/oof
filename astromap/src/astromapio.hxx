@@ -1,7 +1,9 @@
-/*
-  Bojan Nikolic
+/**
+   \file astromapio.hxx
 
-  Input/Output routines for astromap
+   Bojan Nikolic <bojan@bnikolic.co.uk> , <bn204@mrao.cam.ac.uk>
+
+   Input/Output routines for astromap
 */
 #ifndef __ASTROMAP_ASTROMAPIO_HXX__
 #define __ASTROMAP_ASTROMAPIO_HXX__
