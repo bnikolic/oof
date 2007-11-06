@@ -149,6 +149,52 @@ def MidPointVariance(pos, parlist,
 
     return requiredvar -interpvar
     
+
+def MidPointRot( pos, parlist , **kwargs):
+
+    "Rotate the parlist to ensure optimum solution"
+
+    """
+    Need to have this to deal with non-equal-distant interpolation
+    """
+
+    res = []
+    parlist= parlist.tolist()
+    
+    for i in range(len(parlist)):
+        r=MidPointVariance(pos, numarray.array(parlist), **kwargs)
+        res.append(r)
+        parlist= [list(parlist[-1])]+parlist[0:-1]
+
+    return res
+        
+c8= numarray.array( [0.5, 0.5, 0.5])
+p8= numarray.array( [ [1, 0, 0],
+                      [1, 1, 0],
+                      [0, 1, 0],
+                      [0, 0, 0],
+                      [1, 0, 1],
+                      [1, 1, 1],
+                      [0, 1, 1],
+                      [0, 0, 1]
+                      ])
+    
+
+fc6 = numarray.array( [0.5, 0.5, 1])
+fp6 = numarray.array( [ [0.5, 0.5, 0.5],
+                        [0, 0, 1],
+                        [0, 1, 1],
+                        [1, 0, 1],
+                        [1, 1, 1],
+                        [0.5, 0.5, 1.5] ])
+
+fc5 = numarray.array( [0.5, 0.5, 1])
+fp5 = numarray.array( [ [0.5, 0.5, 0.5],
+                        [0, 0, 1],
+                        [0, 1, 1],
+                        [1, 0, 1],
+                        [1, 1, 1] ])
+
     
 def ShowRequiredVariances():
 
@@ -156,36 +202,14 @@ def ShowRequiredVariances():
 
     print "Normal eight parents at vertices of the cube"
 
-    c8= numarray.array( [0.5, 0.5, 0.5])
-    p8= numarray.array( [ [1, 0, 0],
-                          [1, 1, 0],
-                          [0, 1, 0],
-                          [0, 0, 0],
-                          [1, 0, 1],
-                          [1, 1, 1],
-                          [0, 1, 1],
-                          [0, 0, 1]
-                          ])
     print 8 , MidPointVariance( c8, p8)**0.5
 
     print "Normal six parent for face iterator"
 
-    fc6 = numarray.array( [0.5, 0.5, 1])
-    fp6 = numarray.array( [ [0.5, 0.5, 0.5],
-                            [0, 0, 1],
-                            [0, 1, 1],
-                            [1, 0, 1],
-                            [1, 1, 1],
-                            [0.5, 0.5, 1.5] ])
+
     print 6,  MidPointVariance( fc6, fp6)**0.5
 
     print "Face iterator, five parent"
-    fc5 = numarray.array( [0.5, 0.5, 1])
-    fp5 = numarray.array( [ [0.5, 0.5, 0.5],
-                            [0, 0, 1],
-                            [0, 1, 1],
-                            [1, 0, 1],
-                            [1, 1, 1] ])
     print 5,  MidPointVariance( fc5, fp5)**0.5
 
     print "Face iterator, four parent"
