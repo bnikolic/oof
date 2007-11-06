@@ -69,7 +69,7 @@ namespace BNLib {
       k = dk + ( fcount % 4 ? 1 : -1 ) * ci.origin();
       break;
     default:
-      throw "Logic error";
+      throw "Logic error in UpdateFace";
     }
   }
 
@@ -128,7 +128,7 @@ namespace BNLib {
 	p.k = k;
 	break;      
       default:
-	throw "Logic error";
+	throw "Logic error in ParentFace";
       }
     }
   }
@@ -154,7 +154,7 @@ namespace BNLib {
       opp.k +=  ( fcount % 4 ? 1 : -1 ) * ci.delta();
       break;
     default:
-      throw "Logic error";
+      throw "Logic error in ParentOpposite";
     }
 
   }
@@ -184,13 +184,41 @@ namespace BNLib {
 
   }
 
+  bool K3FaceIterBalanced::pOnFace(void)
+  {
+    if ( i ==  0 || i == Nx-1 ||
+	 j ==  0 || j == Ny-1 ||
+	 k ==  0 || k == Nz-1 )
+    {
+      return true;
+    }
+    return false;
+
+  }
+
   const K3DParent * K3FaceIterBalanced::FilteredParentP(size_t & np)
   {
     // Note that this is a modified version of the code that generates
     // all of the parents.
-    
+
+    if ( pOnFace() )
+    {
+      // only four parents on the face, since we want to be
+      // balanced...
+      K3DParent * fp = FilteredParentBuffer();
+      np =4;
+      ParentFace(fp);
+      return fp;
+    }
+    else
+    {
+      // All of the parents...
+      np=6;
+      return K3FaceIterV2::ParentListP();
+    }
+
     // For the time being just return old value
-    return K3FaceIterV2::FilteredParentP( np);
+    //return K3FaceIterV2::FilteredParentP( np);
 
   }
 

@@ -89,6 +89,10 @@ namespace BNLib {
   class K3FaceIterBalanced : 
     public K3FaceIterV2
   {
+    
+    /** Are we on a face of the overal volume?
+     */
+    bool pOnFace(void);
 
   public:
 

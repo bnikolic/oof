@@ -13,6 +13,7 @@
 #include <cmath>
 #include <vector>
 #include <map>
+#include <memory>
 
 #include "bnrandom.hxx"
 #include "kolmogorov_3diters.hxx"
@@ -386,18 +387,22 @@ namespace BNLib {
       }
 
       {
-	//K3FaceIterV2 fi(Nx,Ny,Nz, o);
-	K3FaceIterBalanced fi(Nx,Ny,Nz, o);
+	std::auto_ptr<K3FaceIterV2> fi;
+	if ( opt & KBalancedIters )
+	  fi.reset( new K3FaceIterBalanced (Nx,Ny,Nz, o) );
+	else
+	  fi.reset( new K3FaceIterV2 (Nx,Ny,Nz, o) ) ;
+
 	VarianceCache fvc(o, KMidPointVar_FI);
-	while ( fi.inBounds() )
+	while ( fi->inBounds() )
 	{
 
 	  size_t i,j, k;
-	  fi.getc( i,j, k);
+	  fi->getc( i,j, k);
 	  size_t dx= k* N2 + j *Nx + i;
 
 	  size_t np;
-	  const K3DParent * fpv = fi.FilteredParentP(np);
+	  const K3DParent * fpv = fi->FilteredParentP(np);
 	  
 	  double val;
 	  if ( opt & KWeightedInterp ) 
@@ -414,7 +419,7 @@ namespace BNLib {
 	  
 	  cube[dx]=val;
 	  
-	  fi.next();
+	  fi->next();
 	  
 	}
       }
@@ -504,8 +509,12 @@ namespace BNLib {
     case 5:
       res= 1.35819897457;
       break;
+    case 4:
+      res=1.63006978865;
+      break;
     default:
-      throw "Logic error";
+      throw "Logic error in KMidPointVar_FI:\
+ don't know the variance for that many parent points";
     }
     res = res * pow ( 1.0 / ( 1 << o) , 2.0/ 6.0);
     return res;
