@@ -75,7 +75,8 @@ def FaceStruct(n, samples):
     h=n/2
     n1=n-1
 
-    l = [ [ [h,h,n1] , [h,h,0] ]
+    l = [ [ [h,h,n1] , [h,h,0] ],
+          [ [h,n1,h] , [h,0,h] ]
           ]
     return CubeStructure( n, samples, l )
 
