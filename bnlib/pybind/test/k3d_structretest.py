@@ -79,6 +79,27 @@ def FaceStruct(n, samples):
           ]
     return CubeStructure( n, samples, l )
 
+def CornerToFace(n , samples):
+    
+    h=n/2
+    n1=n-1
+
+    l = [ [ [0,0,0] , [h,h,0] ],
+          [ [n1,n1,n1] , [h,h,n1] ],
+          ]
+    return CubeStructure( n, samples, l )
+
+def CentreToFace(n , samples):
+
+    h=n/2
+    n1=n-1
+
+    l = [ [ [h,h,h] , [h,h,0] ],
+          [ [h,h,h] , [h,h,n1] ],
+          ]
+    return CubeStructure( n, samples, l )
+    
+
 def CentreStruct(n , samples):
 
     h=n/2
@@ -89,7 +110,7 @@ def CentreStruct(n , samples):
     return CubeStructure( n, samples, l )
 
 #expect: 6.88 * ( (0.25*3)**0.5)**(2.0/3) == 6.2508948393425605
-    
+
 
 def FaceQStruct(n , samples):
 

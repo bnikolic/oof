@@ -40,9 +40,6 @@ class Test3dStructureFn(unittest.TestCase):
         a=k3d_structretest.FaceStruct(5, self.SfnSamples)
         self.Check(a, 6.88, 0.2)
 
-        a=k3d_structretest.FaceQStruct(5, self.SfnSamples)
-        self.Check(a, 6.88 * (2.0/3)**2, 0.2)
-
         
         
         
