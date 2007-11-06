@@ -30,7 +30,8 @@ libbnlib_la_SOURCES= interpolate.hxx interpolate.cxx \
 			kolmogorov_3d.cxx kolmogorov_3d.hxx \
 			kernels_3d.cxx kernels_3d.hxx \
 			kolmogorov_3diters_t.hxx \
-			quadratic_bfn.cxx quadratic_bfn.hxx
+			quadratic_bfn.cxx quadratic_bfn.hxx \
+			kolmogorov_3diters_face.cxx kolmogorov_3diters_face.hxx
 
 libbnlib_la_CFLAGS = -Wall
 libbnlib_la_CPPFLAGS = -Wall
