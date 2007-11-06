@@ -487,7 +487,12 @@ namespace BNLib {
     switch (np)
     {
     case 8:
-      res=2.06434648615;
+      // Setting this to zere makes appaling little difference to some
+      // results! Should investigated
+      //res=0;
+      // Previous value, definitely wrong
+      //res=2.06434648615;
+      res= 1.64785599181;
       break;
     default:
       throw "Logic error: center cell iterator should always have eight parents";
@@ -505,6 +510,9 @@ namespace BNLib {
     {
     case 6:
       res= 1.29278759904;
+      // If were to average the variances to different parent points,
+      // would get this:
+      // res= 1.4999830720263603;
       break;
     case 5:
       res= 1.35819897457;
