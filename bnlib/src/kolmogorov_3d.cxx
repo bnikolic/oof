@@ -509,13 +509,10 @@ namespace BNLib {
     switch (np)
     {
     case 6:
-      res= 1.29278759904;
-      // If were to average the variances to different parent points,
-      // would get this:
-      // res= 1.4999830720263603;
+      res= 1.4999830720263603;
       break;
     case 5:
-      res= 1.35819897457;
+      res=1.559617679005423;
       break;
     case 4:
       res=1.63006978865;

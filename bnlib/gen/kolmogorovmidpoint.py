@@ -166,7 +166,7 @@ def MidPointRot( pos, parlist , **kwargs):
         res.append(r)
         parlist= [list(parlist[-1])]+parlist[0:-1]
 
-    return res
+    return numpy.array(res)
         
 c8= numarray.array( [0.5, 0.5, 0.5])
 p8= numarray.array( [ [1, 0, 0],
@@ -204,13 +204,12 @@ def ShowRequiredVariances():
 
     print 8 , MidPointVariance( c8, p8)**0.5
 
-    print "Normal six parent for face iterator"
+    print "Normal six parent for face iterator (using average)"
 
+    print 6,  MidPointRot( fc6, fp6).mean()**0.5
 
-    print 6,  MidPointVariance( fc6, fp6)**0.5
-
-    print "Face iterator, five parent"
-    print 5,  MidPointVariance( fc5, fp5)**0.5
+    print "Face iterator, five parent (using mean)"
+    print 5,  MidPointRot( fc5, fp5).mean()**0.5
 
     print "Face iterator, four parent"
     fc4 = numarray.array( [0.5, 0.5, 1])
