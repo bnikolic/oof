@@ -26,9 +26,13 @@ def CubeStructure(cuben,
 
     res=[]
 
+    #opts=pybnlib.KInitialEFB + pybnlib.KBalancedIters
+    opts=pybnlib.KInitialEFB
+    
     for seed in range(1,samples):
         g=kolmogorovutils.GridToNumarray(kolmogorovutils.GenerateKolmogorov3D(cuben,cuben,cuben,
-                                                                              seed))
+                                                                              seed,
+                                                                              opt=opts))
         r = []
         for (p1, p2) in pairl:
             r.append( (g[ p1[0],p1[1],p1[2] ] - g[ p2[0],p2[1],p2[2] ] ) **2)
