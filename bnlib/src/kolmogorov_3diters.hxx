@@ -90,7 +90,7 @@ namespace BNLib {
     */
     void getc( size_t & iOUT,
 	       size_t & jOUT,
-	       size_t & kOUT )
+	       size_t & kOUT ) const
     {
       iOUT=i;     jOUT=j;    kOUT=k;
     }
@@ -139,7 +139,14 @@ namespace BNLib {
 	within the cube grid. 
 
 	This should be substantially faster than
-	FilteredParentList. Number of parents goes into parameter np
+	FilteredParentList. Number of parents goes into parameter np.
+	
+	Override this function if have an algorithm that directly
+	generates the parents within the volume rather than the
+	generate and filter technique used here (in the base class).
+	
+	\param np Used to the return value of how many parents are
+	actually within the volume at this position
     */
     virtual const K3DParent * FilteredParentP(size_t & np);
 

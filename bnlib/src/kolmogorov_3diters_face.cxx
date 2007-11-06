@@ -94,17 +94,18 @@ namespace BNLib {
     UpdateFace()    ;
 
   }
-  const K3DParent * K3FaceIterV2::ParentListP(void) 
+  
+  void K3FaceIterV2::ParentCentre(K3DParent * parents) const
   {
-
-    // Center of current is always a parent.
     ci.getc( parents[0].i, parents[0].j, parents[0].k );
-    
-    // Then the four on the current face.
+  }
+
+  void K3FaceIterV2::ParentFace(K3DParent * parents) const
+  {
     const size_t o = ci.origin();
     for (size_t l =0 ; l < 4 ; ++l )
     {
-      K3DParent & p = parents[l+1];
+      K3DParent & p = parents[l];
 
       switch (fcount)
       {
@@ -130,9 +131,12 @@ namespace BNLib {
 	throw "Logic error";
       }
     }
+  }
 
-    // Finaly the oposite center
-    K3DParent & opp = parents[5];
+  void K3FaceIterV2::ParentOpposite(K3DParent * parents) const
+  {
+
+    K3DParent & opp = parents[0];
     ci.getc( opp.i, opp.j, opp.k );
 
     switch (fcount)
@@ -152,8 +156,41 @@ namespace BNLib {
     default:
       throw "Logic error";
     }
+
+  }
+
+  const K3DParent * K3FaceIterV2::ParentListP(void) 
+  {
+
+    // Center of current is always a parent.
+    ParentCentre(parents);
     
+    // Then the four on the current face.
+    ParentFace(parents + 1);
+
+    // Finaly the oposite center
+    ParentOpposite( parents + 5 );
+
     return parents;
+
+  }
+
+  K3FaceIterBalanced::K3FaceIterBalanced( size_t Nx, 
+					  size_t Ny, 
+					  size_t Nz , 
+					  size_t o ):
+    K3FaceIterV2(Nx, Ny, Nz, o)
+  {
+
+  }
+
+  const K3DParent * K3FaceIterBalanced::FilteredParentP(size_t & np)
+  {
+    // Note that this is a modified version of the code that generates
+    // all of the parents.
+    
+    // For the time being just return old value
+    return K3FaceIterV2::FilteredParentP( np);
 
   }
 

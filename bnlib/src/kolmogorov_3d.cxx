@@ -386,7 +386,8 @@ namespace BNLib {
       }
 
       {
-	K3FaceIterV2 fi(Nx,Ny,Nz, o);
+	//K3FaceIterV2 fi(Nx,Ny,Nz, o);
+	K3FaceIterBalanced fi(Nx,Ny,Nz, o);
 	VarianceCache fvc(o, KMidPointVar_FI);
 	while ( fi.inBounds() )
 	{
