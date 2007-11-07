@@ -34,6 +34,11 @@ class Test3dStructureFn(unittest.TestCase):
         
         a=k3d_structretest.EdgeCorner(3, self.ncubeCorner)
         self.CornerCheck( a, 6.88)
+
+    def testBodyCorner(self):
+        
+        a=k3d_structretest.BodyCorner(3, self.ncubeCorner)
+        self.CornerCheck( a, 6.88 * (3**0.5)**(2.0/3))        
         
     def testFaceStruct(self):
 
