@@ -79,7 +79,6 @@ def plotmap(mapp,
     if valrange[0] == None:valrange[0]= mapp.min()         
     if valrange[1] == None:valrange[1]= mapp.max() 
         
-    print valrange
     if plotwedge:
         pyplot.cpgwedg("RI",1,2, valrange[0] , valrange[1], " ")
         
@@ -146,7 +145,8 @@ def PlotSynthesisFile(fnamein,
                       nc=7,
                       ext=1,
                       colour=False,
-                      zoom=None):
+                      zoom=None,
+                      center=False):
 
     "Plot an aperture synthesis map from file"
     
@@ -158,6 +158,9 @@ def PlotSynthesisFile(fnamein,
 
     m1=pyplot.FitsMapLoad(fnamein ,
                           ext)
+
+    if center:
+        pyplot.ZeroOffsetCS(m1)
 
     if  zoom > 1:
         zoom = 1.0 /zoom

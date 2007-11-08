@@ -89,6 +89,18 @@ namespace AstroMap {
     
   }
 
+  void ZeroOffsetCS(Map &m)
+  {
+    
+    LinCS * lcs = dynamic_cast<LinCS *>( m.cs );
+    ENFORCE(lcs);
+
+    lcs->TM[2] = -1 * ( lcs->TM[0] * m.nx/2 +  lcs->TM[1] * m.ny/2)  ;
+
+    lcs->TM[5] = -1 * ( lcs->TM[3] * m.nx/2 +  lcs->TM[4] * m.ny/2)  ;
+
+  }
+
 }
 
 
