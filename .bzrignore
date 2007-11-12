@@ -1,5 +1,6 @@
 *.la
 *.lo
+*.loT
 *.deps
 *.libs
 *.tar.gz
