@@ -49,3 +49,19 @@ def MkExtent(g):
     return ext
 
 
+def RandomCubeSFN(cube,
+                  s_p,
+                  acumlen):
+
+    "Compute the structure function"
+
+    acum= pybnlib.doubleArray( acumlen)
+    ns=   pybnlib.size_tArray( acumlen)
+    
+    pybnlib.RandomSFN( cube[0], cube[1][0], cube[1][1], cube[1][2], s_p, acum, ns, acumlen)
+
+    r=[]
+    for i in range(acumlen):
+        r.append( (acum[i], ns[i] ))
+
+    return numarray.array( r)

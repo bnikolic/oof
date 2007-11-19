@@ -23,6 +23,7 @@
 #include "../src/kolmogorov_3diters.hxx"
 #include "../src/kolmogorov_3d.hxx"
 #include "../src/kernels_3d.hxx"
+#include "../src/kolmogorov_3dsfn.hxx"
 
 %}
 
@@ -31,6 +32,7 @@
 %include "std_vector.i"
 
 %array_class( double , doubleArray);
+%array_class( size_t , size_tArray);
 
 %apply size_t & OUTPUT { size_t &iOUT, size_t &jOUT, size_t &kOUT };
 
@@ -68,6 +70,7 @@ namespace std {
 %include "../src/kolmogorov_3diters.hxx"
 %include "../src/kolmogorov_3d.hxx"
 %include "../src/kernels_3d.hxx"
+%include "../src/kolmogorov_3dsfn.hxx"
 
 %extend BNLib::ConstUDD {
 	
