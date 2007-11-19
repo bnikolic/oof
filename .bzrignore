@@ -148,3 +148,5 @@ CVS
 ./dust/doc/Doxyfile
 ./dust/config/compile
 ./oofanalysis/simulation/plots
+./bnlib/config.h
+./bnlib/config.h.in
