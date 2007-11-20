@@ -53,3 +53,8 @@ def AccumPlot(N,
     PlotSFN(r,
             fnameout,
             N)
+
+def TestPlots():
+
+    AccumPlot( 33, 1000, "temp/c33normal.eps")
+    AccumPlot( 33, 1000, "temp/c33balanced.eps", opt=pybnlib.KInitialEFB + pybnlib.KBalancedIters)

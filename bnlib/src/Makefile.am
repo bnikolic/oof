@@ -32,6 +32,7 @@ libbnlib_la_SOURCES= interpolate.hxx interpolate.cxx \
 			kolmogorov_3diters_t.hxx \
 			quadratic_bfn.cxx quadratic_bfn.hxx \
 			kolmogorov_3diters_face.cxx kolmogorov_3diters_face.hxx \
+			kolmogorov_3diters_edge.cxx kolmogorov_3diters_edge.hxx \
 			kolmogorov_3dsfn.cxx kolmogorov_3dsfn.hxx
 
 libbnlib_la_CFLAGS = -Wall

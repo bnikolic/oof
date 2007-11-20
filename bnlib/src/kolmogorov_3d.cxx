@@ -18,6 +18,7 @@
 #include "bnrandom.hxx"
 #include "kolmogorov_3diters.hxx"
 #include "kolmogorov_3diters_face.hxx"
+#include "kolmogorov_3diters_edge.hxx"
 #include "kolmogorov_3diters_t.hxx"
 
 namespace BNLib {
