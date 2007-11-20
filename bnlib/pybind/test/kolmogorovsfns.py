@@ -35,11 +35,14 @@ def PlotSFN(r,
                   
 def AccumPlot(N,
               naccum,
-              fnameout):
+              fnameout,
+              opt=pybnlib.KInitialEFB):
 
     def Sample(N,i):
-
-        return kolmogorovutils.RandomCubeSFN(kolmogorovutils.GenerateKolmogorov3D(N,N,N,i),
+        c=kolmogorovutils.GenerateKolmogorov3D(N,N,N,
+                                               i,
+                                               opt=opt)
+        return kolmogorovutils.RandomCubeSFN(c,
                                              10 , int(N*1.4))
 
     r=Sample(N,0)

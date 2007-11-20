@@ -15,7 +15,8 @@ import kolmogorovutils
 
 def CubeStructure(cuben,
                   samples,
-                  pairl):
+                  pairl,
+                  opts=pybnlib.KInitialEFB):
 
     "Compute structure function on many realisations of small cubes"
 
@@ -26,9 +27,6 @@ def CubeStructure(cuben,
 
     res=[]
 
-    #opts=pybnlib.KInitialEFB + pybnlib.KBalancedIters
-    opts=pybnlib.KInitialEFB
-    
     for seed in range(1,samples):
         g=kolmogorovutils.GridToNumarray(kolmogorovutils.GenerateKolmogorov3D(cuben,cuben,cuben,
                                                                               seed,
@@ -129,14 +127,22 @@ def FaceQStruct(n , samples):
           ]
     return CubeStructure( n, samples, l )
     
-def FaceToFace(n, samples):
+def FaceToFace(n, samples,
+               **kwargs):
 
     l=[]
     for i in range(n):
         for j in range(n):
             l.append( [ [i,j,0] , [i,j,n-1] ] )
     
-    return CubeStructure( n, samples, l )
+    return CubeStructure( n, samples, l ,
+                          **kwargs)
 
 
 
+def PlotSTest(a):
+
+    x=numpy.mean(a, axis=0)
+    x.shape=( int(len(x)**0.5), int(len(x)**0.5) )
+    pylab.matshow(x)
+    pylab.colorbar()
