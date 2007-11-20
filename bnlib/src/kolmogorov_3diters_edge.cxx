@@ -144,32 +144,11 @@ namespace BNLib {
 
   const K3DParent * K3EdgeIterV2::ParentListP(void) 
   {
-    const size_t o = ci.origin();
-    for ( size_t l = 0 ; l < 6 ; ++l )
-    {
-      K3DParent & p = parents[l];
-      p.i=i;
-      p.j=j;
-      p.k=k;
-      
-      switch (l)
-      {
-      case 0 :
-      case 1 :
-	p.i += ( l  ? 1 : -1 ) * o;
-	break;
-      case 2 :
-      case 3 :
-	p.j += ( l % 2 ? 1 : -1 ) * o;
-	break;
-      case 4 :
-      case 5 :
-	p.k +=  ( l % 4 ? 1 : -1 ) * o;
-	break;
-      default:
-	throw "Logic error";
-      }
-    }
+    
+    ParentOnDir(& parents[0], D_X);
+    ParentOnDir(& parents[2], D_Y);
+    ParentOnDir(& parents[4], D_Z);
+
     return parents;
   }  
 
@@ -209,6 +188,36 @@ namespace BNLib {
 					  size_t o ):
     K3EdgeIterV2( Nx , Ny, Nz, o)
   {
+
+  }
+
+  const K3DParent * K3EdgeIterBalanced::FilteredParentP(size_t & np)
+  {
+    K3DParent * fp = FilteredParentBuffer();
+    size_t cp =0;
+
+    if ( i != 0 && i != Nx-1 )
+    {
+      ParentOnDir(& fp[cp], D_X);
+      cp +=2;
+    }
+
+    if ( j != 0 && j != Ny-1 )
+    {
+      ParentOnDir(& fp[cp], D_Y);
+      cp +=2;
+    }
+
+    if ( k != 0 && k != Nz-1 )
+    {
+      ParentOnDir(& fp[cp], D_Z);
+      cp +=2;
+    }
+    
+    np=cp;
+
+    return fp;
+
 
   }
   

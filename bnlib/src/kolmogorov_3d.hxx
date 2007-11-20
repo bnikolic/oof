@@ -24,7 +24,8 @@ namespace BNLib {
   enum Kolmgorov3DOptions { KInitialEFB =0 ,
 			    KInitialFBB =1,
                             KWeightedInterp = 2,
-                            KBalancedIters  = 4};
+                            KBalancedIters  = 4,
+			    KEdgeBalanced   = 8};
 
   /**
      \brief Set up the eight initial corner values for 3d turbulence

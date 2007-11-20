@@ -426,16 +426,20 @@ namespace BNLib {
       }
 
       {
-	K3EdgeIterV2 ei(Nx,Ny,Nz, o);
+	std::auto_ptr<K3EdgeIterV2> ei;
+	if ( opt & KEdgeBalanced)
+	  ei.reset( new K3EdgeIterBalanced(Nx,Ny,Nz, o) );
+	else
+	  ei.reset( new K3EdgeIterV2(Nx,Ny,Nz, o) );
 	VarianceCache evc(o, KMidPointVar_EI);
-	while ( ei.inBounds() )
+	while ( ei->inBounds() )
 	{
 	  size_t i,j, k;
-	  ei.getc( i,j, k);
+	  ei->getc( i,j, k);
 	  size_t dx= k* N2 + j *Nx + i;
 	  
 	  size_t np;
-	  const K3DParent * epv = ei.FilteredParentP(np);
+	  const K3DParent * epv = ei->FilteredParentP(np);
 	  
 	  double val;
 	  if ( opt & KWeightedInterp ) 
@@ -452,7 +456,7 @@ namespace BNLib {
 	  
 	  cube[dx]=val;
 	  
-	  ei.next();
+	  ei->next();
 	  
 	}
       }
@@ -537,8 +541,11 @@ namespace BNLib {
     case 4:
       res= 1.42135665233;
       break;
+    case 2:
+      res= 1.6168266486;
+      break;
     default:
-      throw "Logic error";
+      throw "Logic error in EdgePointVariances";
     }
     res = res * pow ( 1.0 / ( 1 << o) , 2.0/ 6.0);
     return res;

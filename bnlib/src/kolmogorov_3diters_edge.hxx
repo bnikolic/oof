@@ -91,11 +91,17 @@ namespace BNLib {
     public K3EdgeIterV2
   {
 
+  public:
+
     // ----------------   Constructors / Destructors ----------
 
     K3EdgeIterBalanced( size_t Nx, size_t Ny, size_t Nz , 
 			size_t o );
 
+    /**
+       Override to provide balanced parents.
+     */
+    virtual const K3DParent * FilteredParentP(size_t & np);
 
   };
 

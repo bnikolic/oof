@@ -239,9 +239,14 @@ def ShowRequiredVariances():
                             [0.5, 0.5, 1],
                             [0.5, 1, 0.5]
                             ])
+
+    ep2 = numarray.array( [ [0, 1, 1],
+                            [1, 1, 1]
+                            ])    
     print 6,  MidPointVariance( ec6, ep6)**0.5
     print 5,  MidPointVariance( ec6, ep5)**0.5
-    print 4,  MidPointVariance( ec6, ep4)**0.5    
+    print 4,  MidPointVariance( ec6, ep4)**0.5
+    print 2,  MidPointVariance( ec6, ep2)**0.5        
     
 
 

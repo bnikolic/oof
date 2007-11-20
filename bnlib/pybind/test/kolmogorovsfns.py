@@ -56,5 +56,10 @@ def AccumPlot(N,
 
 def TestPlots():
 
-    AccumPlot( 33, 1000, "temp/c33normal.eps")
-    AccumPlot( 33, 1000, "temp/c33balanced.eps", opt=pybnlib.KInitialEFB + pybnlib.KBalancedIters)
+    if 0:
+        AccumPlot( 33, 1000, "temp/c33normal.eps")
+        AccumPlot( 33, 1000, "temp/c33balanced.eps", opt=pybnlib.KInitialEFB + pybnlib.KBalancedIters)
+
+    if 1:
+        AccumPlot( 33, 1000, "temp/c33Bfaceedge.eps",
+                   opt=pybnlib.KInitialEFB + pybnlib.KBalancedIters+ pybnlib.KEdgeBalanced)
