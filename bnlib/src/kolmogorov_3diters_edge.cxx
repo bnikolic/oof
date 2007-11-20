@@ -173,6 +173,38 @@ namespace BNLib {
     return parents;
   }  
 
+  void K3EdgeIterV2::ParentOnDir( K3DParent * parents,
+				  dirs d) const
+  {
+    const size_t o = ci.origin();
+    
+    for ( size_t l = 0 ; l < 2 ; ++l )
+    {
+      K3DParent & p = parents[l];
+      p.i=i;
+      p.j=j;
+      p.k=k;
+
+      int offset = ( l  ? 1 : -1 ) * o ;
+
+      switch (d)
+      {
+      case D_X:
+	p.i += offset;
+	break;
+      case D_Y :
+	p.j += offset;
+	break;
+      case D_Z:
+	p.k += offset;
+	break;
+      default:
+	throw "logic error";
+      }
+    }
+
+  }
+
   K3EdgeIterBalanced::K3EdgeIterBalanced( size_t Nx, size_t Ny, size_t Nz , 
 					  size_t o ):
     K3EdgeIterV2( Nx , Ny, Nz, o)

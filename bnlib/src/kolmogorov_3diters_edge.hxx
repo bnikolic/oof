@@ -36,6 +36,14 @@ namespace BNLib {
     K3DParent parents[np];
     K3DParent filtParents[np];
 
+  protected:
+    /**
+       Generate the two parents in the direction supplied.
+     */
+    void ParentOnDir( K3DParent * parents,
+		      dirs d) const;
+		 
+
   public:
 
     // ----------------  Public Data -----------------------    
