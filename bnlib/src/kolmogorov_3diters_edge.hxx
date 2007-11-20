@@ -14,8 +14,13 @@
 
 namespace BNLib {
 
-  /** \brief An iterator for cell edges. For generation of 3D
-      Kolmogorov turbulence.
+  /** \brief An iterator for cell edges. 
+
+      
+      On a 3x3x3 cube this iterator sits on the centres of all cell
+      edges. Larger cubes are made up of these building blocks.
+      
+      Used for generation of 3D Kolmogorov turbulence.
 
    */
   class K3EdgeIterV2 :
@@ -67,6 +72,26 @@ namespace BNLib {
 
 
   };
+
+  /**
+     \brief A refined iterator that only includes parents that have an
+     opposite number. On the outermost cube therefore, this iterator
+     always ends up with two parents.
+     
+   */
+  class K3EdgeIterBalanced :
+    public K3EdgeIterV2
+  {
+
+    // ----------------   Constructors / Destructors ----------
+
+    K3EdgeIterBalanced( size_t Nx, size_t Ny, size_t Nz , 
+			size_t o );
+
+
+  };
+
+  
 
 }
 #endif

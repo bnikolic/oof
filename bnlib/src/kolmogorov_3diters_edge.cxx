@@ -172,5 +172,13 @@ namespace BNLib {
     }
     return parents;
   }  
+
+  K3EdgeIterBalanced::K3EdgeIterBalanced( size_t Nx, size_t Ny, size_t Nz , 
+					  size_t o ):
+    K3EdgeIterV2( Nx , Ny, Nz, o)
+  {
+
+  }
+  
 }
 
