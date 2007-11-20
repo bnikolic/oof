@@ -129,37 +129,14 @@ def FaceQStruct(n , samples):
           ]
     return CubeStructure( n, samples, l )
     
+def FaceToFace(n, samples):
+
+    l=[]
+    for i in range(n):
+        for j in range(n):
+            l.append( [ [i,j,0] , [i,j,n-1] ] )
     
-    
-
-def FaceStructure(n=100):
-    res=[]
-    for seed in range(1,n):
-        g=kolmogorovutils.GridToNumarray(kolmogorovutils.GenerateKolmogorov3D(5,5,5,
-                                                                              seed))
-
-        s1= (g[2,2,4]- g[2,2,0])**2
-        s2= (g[2,4,2]- g[2,0,2])**2
-        res.append(s1)
-        res.append(s2)
-    return numarray.array(res)
-
-def EdgeStructure(n=1000):
-    res=[]
-    for seed in range(1,n):
-        g=kolmogorovutils.GridToNumarray(kolmogorovutils.GenerateKolmogorov3D(5,5,5,
-                                                                              seed))
-
-        s1= (g[2,0,4]- g[2,0,0])**2
-        s2= (g[2,4,0]- g[2,0,0])**2
-        res.append(s1)
-        res.append(s2)
-    return numarray.array(res)
-
-        
-
-
-
+    return CubeStructure( n, samples, l )
 
 
 

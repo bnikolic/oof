@@ -487,11 +487,6 @@ namespace BNLib {
     switch (np)
     {
     case 8:
-      // Setting this to zere makes appaling little difference to some
-      // results! Should investigated
-      //res=0;
-      // Previous value, definitely wrong
-      //res=2.06434648615;
       res= 1.64785599181;
       break;
     default:
