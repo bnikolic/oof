@@ -33,3 +33,20 @@ def PlotSFN(r,
                   yax=pyxplot.axis(r"$D(d)$", type="log"),
                   multi=True)
                   
+def AccumPlot(N,
+              naccum,
+              fnameout):
+
+    def Sample(N,i):
+
+        return kolmogorovutils.RandomCubeSFN(kolmogorovutils.GenerateKolmogorov3D(N,N,N,i),
+                                             10 , int(N*1.4))
+
+    r=Sample(N,0)
+
+    for i in range(1,naccum):
+        r+=Sample(N,i)
+
+    PlotSFN(r,
+            fnameout,
+            N)
