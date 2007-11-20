@@ -99,7 +99,14 @@ def CentreToFace(n , samples):
           [ [h,h,h] , [h,h,n1] ],
           ]
     return CubeStructure( n, samples, l )
-    
+
+def CornerToFirst(n, samples):
+
+    l = [ [ [0,0,0] , [0,0,1]],
+          [ [0,0,0] , [0,1,0]],
+          [ [0,0,0] , [1,0,0]]]
+
+    return CubeStructure( n, samples, l )
 
 def CentreStruct(n , samples):
 
