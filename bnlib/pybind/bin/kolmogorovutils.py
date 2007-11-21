@@ -21,6 +21,24 @@ def GenerateKolmogorov3D( Nx,Ny,Nz,
     return ( grid,
              ( Nx,Ny,Nz) )
 
+def GenerateKNumarray ( Nx,Ny,Nz,
+                        seed=None,
+                        opt=pybnlib.KInitialEFB):
+
+    "Generate 3d Kolmogorov turbulence directly in numarray"
+
+    a= numarray.zeros( (Nz, Ny,Nx), numarray.Float64)
+    g= pybnlib.doubleCvt( int(a.__array_data__[0], 16) )
+    
+    rfn=pybnlib.NormDistZM(1.0)
+    if seed != None:
+        rfn.reseed(seed)
+    pybnlib.Kolmogorov3D( g, Nx,Ny,Nz, rfn, opt)
+
+    return a
+
+    
+
 def GridToNumarray( gs):
 
     import numarray

@@ -28,9 +28,15 @@ def CubeStructure(cuben,
     res=[]
 
     for seed in range(1,samples):
-        g=kolmogorovutils.GridToNumarray(kolmogorovutils.GenerateKolmogorov3D(cuben,cuben,cuben,
-                                                                              seed,
-                                                                              opt=opts))
+
+        g=kolmogorovutils.GenerateKNumarray(cuben,cuben,cuben,
+                                            seed,
+                                            opt=opts)
+        # Transpose to get back to exactly the same numbers as the
+        # old copy to numarray scheme. Note that it is worrying
+        # that some of the tests depend on this.
+        g.transpose()
+
         r = []
         for (p1, p2) in pairl:
             r.append( (g[ p1[0],p1[1],p1[2] ] - g[ p2[0],p2[1],p2[2] ] ) **2)
