@@ -80,3 +80,9 @@ namespace std {
 	}
 }
 
+%inline %{
+	double * doubleCvt(size_t t)
+	{
+		return (double *)t;
+	}
+%}
