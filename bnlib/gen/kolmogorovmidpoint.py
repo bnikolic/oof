@@ -10,6 +10,7 @@ import math
 
 import numarray
 import numarray.linear_algebra as la
+import numpy
 
 def JKtoi(J,K,N):
 
