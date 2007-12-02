@@ -31,7 +31,8 @@ namespace BNLib {
     memset( acum , 0 , acumlen * sizeof(double) );
     memset( ns   , 0 , acumlen * sizeof(size_t) );
 
-    
+    double binfact = ((double)acumlen)/log10(2 * Nx) ;
+
     for ( size_t ck =0 ; ck < Nz ; ++ck)
       for ( size_t cj =0 ; cj < Ny ; ++cj )
 	for (size_t ci =0 ; ci < Nx ; ++ci )
@@ -54,7 +55,7 @@ namespace BNLib {
 			     0.5);
 
 	    // Use log binning
-	    size_t s = (size_t) (log10(d) * acumlen/log10(2 * Nx)) ;
+	    size_t s = (size_t) (log10(d) * binfact) ;
 	    
 	    if ( d<acumlen)
 	    {
