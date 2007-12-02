@@ -39,6 +39,7 @@ def AccumPlot(N,
               naccum,
               fnameout,
               opt=pybnlib.KInitialEFB,
+              nsamples=10,
               **kwargs):
 
     def Sample(N,i):
@@ -46,7 +47,7 @@ def AccumPlot(N,
                                                i,
                                                opt=opt)
         return kolmogorovutils.RandomCubeSFN(c,
-                                             10 , int(N*1.4))
+                                             nsamples , int(N*1.4))
 
     r=Sample(N,0)
 
@@ -70,6 +71,7 @@ def TestPlots():
                    opt=pybnlib.KInitialEFB + pybnlib.KBalancedIters+ pybnlib.KEdgeBalanced)
 
     if 1:
-        AccumPlot(129, 50,
+        AccumPlot(129, 500,
                   "temp/n129_e50.eps",
-                  opt=pybnlib.KInitialEFB + pybnlib.KBalancedIters+ pybnlib.KEdgeBalanced)
+                  opt=pybnlib.KInitialEFB + pybnlib.KBalancedIters+ pybnlib.KEdgeBalanced,
+                  nsamples=1)
