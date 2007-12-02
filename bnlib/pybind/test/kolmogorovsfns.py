@@ -32,7 +32,7 @@ def PlotSFN(r,
                   [yvals, yfid      ],
                   fnameout,
                   xax=pyxplot.axis(r"$d$", type="log"),
-                  yax=pyxplot.axis(r"$D(d)$", type="log", xmax=10),
+                  yax=pyxplot.axis(r"$D(d)$", type="log", xmax=12),
                   multi=True)
                   
 def AccumPlot(N,
@@ -46,7 +46,7 @@ def AccumPlot(N,
                                                i,
                                                opt=opt)
         return kolmogorovutils.RandomCubeSFN(c,
-                                             naccum , int(N*1.4))
+                                             10 , int(N*1.4))
 
     r=Sample(N,0)
 
@@ -61,10 +61,10 @@ def AccumPlot(N,
 
 def TestPlots():
 
-    if 0:
+    if 1:
         AccumPlot( 33, 1000, "temp/c33normal.eps")
         AccumPlot( 33, 1000, "temp/c33balanced.eps", opt=pybnlib.KInitialEFB + pybnlib.KBalancedIters)
 
     if 1:
-        AccumPlot( 33, 100, "temp/c33Bfaceedge.eps",
+        AccumPlot( 33, 1000, "temp/c33Bfaceedge.eps",
                    opt=pybnlib.KInitialEFB + pybnlib.KBalancedIters+ pybnlib.KEdgeBalanced)

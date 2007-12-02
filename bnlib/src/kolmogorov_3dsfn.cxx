@@ -49,10 +49,10 @@ namespace BNLib {
 	    double rval = cube[ rk * Nx*Ny + rj * Nx + ri ];
 
 	    // This is the actuall distance
-	    double  d = pow( pow(ci - ri ,2 )+
-			     pow(cj - rj ,2 )+
-			     pow(ck - rk ,2 ),
-			     0.5);
+	    float  d =  (float) pow( pow(ci - ri ,2 )+
+				     pow(cj - rj ,2 )+
+				     pow(ck - rk ,2 ),
+				     0.5);
 
 	    // Use log binning
 	    size_t s = (size_t) (log10(d) * binfact) ;
