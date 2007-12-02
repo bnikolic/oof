@@ -5,6 +5,7 @@
 # Plot structure funcitons of generated turbulence
 
 import numarray
+import pdb
 
 from setup import *
 
@@ -16,12 +17,13 @@ import kolmogorovutils
 
 def PlotSFN(r,
             fnameout,
-            fid):
+            fid,
+            **kwargs):
 
-    mask = numarray.logical_and( r[:,0] > 0,
-                                 r[:,1] > 0)
-    xvals= numarray.arange(len(r))
-    yvals= (r[:,0])[mask]/(r[:,1])[mask]
+    mask = numarray.logical_and( r[:,1] > 0,
+                                 r[:,2] > 0)
+    xvals= r[:,0]
+    yvals= (r[:,1])[mask]/(r[:,2])[mask]
 
     m2= (xvals > 0)
     yfid= 6.88* (xvals[m2]/float(fid))**(2.0/3)
@@ -30,29 +32,32 @@ def PlotSFN(r,
                   [yvals, yfid      ],
                   fnameout,
                   xax=pyxplot.axis(r"$d$", type="log"),
-                  yax=pyxplot.axis(r"$D(d)$", type="log"),
+                  yax=pyxplot.axis(r"$D(d)$", type="log", xmax=10),
                   multi=True)
                   
 def AccumPlot(N,
               naccum,
               fnameout,
-              opt=pybnlib.KInitialEFB):
+              opt=pybnlib.KInitialEFB,
+              **kwargs):
 
     def Sample(N,i):
         c=kolmogorovutils.GenerateKolmogorov3D(N,N,N,
                                                i,
                                                opt=opt)
         return kolmogorovutils.RandomCubeSFN(c,
-                                             10 , int(N*1.4))
+                                             naccum , int(N*1.4))
 
     r=Sample(N,0)
 
     for i in range(1,naccum):
         r+=Sample(N,i)
 
+    r[:,0] /= naccum
     PlotSFN(r,
             fnameout,
-            N)
+            N,
+            **kwargs)
 
 def TestPlots():
 
@@ -61,5 +66,5 @@ def TestPlots():
         AccumPlot( 33, 1000, "temp/c33balanced.eps", opt=pybnlib.KInitialEFB + pybnlib.KBalancedIters)
 
     if 1:
-        AccumPlot( 33, 1000, "temp/c33Bfaceedge.eps",
+        AccumPlot( 33, 100, "temp/c33Bfaceedge.eps",
                    opt=pybnlib.KInitialEFB + pybnlib.KBalancedIters+ pybnlib.KEdgeBalanced)

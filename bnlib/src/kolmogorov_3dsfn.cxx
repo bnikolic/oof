@@ -46,16 +46,20 @@ namespace BNLib {
 	    int rk = (int) std::floor ( Nz * rfn.sample());
 
 	    double rval = cube[ rk * Nx*Ny + rj * Nx + ri ];
-	    
-	    size_t d = (size_t)pow( pow(ci - ri ,2 )+
-				    pow(cj - rj ,2 )+
-				    pow(ck - rk ,2 ),
-				    0.5);
+
+	    // This is the actuall distance
+	    double  d = pow( pow(ci - ri ,2 )+
+			     pow(cj - rj ,2 )+
+			     pow(ck - rk ,2 ),
+			     0.5);
+
+	    // Use log binning
+	    size_t s = (size_t) (log10(d) * acumlen/log10(2 * Nx)) ;
 	    
 	    if ( d<acumlen)
 	    {
-	      acum[d] += pow(rval - cval,2);
-	      ns[d] += 1;
+	      acum[s] += pow(rval - cval,2);
+	      ns[s] += 1;
 	    }
 
 	  }

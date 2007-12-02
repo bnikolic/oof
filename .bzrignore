@@ -151,3 +151,4 @@ CVS
 ./bnlib/config.h
 ./bnlib/config.h.in
 ./bnlib/stamp-h1
+./oofanalysis/gbt/plots

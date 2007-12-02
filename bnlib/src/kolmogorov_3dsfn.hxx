@@ -24,6 +24,10 @@ namespace BNLib {
      \param acum      Array to output accumulated sum of differences squared
      \param ns        Array to output accumulated samples
      \param acumlen   Length of acum array (longer distances are not recorded)
+
+     acum and ns are treated as logarthmic bins with maximum bin at
+     distance of 2 * Nx and minimum bin at distance 1 and number of
+     bins acumlen.
      
    */
   void RandomSFN( const double * cube,

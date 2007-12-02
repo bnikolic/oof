@@ -4,6 +4,7 @@
 #
 # Utilities to support the use of Kolmogorov utilities in Python
 
+import math
 
 import pybnlib
 
@@ -82,6 +83,7 @@ def RandomCubeSFN(cube,
 
     r=[]
     for i in range(acumlen):
-        r.append( (acum[i], ns[i] ))
+        r.append( (10**(float(i)/acumlen * math.log10(2*cube[1][0] )) ,
+                   acum[i], ns[i] ))
 
     return numarray.array( r)
