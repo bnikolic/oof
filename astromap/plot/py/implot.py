@@ -127,13 +127,17 @@ def MkChopContours( m, step=0.5 , nlevels=5, ctype="log"):
 
     return contours
 
-def MkSynthesisContours( m , step=0.5, nlevels=5):
+def MkSynthesisContours( m , step=0.5,
+                         nlevels=5):
 
     "Make contours which look good on synthesis maps"
 
     """
     Positive and negatives scales are identical
     """
+
+    if nlevels==0 or nlevels is None:
+        return None
 
     contours =       [ m.max() * step**i for i in range(nlevels)  ]
     contours.extend( [ -m.max() * step**i for i in range(nlevels)  ])
