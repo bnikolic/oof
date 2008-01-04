@@ -165,6 +165,8 @@ def Scale( d , wavel ,
 
 def MkGBTSfcFile(fnamein, fnameout, wavel ):
 
+    "Convert OOF results in FITS table to GBT M&C values in FITS table"
+
     oofdict = LoadFITS(fnamein)
 
     gbtdict = ConvertOOFtoGBT (oofdict )
