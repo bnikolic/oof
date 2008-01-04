@@ -11,8 +11,6 @@ from itertools import izip
 import pyfits
 
 import iofits4
-import oofreduce
-import oofcol
 
 modcvs = r"$Id: ooffitconv.py,v 1.6 2006/02/18 19:30:03 bnikolic Exp $"
 
@@ -219,6 +217,9 @@ def MkGBTSfcDir(dirin, fnameout):
     """
     dirin is a directory where the output of OOF reduction is stored.
     """
+
+    import oofreduce
+    import oofcol
 
     # If the offset file exists than that is almost certainly the one
     # to use
