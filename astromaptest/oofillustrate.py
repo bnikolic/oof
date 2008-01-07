@@ -113,7 +113,7 @@ def GenTable(nmax=21):
       width="150" height="150" />
   </td>
   </tr>
-  """ % ( n, l, zn, oofn, n, l , zn, zn , zn)
+  """ % ( n, l, oofn, gbtn, n, l , zn, zn , zn)
   
     
 def WhyDefocus(npix=256, zn=7, err=1,
