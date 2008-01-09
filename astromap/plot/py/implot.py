@@ -35,7 +35,8 @@ def plotmap(mapp,
             colmap=None,
             valrange=None,
             contours=None,
-            contcolour=None):
+            contcolour=None,
+            aspect=1.0):
 
 
     "Plots a general map"
@@ -47,6 +48,7 @@ def plotmap(mapp,
            to the that specified. Othervise cover the whole range of
            the data from the minimum to maximum value.
 
+    aspect:    aspect  ratio of the plot
 
     """
     mapp  = pyplot.Map(mapp)
@@ -57,7 +59,7 @@ def plotmap(mapp,
 
     if pgbeg:
         pyplot.cpgbeg(0,fout,0,0)
-        pyplot.cpgpap(width,1.0)
+        pyplot.cpgpap(width,aspect)
 
     SetupBBox( mapp, bbox=bbox)        
 
