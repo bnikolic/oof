@@ -38,6 +38,7 @@
 
 %}
 
+
 %include "typemaps.i"
 %include "carrays.i"
 %include "std_vector.i"
@@ -151,6 +152,13 @@ namespace std {
 		self->coeffs[i]=c;
 	}
 }
+
+%include "../config.h"
+
+#ifdef HAVE_MINIMMODEL_HXX
+// wraps that depend on the minimisation routines
+
+#endif
 
 void cpgldev(void);
 int cpgbeg(int unit, const char *file, int nxsub, int nysub);
