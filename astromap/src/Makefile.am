@@ -16,7 +16,8 @@ libastromap_la_SOURCES= astromap.cxx astromap.hxx \
 			pixiterators.cxx pixiterators.hxx \
 			pixalgo.cxx pixalgo.hxx \
 			fresneltrans.cxx fresneltrans.hxx \
-			mapstructure.cxx mapstructure.hxx
+			mapstructure.cxx mapstructure.hxx \
+			fitting_basic.cxx fitting_basic.hxx
 
 
 libastromap_la_CFLAGS = -Wall
@@ -37,5 +38,6 @@ include_HEADERS = 	astromap.hxx mapops.hxx \
 			pixiterators.hxx \
 			pixalgo.hxx \
 			fresneltrans.hxx\
-			mapstructure.hxx
+			mapstructure.hxx\
+			fitting_basic.hxx
 
