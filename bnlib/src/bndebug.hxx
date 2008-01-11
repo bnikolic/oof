@@ -1,8 +1,8 @@
-/*
-  Copyright:
-  Bojan Nikolic
+/**
+   \file bndebug.hxx
+   Bojan Nikolic <bojan@bnikolic.co.uk>
 
-  Some utilities for debugging
+   Some utilities for debugging
 */
 
 #ifndef _BNLib_DEBUG_HXX__

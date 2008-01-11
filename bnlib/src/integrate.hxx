@@ -1,8 +1,8 @@
-/*
-  Copyright:
-  Bojan Nikolic
+/**
+   \file integrate.hxx
+   Bojan Nikolic <bojan@bnikolic.co.uk>
   
-  Numerical integration
+   Numerical integration
 
 */
 #ifndef _BNLIB_INTEGRATE_HXX__

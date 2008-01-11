@@ -1,8 +1,8 @@
-/*
-  Copyright:
-  Bojan Nikolic
+/**
+   \file gsl_utils.hxx
+   Bojan Nikolic <bojan@bnikolic.co.uk>
 
-  Some helper classes for dealing with gsl
+   Some helper classes for dealing with gsl
 */
 #ifndef _ADAS_GSL_UTILS_HXX__
 #define _ADAS_GSL_UTILS_HXX__

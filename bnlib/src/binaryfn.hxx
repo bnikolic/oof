@@ -1,8 +1,8 @@
-/*
-  Copyright:
-  Bojan Nikolic
+/**
+   \file binaryfn.hxx
+   Bojan Nikolic <bojan@bnikolic.co.uk>
 
-  Declares a simple binary function class 
+   Declares a simple binary function class 
 
 */
 #ifndef _BNLIB_BINARYFN_HXX___

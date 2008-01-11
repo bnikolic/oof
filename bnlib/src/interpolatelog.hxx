@@ -1,8 +1,8 @@
-/*
-  Copyright:
-  Bojan Nikolic
-
-  Routines to interpolate in log-space
+/**
+   \file interpolatelog.hxx
+   Bojan Nikolic <bojan@bnikolic.co.uk>
+   
+   Routines to interpolate in log-space
 */
 #ifndef BNLIB_INTERPOLATE_LOG__
 #define BNLIB_INTERPOLATE_LOG__

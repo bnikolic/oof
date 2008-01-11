@@ -1,6 +1,6 @@
-/*
-  Copyright:
-  Bojan Nikolic
+/**
+   \file interpolategsl.hxx
+   Bojan Nikolic <bojan@bnikolic.co.uk>
 
   Routines for interpolation
 */

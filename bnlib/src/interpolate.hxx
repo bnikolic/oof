@@ -1,8 +1,8 @@
-/*
-  Copyright:
-  Bojan Nikolic
+/**
+   \file interpolate.hxx
+   Bojan Nikolic <bojan@bnikolic.co.uk>   
 
-  Routines for interpolation
+   Routines for interpolation
 */
 #ifndef _BNLIB_INTERPOLATE_HXX__
 #define _BNLIB_INTERPOLATE_HXX__

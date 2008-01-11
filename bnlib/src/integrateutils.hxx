@@ -1,8 +1,8 @@
-/*
- * Bojan Nikolic
- *
- * Some utilities to deal with difficult integrations.
- */
+/** 
+    \file integrateutils.hxx
+    Bojan Nikolic <bojan@bnikolic.co.uk>
+    Some utilities to deal with difficult integrations.
+*/
 
 #ifndef _BNLIB_INTEGRATEUTILS_HXX__
 #define _BNLIB_INTEGRATEUTILS_HXX__
