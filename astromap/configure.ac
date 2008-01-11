@@ -2,6 +2,7 @@ AC_INIT(ASTROMAP, 1.0.2 , bojan@bnikolic.co.uk)
 
 AC_CONFIG_AUX_DIR(config)
 
+AC_CONFIG_HEADERS(config.h)
 
 AM_INIT_AUTOMAKE(ASTROMAP, 1.0.3, bojan@bnikolic.co.uk)
 
@@ -28,6 +29,10 @@ AC_CHECK_HEADERS( bndebug.hxx ,
 AC_CHECK_HEADERS( fitswrap.hxx , 
 		  [echo "found bnfits"],
 		  [echo "Error: No bnfits" ]  
+		  )
+
+AC_CHECK_HEADERS( minimmodel.hxx , 
+		  [echo "Found minimisation library, will build fitting routines "]
 		  )
 
 AC_LANG_POP(C++)

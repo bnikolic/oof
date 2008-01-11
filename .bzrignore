@@ -152,3 +152,6 @@ CVS
 ./bnlib/config.h.in
 ./bnlib/stamp-h1
 ./oofanalysis/gbt/plots
+./astromap/stamp-h1
+./astromap/config.h.in
+./astromap/config.h
