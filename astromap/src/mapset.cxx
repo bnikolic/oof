@@ -27,6 +27,17 @@ namespace AstroMap {
     TWorldSet( m  , fn, mask);
   }
 
+  void PixelSet(Map &m , BNLib::BinaryDD &fn )
+  {
+    for (unsigned px (0) ; px < m.nx ; ++px)
+      {
+	for (unsigned py(0) ; py < m.ny ; ++py )
+	  {
+	    m.get(px, py ) = fn(px, py);
+	  }
+      }
+  }
+
 }
 
 

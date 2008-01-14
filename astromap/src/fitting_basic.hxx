@@ -31,25 +31,46 @@ namespace AstroMap {
   class FittableMap :
     public Minim::Minimisable
   {
-    BNLib::BinaryDD & model;
+    /**  \brief The model to be fitted for
+     */
+    BNLib::BinaryDD * model;
+    
     const Map & map;
 
     /// A scratch map to compute the model on
     Map mtemp;
 
   public:
+
+    // ---------- Public data ------------
+
+    /**
+       If this parameter is false the fitting will be carried out in
+       pixel coordinates rather then world coordinates.
+     */
+    bool worldcs;
+
     // ---------- Construction/Destruction -------------
 
     /**
-       \param The model to be fitted for
+
        \param map the map to fit for. 
        
        \note still need to add parameters after construction
      */
-    FittableMap(BNLib::BinaryDD & model,
-		const Map       & map);
+    FittableMap(const Map       & map);
 
     // ---------- Public interface         -------------
+
+    /** \brief Set the model to fit for
+     */
+    void SetModel(BNLib::BinaryDD * mod);
+
+    /** \brief return a copy of the scratch map
+	
+     */
+    Map * ScratchCopy(void);
+    
 
     // ---------- Inherited from Minimisable -----------
     
@@ -61,7 +82,8 @@ namespace AstroMap {
   /**
      \brief Fit a gaussian to a map.
    */
-  class GaussMapModel {
+  class GaussMapModel:
+    public FittableMap {
     
   public:
 
@@ -72,12 +94,14 @@ namespace AstroMap {
      */
     BNLib::GaussianDD gm;
     
-    FittableMap fm;
 
     // ------------ Construction/ destruction ----------
     
-    GaussMapModel( const Map       & map);
-    
+    GaussMapModel( const Map  & map);
+
+    // ---------- Inherited from Minimisable -----------
+
+    virtual    void     AddParams ( std::vector< Minim::DParamCtr > &pars );
     
 
   };

@@ -2,7 +2,8 @@
    \file mapset.hxx
 
    Bojan Nikolic <bojan@bnikolic.co.uk> , <bn204@mrao.cam.ac.uk>
-
+   
+   Set map values from supplied functions
 */
 
 #ifndef _ASTROMAP_MAPSET_HXX__
@@ -28,6 +29,13 @@ namespace AstroMap {
    */
   void WorldSet(Map &m , BNLib::BinaryDD &fn, 
 		std::valarray<bool> const  &mask );
+
+  /** \brief Set a map by passing pixel coordinates to a function
+     
+      \param m the map to be set
+      \param fn the function to use
+   */
+  void PixelSet(Map &m , BNLib::BinaryDD &fn );
 
 }
 

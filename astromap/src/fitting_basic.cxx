@@ -13,22 +13,35 @@
 
 namespace AstroMap {
   
-  FittableMap::FittableMap(BNLib::BinaryDD & model,
-			   const Map       & map):
-    model(model),
+  FittableMap::FittableMap(  const Map       & map):
+    model(NULL),
     map(map),
-    mtemp(map)
+    mtemp(map),
+    worldcs(true)
   {
 
   }
 
+  void FittableMap::SetModel(BNLib::BinaryDD * mod)
+  {
+    model=mod;
+  }
+
   void  FittableMap::residuals ( std::vector< double > & res ) 
   {
-    WorldSet(mtemp, model);
+    if (worldcs) 
+    {
+      WorldSet(mtemp, *model);
+    }
+    else
+    {
+      PixelSet(mtemp, *model);
+    }
+
     for ( size_t j =0 ; j < map.ny ; ++j) 
       for ( size_t i =0 ; i < map.nx ; ++i)
       {
-	res[j* map.nx+ i] = map[i,j]-mtemp[i,j];
+	res[j* map.nx+ i] = map.get(i,j)-mtemp.get(i,j);
       }
   }
 
@@ -37,10 +50,59 @@ namespace AstroMap {
     return map.nx * map.ny;
   }
 
-  GaussMapModel::GaussMapModel( const Map       & map) :
-    fm( gm, map)
+  Map * FittableMap::ScratchCopy(void)
+  {
+    return new Map(mtemp);
+  }
+
+  GaussMapModel::GaussMapModel( const AstroMap::Map & mm) :
+    FittableMap( mm )
+  {
+    SetModel( & gm);
+  }
+
+  void  GaussMapModel::AddParams ( std::vector< Minim::DParamCtr > &pars )
   {
     
+    pars.push_back(Minim::DParamCtr ( & gm.amp ,      
+				      "amp", 
+				      true     ,                       
+				      "Amplitude "
+				      ));
+
+    pars.push_back(Minim::DParamCtr ( & gm.x0 ,      
+				      "x0", 
+				      true     ,                       
+				      "x position "
+				      ));
+
+    pars.push_back(Minim::DParamCtr ( & gm.y0 ,      
+				      "y0", 
+				      true     ,                       
+				      "y position "
+				      ));
+
+    pars.push_back(Minim::DParamCtr ( & gm.sigma ,      
+				      "sigma", 
+				      true     ,                       
+				      "sigma "
+				      ));
+
+    pars.push_back(Minim::DParamCtr ( & gm.diff ,      
+				      "diff", 
+				      true     ,                       
+				      "fiff "
+				      ));
+
+    pars.push_back(Minim::DParamCtr ( & gm.rho ,      
+				      "rho", 
+				      true     ,                       
+				      "rho "
+				      ));
+
+    
+
+
   }
 
 }
