@@ -15,6 +15,7 @@
 
 #include "minimmodel.hxx"
 #include "astromap.hxx"
+#include "gaussian.hxx"
 
 // Forward declarations
 namespace BNLib{
@@ -54,6 +55,30 @@ namespace AstroMap {
     
     virtual void  residuals ( std::vector< double > & res ) ;
     virtual unsigned   nres (void)  ; 
+
+  };
+
+  /**
+     \brief Fit a gaussian to a map.
+   */
+  class GaussMapModel {
+    
+  public:
+
+    // ---------- Public data ------------
+
+    /**
+       The gaussian model. Publicly expose for easy introspection.
+     */
+    BNLib::GaussianDD gm;
+    
+    FittableMap fm;
+
+    // ------------ Construction/ destruction ----------
+    
+    GaussMapModel( const Map       & map);
+    
+    
 
   };
 

@@ -37,6 +37,12 @@ namespace AstroMap {
     return map.nx * map.ny;
   }
 
+  GaussMapModel::GaussMapModel( const Map       & map) :
+    fm( gm, map)
+  {
+    
+  }
+
 }
 
 #endif //HAVE_MINIMMODEL_HXX
