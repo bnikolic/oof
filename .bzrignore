@@ -155,3 +155,5 @@ CVS
 ./astromap/stamp-h1
 ./astromap/config.h.in
 ./astromap/config.h
+./bnlib/doc/bnlib.doxytags
+./astromap/doc/astromap.doxytags

@@ -13,9 +13,28 @@
 
 #if HAVE_MINIMMODEL_HXX
 
+#include "minimmodel.hxx"
+
 namespace AstroMap {
-  
-  
+
+  /**
+     \brief Fit single functions of two variables to a region in a map.
+     
+   */
+  class FittableMap :
+    public Minim::Minimisable
+  {
+
+  public:
+    // ---------- Construction/Destruction -------------
+    FittableMap();
+
+    // ---------- Inherited from Minimisable -----------
+    
+    virtual void  residuals ( std::vector< double > & res ) = 0;
+    virtual unsigned   nres (void)  =0 ; 
+
+  };
 
 }
 

@@ -47,3 +47,11 @@ on laptop:
 			LDFLAGS="-L${BNPREFIX}/lib -L${PGPLOTDIR}"\
 			 --prefix=${BNPREFIX} 
 
+or if pgplot installed systemwide so doesn't need to be specified:
+
+./configure 	CPPFLAGS="-I${BNPREFIX}/include " \
+		CFLAGS="-I${BNPREFIX}/include  " \
+		SWIGFLAGS="-I${BNPREFIX}/include " \
+		LDFLAGS="-L${BNPREFIX}/lib "\
+		 --prefix=${BNPREFIX} 
+
