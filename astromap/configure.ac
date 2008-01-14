@@ -37,6 +37,9 @@ AC_CHECK_HEADERS( minimmodel.hxx ,
 
 AC_LANG_POP(C++)
 
+AM_CONDITIONAL([HAVEBNMIN1], 
+               [test x$ac_cv_header_minimmodel_hxx = xyes])
+
 AC_CONFIG_SUBDIRS([plot])	
 
 

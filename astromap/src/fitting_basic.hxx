@@ -14,6 +14,12 @@
 #if HAVE_MINIMMODEL_HXX
 
 #include "minimmodel.hxx"
+#include "astromap.hxx"
+
+// Forward declarations
+namespace BNLib{
+  class BinaryDD;
+}
 
 namespace AstroMap {
 
@@ -24,15 +30,30 @@ namespace AstroMap {
   class FittableMap :
     public Minim::Minimisable
   {
+    BNLib::BinaryDD & model;
+    const Map & map;
+
+    /// A scratch map to compute the model on
+    Map mtemp;
 
   public:
     // ---------- Construction/Destruction -------------
-    FittableMap();
+
+    /**
+       \param The model to be fitted for
+       \param map the map to fit for. 
+       
+       \note still need to add parameters after construction
+     */
+    FittableMap(BNLib::BinaryDD & model,
+		const Map       & map);
+
+    // ---------- Public interface         -------------
 
     // ---------- Inherited from Minimisable -----------
     
-    virtual void  residuals ( std::vector< double > & res ) = 0;
-    virtual unsigned   nres (void)  =0 ; 
+    virtual void  residuals ( std::vector< double > & res ) ;
+    virtual unsigned   nres (void)  ; 
 
   };
 
