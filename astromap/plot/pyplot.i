@@ -29,7 +29,7 @@
 #include "zernikepoly.hxx"
 #include "../src/mapset.hxx"
 
-#include "fitting_basic.hxx"
+#include "../src/fitting_basic.hxx"
 
 #include "plot.hxx"
 #include "phelpers.hxx"
@@ -159,7 +159,7 @@ namespace std {
 
 %include "paramctr.hxx"
 %include "minimmodel.hxx"
-%include "fitting_basic.hxx"
+%include "../src/fitting_basic.hxx"
 
 #endif
 
