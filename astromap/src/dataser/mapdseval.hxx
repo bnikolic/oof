@@ -3,7 +3,7 @@
 
    Bojan Nikolic <bn204@mrao.cam.ac.uk> , <bojan@bnikolic.co.uk>
 
-   2004-2007
+   2004-2008
 
    Interpolation of maps to positions contained in a dataseries and
    similar routines.
@@ -97,7 +97,7 @@ namespace AstroMap {
 
   public:
 
-    ~MapDSEvalBase();
+    virtual ~MapDSEvalBase();
 
     /*! 
       Interpolate the supplied map m to the position in the
