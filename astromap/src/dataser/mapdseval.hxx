@@ -81,7 +81,16 @@ namespace AstroMap {
   MapPixLC * MkCircleCoeffs (int px, int py, 
 			     Map const &msample,
 			     double radius);
-  
+
+  /**
+     \brief Return a pixel linear combination which represents a bi-linear
+     interpolation.
+
+     \param px,py position to interpoalte to
+   */
+  MapPixLC * MkBiLinearCoeffs (double px, 
+			       double py, 
+			       Map const &msample);
 
   /**
      Allow easy storage of pre-computed linear-combination

@@ -63,7 +63,7 @@ namespace AstroMap {
   {
     for (unsigned i =0 ; i < index.size() ; ++i )
     {
-      std::cout<<"inx=" <<index[i]<<" c=" <<coeff[i];
+      std::cout<<"index= " <<index[i]<<"; c=" <<coeff[i]<<std::endl;
     }
   }
 
@@ -132,6 +132,38 @@ namespace AstroMap {
     std::valarray<unsigned> vindex( &index[0] , index.size() );
     vcoeff /= vcoeff.sum() ;
     return new MapPixLC( vindex, vcoeff);
+  }
+
+  MapPixLC * MkBiLinearCoeffs (double px, 
+			       double py, 
+			       Map const &msample)
+  {
+    int xl = (int)floor(px);    
+    int yl = (int)floor(py);    
+
+    int xh = xl+1;
+    int yh = yl+1;
+    
+    double xd = px - xl;
+    double yd = py - yl;
+
+    std::valarray<double> vcoeff( 4);
+    std::valarray<unsigned> vindex( 4);
+    
+    vcoeff[0]= xd * yd;
+    vindex[0]= (yh*msample.nx+ xh);
+
+    vcoeff[1]= (1-xd) * yd;
+    vindex[1]= (yh*msample.nx+ xl);
+
+    vcoeff[2]= xd * (1-yd);
+    vindex[2]= (yl*msample.nx+ xh);    
+
+    vcoeff[3]= (1-xd) * (1-yd);
+    vindex[3]= (yl*msample.nx+ xl);
+      
+    return new MapPixLC( vindex, vcoeff);    
+    
   }
 
   MapDSEvalBase::~MapDSEvalBase()
