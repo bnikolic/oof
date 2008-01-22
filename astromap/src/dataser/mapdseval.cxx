@@ -166,6 +166,21 @@ namespace AstroMap {
     
   }
 
+  void BiLinearMapInterp( const double *px,
+			  const double *py,
+			  double  * res,
+			  size_t n,
+			  const Map &m)
+  {
+    for (size_t i =0 ; i < n ; ++i)
+    {
+      std::auto_ptr<MapPixLC> lc ( MkBiLinearCoeffs(px[i], py[i],
+						    m) );
+      res[i] = (*lc)(m);
+    }
+
+  }
+
   MapDSEvalBase::~MapDSEvalBase()
   {
     for (unsigned i =0 ; i < lcs.size() ; ++i )

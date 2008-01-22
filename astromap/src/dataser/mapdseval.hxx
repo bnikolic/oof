@@ -92,6 +92,14 @@ namespace AstroMap {
 			       double py, 
 			       Map const &msample);
 
+  /**\brief Bi-linearly interpolate map to supplied positions
+   */
+  void BiLinearMapInterp( const double *px,
+			  const double *py,
+			  double  * res,
+			  size_t n,
+			  const Map &m);
+
   /**
      Allow easy storage of pre-computed linear-combination
      coefficients so that multiple interpolations from maps with same
