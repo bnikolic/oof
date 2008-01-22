@@ -21,3 +21,7 @@ export set BNPREFIX=/home/bn204/d/p/bnprog-devel-main
 and then 
 	
 	./configure --prefix=${BNPREFIX}
+
+At MRAO, have to specify swig manually:
+	
+	./configure --prefix=${BNPREFIX} SWIG=/usr/bin/swig
