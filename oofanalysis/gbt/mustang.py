@@ -10,8 +10,8 @@ import pyfits
 import numarray
 
 import iofits4
-
-
+import oofreduce
+import oofplot
 
 
 def CorrectDZ(fnamein):
@@ -62,3 +62,13 @@ def RemoveStartEnd(fnamein,
     iofits4.Write(res,
                   fnameout,
                   overwrite=1)    
+
+def PlotPixTimeSer(fnamein,
+                   hduno,
+                   pixno):
+
+    f=pyfits.open(fnamein)
+    mask= ( f[hduno].data.field("PixID") == pixno)
+    pylab.plot( f[hduno].data.field("time")[mask],
+                f[hduno].data.field("fnu")[mask])
+    
