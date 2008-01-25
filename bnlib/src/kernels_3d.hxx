@@ -112,11 +112,17 @@ namespace BNLib {
 		 size_t zend,
 		 double * res);
 
-  /** \brief Sum close-to horisontal slices
+  /** \brief Sum close-to horizontal slices
       
   Use this to simulate non-vertical sight lines through the
   cube. Linear interpolation is used. Parameters like ZFlatten plus
   the following.
+
+  Pixels which are too close to edges to correctly sum are assigned
+  NaNs.
+
+  \bug Pixels which are exactly on edge, so are well defined, may also
+  be assigned a NaN.
 
   \param cx offset at zstart in the x direction
   \param cy offset at zstart in the y direction

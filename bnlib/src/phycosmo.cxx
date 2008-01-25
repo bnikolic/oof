@@ -1,6 +1,9 @@
-/*
-  Bojan Nikolic
+/**
+   \file phycosmo.cxx
 
+   Bojan Nikolic <bn204@mrao.cam.ac.uk>, <bojan@bnikolic.co.uk>
+   
+   Initial version  2002
 */
 
 #include "phycosmo.hxx"

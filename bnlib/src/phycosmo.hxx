@@ -2,6 +2,8 @@
    \file phycosmo.hxx
    
    Bojan Nikolic <bn204@mrao.cam.ac.uk>, <bojan@bnikolic.co.uk>
+   
+   Initial version in 2002
 
    Some simple cosmology routines
 */
