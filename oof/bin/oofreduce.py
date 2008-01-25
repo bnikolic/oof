@@ -105,12 +105,19 @@ def MkFF ( fnamein,
         try:
             recvname= pyfits.open(fnamein)[0].header["recv"]
         except:
-            print "No recv keyword... assuming Q band!!"
-            recvname= "qunbal"
+            if wavel < 0.005 :
+                recvname= "mustang"
+                print "No recv keyword... assuming mustang!!"
+            else:
+                recvname= "qunbal"
+                print "No recv keyword... assuming Q band!!"
+
             
         if recvname == "qunbal":
             ff = pyoof.ChoppedFF( apphase , wavel)
             ff.hchop = -57.8 *  math.pi / 180.0 / 3600
+        elif recvname == "mustang":
+            ff = pyoof.FarF(apphase, wavel)
         else:
             raise "Unknown receiver/GBT: " + recvnema
     else:
