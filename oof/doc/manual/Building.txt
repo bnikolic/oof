@@ -2,7 +2,10 @@
 Recommended procedure for building OOF.
 
 export set BNPREFIX=/home/bnikolic/p/bnprog-devel-main
+# If there is more than one python
 export set PYTHON=python2.4
+# If there is more than one swig, pick a recent one
+export set SWIG=/usr/bin/swig
 
 export set CPPFLAGS="${CPPFLAGS} -I${BNPREFIX}/include"
 export set CFLAGS="${CFLAGS} -I${BNPREFIX}/include" 
