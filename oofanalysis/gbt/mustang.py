@@ -4,6 +4,7 @@
 #
 # Processing/analysis of mustang data
 
+import os
 import setup
 
 import pyfits
@@ -72,3 +73,22 @@ def PlotPixTimeSer(fnamein,
     pylab.plot( f[hduno].data.field("time")[mask],
                 f[hduno].data.field("fnu")[mask])
     
+
+def RedTPAR18():
+
+    dirin= "/home/bnikolic/data/gbt-oof/mustang/TPAR18/"
+    obslist = [ "0854+2006tpar18s56s58.fits",
+                "0854+2006tpar18s59s61.fits",
+                "0854+2006tpar18s64s66.fits" ]
+
+    for f in obslist:
+        fnamein=os.path.join(dirin, f)
+        CorrectDZ(fnamein)
+        fs=fnamein[:-5] + "_s.fits"
+        RemoveStartEnd( fnamein ,
+                        fs)
+
+        oofreduce.Red(fs)
+        
+        
+        
