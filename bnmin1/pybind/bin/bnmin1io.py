@@ -137,9 +137,15 @@ def CVCVSWrite(cvm, m , fnameout , norm=0, wikiform=0 ):
         fout.write("\n %s %s " % (linesep, p1) )
         for j, p2 in enumerate(parlist):
             if norm:
-                fout.write(" %s %g " % (sep, ( cvm[i,j] / ( cvm[i,i] * cvm[j,j] )**0.5 )))
+                if cvm[i,j] == 0.0 :
+                    val = 0.0
+                else:
+                    val = ( cvm[i,j] / ( cvm[i,i] * cvm[j,j] )**0.5 )
             else:
                 fout.write(" %s %g " % (sep, cvm[i,j] ))
+
+            fout.write(" %s %g " % (sep, val))
+
         fout.write(linesep)
         
 
