@@ -1,6 +1,7 @@
-/*! 
-  Bojan Nikolic
-  $Id: choppedff.cxx,v 1.3 2005/08/28 04:26:25 bnikolic Exp $
+/**
+   \file choppedff.cxx
+   Bojan Nikolic <bojan@bnikolic.co.uk>,   <bn204@mrao.cam.ac.uk>
+   
 */
 
 #include "choppedff.hxx"

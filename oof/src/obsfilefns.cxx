@@ -1,7 +1,7 @@
-/*
-  Bojan Nikolic
-  $Id: obsfilefns.cxx,v 1.3 2005/08/18 23:52:32 bnikolic Exp $
-
+/**
+   \file obsfilefns.cxx
+   
+   Bojan Nikolic <bojan@bnikolic.co.uk>,   <bn204@mrao.cam.ac.uk>
 */
 
 #include "obsfilefns.hxx"

@@ -1,8 +1,9 @@
-/*
-  Bojan Nikolic
-  $Id: obscompare.hxx,v 1.8 2005/08/18 23:52:32 bnikolic Exp $
+/**
+   \file obscompare.hxx
+   
+   Bojan Nikolic <bojan@bnikolic.co.uk>,   <bn204@mrao.cam.ac.uk>
 
-  Compare models to observations!
+   Compare models to observations!
 */
 
 #ifndef __OOF_OBSCOMPARE_HXX__

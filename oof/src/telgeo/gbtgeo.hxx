@@ -1,7 +1,6 @@
-/*!
-  Bojan Nikolic
-  $Id: gbtgeo.hxx,v 1.2 2005/09/05 01:12:36 bnikolic Exp $
-
+/**
+   \file gbtgeo.hxx
+   Bojan Nikolic <bojan@bnikolic.co.uk>,   <bn204@mrao.cam.ac.uk>
 */
 #ifndef _OOF_TELGEO_GBTGEO_HXX__
 #define _OOF_TELGEO_GBTGEO_HXX__

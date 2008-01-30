@@ -1,8 +1,9 @@
-/*
-  Bojan Nikolic
-  $Id: farffunctions.hxx,v 1.3 2005/08/18 04:57:43 bnikolic Exp $
+/**
+   \file farffunctions.hxx
 
-  Far-field support functions 
+   Bojan Nikolic <bojan@bnikolic.co.uk>,   <bn204@mrao.cam.ac.uk>
+
+   Far-field support functions 
 */
 
 #ifndef _OOF_FARFFINCTIONS_HXX__

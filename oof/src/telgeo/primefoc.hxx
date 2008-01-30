@@ -1,8 +1,9 @@
-/*
-  Bojan Nikoic
-  $Id: primefoc.hxx,v 1.2 2005/08/31 14:07:32 bnikolic Exp $
+/**
+   \file primefoc.hxx
 
-  Description of prime focus telescope geometry
+   Bojan Nikolic <bojan@bnikolic.co.uk>,   <bn204@mrao.cam.ac.uk>
+   
+   Description of prime focus telescope geometry
 */
 #ifndef _OOF_TELGEO_PRIMEF___
 #define _OOF_TELGEO_PRIMEF___
@@ -10,7 +11,9 @@
 #include "telgeo.hxx"
 
 namespace OOF {
-
+  
+  /** Prime focus telescope geometry 
+   */
   class  PrimeFocusGeo : public  TelGeometry {
 
   public:

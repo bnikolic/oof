@@ -1,6 +1,8 @@
-/*
-  Bojan Nikolic
-  $Id: obscompare.cxx,v 1.10 2005/08/24 21:21:13 bnikolic Exp $
+/**
+   \file obscompare.cxx
+   
+   Bojan Nikolic <bojan@bnikolic.co.uk>,   <bn204@mrao.cam.ac.uk>
+
 */
 
 #include "obscompare.hxx"

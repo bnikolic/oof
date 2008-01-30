@@ -1,8 +1,8 @@
-/*
-  Bojan Nikolic
-  $Id: obsfilefns.hxx,v 1.3 2005/08/18 23:52:32 bnikolic Exp $
+/**
+   \file obsfilefns.hxx
+   Bojan Nikolic <bojan@bnikolic.co.uk>,   <bn204@mrao.cam.ac.uk>
 
-  Input/output support functions for observations 
+   Input/output support functions for observations 
 */
 
 #ifndef __OOF_OBSFILEFNS_HXX__

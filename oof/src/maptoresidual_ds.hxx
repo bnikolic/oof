@@ -1,6 +1,7 @@
-/*!
-  Bojan Nikolic
-  $Id: maptoresidual_ds.hxx,v 1.2 2005/08/18 04:57:43 bnikolic Exp $
+/**
+   \file maptoresidual_ds.hxx
+   
+   Bojan Nikolic <bojan@bnikolic.co.uk>,   <bn204@mrao.cam.ac.uk>
 
 */
 

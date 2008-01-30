@@ -1,8 +1,8 @@
-/*! 
-  Bojan Nikolic
-  $Id: choppedff.hxx,v 1.2 2005/08/18 23:52:32 bnikolic Exp $
+/**
+   \file choppedff.hxx
+   Bojan Nikolic <bojan@bnikolic.co.uk>,   <bn204@mrao.cam.ac.uk>
 
-  Support for chopped observations
+   Support for chopped observations
 */
 
 #ifndef _OOF_CHOPPEDFF_HXX___
@@ -12,6 +12,10 @@
 
 namespace OOF {
 
+  /**
+     \brief Represent a differenced or chopped on-the sky measurement
+     by the telescope.
+   */
   class ChoppedFF : public FarF {
 
     /*! An aperutre phase map representing a vertical tilt

@@ -1,6 +1,7 @@
-/*!
-  Bojan Nikolic
-  $Id: cassegrain.hxx,v 1.4 2005/08/09 01:09:19 bnikolic Exp $
+/**
+   \file cassegrain.hxx
+
+   Bojan Nikolic <bojan@bnikolic.co.uk>,   <bn204@mrao.cam.ac.uk>
 
 */
 #ifndef _OOF_TELGEO_CASSEGRAIN_HXX__
