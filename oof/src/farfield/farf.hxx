@@ -60,7 +60,8 @@ namespace OOF {
        \brief Calculate the far-field power from the supplied aperture
        amplitude and phase distributions 
     */
-    virtual void Power ( const AstroMap::Map & amp, const AstroMap::Map & phase, 
+    virtual void Power ( const AstroMap::Map & amp, 
+			 const AstroMap::Map & phase, 
 			 AstroMap::Map & res);
 
     /**

@@ -43,7 +43,8 @@ namespace OOF {
     delete (skyscratch);
   }
 
-  void ChoppedFF::Power ( const AstroMap::Map & amp, AstroMap::Map & phase, 
+  void ChoppedFF::Power ( const AstroMap::Map & amp, 
+			  const AstroMap::Map & phase, 
 			  AstroMap::Map & res) 
   {
 

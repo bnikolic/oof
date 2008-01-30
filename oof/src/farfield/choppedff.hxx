@@ -50,7 +50,10 @@ namespace OOF {
 
     // ---------- Functions inherited from FarF  -------------
 
-    virtual void Power ( const AstroMap::Map & amp, AstroMap::Map & phase, AstroMap::Map & res);
+    virtual void Power ( const AstroMap::Map & amp, 
+			 const AstroMap::Map & phase, 
+			 AstroMap::Map & res);
+
     virtual const char * FFType (void) const; 
 
     // ------ Inherited functions rom Minim::Model ---------
