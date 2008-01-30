@@ -94,6 +94,14 @@ namespace OOF {
     /*! Return the aperture */
     ApertureMod * GetAperture(void);
 
+    /** \brief Return pointer to the farfield 
+	
+	\note This is a trouble-shooting function
+     */
+    const FarF * getFF(void) { return farf; };
+    
+    
+
 
     // ------- Methods inherited from minimisable
 

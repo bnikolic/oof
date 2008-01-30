@@ -101,6 +101,11 @@ namespace OOF {
 
   }
 
+  const char * ChoppedFF::FFType (void) const
+  {
+    return "ChoppedFF";
+  }
+
 
 }
 

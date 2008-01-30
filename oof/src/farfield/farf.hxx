@@ -78,6 +78,14 @@ namespace OOF {
 			   AstroMap::Map & ff_amp,
 			   AstroMap::Map & ff_phase);
 
+    /**
+       \brief Report the type of far-field type
+       
+       For debug of swig related problems
+    */
+    virtual const char * FFType (void) const;
+    
+    
     // ------ Inherited functions rom Minim::Model ---------
     virtual    void     AddParams ( std::vector< Minim::DParamCtr > &pars );    
     

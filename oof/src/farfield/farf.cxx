@@ -84,6 +84,11 @@ namespace OOF {
   {
   }
 
+  const char * FarF::FFType (void) const
+  {
+    return "FarF";
+  }
+
 }
 
 
