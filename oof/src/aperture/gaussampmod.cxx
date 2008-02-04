@@ -78,6 +78,17 @@ namespace OOF {
 				      false     ,                       
 				      "Illumination taper"
 				      ));
+
+    pars.push_back(Minim::DParamCtr ( & gfn->x0 ,      
+				      "x0", 
+				      false     ,                       
+				      "Illumination offset in horizontal"
+				      ));
+    pars.push_back(Minim::DParamCtr ( & gfn->y0 ,      
+				      "y0", 
+				      false     ,                       
+				      "Illumination offset in vertical"
+				      ));
     
   }
 
