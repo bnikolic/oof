@@ -70,8 +70,14 @@ def TestPlots():
         AccumPlot( 33, 1000, "temp/c33Bfaceedge.eps",
                    opt=pybnlib.KInitialEFB + pybnlib.KBalancedIters+ pybnlib.KEdgeBalanced)
 
-    if 1:
+    if 0:
         AccumPlot(129, 500,
                   "temp/n129_e50.eps",
                   opt=pybnlib.KInitialEFB + pybnlib.KBalancedIters+ pybnlib.KEdgeBalanced,
                   nsamples=1)
+
+    if 1:
+        AccumPlot(129, 500,
+                  "temp/n129_e50_simple.eps",
+                  opt=pybnlib.KInitialEFB,
+                  nsamples=1)        

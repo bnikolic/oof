@@ -16,7 +16,7 @@ import kolmogorovutils
 def CubeStructure(cuben,
                   samples,
                   pairl,
-                  opts=pybnlib.KInitialEFB):
+                  opt=pybnlib.KInitialEFB):
 
     "Compute structure function on many realisations of small cubes"
 
@@ -31,7 +31,7 @@ def CubeStructure(cuben,
 
         g=kolmogorovutils.GenerateKNumarray(cuben,cuben,cuben,
                                             seed,
-                                            opt=opts)
+                                            opt=opt)
         # Transpose to get back to exactly the same numbers as the
         # old copy to numarray scheme. Note that it is worrying
         # that some of the tests depend on this.
@@ -144,9 +144,22 @@ def FaceToFace(n, samples,
     return CubeStructure( n, samples, l ,
                           **kwargs)
 
+def HalfToFace(n, samples,
+               **kwargs):
+
+    l=[]
+    for i in range(n):
+        for j in range(n):
+            l.append( [ [i,j,0] , [i,j,n/2] ] )
+    
+    return CubeStructure( n, samples, l ,
+                          **kwargs)
+
 
 
 def PlotSTest(a):
+
+    from matplotlib import pylab
 
     x=numpy.mean(a, axis=0)
     x.shape=( int(len(x)**0.5), int(len(x)**0.5) )
