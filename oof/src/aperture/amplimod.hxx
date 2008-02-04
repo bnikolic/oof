@@ -1,6 +1,6 @@
-/*!
-  Bojan Nikolic
-  $Id: amplimod.hxx,v 1.2 2005/08/05 22:01:11 bnikolic Exp $
+/**
+   \file amplimod.hxx 
+   Bojan Nikolic <bojan@bnikolic.co.uk>, <bn204@mrao.cam.ac.uk>
 
   Aperture model
 */
@@ -17,6 +17,9 @@ namespace AstroMap {
 
 namespace OOF {
 
+  /** \brief A model for the aperture plane illumination (or amplitude)
+
+   */
     class AmpliMod : public Minim::Model  {
 
     public:

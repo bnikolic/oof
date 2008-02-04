@@ -1,8 +1,9 @@
-/*!
-  Bojan Nikolic
-  $Id: zernmodel.hxx,v 1.8 2005/08/21 21:46:53 bnikolic Exp $
+/**
+   \file zernmodel.hxx
 
-  Zernike model for the aperture phase distribution
+   Bojan Nikolic <bojan@bnikolic.co.uk>, <bn204@mrao.cam.ac.uk>
+
+   Zernike model for the aperture phase distribution
 */
 #ifndef _OOF_ZERNMODEL_HXX__
 #define _OOF_ZERNMODEL_HXX__

@@ -1,6 +1,6 @@
-/*!
-  Bojan Nikolic
-  $Id: aperturemod.cxx,v 1.4 2005/08/21 21:46:53 bnikolic Exp $
+/**
+   \file aperturemod.cxx
+   Bojan Nikolic <bojan@bnikolic.co.uk>, <bn204@mrao.cam.ac.uk>
 
 */
 

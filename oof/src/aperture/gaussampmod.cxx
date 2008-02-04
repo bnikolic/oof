@@ -1,6 +1,6 @@
-/*
-  Bojan Nikolic
-  $Id: gaussampmod.cxx,v 1.7 2006/02/16 00:23:12 bnikolic Exp $
+/**
+   \file gaussampmod.cxx
+   Bojan Nikolic <bojan@bnikolic.co.uk>, <bn204@mrao.cam.ac.uk>
 
 */
 

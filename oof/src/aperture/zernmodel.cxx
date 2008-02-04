@@ -1,6 +1,7 @@
-/*!
-  Bojan Nikolic
-  $Id: zernmodel.cxx,v 1.9 2005/08/21 21:46:53 bnikolic Exp $
+/**
+   \file zernmodel.cxx
+   Bojan Nikolic <bojan@bnikolic.co.uk>, <bn204@mrao.cam.ac.uk>
+
 */
 
 #include "zernmodel.hxx"

@@ -1,6 +1,6 @@
-/*!
-  Bojan Nikolic
-  $Id: phasemod.cxx,v 1.3 2005/08/24 21:21:14 bnikolic Exp $
+/**
+   \file phasemod.cxx
+   Bojan Nikolic <bojan@bnikolic.co.uk>, <bn204@mrao.cam.ac.uk>
 
 */
 

@@ -1,6 +1,6 @@
-/*!
-  Bojan Nikolic
-  $Id: phasemod.hxx,v 1.5 2005/08/24 21:21:14 bnikolic Exp $
+/**
+  \file phasemod.hxx
+  Bojan Nikolic <bojan@bnikolic.co.uk>, <bn204@mrao.cam.ac.uk>
 
   Phase model
 */
@@ -18,7 +18,9 @@ namespace AstroMap {
 
 namespace OOF {
 
-  
+
+  /** \brief A model for the aperture plane phase of the electric field
+   */
   class PhaseMod : public Minim::Model  {
 
   public:
