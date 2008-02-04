@@ -17,7 +17,8 @@ namespace AstroMap {
 
 namespace OOF {
 
-  /** \brief A model for the aperture plane illumination (or amplitude)
+  /** \brief A model for the aperture plane illumination (or
+      amplitude)
 
    */
     class AmpliMod : public Minim::Model  {
@@ -25,7 +26,13 @@ namespace OOF {
     public:
 
       // ------ Member functions ----------------------------
-    
+
+      /**
+	 \brief Compute the amplitude and store in the supplied map.
+
+	 The primary function of the interface -- derived classes
+	 override this to define their behaviour.
+       */
       virtual void Calc( AstroMap::Map &m) const = 0 ;
 
       /*! This is only really for the python binding to work */
