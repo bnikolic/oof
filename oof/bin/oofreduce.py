@@ -40,6 +40,27 @@ def GetObsWaveL(fnamein):
     
     return  3e8 / filein[0].header["freq"]
 
+def GetRecvName(fnamein):
+
+    "Return the name of the receiver in use"
+
+    fin = pyfits.open(fnamein)
+
+    if fin[0].header.has_key( "recv") :
+        return fin[0].header["recv"]
+    else:
+        # Guess
+        if fin[0].header["telesc"] == "GBT":
+            wavel = GetObsWaveL(fnamein)
+            if wavel < 0.005 :
+                return  "mustang"
+                print "No recv keyword... assuming mustang!!"
+            else:
+                return "qunbal"
+                print "No recv keyword... assuming Q band!!"
+        else:
+            return None
+    
 
 def MkMapResDS(fnamein,
                extno,
@@ -101,18 +122,7 @@ def MkFF ( fnamein,
 
     if telname == "GBT":
 
-        recvname=None 
-        try:
-            recvname= pyfits.open(fnamein)[0].header["recv"]
-        except:
-            if wavel < 0.005 :
-                recvname= "mustang"
-                print "No recv keyword... assuming mustang!!"
-            else:
-                recvname= "qunbal"
-                print "No recv keyword... assuming Q band!!"
-
-            
+        recvname=GetRecvName(fnamein)
         if recvname == "qunbal":
             ff = pyoof.ChoppedFF( apphase , wavel)
             ff.hchop = -57.8 *  math.pi / 180.0 / 3600
@@ -155,11 +165,19 @@ def MkObsCompare(fnamein,
 
     wavel= GetObsWaveL(fnamein)
 
-    aperture = pyoof.MkSimpleAp ( tel,
-                                  wavel,
-                                  npix,
-                                  nzern,
-                                  oversample)
+    recv= GetRecvName(fnamein)
+    if recv ==  "mustang" :
+        aperture = pyoof.MkMUSTANGAp ( tel,
+                                     wavel,
+                                     npix,
+                                     nzern,
+                                     oversample)
+    else:
+        aperture = pyoof.MkSimpleAp ( tel,
+                                      wavel,
+                                      npix,
+                                      nzern,
+                                      oversample)
 
     aperture.thisown=0
 
