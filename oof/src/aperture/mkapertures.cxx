@@ -18,6 +18,7 @@
 
 #include "zernmodel.hxx"
 #include "gaussampmod.hxx"
+#include "tophatmodel.hxx"
 
 
 
@@ -50,6 +51,28 @@ namespace  OOF {
 
     GaussAmpMod * ampmod  = new GaussAmpMod (telgeo,
 					     *msample);
+
+    
+    return new ApertureMod( phasemod, ampmod,
+			    wavel,
+			    *msample);
+
+
+  }
+
+  ApertureMod * MkMUSTANGAp( TelGeometry * telgeo ,
+			     double wavel,
+			     unsigned npix,
+			     unsigned nzern ,
+			     double oversample )
+  {
+    std::auto_ptr< AstroMap::Map  > msample (  MkApMap ( telgeo, npix, oversample));
+    
+    RZernModel * phasemod = new RZernModel( nzern,
+					    *msample,
+					    telgeo);
+
+    TopHatAmpMod * ampmod  = new TopHatAmpMod(45.0);
 
     
     return new ApertureMod( phasemod, ampmod,

@@ -43,6 +43,19 @@ namespace  OOF {
 			    double oversample );
 
 
+  /** \brief Make the aperture model suitable for MUSTANG/GBT
+      
+      So far only difference from MkSimpleAp is that top-hat
+      illumination is used.
+            
+   */
+  ApertureMod * MkMUSTANGAp( TelGeometry * telgeo ,
+			     double wavel,
+			     unsigned npix,
+			     unsigned nzern ,
+			     double oversample );
+
+
 
 }
 
