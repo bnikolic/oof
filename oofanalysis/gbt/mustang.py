@@ -1,11 +1,14 @@
 # Bojan Nikolic <bojan@bnikolic.co.uk>
 #
-# January 2008
+# Initial version January 2008
 #
 # Processing/analysis of mustang data
 
 import os
+import tarfile
+
 import setup
+
 
 import pyfits
 import numarray
@@ -74,12 +77,15 @@ def PlotPixTimeSer(fnamein,
                 f[hduno].data.field("fnu")[mask])
     
 
+
+tpar18list=  [ "0854+2006tpar18s56s58.fits",
+               "0854+2006tpar18s59s61.fits",
+               "0854+2006tpar18s64s66.fits" ]
+
 def RedTPAR18():
 
     dirin= "/home/bnikolic/data/gbt-oof/mustang/TPAR18/"
-    obslist = [ "0854+2006tpar18s56s58.fits",
-                "0854+2006tpar18s59s61.fits",
-                "0854+2006tpar18s64s66.fits" ]
+    obslist = tpar18list
 
     for f in obslist:
         fnamein=os.path.join(dirin, f)
@@ -91,4 +97,15 @@ def RedTPAR18():
         oofreduce.Red(fs)
         
         
-        
+def PlotAndPack():
+
+    tf=tarfile.open("oofout/tpar18analysis.tar.bz2" , "w:bz2")
+
+    for f in tpar18list:
+        fs = os.path.join("oofout", f[:-5] + "_s-000"  , "z5")
+        oofplot.PlotDir(fs, bbox=[ -6e-4 * x for x in [-1 ,1,-1,1] ])
+        tf.add( fs )
+
+    
+    
+    
