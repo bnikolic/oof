@@ -242,6 +242,8 @@ def Red(obsfilename,
     #The last recorded fit file goes into this variable to restart the
     #minimisation with higher number of Zernike from that point
     lastfitf= None
+
+    wavel = GetObsWaveL(obsfilename)
     
     for nzern in range(1, nzmax+1):
 
@@ -291,6 +293,11 @@ def Red(obsfilename,
         pyoof.WriteAperture(oc,
                             "!"+os.path.join(cdirout, "aperture-notilt.fits"))
 
+        hdulist = pyfits.open(os.path.join(cdirout, "aperture-notilt.fits"),mode='update')
+        prihdr = hdulist[0].header
+        prihdr.update('wave',wavel,'wavelength (m), floating value')
+        hdulist.flush()
+
         # Save the fits file with information about the fit
         iofits4.Write( [pyfits.PrimaryHDU() ,
                         ptable,
@@ -298,6 +305,7 @@ def Red(obsfilename,
                         ],
                        os.path.join(cdirout, "fitinfo.fits") ,
                        overwrite=1)
+        
 
         # Write out offset aperture and beams if exist
         if OffsetFname(obsfilename):
