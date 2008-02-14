@@ -63,7 +63,7 @@ def FLoad( modeldsc, fnamein, ext=1, silent=False):
         cpar = modeldsc.getbyname( rowin.field("ParName"))
 
         if  cpar:
-            cpar.setp( rowin.field("ParValue") )
+            cpar.setp( float(rowin.field("ParValue")) )
         else:
             if not silent : print "%s doesn't exist in model" % rowin.field("ParName")
 
