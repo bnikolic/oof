@@ -109,6 +109,14 @@ def PlotAndPack():
         oofplot.PlotDir(fs, bbox=[ -6e-4 * x for x in [-1 ,1,-1,1] ])
         tf.add( fs )
 
+def PlotObitMUSTANG(sno):
+
+    fnamein="/home/bn204/d/data/oof/gbt/mustang/obit/OOF/0854+2006.%i.CalImage.fits" % sno
+
+    m=pyplot.FitsMapLoad(fnamein ,1)
+    pyplot.ReplaceInfNaN(m, 0)
+
+    implot.plotmap(m, colmap="heat")
     
     
     
