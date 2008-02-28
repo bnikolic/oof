@@ -11,6 +11,10 @@ In Development
    * Function to replace inf/nan values with a specified value
      (ReplaceInfNaN)
 
+   ENHANCEMENTS :
+   
+   * Extra colour map (rainbow2)
+
    BUG FIXES   :
 
    PERFROMANCE :
