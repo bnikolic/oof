@@ -17,6 +17,9 @@ import iofits4
 import oofreduce
 import oofplot
 
+import pyplot
+import implot
+
 
 def CorrectDZ(fnamein):
 
