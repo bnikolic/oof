@@ -91,6 +91,16 @@ namespace AstroMap {
     
     return res;
   }
+
+  void ReplaceInfNaN ( Map &m,
+		       double val)
+  {
+    for (size_t i =0 ; i < m.size() ; ++i )
+    {
+      if (  ! std::isfinite( m[i] ) )
+	m[i]=val;
+    }
+  }
   
 
   void KolmogorovMap( Map &m )

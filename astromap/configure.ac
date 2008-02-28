@@ -1,10 +1,12 @@
-AC_INIT(ASTROMAP, 1.0.2 , bojan@bnikolic.co.uk)  
+AC_INIT(ASTROMAP, 
+        1.1 , 
+	"Bojan Nikolic" <bojan@bnikolic.co.uk> )  
 
 AC_CONFIG_AUX_DIR(config)
 
 AC_CONFIG_HEADERS(config.h)
 
-AM_INIT_AUTOMAKE(ASTROMAP, 1.0.3, bojan@bnikolic.co.uk)
+AM_INIT_AUTOMAKE()
 
 AC_LIBTOOL_DLOPEN
 AC_DISABLE_STATIC

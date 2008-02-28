@@ -6,6 +6,16 @@ AstroMap Release Notes
 In Development
 ==============
 
+   FEATURES    :
+
+   * Function to replace inf/nan values with a specified value
+     (ReplaceInfNaN)
+
+   BUG FIXES   :
+
+   PERFROMANCE :
+
+
 
 
 Version 1.0.3

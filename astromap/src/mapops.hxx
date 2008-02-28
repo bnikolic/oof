@@ -54,6 +54,11 @@ namespace AstroMap {
   std::complex<double> ComplexSum( const Map & amp,
 				   const Map & phase);
 
+  /** \brief Replace not-a-number values or infinities with specified value
+   */
+  void ReplaceInfNaN ( Map &m,
+		       double val);
+
   /** Assign a Kolmogorov distribution the the supplied map */
   void KolmogorovMap( Map &m );
 
