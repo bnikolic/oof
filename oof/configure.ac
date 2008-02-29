@@ -1,9 +1,12 @@
 
-AC_INIT()
+AC_INIT(OOF,
+	1.1,
+	"Bojan Nikolic" <bojan@bnikolic.co.uk> )
 
 AC_CONFIG_AUX_DIR(config)
+AC_CONFIG_HEADERS(config.h)
 
-AM_INIT_AUTOMAKE(OOF, 1.0.2)
+AM_INIT_AUTOMAKE()
 
 AC_LIBTOOL_DLOPEN
 AC_DISABLE_STATIC
