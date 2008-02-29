@@ -32,10 +32,19 @@ def MkTel(fnamein):
 
     return tel
 
+def GetBeamSeparation(fnamein):
+    "Return the beam separation in arcsec"
+    filein = pyfits.open(fnamein)
+    try:
+        beamsep = filein[0].header['CHOPTHR']
+    except:
+        print "CHOPTHR not found in header. Assuming Q-band value."
+        beamsep = 57.8
+    return beamsep
 
 def GetObsWaveL(fnamein):
 
-    "Return the obseving wavelength"
+    "Return the observing wavelength"
 
     filein = pyfits.open(fnamein)
     
@@ -108,12 +117,15 @@ def MkFF ( fnamein,
         except:
             print "No recv keyword... assuming Q band!!"
             recvname= "qunbal"
-            
+        beamSeparationArcsec = GetBeamSeparation(fnamein)    
         if recvname == "qunbal":
             ff = pyoof.ChoppedFF( apphase , wavel)
-            ff.hchop = -57.8 *  math.pi / 180.0 / 3600
+            ff.hchop = -beamSeparationArcsec *  math.pi / 180.0 / 3600
+        elif recvname == "Ka":
+            ff = pyoof.ChoppedFF( apphase , wavel)
+            ff.hchop = +beamSeparationArcsec *  math.pi / 180.0 / 3600
         else:
-            raise "Unknown receiver/GBT: " + recvnema
+            raise "Unknown receiver/GBT: " + recvname
     else:
         ff = pyoof.FarF(apphase, wavel)
 
@@ -294,8 +306,9 @@ def Red(obsfilename,
                             "!"+os.path.join(cdirout, "aperture-notilt.fits"))
 
         hdulist = pyfits.open(os.path.join(cdirout, "aperture-notilt.fits"),mode='update')
-        prihdr = hdulist[0].header
-        prihdr.update('wave',wavel,'wavelength (m), floating value')
+        for ext in range(0,2):
+            prihdr = hdulist[ext].header
+            prihdr.update('wave',wavel,'wavelength (m), floating value')
         hdulist.flush()
 
         # Save the fits file with information about the fit
