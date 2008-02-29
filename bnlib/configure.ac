@@ -1,9 +1,11 @@
 
-AC_INIT(src/interpolate.hxx)
+AC_INIT(BNLIB,
+	1.1,
+	 "Bojan Nikolic"   <bojan@bnikolic.co.uk>)
 
 AC_CONFIG_AUX_DIR(config)
 
-AM_INIT_AUTOMAKE(BNLIB, 1.0)
+AM_INIT_AUTOMAKE()
 
 AC_CONFIG_HEADERS(config.h)
 
