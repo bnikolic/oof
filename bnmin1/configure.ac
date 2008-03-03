@@ -1,8 +1,11 @@
-AC_INIT(src/minim.hxx)
+AC_INIT(BNMIN1, 1.1,
+	"Bojan Nikolic"   <bojan@bnikolic.co.uk>)
 
 AC_CONFIG_AUX_DIR(config)
 
-AM_INIT_AUTOMAKE(BNMIN1, 1.0)
+AM_INIT_AUTOMAKE()
+
+AC_CONFIG_HEADERS(config.h)
 
 AC_LIBTOOL_DLOPEN
 AC_DISABLE_STATIC
