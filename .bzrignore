@@ -160,3 +160,6 @@ CVS
 ./oof/stamp-h1
 ./oof/config.h.in
 ./oof/config.h
+./bnfits/stamp-h1
+./bnfits/config.h.in
+./bnfits/config.h
