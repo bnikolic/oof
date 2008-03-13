@@ -1,6 +1,8 @@
-/*
-  Bojan Nikolic
-  $Id: lmmin.cxx,v 1.1 2005/06/02 13:43:18 bnikolic Exp $
+/**
+   \file lmmin.cxx
+   
+   Bojan Nikolic <bojan@bnikolic.co.uk>
+   Initial version 2003
 */
 
 #include "lmmin.hxx"

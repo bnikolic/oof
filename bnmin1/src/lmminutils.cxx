@@ -1,7 +1,8 @@
-/*
-  Bojan Nikolic
-  $Id: lmminutils.cxx,v 1.1 2005/08/21 02:42:02 bnikolic Exp $
+/**
+   \file lmminutils.cxx
 
+   Bojan Nikolic <bojan@bnikolic.co.uk>
+   Initial version 2003
   
 */
 

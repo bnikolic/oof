@@ -1,6 +1,6 @@
-/*
-  Bojan Nikolic
-  $Id: monitor.cxx,v 1.2 2005/08/21 02:42:03 bnikolic Exp $
+/**
+   \file monitor.cxx
+   Bojan Nikolic <bojan@bnikolic.co.uk>
 
 */
 

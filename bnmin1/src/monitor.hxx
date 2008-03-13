@@ -1,8 +1,8 @@
-/*
-  Bojan Nikolic
-  $Id: monitor.hxx,v 1.2 2005/08/21 02:42:03 bnikolic Exp $
+/**
+   \file monitor.hxx
+   Bojan Nikolic <bojan@bnikolic.co.uk>
 
-  A base class for monitoring the progress of minimisation
+   A base class for monitoring the progress of minimisation
 */
 #ifndef _BNMIN1__MONITOR_HXX__
 #define _BNMIN1__MONITOR_HXX__

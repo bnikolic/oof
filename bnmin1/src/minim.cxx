@@ -1,5 +1,8 @@
-/* Bojan Nikolic
- * $Id: minim.cxx,v 1.4 2005/08/24 21:20:36 bnikolic Exp $
+/**
+   \file minim.cxx
+   
+   Bojan Nikolic <bojan@bnikolic.co.uk>
+
  */
 
 #include "minim.hxx"

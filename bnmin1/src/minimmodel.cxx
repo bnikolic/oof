@@ -1,6 +1,6 @@
-/*
-  Bojan Nikolic
-  $Id: minimmodel.cxx,v 1.3 2005/08/24 21:20:36 bnikolic Exp $
+/**
+   \file minimmodel.cxx
+   Bojan Nikolic <bojan@bnikolic.co.uk>
 
 */
 

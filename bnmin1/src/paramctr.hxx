@@ -1,8 +1,9 @@
-/*
-  Bojan Nikolic
-  $Id: paramctr.hxx,v 1.2 2005/08/21 02:42:03 bnikolic Exp $
+/**
+   \file paramctr.hxx
 
-  Control of parameters
+   Bojan Nikolic <bojan@bnikolic.co.uk>
+
+   Control of parameters
 */
 
 #ifndef _BNMIN_PARAMCTR_HXX__

@@ -1,8 +1,8 @@
-/*
-  Bojan Nikolic
-  $Id: minimmodel.hxx,v 1.3 2005/08/24 21:20:36 bnikolic Exp $
+/**
+   \file minimmodel.hxx
+   Bojan Nikolic <bojan@bnikolic.co.uk>
 
-  Models to be minimised
+   Models to be minimised
 
 */
 

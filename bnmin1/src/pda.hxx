@@ -1,8 +1,8 @@
-/*
-  Bojan Nikolic
-  $Id: pda.hxx,v 1.1 2005/06/02 13:43:18 bnikolic Exp $
-
-  Interface definition to the PDA routines
+/**
+   \file pda.hxx
+   Bojan Nikolic <bojan@bnikolic.co.uk>
+   
+   Interface definition to the PDA routines
 */
 
 #define F77FUNC( name ) name ## __

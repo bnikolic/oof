@@ -1,5 +1,7 @@
-// Bojan Nikolic
-// $Id: minim.hxx,v 1.4 2005/08/24 21:20:36 bnikolic Exp $
+/**
+   \file minim.hxx
+   Bojan Nikolic <bojan@bnikolic.co.uk>
+*/
 #ifndef __BNMIN__ALGO__MINIM_HXX
 #define __BNMIN__ALGO__MINIM_HXX
 

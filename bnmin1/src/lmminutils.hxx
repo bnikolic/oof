@@ -1,9 +1,10 @@
-/*
-  Bojan Nikolic
-  $Id: lmminutils.hxx,v 1.1 2005/08/21 02:42:03 bnikolic Exp $
+/**
+   \file lmminutils.hxx
+   
+   Bojan Nikolic <bojan@bnikolic.co.uk>
+   Initial version 2005
 
-  Utility functions for the Lavenberg-Marquant minimisation algorithm.
-  
+   Utility functions for the Lavenberg-Marquant minimisation algorithm.
 */
 #ifndef _BNMIN1_LMMINUTILS_HXX__
 #define _BNMIN1_LMMINUTILS_HXX__

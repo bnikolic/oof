@@ -1,8 +1,10 @@
-/*
-  Bojan Nikolic
-  $Id: lmmin.hxx,v 1.1 2005/06/02 13:43:18 bnikolic Exp $
+/**
+   \file lmmin.hxx
 
-  The Lavenburg-Marquant minimisation algorithm interface
+   Bojan Nikolic <bojan@bnikolic.co.uk>
+   Initial version 2003
+
+   The Lavenburg-Marquant minimisation algorithm interface
 
 */
 #ifndef _BNMIN_LMMIN_HXX__
