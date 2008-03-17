@@ -86,6 +86,15 @@ def SinglePixelFile(fnamein,
                     colno,
                     rowno):
 
+    """
+    Extract single pixel of data from a multi-pixel Mustang data file
+
+    excample usage:
+    SinglePixelFile("/home/bnikolic/data/gbt-oof/mustang/agbt08a/agbt08a-056-08-s82s83s843C279.fits",
+                    "/home/bnikolic/data/gbt-oof/mustang/agbt08a/c67.fits" , 6, 7)
+                    
+    """
+
 
     fin=pyfits.open(fnamein)
 
