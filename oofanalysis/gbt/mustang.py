@@ -68,7 +68,38 @@ def RemoveStartEnd(fnamein,
             
     iofits4.Write(res,
                   fnameout,
-                  overwrite=1)    
+                  overwrite=1)
+
+def SelectCR( din,
+              colno,
+              rowno):
+
+    """
+    Select a single pixel by column and row numbers
+    """
+
+    return numarray.logical_and( din.field("col") == colno,
+                                 din.field("row") == rowno)
+
+def SinglePixelFile(fnamein,
+                    fnameout,
+                    colno,
+                    rowno):
+
+
+    fin=pyfits.open(fnamein)
+
+    res=[ fin[0]]
+    for h in fin[1:]:
+
+        mask=SelectCR(h.data, colno, rowno)
+
+        h.data = pyfits.FITS_rec(h.data[mask])
+        res.append(h)
+            
+    iofits4.Write(res,
+                  fnameout,
+                  overwrite=1)
 
 def PlotPixTimeSer(fnamein,
                    hduno,
