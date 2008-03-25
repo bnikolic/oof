@@ -160,18 +160,18 @@ def PlotObitMUSTANG(sno):
     
     
     
-def ComapreBaselineRemoval():
+def ComapreBaselineRemoval(    col, row):
 
     dirin="/home/bnikolic/data/gbt-oof/mustang/06032008/t/"
 
-    col, row = 4,7
+
 
     fl = [ "tpar18s56s58-pfit30ptc0854+2006.fits",
            "tpar18s56s58-pfit60ptc0854+2006.fits",
            "tpar18s56s58-subcommon0854+2006.fits" ]
 
     for f in fl:
-        ofname =  "c47-"+f
+        ofname =  ("c%i%i-" % (col, row) )+f
         SinglePixelFile( os.path.join(dirin,f),
                          os.path.join("temp",ofname) ,
                          col,
@@ -180,9 +180,13 @@ def ComapreBaselineRemoval():
         CorrectDZ(os.path.join("temp",ofname) )
         oofreduce.Red(os.path.join("temp",ofname) ,
                       nzmax=5)
+
         oofplot.PlotDir( os.path.join("oofout",
                                       ofname[:-5] + "-000",
                                       "z5"))
+        oofplot.PlotDir( os.path.join("oofout",
+                                      ofname[:-5] + "-000",
+                                      "z2"))        
                          
                                       
         
