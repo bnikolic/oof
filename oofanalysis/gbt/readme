@@ -7,3 +7,8 @@ get reduced sets:
 
 rsync -rC cv:/users/bnikolic/d/n/prog/oofanalysis/gbt/oofoutTPTCSOOF_060112/s70-l-db-000/z5 temp/
 
+
+
+Directories:
+
+td: temporary data

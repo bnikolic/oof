@@ -5,6 +5,7 @@
 # Processing/analysis of mustang data
 
 import os
+import shutil
 import tarfile
 
 import setup
@@ -19,6 +20,7 @@ import oofplot
 
 import pyplot
 import implot
+import pyxplot
 
 
 def CorrectDZ(fnamein):
@@ -160,24 +162,49 @@ def PlotObitMUSTANG(sno):
     
     
     
-def ComapreBaselineRemoval(    col, row):
+def CopyData():
+    """Copy across original data
+
+    Getting hit by long pathnames again
+    """
 
     dirin="/home/bnikolic/data/gbt-oof/mustang/06032008/t/"
 
+    for fin, fout in [ ("tpar18s56s58-pfit30ptc0854+2006.fits", "s56-p30.fits"),
+                       ("tpar18s56s58-pfit60ptc0854+2006.fits", "s56-p60.fits"),
+                       ("tpar18s56s58-subcommon0854+2006.fits", "s56-sc.fits"),
+                       ]:
+        ffout=os.path.join("td", fout)
+        shutil.copy( os.path.join(dirin, fin),
+                     ffout)
+        CorrectDZ(ffout)
+    
 
+def ComapareBaselineRemoval(col, row,
+                            trim=False):
+    
+    """
+    Push single pixels through the pipeline to check if baseline
+    removal is better.
 
-    fl = [ "tpar18s56s58-pfit30ptc0854+2006.fits",
-           "tpar18s56s58-pfit60ptc0854+2006.fits",
-           "tpar18s56s58-subcommon0854+2006.fits" ]
+    """
+    fl = [ "s56-p30.fits",
+           "s56-p60.fits",
+           "s56-sc.fits",]
 
     for f in fl:
         ofname =  ("c%i%i-" % (col, row) )+f
-        SinglePixelFile( os.path.join(dirin,f),
+        SinglePixelFile( os.path.join("td",f),
                          os.path.join("temp",ofname) ,
                          col,
                          row)
 
-        CorrectDZ(os.path.join("temp",ofname) )
+        if trim:
+            tf= ofname[:-5]+"-tr.fits"
+            RemoveStartEnd(os.path.join("temp",ofname),
+                           os.path.join("temp",tf))
+            ofname=tf
+
         oofreduce.Red(os.path.join("temp",ofname) ,
                       nzmax=5)
 
@@ -189,5 +216,38 @@ def ComapreBaselineRemoval(    col, row):
                                       "z2"))        
                          
                                       
-        
+def PlotSignal(pixel_l,
+               fnameout,
+               hdu=1,
+               trange=None):
 
+    din= pyfits.open("td/s56-p30.fits")[hdu].data
+    xv, yv = [] , []
+
+    for c, r  in pixel_l:
+        mask = SelectCR(din, c, r)
+        time =din.field("time")
+
+        if trange is not None:
+            mask= numarray.logical_and(mask,
+                                       time>=trange[0])
+            mask= numarray.logical_and(mask,
+                                       time<trange[1])
+
+        xv.append(time[mask])
+        yv.append(din.field("fnu")[mask])
+
+    pyxplot.vect( xv, yv, fnameout, multi=True,
+                  xax=pyxplot.axis(r"$t\,$(s)"),
+                  yax=pyxplot.axis(r"$F_{\nu}$"),
+                  )
+        
+    
+def doSigPlots():
+
+    PlotSignal( ((7,0),(7,1)), "plots/compare7071.eps", trange=(65,85), hdu=2)
+    PlotSignal( ((7,0),(7,1)), "plots/compare7071.pdf", trange=(65,85), hdu=2)
+
+    PlotSignal( ((7,0),(5,0)), "plots/compare7050.pdf", trange=(65,85), hdu=2)
+    PlotSignal( ((7,0),(5,0)), "plots/compare7050.eps", trange=(65,85), hdu=2)
+    
