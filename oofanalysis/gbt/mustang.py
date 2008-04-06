@@ -178,6 +178,13 @@ def CopyData():
         shutil.copy( os.path.join(dirin, fin),
                      ffout)
         CorrectDZ(ffout)
+
+    dir2="/home/bnikolic/data/gbt-oof/mustang/06032008/t2/"
+    ffout = os.path.join("td", "s56-p18.fits")
+    shutil.copy( os.path.join(dir2, "tpar18s56s58-apr080854+2006.fits"),
+                 ffout)
+    CorrectDZ(ffout)    
+    
     
 
 def ComapareBaselineRemoval(col, row,
@@ -188,9 +195,11 @@ def ComapareBaselineRemoval(col, row,
     removal is better.
 
     """
-    fl = [ "s56-p30.fits",
-           "s56-p60.fits",
-           "s56-sc.fits",]
+    if 0:
+        fl = [ "s56-p30.fits",
+               "s56-p60.fits",
+               "s56-sc.fits",]
+    fl = [ "s56-p18.fits" ,]
 
     for f in fl:
         ofname =  ("c%i%i-" % (col, row) )+f
@@ -216,12 +225,13 @@ def ComapareBaselineRemoval(col, row,
                                       "z2"))        
                          
                                       
-def PlotSignal(pixel_l,
+def PlotSignal(fnamein,
+               pixel_l,
                fnameout,
                hdu=1,
                trange=None):
 
-    din= pyfits.open("td/s56-p30.fits")[hdu].data
+    din= pyfits.open(fnamein)[hdu].data
     xv, yv = [] , []
 
     for c, r  in pixel_l:
@@ -245,9 +255,25 @@ def PlotSignal(pixel_l,
     
 def doSigPlots():
 
-    PlotSignal( ((7,0),(7,1)), "plots/compare7071.eps", trange=(65,85), hdu=2)
-    PlotSignal( ((7,0),(7,1)), "plots/compare7071.pdf", trange=(65,85), hdu=2)
+    def BothPlots(fin, pl, fout, **kwargs):
+        for x in [".eps", ".pdf"]:
+            PlotSignal(fin, pl, fout+x, **kwargs)        
 
-    PlotSignal( ((7,0),(5,0)), "plots/compare7050.pdf", trange=(65,85), hdu=2)
-    PlotSignal( ((7,0),(5,0)), "plots/compare7050.eps", trange=(65,85), hdu=2)
-    
+    if 0:
+        PlotSignal("td/s56-p30.fits", ((7,0),(7,1)), "plots/compare7071.eps", trange=(65,85), hdu=2)
+        PlotSignal("td/s56-p30.fits", ((7,0),(7,1)), "plots/compare7071.pdf", trange=(65,85), hdu=2)
+
+        PlotSignal("td/s56-p30.fits", ((7,0),(5,0)), "plots/compare7050.pdf", trange=(65,85), hdu=2)
+        PlotSignal("td/s56-p30.fits", ((7,0),(5,0)), "plots/compare7050.eps", trange=(65,85), hdu=2)
+
+
+        PlotSignal("td/s56-sc.fits", ((7,0),(7,1)), "plots/compare7071-sc.pdf", trange=(65,85), hdu=2)
+
+
+        
+        BothPlots("td/s56-sc.fits", ((7,0),(7,1)), "plots/compare7071-sc-drift", trange=(0,200), hdu=3)
+
+        BothPlots("td/s56-sc.fits", ((7,0),(7,1)), "plots/compare7071-sc-drift-zm", trange=(0,50), hdu=3)
+        BothPlots("td/s56-sc.fits", ((7,0),(7,1)), "plots/compare7071-sc-osc", trange=(0,50), hdu=1)
+
+    BothPlots("td/s56-p18.fits", ((7,0),(7,1)), "plots/7071-p18", trange=(71,76), hdu=2)
