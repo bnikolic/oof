@@ -47,7 +47,7 @@ export set SWIG=/usr/bin/swig
 export set CPPFLAGS="${CPPFLAGS} -I${BNPREFIX}/include"
 export set CFLAGS="${CFLAGS} -I${BNPREFIX}/include" 
 export set SWIGFLAGS="-I${BNPREFIX}/include" 
-export set LDFLAGS="${LDFLAGS} -L${BNPREFIX}/lib -L/usr/lib64"
+export set LDFLAGS="${LDFLAGS} -L${BNPREFIX}/lib -L/usr/lib64 -L/soft/star64/lib/"
 
 The run :
 
