@@ -10,5 +10,6 @@ lib_LTLIBRARIES = _pybnfits.la
 
 _pybnfits_la_LDFLAGS = -module
 _pybnfits_la_LIBADD  = ../src/libbnfits.la
-_pybnfits_la_SOURCES = pybnfits.cxx pybnfits.i
+_pybnfits_la_SOURCES = pybnfits.i
+nodist__pybnfits_la_SOURCES = pybnfits.cxx
 _pybnfits_la_CPPFLAGS = @PYTHON_INCLUDES@

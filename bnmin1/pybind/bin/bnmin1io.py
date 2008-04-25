@@ -1,5 +1,4 @@
-# Bojan Nikolic
-# $Id: bnmin1io.py,v 1.4 2005/09/19 15:21:30 bnikolic Exp $
+# Bojan Nikolic <bojan@bnikolic.co.uk>
 #
 # Input / output support for the minimiser routines
 
@@ -8,13 +7,13 @@ import math
 import string
 
 import pyfits
-import numarray
+import numpy
 
 import pybnmin1
 
 import iofits4
 
-modcvs = r"$Id: bnmin1io.py,v 1.4 2005/09/19 15:21:30 bnikolic Exp $"
+modcvs = r""
 
 def FSave(modeldesc , fnameout ):
 
@@ -161,7 +160,7 @@ def LoadCVSFile(fnamein):
             rr=[ float(x) for x in ld[1:] ]
             r.append(rr)
 
-    return numarray.array(r)
+    return numpy.array(r)
             
         
         
@@ -180,7 +179,7 @@ def CVSave( m , fnameout, tol=1e-10):
     
     cvraw = pybnmin1.CVMatrix(m, tol)
 
-    cvm = numarray.array(cvraw)
+    cvm = numpy.array(cvraw)
 
     #set correct shape
     n=int( math.sqrt (len(cvm)))

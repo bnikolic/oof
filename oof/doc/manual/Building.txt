@@ -42,61 +42,16 @@ MRAO from Scratch:
 
 export set BNPREFIX=/home/bn204/d/p/bnprog-devel-scratch
 export set PYTHON=python2.4
+export set SWIG=/usr/bin/swig
 
 export set CPPFLAGS="${CPPFLAGS} -I${BNPREFIX}/include"
 export set CFLAGS="${CFLAGS} -I${BNPREFIX}/include" 
 export set SWIGFLAGS="-I${BNPREFIX}/include" 
-export set LDFLAGS="${LDFLAGS} -L${BNPREFIX}/lib -L/usr/lib64"
+export set LDFLAGS="${LDFLAGS} -L${BNPREFIX}/lib -L/usr/lib64 -L/soft/star64/lib/"
 
-cd bnlib && \
-aclocal-1.9 && libtoolize && automake-1.9 -a && autoconf && \
-cd pybind && \
-aclocal-1.9 && libtoolize && automake-1.9 -a && autoconf &&\
-cd .. &&\
-./configure --prefix=${BNPREFIX} && \
-make install &&\
-cd ..
+The run :
 
-cd bnfits && \
-aclocal-1.9 && libtoolize && automake-1.9 -a && autoconf && \
-cd pybind && \
-aclocal-1.9 && libtoolize && automake-1.9 -a && autoconf &&\
-cd .. &&\
-./configure --prefix=${BNPREFIX} && \
-make install &&\
-cd ..
-
-cd astromap && \
-aclocal-1.9 && libtoolize && automake-1.9 -a && autoconf && \
-cd plot && \
-aclocal-1.9 && libtoolize && automake-1.9 -a && autoconf &&\
-cd .. &&\
-./configure --prefix=${BNPREFIX} && \
-make install &&\
-cd ..
-
-cd bnmin1 && \
-aclocal-1.9 && libtoolize && automake-1.9 -a && autoconf && \
-cd pybind && \
-aclocal-1.9 && libtoolize && automake-1.9 -a && autoconf &&\
-cd .. &&\
-./configure --prefix=${BNPREFIX} && \
-make install &&\
-cd ..
-
-cd oof && \
-aclocal-1.9 && libtoolize && automake-1.9 -a && autoconf && \
-cd pybind && \
-aclocal-1.9 && libtoolize && automake-1.9 -a && autoconf &&\
-cd .. &&\
-./configure --prefix=${BNPREFIX} && \
-make install &&\
-cd ..
-
-
-
-User Build:
-
+bash oof/doc/manual/oofbuidpack.sh
 
 
 * Just make sure all is compiled and installed:
