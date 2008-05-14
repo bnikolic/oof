@@ -122,6 +122,17 @@ def PlotTurbulenceIllustr(a):
         pylab.matshow(suba)
         pylab.savefig("temp/turb3d-sum%03i.eps" % x)
 
+    for x in [1,10,100]:
+
+        for j in [0,1,2]:
+
+            suba= numarray.sum(a[:,:200,j*x:(j+1)*x], axis=2)
+
+            suba.transpose()
+            pylab.clf()
+            pylab.matshow(suba)
+            pylab.savefig("temp/turb3d-sum%03i-s%i.eps" % (x,j))        
+
 def PlotTurbulenceIllustrZFlat(g):
 
 
