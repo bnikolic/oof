@@ -1,55 +1,28 @@
-** Instructions  for building OOF software
-** Bojan Nikolic <bojan@bnikolic.co.uk>
+Instructions for building OOF software
+======================================
 
-** Relevant Documents
+:Author: Bojan Nikolic <bojan@bnikolic.co.uk>
 
-   See Requirements.txt for description of what must be installed
-   before attempting to build the OOF software
+Relevant Documents
+------------------
 
-** User build
+See Requirements.txt for description of what must be installed before
+attempting to build the OOF software
+
+User build
+----------
 
 
+# Everything goes to this directory
 export set OOFPREFIX=/home/bn204/d/p/bnprog-oof-disttest
+
+# Set if there is an older version of python about which may be picked up
 export set PYTHON=python2.4
 
-export set CPPFLAGS="${CPPFLAGS} -I${OOFPREFIX}/include"
-export set CFLAGS="${CFLAGS} -I${OOFPREFIX}/include" 
-export set SWIGFLAGS="-I${OOFPREFIX}/include" 
-export set LDFLAGS="${LDFLAGS} -L${OOFPREFIX}/lib -L/usr/lib64 -L/export/soft/stardev64/lib"
+# Set if there is more then one swig and wrong one getting picked up
+export set SWIG=/usr/bin/swig
 
-export set BNLIB=BNLIB-1.0
-export set BNFITS=BNFITS-1.0.1
-export set ASTROMAP=ASTROMAP-1.0.3
-export set BNMIN1=BNMIN1-1.0
-export set OOF=OOF-1.0.2
+# Additional paths if necessary
+export set LDFLAGS="${LDFLAGS} -L/usr/lib64 -L/soft/star64/lib/"
 
-( tar xvjf ${BNLIB}.tar.bz2 && \
-  cd ${BNLIB}  && \
-  ./configure --prefix=${OOFPREFIX} && \
-  make install )
-
-
-( tar xvjf ${BNFITS}.tar.bz2 && \
-  cd ${BNFITS} && \
-  ./configure --prefix=${OOFPREFIX} && \
-  make install)
-
-
-( tar xvjf ${ASTROMAP}.tar.bz2 && \
-  cd ${ASTROMAP} && \
-  ./configure --prefix=${OOFPREFIX} && 
-  make &&\
-  make install )
-
-( tar xvjf ${BNMIN1}.tar.bz2 && \
-  cd ${BNMIN1}  && \
-  ./configure --prefix=${OOFPREFIX} && \
-  make install )
-
-
-( tar xvjf ${OOF}.tar.bz2 && \
-  cd ${OOF}  && \
-  ./configure --prefix=${OOFPREFIX} && \
-  make install)
-
-
+bash oofbuild.sh

@@ -10,5 +10,6 @@ lib_LTLIBRARIES = _pybnmin1.la
 
 _pybnmin1_la_LDFLAGS = -module
 _pybnmin1_la_LIBADD  = ../src/libbnmin1.la
-_pybnmin1_la_SOURCES = pybnmin1.cxx pybnmin1.i
+_pybnmin1_la_SOURCES = pybnmin1.i
+nodist__pybnmin1_la_SOURCES = pybnmin1.cxx 
 _pybnmin1_la_CPPFLAGS = @PYTHON_INCLUDES@
