@@ -38,6 +38,12 @@ namespace OOF {
 				      true     ,                       
 				      "Illumination amplitude "
 				      ));
+    
+    pars.push_back(Minim::DParamCtr ( & R ,      
+				      "R", 
+				      false     ,                       
+				      "Radius of tophat illum "
+				      ));
 
   }
 

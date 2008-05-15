@@ -15,6 +15,10 @@ namespace OOF {
 
       An approximation for receivers with a cold stop in the optics
       such as the MUSTANG on the GBT.
+
+      Note that the parameter "R" can easily be fitted-for because of
+      the digital nature of algorithm means that numerical
+      differential wrt R can not be calculated.
    */
   class TopHatAmpMod : 
     public AmpliMod {

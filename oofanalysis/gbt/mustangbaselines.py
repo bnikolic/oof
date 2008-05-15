@@ -51,7 +51,7 @@ def RoughReduce():
 
 def RemoveBaseline(fnamein,
                    fnameout,
-                   rad=2e-4):
+                   rad=1.5e-4):
 
     fin=pyfits.open(fnamein)
 
