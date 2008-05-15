@@ -51,7 +51,7 @@ def RoughReduce():
 
 def RemoveBaseline(fnamein,
                    fnameout,
-                   rad=4e-4):
+                   rad=2e-4):
 
     fin=pyfits.open(fnamein)
 
@@ -63,9 +63,9 @@ def RemoveBaseline(fnamein,
                                       h.data.field("fnu"),
                                       baselinealgo.circleMask(0,0,rad) )
         
-                                 
-
         h.data = pyfits.FITS_rec(h.data[mask])
+        for i,f in enumerate( fnu[numpy.array(mask)] ):
+            h.data.field("fnu")[i]=float(f)
         res.append(h)
             
     iofits4.Write(res,
