@@ -7,9 +7,16 @@ In Development
 
    BUG FIXES:
 
+   NEW FEATURES:
+
    ENHANCEMENT:
+   
+   * Can report version of the library through Minim::version() call
 
    DISTRIBUTION:
+
+Version 1.1
+===========
 
 Version 1.0
 ===========

@@ -10,7 +10,8 @@ libbnmin1_la_SOURCES = minimmodel.hxx minimmodel.cxx \
 			lmmin.hxx lmmin.cxx \
 			monitor.cxx monitor.hxx \
 			minimio.cxx minimio.hxx \
-			lmminutils.cxx lmminutils.hxx
+			lmminutils.cxx lmminutils.hxx\
+			bnmin_main.cxx bnmin_main.hxx
 
 libbnmin1_la_LIBADD = f77/libminpda.la -lgsl  -lgslcblas
 
@@ -18,4 +19,4 @@ libbnmin1_la_CFLAGS = -Wall
 libbnmin1_la_CPPFLAGS = -Wall
 
 include_HEADERS = lmmin.hxx minim.hxx minimmodel.hxx paramctr.hxx pda.hxx monitor.hxx \
-			minimio.hxx lmminutils.hxx
+			minimio.hxx lmminutils.hxx bnmin_main.hxx
