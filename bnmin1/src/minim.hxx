@@ -41,8 +41,8 @@ namespace Minim {
     virtual ~ModelDesc(void);
 
     // Routines to access the model parameters
-    DParamCtr * operator[] (std::string name);
-    DParamCtr * getbyname  (std::string name) { return this->operator[](name);};
+    DParamCtr * operator[] (const std::string &name);
+    DParamCtr * getbyname  (const std::string &name) { return this->operator[](name);};
 
     // Routines to access the model parameters by id number
     DParamCtr * operator[] (unsigned i) { return &pars[i]; }

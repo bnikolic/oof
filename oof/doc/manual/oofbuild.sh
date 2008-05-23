@@ -6,14 +6,19 @@ export CFLAGS="${CFLAGS} -I${OOFPREFIX}/include"
 export SWIGFLAGS="-I${OOFPREFIX}/include" 
 export LDFLAGS="${LDFLAGS} -L${OOFPREFIX}/lib"
 
-COMPS="bnlib-1.1 bnfits-1.1 astromap-1.1 bnmin1-1.1 oof-1.1"
+COMPS="bnlib-1.1 bnfits-1.1 astromap-1.1 bnmin1-1.1.1 oof-1.1"
 
 for x in ${COMPS}
 do
+  if  [ -e ${x}.tar.bz2 ] ;  then 
   tar xvjf ${x}.tar.bz2  &&
   (cd ${x} &&
-   ./configure --prefix=${OOFPREFIX} && 
-   make install
-   )
+      ./configure --prefix=${OOFPREFIX} && 
+      make install
+      )
+  else
+      echo "Cant find ${x} !!!"
+      break
+  fi
 done
 

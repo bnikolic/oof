@@ -1,4 +1,4 @@
-AC_INIT(BNMIN1, 1.1,
+AC_INIT(BNMIN1, 1.1.1,
 	"Bojan Nikolic"   <bojan@bnikolic.co.uk>)
 
 AC_CONFIG_AUX_DIR(config)

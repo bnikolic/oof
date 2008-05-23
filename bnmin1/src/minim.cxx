@@ -28,7 +28,7 @@ namespace Minim {
   }
 
 
-  DParamCtr * ModelDesc::operator[] (std::string name) 
+  DParamCtr * ModelDesc::operator[] (const std::string &name) 
   {
     for ( std::vector<DParamCtr>::iterator i ( pars.begin() ) ;
 	  i < pars.end() ;
