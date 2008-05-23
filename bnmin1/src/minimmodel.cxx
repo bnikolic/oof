@@ -21,7 +21,8 @@ namespace Minim {
 
   }
 
-  void     Model::AddParams ( std::vector< Minim::DParamCtr > &pars , std::string prefix)
+  void     Model::AddParams ( std::vector< Minim::DParamCtr > &pars , 
+			      std::string &prefix)
   {
     
     std::vector< Minim::DParamCtr > scratchpars;

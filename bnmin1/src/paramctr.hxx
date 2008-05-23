@@ -24,7 +24,8 @@ namespace Minim {
     /// A comment explaining what the parametar does
     std::string comment;
 
-    ParamCtr( T* pp , std::string pname , bool pdofit , std::string pcomment): 
+    ParamCtr( T* pp , std::string pname , bool pdofit , 
+	      const std::string &pcomment): 
       p(pp) , name(pname) , dofit(pdofit) , comment(pcomment) {};
     
     /// if we want vectors of these, best to have an default

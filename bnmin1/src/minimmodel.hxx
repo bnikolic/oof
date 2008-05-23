@@ -39,7 +39,7 @@ namespace Minim {
     /*!  Adds a prefix to all parameters -- use to resolve clashes.
      */
     virtual    void     AddParams ( std::vector< Minim::DParamCtr > &pars , 
-				    std::string prefix);
+				    std::string &prefix);
   }; 
 
   /*! This also defines the residuals 
