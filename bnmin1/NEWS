@@ -2,12 +2,14 @@
 BNMin1 Release Notes  
 ======================
 
-In Development
-==============
+In Development (to be 1.2)
+==========================
 
    BUG FIXES:
 
    NEW FEATURES:
+   
+   * C++ unit tests (see test directory)
 
    ENHANCEMENT:
    

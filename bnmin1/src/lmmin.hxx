@@ -21,6 +21,8 @@ namespace Minim {
 
   public:
 
+    // ---------- Public data  -----------------------
+
     // controls various tolerances; names same as in the original f77
     // file
 
@@ -35,11 +37,14 @@ namespace Minim {
     int ldfjac ;
     std::vector<int > ipvt;
 
+    // ---------- Construction / Destruction --------------
+
     /// Tolerances are initialised to some normal defaults
     LMMin( Minimisable &pm ) ;
       
     virtual ~LMMin (void) { };
 
+    // ------------------ Inherited from Minimiser -------------
     virtual void solve(void);
 
   };
