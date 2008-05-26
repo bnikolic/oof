@@ -13,9 +13,11 @@
 
 namespace Minim {
 
+  /** A class to describe a model parameter
+   */
   template <class T>  class ParamCtr {
   public:
-    /// Pointer to the actuall value being controlled
+    /// Pointer to the actual value being controlled
     T * p;
     /// A name for this parameter
     std::string name;
@@ -47,6 +49,7 @@ namespace Minim {
 
   };
 
+  /// A floating point double parameter
   typedef ParamCtr<double>  DParamCtr;
 
 

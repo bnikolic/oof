@@ -3,6 +3,8 @@
    Bojan Nikolic <bojan@bnikolic.co.uk>
 
    The main include file for BNMin1 Library
+   
+   \mainpage A simple minimisation / inference library
 
 */
 

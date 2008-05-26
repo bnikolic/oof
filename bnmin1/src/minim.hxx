@@ -58,6 +58,9 @@ namespace Minim {
   };
 
 
+  /** Demands that a Minimisable is passed hence provides a "solve"
+      function interface
+   */
   class Minimiser : public ModelDesc {
 
   private:

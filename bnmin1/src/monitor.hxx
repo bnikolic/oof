@@ -12,6 +12,9 @@ namespace Minim {
 
   class Minimiser;
 
+  /** \brief Defines an interface from monitoring the progress of a
+      minimisation
+   */
   class Monitor {
 
   public:
