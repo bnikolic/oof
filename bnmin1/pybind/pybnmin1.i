@@ -1,6 +1,6 @@
 %module pybnmin1 
 %{
-
+#include "../src/bnmin_main.hxx"
 #include "../src/paramctr.hxx"
 #include "../src/minimmodel.hxx"
 #include "../src/monitor.hxx"
@@ -25,6 +25,7 @@ namespace std {
 	   %template(DoubleVector) vector<double>; 
 }
 
+%include "../src/bnmin_main.hxx"
 %include "../src/minimmodel.hxx"
 %include "../src/monitor.hxx"
 %include "../src/minim.hxx"
