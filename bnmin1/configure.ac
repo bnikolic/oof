@@ -33,4 +33,5 @@ AC_CONFIG_SUBDIRS([pybind])
 AC_OUTPUT(Makefile 
           src/Makefile
 	  src/f77/Makefile
+	  test/Makefile
 	  doc/Doxyfile)

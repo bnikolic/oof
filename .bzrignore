@@ -166,3 +166,6 @@ CVS
 ./bnmin1/stamp-h1
 ./bnmin1/config.h.in
 ./bnmin1/config.h
+./bnmin1/test/t_minim
+./bnmin1/test/Makefile
+./bnmin1/doc/Doxyfile
