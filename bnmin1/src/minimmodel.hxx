@@ -34,9 +34,18 @@ namespace Minim {
 
     // ---- Member functions  -------
 
+    /**
+       Each model class should add its parameters to the supplied
+       parameter vector. This interface allows easy layering of
+       parameters of complex models.
+
+       Non-pure function since can be a no-op.
+
+       \param pars vector to add this models parameters to.
+     */
     virtual    void     AddParams ( std::vector< Minim::DParamCtr > &pars );
     
-    /*!  Adds a prefix to all parameters -- use to resolve clashes.
+    /** Adds a prefix to all parameters -- use to resolve clashes.
      */
     virtual    void     AddParams ( std::vector< Minim::DParamCtr > &pars , 
 				    std::string &prefix);
