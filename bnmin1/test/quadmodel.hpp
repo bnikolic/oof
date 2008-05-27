@@ -19,7 +19,7 @@ public:
   }
   
   double eval(const std::vector<double> & x,
-	      std::vector<double> & res)
+	      std::vector<double> & res) const
   {
     res.resize(x.size() );
     for (size_t i = 0 ; i< x.size() ; ++i)
@@ -58,7 +58,7 @@ class QuadObs :
 {
   std::vector<double> x;
   std::vector<double> obs;
-  std::vector<double> scratch;
+  mutable std::vector<double> scratch;
 public:
  
   QuadModel  qm;
@@ -70,12 +70,12 @@ public:
     scratch(obs.size())
   {}
   
-  unsigned   nres (void)
+  unsigned   nres (void) const
   {
     return obs.size();
   }
 
-  void  residuals ( std::vector< double > & res )
+  void  residuals ( std::vector< double > & res ) const
   {
     qm.eval( x, scratch);
     for(size_t i =0; i<obs.size(); ++i)

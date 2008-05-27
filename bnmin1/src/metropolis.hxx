@@ -6,7 +6,23 @@
 */
 #ifndef _BNMIN1_METROPOLIS_HXX__
 #define _BNMIN1_METROPOLIS_HXX__
+
+#include "minimmodel.hxx"
+
 namespace Minim {
+
+  class MLikelihood;
+
+  class MetropolisMCMC {
+
+  public:
+
+    MetropolisMCMC(const MLikelihood & ml);
+    
+    
+
+
+  };
 
 
 }

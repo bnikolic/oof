@@ -5,6 +5,7 @@
 */
 
 #include "minimmodel.hxx"
+#include <cmath>
 
 namespace Minim {
 
@@ -38,6 +39,17 @@ namespace Minim {
 	pars.push_back(pp);
       }
     
+  }
+  
+  double Minimisable::lLikely(void) const
+  {
+    std::vector<double> res(nres());
+    residuals(res);
+    
+    double ss=0;
+    for (size_t i=0; i < res.size() ; ++i)
+      ss += std::pow(res[i],2);
+    return ss;
   }
 
 }

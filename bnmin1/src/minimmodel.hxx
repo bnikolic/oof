@@ -51,21 +51,52 @@ namespace Minim {
 				    std::string &prefix);
   }; 
 
-  /*! This also defines the residuals 
+  /** \brief A model that defines its likelihood function
+
+      These classes can be explored both by MCMC and maximum
+      likelihood.
    */
-  class Minimisable  : public Model {
+  class MLikelihood :
+    public Model
+  {
+
+  public:
+
+    // ---------- Public interface  --------------------------
+
+    /** \brief Return the negative log-likelihood of the current model
+     */
+    virtual double lLikely(void) const = 0;
+    
+
+  };
+
+  /*! \brief A model that also defines residuals to observation
+    
+    These models can be exmplred by L-M algorithm
+   */
+  class Minimisable  : 
+    public MLikelihood {
     
   public:
+
+    // ---------- Public interface  --------------------------
     
     /// Calculates the residuals for the current model
-    virtual void  residuals ( std::vector< double > & res ) = 0;
+    virtual void  residuals ( std::vector< double > & res ) const = 0;
 
     /// Returns the number of functions to be minimised == the number
     /// of residuals that will be evaluated
-    virtual unsigned   nres (void)  =0 ; 
+    virtual unsigned   nres (void) const  =0 ; 
 
-    
-    virtual    void     AddParams ( std::vector< Minim::DParamCtr > &pars )  {};
+    // ---------- Inherited from  MLikelihood  --------------------------
+
+    /** Minimisation routines will already assume a gaussian error
+	model on the residuals so we can do the same here and compute
+	the lLikelihood from residuals.
+     */
+    virtual double lLikely(void) const;
+
      
   };
 
