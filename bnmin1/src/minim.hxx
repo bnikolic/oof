@@ -62,6 +62,17 @@ namespace Minim {
     */
     unsigned NParam(void) const;
 
+    /** Copy supplied values to parameters
+
+	Only fitted-for parameters are copied to
+    */
+    void copytopars(const double *x) ;
+
+    /** Copy parameters to supplied vector
+     */
+    void copyfrompars(double *x) ;
+
+
 
   };
 
@@ -111,10 +122,6 @@ namespace Minim {
 
     virtual void solve(void) = 0;
 
-    /// Copies values from the supplied array to the pars vector
-    void copytopars(double *x) ;
-    /// Copies values from vector pars to the supplied double array
-    void copyfrompars(double *x) ;
 
     void copyres (double *x) { std::copy( res.begin() , res.end(), x) ; }
 

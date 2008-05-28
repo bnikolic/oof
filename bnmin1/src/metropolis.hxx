@@ -10,6 +10,9 @@
 #include <stdexcept>
 #include <list>
 #include <vector>
+#include <boost/random/mersenne_twister.hpp>
+#include <boost/random/normal_distribution.hpp>
+#include <boost/random/variate_generator.hpp>
 
 #include "minim.hxx"
 #include "minimmodel.hxx"
@@ -30,6 +33,14 @@ namespace Minim {
 
     std::vector<double> sigmas;
 
+    // Random-number generation
+
+    typedef boost::mt19937  base_generator_type;
+    base_generator_type generator;
+    boost::normal_distribution<> norm_dist;
+    boost::variate_generator<base_generator_type&, boost::normal_distribution<> > 
+      norm;
+
   public:
 
     class Error :
@@ -49,13 +60,16 @@ namespace Minim {
        perturbation used in the Metropolis algorithm
      */
     MetropolisMCMC(MLikelihood & ml,
-		   const std::vector<double> & sigmas
+		   const std::vector<double> & sigmas,
+		   unsigned seed=0
 		   );
 
     // ---------- Public interface --------------------------
 
     /**
        Create a sample chain.
+
+       \param npropose number of proposal samples to run
 
      */
     std::list<std::vector<double> > *

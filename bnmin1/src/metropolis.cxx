@@ -12,20 +12,26 @@
 namespace Minim {
 
   MetropolisMCMC::MetropolisMCMC(MLikelihood & ml,
-				 const std::vector<double> & sigmas
+				 const std::vector<double> & sigmas,
+				 unsigned seed
 				 ):
     ModelDesc(ml),
     ml(ml),
-    sigmas(sigmas)
+    sigmas(sigmas),
+    generator(seed),
+    norm(generator, norm_dist)
   {
+    if (sigmas.size() != NParam() )
+      throw Error("Number of sigmas not consistent with number of pars set to fit");
   }
 
   std::list<std::vector<double> > *
   MetropolisMCMC::sample(size_t npropose)
   {
-    if (sigmas.size() != NParam() )
-      throw Error("Number of sigmas not consistent with number of pars set to fit");
+    for(size_t sn =0 ; sn < npropose; ++sn)
+    {
 
+    }
   }
 
   

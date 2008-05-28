@@ -60,6 +60,29 @@ namespace Minim {
     return count;
   }
 
+  void ModelDesc::copytopars(const double *x) 
+  { 
+    unsigned count(0);
+    for ( std::vector<DParamCtr>::iterator i ( pars.begin() ) ;
+	  i < pars.end();
+	  i++ )  
+      if (i->dofit) {
+	    *(i-> p)  =  x[ count ]; 
+	    ++count;
+	  }
+  }
+
+  void ModelDesc::copyfrompars(double *x) 
+  { 
+    unsigned count(0);
+    for ( std::vector<DParamCtr>::iterator i ( pars.begin() ) ;
+	  i < pars.end();
+	  i++ ) if(i->dofit) {
+	    x[ count ]  =  * (i-> p)  ; 
+	    ++count;
+	  }
+  }
+
 
   Minimiser::Minimiser (Minim::Minimisable &pm) : 
     ModelDesc(pm),
@@ -103,33 +126,6 @@ namespace Minim {
     m.AddParams(pars) ; 
     MonitorChi_stride=NParam();
   };
-
-
-  void Minimiser::copytopars(double *x) 
-  { 
-    unsigned count(0);
-    for ( std::vector<DParamCtr>::iterator i ( pars.begin() ) ;
-	  i < pars.end();
-	  i++ )  
-      if (i->dofit) {
-	    *(i-> p)  =  x[ count ]; 
-	    ++count;
-	  }
-  }
-
-  void Minimiser::copyfrompars(double *x) 
-  { 
-    unsigned count(0);
-    for ( std::vector<DParamCtr>::iterator i ( pars.begin() ) ;
-	  i < pars.end();
-	  i++ ) if(i->dofit) {
-	    x[ count ]  =  * (i-> p)  ; 
-	    ++count;
-	  }
-  }
-
-
-
 
 
   double Minimiser::ChiSquared(void) {
