@@ -481,7 +481,7 @@ AC_DEFUN([AX_BOOST],
     		AC_DEFINE(HAVE_BOOST_UNIT_TEST_FRAMEWORK,,[define if the Boost::Unit_test_framework library is available])
 			BN=boost_unit_test_framework
     		saved_ldflags="${LDFLAGS}"
-			for ax_lib in $BN $BN-$CC $BN-$CC-mt $BN-$CC-mt-s $BN-$CC-s \
+			for ax_lib in $BN $BN-$CC $BN-$CC-mt $BN-${CC}34-mt $BN-$CC-mt-s $BN-$CC-s \
                           lib$BN lib$BN-$CC lib$BN-$CC-mt lib$BN-$CC-mt-s lib$BN-$CC-s \
                           $BN-mgw $BN-mgw $BN-mgw-mt $BN-mgw-mt-s $BN-mgw-s ; do
                 LDFLAGS="${LDFLAGS} -l$ax_lib"
