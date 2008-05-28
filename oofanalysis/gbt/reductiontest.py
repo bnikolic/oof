@@ -33,3 +33,26 @@ if 0:
                    oversample=4.0,
                    ds_fwhm=1.0,
                    ds_extent=2.0, nzmax=7)    
+
+
+def TestMetro():
+    
+    oc=oofreduce.MkObsCompare( "/home/bnikolic/data/gbt-oof/q-band/old/s114-l-db.fits", 
+                               nzern=1,
+                               npix=256,
+                               oversample=4.0,
+                               ds_fwhm=1.0,
+                               ds_extent=2.0)
+
+    sigmas=oofreduce.pybnmin1.DoubleVector([ 0.0001 , 0.1, 0.1])
+
+    metro=oofreduce.pybnmin1.MetropolisMCMC(oc.downcast(),
+                                            sigmas,
+                                            33)
+    metro.getbyname("amp").setp(0.000853)
+    metro.getbyname("z2").setp(-6.2)
+
+    return metro.sample(1000)
+    
+
+
