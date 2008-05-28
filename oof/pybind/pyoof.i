@@ -6,6 +6,8 @@
 #include <fft.hxx>
 #include "coordsys.hxx"
 
+#include "../src/oof_main.hxx"
+
 #include "../src/telgeo/telgeo.hxx"
 #include "../src/telgeo/gbtgeo.hxx"
 #include "../src/telgeo/primefoc.hxx"
@@ -41,6 +43,7 @@
 %include "coordsys.hxx"
 
 
+%include "../src/oof_main.hxx"
 %include "../src/telgeo/telgeo.hxx"
 %include "../src/telgeo/gbtgeo.hxx"
 %include "../src/telgeo/primefoc.hxx"

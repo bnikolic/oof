@@ -1,6 +1,6 @@
 
 AC_INIT(OOF,
-	1.1,
+	1.2,
 	"Bojan Nikolic" <bojan@bnikolic.co.uk> )
 
 AC_CONFIG_AUX_DIR(config)
@@ -22,12 +22,12 @@ AC_LANG_PUSH(C++)
 
 AC_CHECK_HEADERS( astromap.hxx , 
 		  [echo "found AstroMap"],
-		  [echo "Error: No AstroMap!!!" ]  
+		  AC_MSG_ERROR(["Error: No AstroMap!!!" ] )
 		  )
 
 AC_CHECK_HEADERS( minimmodel.hxx , 
 		  [echo "found BNMinim "],
-		  [echo "Error: No BNMinim  !!!" ]  
+		  AC_MSG_ERROR(["Error: No BNMinim  !!!" ])  
 		  )
 
 AC_LANG_POP(C++)

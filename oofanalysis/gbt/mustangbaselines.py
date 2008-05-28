@@ -6,6 +6,8 @@
 
 import os
 
+import setup
+
 import pyfits
 import iofits4
 

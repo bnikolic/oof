@@ -2,14 +2,25 @@
 OOF Release Notes  
 ======================
 
-In Development
-==============
+In Development (to be 1.2)
+==========================
 
    BUG FIXES:
 
    ENHANCEMENT:
 
+   * OOF::version() reports the version of the package
+   
+   BUILD/DEPS:
+   
+   * If checks for BN-libraries fail, configure will now report error
+     and stop the build
+
    DISTRIBUTION:
+
+
+Version 1.1
+===========
 
 Version 1.0
 ===========
