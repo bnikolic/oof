@@ -40,6 +40,8 @@ namespace Minim {
 
     virtual ~ModelDesc(void);
 
+    // ---------- Public interface --------------------------
+
     // Routines to access the model parameters
     DParamCtr * operator[] (const std::string &name);
     DParamCtr * getbyname  (const std::string &name) { return this->operator[](name);};
@@ -54,6 +56,12 @@ namespace Minim {
 
     /*! Copies the parameter values from the supplied ModelDesc */
     void CopyParsFrom ( ModelDesc & mod2 );
+
+    /** Returns the number of parameters to be fitted, i.e. excluding
+	those with do fit set to false
+    */
+    unsigned NParam(void) const;
+
 
   };
 
@@ -98,10 +106,6 @@ namespace Minim {
     void CollectParams ( Model & m );
 
 
-
-    /// Returns the number of parameters to be fitted, i.e. excluding
-    /// those with do fit set to false
-    unsigned NParam(void) const;
 
     unsigned NRes(void)   const { return res.size() ; };
 

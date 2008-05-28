@@ -52,6 +52,14 @@ namespace Minim {
       }
   }
 
+  unsigned ModelDesc::NParam(void) const 
+  {
+    unsigned count(0);
+    for (std::vector<DParamCtr>::const_iterator i (pars.begin() ) ; i< pars.end() ; ++i ) 
+      if (i->dofit) ++count;
+    return count;
+  }
+
 
   Minimiser::Minimiser (Minim::Minimisable &pm) : 
     ModelDesc(pm),
@@ -96,15 +104,6 @@ namespace Minim {
     MonitorChi_stride=NParam();
   };
 
-
-  // Used to communicate with the search routine.
-  unsigned Minimiser::NParam(void) const 
-  {
-    unsigned count(0);
-    for (std::vector<DParamCtr>::const_iterator i (pars.begin() ) ; i< pars.end() ; ++i ) 
-      if (i->dofit) ++count;
-    return count;
-  }
 
   void Minimiser::copytopars(double *x) 
   { 
