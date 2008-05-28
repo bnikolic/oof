@@ -70,7 +70,7 @@ namespace OOF {
     return phasescreens.size();
   }
 
-  unsigned   ObsCompare::nres (void)  
+  unsigned   ObsCompare::nres (void)   const
   {
     unsigned tot = 0;
     for ( unsigned i =0 ; i < rescalculators.size() ; ++i )
@@ -114,7 +114,7 @@ namespace OOF {
     return res;
   }
 
-  void  ObsCompare::residuals ( std::vector< double > & res ) 
+  void  ObsCompare::residuals ( std::vector< double > & res ) const
   {
     // do this the simple minded way first....
 

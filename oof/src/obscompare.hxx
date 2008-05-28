@@ -106,8 +106,9 @@ namespace OOF {
 
     // ------- Methods inherited from minimisable
 
-    virtual unsigned   nres (void)   ; 
-    virtual void  residuals ( std::vector< double > & res ) ;
+    virtual unsigned   nres (void) const  ; 
+    virtual void  residuals ( std::vector< double > & res ) const;
+
     virtual    void     AddParams ( std::vector< Minim::DParamCtr > &pars ) ;
 
 
