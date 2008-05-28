@@ -34,4 +34,5 @@ AC_OUTPUT(Makefile
           src/Makefile
 	  src/f77/Makefile
 	  test/Makefile
-	  doc/Doxyfile)
+	  doc/Doxyfile
+	  bnmin1.pc)

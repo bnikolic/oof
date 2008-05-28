@@ -25,10 +25,7 @@ AC_CHECK_HEADERS( astromap.hxx ,
 		  AC_MSG_ERROR(["Error: No AstroMap!!!" ] )
 		  )
 
-AC_CHECK_HEADERS( minimmodel.hxx , 
-		  [echo "found BNMinim "],
-		  AC_MSG_ERROR(["Error: No BNMinim  !!!" ])  
-		  )
+PKG_CHECK_MODULES([BN], [bnmin1 >= 1.2])
 
 AC_LANG_POP(C++)
 

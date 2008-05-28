@@ -169,3 +169,4 @@ CVS
 ./bnmin1/test/t_minim
 ./bnmin1/test/Makefile
 ./bnmin1/doc/Doxyfile
+./bnmin1/bnmin1.pc

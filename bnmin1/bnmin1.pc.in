@@ -1,0 +1,10 @@
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+libdir=@libdir@
+includedir=@includedir@
+
+Name: BNMin1
+Description: B. Nikolic's minimisation library
+Version: @VERSION@
+Libs:   -lbnmin1
+Cflags: @CFLAGS@

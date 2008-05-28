@@ -1,7 +1,7 @@
 
 Recommended procedure for building OOF.
 
-export set BNPREFIX=/home/bnikolic/p/bnprog-devel-main
+export set BNPREFIX=/home/bnikolic/d/p/bnprog-devel-main
 # If there is more than one python
 export set PYTHON=python2.4
 # If there is more than one swig, pick a recent one
@@ -11,6 +11,8 @@ export set CPPFLAGS="${CPPFLAGS} -I${BNPREFIX}/include"
 export set CFLAGS="${CFLAGS} -I${BNPREFIX}/include" 
 export set SWIGFLAGS="-I${BNPREFIX}/include" 
 export set LDFLAGS="${LDFLAGS} -L${BNPREFIX}/lib"
+export set PKG_CONFIG_PATH=${BNPREFIX}/lib/pkgconfig
+
 
 cd bnlib && \
 ./configure --prefix=${BNPREFIX} && \

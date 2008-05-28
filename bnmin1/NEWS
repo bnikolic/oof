@@ -10,10 +10,14 @@ In Development (to be 1.2)
    NEW FEATURES:
    
    * C++ unit tests (see test directory)
+   
+   * Metropolis sampling (see metropolis.hxx)
 
    ENHANCEMENT:
    
    * Can report version of the library through Minim::version() call
+   
+   * Prodcues a pkg-config file
 
    DISTRIBUTION:
 
