@@ -68,9 +68,21 @@ namespace Minim {
     */
     void copytopars(const double *x) ;
 
+    /** Like copytopars but take a vector 
+     */
+    void put(const std::vector<double>  & x)
+    {
+      copytopars(&x[0]);
+    }
+
     /** Copy parameters to supplied vector
      */
     void copyfrompars(double *x) ;
+
+    void get(std::vector<double>  & x)
+    {
+      copyfrompars(&x[0]) ;
+    }
 
 
 

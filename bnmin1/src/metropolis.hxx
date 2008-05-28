@@ -12,6 +12,7 @@
 #include <vector>
 #include <boost/random/mersenne_twister.hpp>
 #include <boost/random/normal_distribution.hpp>
+#include <boost/random/uniform_real.hpp>
 #include <boost/random/variate_generator.hpp>
 
 #include "minim.hxx"
@@ -38,8 +39,16 @@ namespace Minim {
     typedef boost::mt19937  base_generator_type;
     base_generator_type generator;
     boost::normal_distribution<> norm_dist;
+    boost::uniform_real<> uni_dist;
+    
+    /// Normal distribution for creating proposal points
     boost::variate_generator<base_generator_type&, boost::normal_distribution<> > 
       norm;
+
+    /// Uniform distribution for accepting according to probability
+    boost::variate_generator<base_generator_type&, boost::uniform_real<> > uni;
+
+    void displace( std::vector<double> &x);
 
   public:
 

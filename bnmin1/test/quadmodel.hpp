@@ -62,12 +62,14 @@ class QuadObs :
 public:
  
   QuadModel  qm;
+  double sigma;
 
   QuadObs( const std::vector<double> &x,
 	   const std::vector<double> &obs):
     x(x),
     obs(obs),
-    scratch(obs.size())
+    scratch(obs.size()),
+    sigma(1.0)
   {}
   
   unsigned   nres (void) const
@@ -79,7 +81,7 @@ public:
   {
     qm.eval( x, scratch);
     for(size_t i =0; i<obs.size(); ++i)
-      res[i]=obs[i]-scratch[i];
+      res[i]=(obs[i]-scratch[i])/sigma;
   }
   
 
