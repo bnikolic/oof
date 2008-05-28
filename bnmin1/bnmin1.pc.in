@@ -6,5 +6,5 @@ includedir=@includedir@
 Name: BNMin1
 Description: B. Nikolic's minimisation library
 Version: @VERSION@
-Libs:   -lbnmin1
+Libs:   ${libdir}/libbnmin1.la
 Cflags: @CFLAGS@
