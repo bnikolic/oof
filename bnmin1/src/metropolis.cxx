@@ -25,8 +25,6 @@ namespace Minim {
     norm(generator, norm_dist),
     uni(generator, uni_dist)
   {
-    if (sigmas.size() != NParam() )
-      throw Error("Number of sigmas not consistent with number of pars set to fit");
   }
 
   void MetropolisMCMC::displace( std::vector<double> &x)
@@ -38,6 +36,9 @@ namespace Minim {
   std::list<MCPoint> *
   MetropolisMCMC::sample(size_t npropose)
   {
+    if (sigmas.size() != NParam() )
+      throw Error("Number of sigmas not consistent with number of pars set to fit");
+
     std::auto_ptr< std::list<MCPoint> > res
       (new std::list<MCPoint> ) ;
 

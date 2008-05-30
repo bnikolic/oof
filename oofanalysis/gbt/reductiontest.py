@@ -44,15 +44,18 @@ def TestMetro():
                                ds_fwhm=1.0,
                                ds_extent=2.0)
 
-    sigmas=oofreduce.pybnmin1.DoubleVector([ 0.00001 , 0.001, 0.001])
+    sigmas=oofreduce.pybnmin1.DoubleVector([ 0.00001 , 0.001, 0.001,0.001])
 
     metro=oofreduce.pybnmin1.MetropolisMCMC(oc.downcast(),
                                             sigmas,
                                             33)
-    metro.getbyname("amp").setp(0.00056)
+    metro.getbyname("amp").setp(0.00085)
     metro.getbyname("z2").setp(-6.2)
-
-    return metro.sample(100)
+    metro.getbyname("sigma").setp(0.3)
+    metro.getbyname("beamgainf").setp(1.08)
+    metro.getbyname("beamgainf").dofit=1
+    return metro
+    return metro.sample(1000)
     
 
 
