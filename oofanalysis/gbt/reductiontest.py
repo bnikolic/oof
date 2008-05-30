@@ -38,13 +38,13 @@ if 0:
 def TestMetro():
     
     oc=oofreduce.MkObsCompare( "/home/bnikolic/data/gbt-oof/q-band/old/s114-l-db.fits", 
-                               nzern=1,
+                               nzern=5,
                                npix=256,
                                oversample=4.0,
                                ds_fwhm=1.0,
                                ds_extent=2.0)
 
-    sigmas=oofreduce.pybnmin1.DoubleVector([ 0.00001 , 0.001, 0.001,0.001])
+    sigmas=oofreduce.pybnmin1.DoubleVector([ 0.000003]+ [0.01]*20 +[ 0.001] )
 
     metro=oofreduce.pybnmin1.MetropolisMCMC(oc.downcast(),
                                             sigmas,
@@ -54,8 +54,7 @@ def TestMetro():
     metro.getbyname("sigma").setp(0.3)
     metro.getbyname("beamgainf").setp(1.08)
     metro.getbyname("beamgainf").dofit=1
-    return metro
-    return metro.sample(1000)
+    return metro.sample(10000)
     
 
 
