@@ -29,7 +29,7 @@ namespace Minim {
 namespace std {
 	   %template(DoubleVector) vector<double>; 
 
-	   %template(ListDV) list<vector<double> >; 
+	   %template(ListDV) list<Minim::MCPoint>; 
 }
 
 %include "../src/bnmin_main.hxx"

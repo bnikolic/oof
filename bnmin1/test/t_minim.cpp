@@ -84,12 +84,12 @@ BOOST_AUTO_TEST_CASE( QuadMetro )
   MetropolisMCMC metro(qo,sigmas);
   
   
-  boost::shared_ptr< std::list<std::vector<double> >  >
+  boost::shared_ptr< std::list<Minim::MCPoint>  >
     res( metro.sample(10000)) ;
 
   for (size_t i = 0 ; i < sigmas.size(); ++i)
   {
-    BOOST_CHECK_CLOSE( res->back()[i],
+    BOOST_CHECK_CLOSE( res->back().p[i],
 		       params[i],
 		       1);
   }

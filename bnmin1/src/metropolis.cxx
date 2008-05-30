@@ -35,11 +35,11 @@ namespace Minim {
       x[i] += sigmas[i]* norm();
   }
 
-  std::list<std::vector<double> > *
+  std::list<MCPoint> *
   MetropolisMCMC::sample(size_t npropose)
   {
-    std::auto_ptr< std::list<std::vector<double> > > res
-      (new std::list<std::vector<double> > ) ;
+    std::auto_ptr< std::list<MCPoint> > res
+      (new std::list<MCPoint> ) ;
 
     // Current point in chain
     std::vector<double> cpoint( sigmas.size() );
@@ -66,7 +66,10 @@ namespace Minim {
       if (ldiff > 0 or 
 	  uni() < exp(ldiff) )
       {
-	res->push_back(propose);
+	MCPoint mcp;
+	mcp.p=propose;
+	mcp.ll=proplogl;
+	res->push_back(mcp);
 	cpoint=propose;
 	clogl =proplogl;      
       }

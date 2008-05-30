@@ -24,6 +24,17 @@ namespace Minim {
 
   class MLikelihood;
 
+  /** Structure containing the data recorded at each point in an MCMC
+      distribution
+  */
+  struct MCPoint
+  {
+    /// The actual parameters
+    std::vector<double> p;
+    /// Log-likelihood of this point
+    double ll;
+  };
+
   /** \brief Markov Chain Monte Carlo with Metropolis sampling
    */
   class MetropolisMCMC:
@@ -81,10 +92,8 @@ namespace Minim {
        \param npropose number of proposal samples to run
 
      */
-    std::list<std::vector<double> > *
+    std::list<MCPoint> *
     sample(size_t npropose);
-    
-
     
 
 
