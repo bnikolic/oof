@@ -1,7 +1,7 @@
 
 AC_INIT(BNLIB,
-	1.1,
-	 "Bojan Nikolic"   <bojan@bnikolic.co.uk>)
+	1.2,
+	"Bojan Nikolic"   <bojan@bnikolic.co.uk>)
 
 AC_CONFIG_AUX_DIR(config)
 
@@ -28,5 +28,6 @@ AC_OUTPUT(Makefile
           src/Makefile
 	  cbind/Makefile
 	  doc/Doxyfile
+	  bnlib.pc
 	  )
 	  

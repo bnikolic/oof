@@ -1,0 +1,10 @@
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+libdir=@libdir@
+includedir=@includedir@
+
+Name: BNLib
+Description: B. Nikolic's general utilities library
+Version: @VERSION@
+Libs:   ${libdir}/libbnlib.la
+Cflags: @CFLAGS@

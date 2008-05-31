@@ -2,14 +2,23 @@
 BNLib Release Notes  
 ======================
 
-In Development
-==============
+In Development (to be V1.2)
+===========================
 
    BUG FIXES:
 
+   NEW FEATURES:
+
    ENHANCEMENT:
+   
+   * bnlib now produces a pkg-config file
 
    DISTRIBUTION:
+
+Version 1.1
+===========
+	
+(Released without detailed notes)
 
 Version 1.0
 ===========
