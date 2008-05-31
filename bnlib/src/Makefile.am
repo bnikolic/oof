@@ -1,4 +1,5 @@
- 
+SUBDIRS = kolmog
+
 lib_LTLIBRARIES = libbnlib.la 
 
 libbnlib_la_SOURCES= interpolate.hxx interpolate.cxx \
@@ -22,23 +23,13 @@ libbnlib_la_SOURCES= interpolate.hxx interpolate.cxx \
 			tophat.cxx tophat.hxx \
 			integrateutils.cxx integrateutils.hxx\
 			unaryfnutils.cxx unaryfnutils.hxx\
-			kolmogorov.cxx kolmogorov.hxx \
-			kolmogorov_iters.cxx kolmogorov_iters.hxx \
-			kolmogorov_wrap.cxx kolmogorov_wrap.hxx \
-			kolmogorov_spec.cxx kolmogorov_spec.hxx \
-			kolmogorov_3diters.cxx kolmogorov_3diters.hxx\
-			kolmogorov_3d.cxx kolmogorov_3d.hxx \
-			kernels_3d.cxx kernels_3d.hxx \
-			kolmogorov_3diters_t.hxx \
-			quadratic_bfn.cxx quadratic_bfn.hxx \
-			kolmogorov_3diters_face.cxx kolmogorov_3diters_face.hxx \
-			kolmogorov_3diters_edge.cxx kolmogorov_3diters_edge.hxx \
-			kolmogorov_3dsfn.cxx kolmogorov_3dsfn.hxx
+			quadratic_bfn.cxx quadratic_bfn.hxx 
+
 
 libbnlib_la_CFLAGS = -Wall
 libbnlib_la_CPPFLAGS = -Wall
 
-libbnlib_la_LIBADD = -lgsl -lgslcblas
+libbnlib_la_LIBADD = -lgsl -lgslcblas kolmog/libbnlibkolmog.la 
 
 include_HEADERS = 	unaryfn.hxx \
 			interpolate.hxx \
@@ -62,11 +53,4 @@ include_HEADERS = 	unaryfn.hxx \
 			tophat.hxx\
 			integrateutils.hxx\
 			unaryfnutils.hxx \
-			kolmogorov.hxx\
-			kolmogorov_iters.hxx \
-			kolmogorov_spec.hxx \
-			kolmogorov_wrap.hxx \
-			kolmogorov_3diters.hxx \
-			kolmogorov_3d.hxx \
-			kernels_3d.hxx \
 			quadratic_bfn.hxx

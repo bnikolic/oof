@@ -26,6 +26,7 @@ AC_CONFIG_SUBDIRS([pybind])
 
 AC_OUTPUT(Makefile 
           src/Makefile
+	  src/kolmog/Makefile
 	  cbind/Makefile
 	  doc/Doxyfile
 	  bnlib.pc
