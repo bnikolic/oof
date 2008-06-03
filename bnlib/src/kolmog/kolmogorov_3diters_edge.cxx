@@ -9,6 +9,7 @@
 #include "kolmogorov_3diters_edge.hxx"
 
 namespace BNLib {
+  namespace Kolmog {
 
   K3EdgeIterV2::K3EdgeIterV2( size_t Nx, size_t Ny, size_t Nz , 
 			      size_t o ) :
@@ -221,5 +222,5 @@ namespace BNLib {
 
   }
   
-}
+  }}
 

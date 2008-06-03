@@ -12,6 +12,7 @@
 #define __BNLIB_KOL_3DITERS_T_HX__
 
 namespace BNLib {
+  namespace Kolmog {
 
   template<class T>
   T TKAverageParents( const T * cube,
@@ -65,6 +66,6 @@ namespace BNLib {
 
 
 
-}
+  }}
 
 #endif

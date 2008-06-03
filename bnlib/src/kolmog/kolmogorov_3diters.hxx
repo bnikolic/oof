@@ -23,6 +23,7 @@
 #include <vector>
 
 namespace BNLib {
+  namespace Kolmog {
 
   struct K3DParent {
 
@@ -242,6 +243,6 @@ namespace BNLib {
 			  size_t np);
   
 
-
+  }
 }
 #endif

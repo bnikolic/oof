@@ -12,6 +12,8 @@
 #include <cmath>
 
 namespace BNLib {
+  namespace Kolmog {
+
 
   KolCellIteratorBase::KolCellIteratorBase( size_t N, 
 					    size_t o):
@@ -243,4 +245,4 @@ namespace BNLib {
     }
   }
 
-}
+  }}

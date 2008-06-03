@@ -13,6 +13,7 @@
 #include "kolmogorov_3diters.hxx"
 
 namespace BNLib {
+  namespace Kolmog {
 
   /**
      \brief An iterator for cell faces. For generation of 3D
@@ -116,6 +117,6 @@ namespace BNLib {
   };
 
 
-}
+  }}
 #endif
    

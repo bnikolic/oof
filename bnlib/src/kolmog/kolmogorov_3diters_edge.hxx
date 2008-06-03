@@ -13,6 +13,7 @@
 #include "kolmogorov_3diters.hxx"
 
 namespace BNLib {
+  namespace Kolmog {
 
   /** \brief An iterator for cell edges. 
 
@@ -107,5 +108,5 @@ namespace BNLib {
 
   
 
-}
+  }}
 #endif

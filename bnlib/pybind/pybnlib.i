@@ -43,7 +43,7 @@
 			 double *OUTdelta};
 
 namespace std {
-   %template(K3DParentV) vector<BNLib::K3DParent>; 
+   %template(K3DParentV) vector<BNLib::Kolmog::K3DParent>; 
    %template(Displacement3DV) vector<BNLib::Displacement3D>;
    %template(doubleV) vector<double>;
    %template(Position3DV) vector<BNLib::Position3D>;

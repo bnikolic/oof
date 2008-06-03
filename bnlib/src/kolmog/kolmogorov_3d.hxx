@@ -28,17 +28,6 @@ namespace BNLib {
 			    KEdgeBalanced   = 8};
 
   /**
-     \brief Set up the eight initial corner values for 3d turbulence
-     generation.
-
-     In this instance only support a fully symetric cube. This uses
-     the Edge-Face-Body algorithm.
-  */
-  void KolmogorovCorners3D(double *cube,
-			   size_t N,
-			   RDist &rfn);
-
-  /**
      Generate 3d komogorov turbulence on Ncubed grid
   */
   size_t Kolmogorov3D( double * cube,
@@ -71,6 +60,20 @@ namespace BNLib {
 			size_t Ny,
 			size_t Nz,
 			RDist &rfn);
+
+  namespace Kolmog {
+
+  /**
+     \brief Set up the eight initial corner values for 3d turbulence
+     generation.
+
+     In this instance only support a fully symetric cube. This uses
+     the Edge-Face-Body algorithm.
+  */
+  void KolmogorovCorners3D(double *cube,
+			   size_t N,
+			   RDist &rfn);
+
 
   /**
      Compute the required mid-point standard deviation for the case of
@@ -120,6 +123,8 @@ namespace BNLib {
       Returns true if the supplied unsigned int is of form 2^n +1 
   */
   bool pTwoNPlustOne(unsigned n);
+
+  }
   
 
 }

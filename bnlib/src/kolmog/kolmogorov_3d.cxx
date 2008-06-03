@@ -203,9 +203,9 @@ namespace BNLib {
 
   }
 
-  void KolmogorovCorners3D(double *cube,
-			   size_t N,
-			   RDist &rfn)
+  void Kolmog::KolmogorovCorners3D(double *cube,
+				   size_t N,
+				   RDist &rfn)
   {
     return TKolmogorovCorners3D(cube, N, rfn);
   }
@@ -293,6 +293,7 @@ namespace BNLib {
 			RDist &rfn,
 			Kolmgorov3DOptions opt) throw (const char *)
   {
+    using namespace Kolmog;
 
     memset( cube, 0 , Nx*Ny*Nz*sizeof(T) );
 
@@ -484,8 +485,8 @@ namespace BNLib {
   }
 
 
-  double  KMidPointVar_CI( size_t np,
-			   size_t o)
+  double  Kolmog::KMidPointVar_CI( size_t np,
+				   size_t o)
   {
     
     double res;
@@ -501,8 +502,8 @@ namespace BNLib {
     return res;
   }
 
-  double  KMidPointVar_FI( size_t np,
-			   size_t o)
+  double  Kolmog::KMidPointVar_FI( size_t np,
+				   size_t o)
   {
     
     double res;
@@ -525,8 +526,8 @@ namespace BNLib {
     return res;
   }
 
-  double  KMidPointVar_EI( size_t np,
-			   size_t o)
+  double  Kolmog::KMidPointVar_EI( size_t np,
+				   size_t o)
   {
     
     double res;
@@ -552,7 +553,7 @@ namespace BNLib {
   }
 
 
-  void KMagnifyGrid(double *og,
+  void Kolmog::KMagnifyGrid(double *og,
 		    const size_t N,
 		    double *dd,
 		    const size_t Nx,
@@ -564,7 +565,7 @@ namespace BNLib {
 			   Nx,Ny,Nz);
   }  
 
-  bool pTwoNPlustOne(unsigned n)
+  bool Kolmog::pTwoNPlustOne(unsigned n)
   {
     // must be odd 
     if (  not ( n  & 1 )  ) 
@@ -595,7 +596,9 @@ namespace BNLib {
 			     size_t Ny,
 			     size_t Nz)
   {
-    
+
+    using namespace Kolmog;
+
     if ( not ( pTwoNPlustOne(Nx) && 
 	       pTwoNPlustOne(Ny) &&
 	       pTwoNPlustOne(Nz) )) 
@@ -604,6 +607,7 @@ namespace BNLib {
     }
 
   }
+
 
 }
 

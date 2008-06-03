@@ -15,6 +15,8 @@
 
 
 namespace BNLib {
+  using namespace  Kolmog;
+
 
 
   void KolmogorovCorners( double *alpha,

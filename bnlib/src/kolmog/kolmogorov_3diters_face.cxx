@@ -8,6 +8,7 @@
 #include "kolmogorov_3diters_face.hxx"
 
 namespace BNLib {
+  namespace Kolmog {
 
   K3FaceIterV2::K3FaceIterV2( size_t Nx, 
 			      size_t Ny, 
@@ -222,4 +223,4 @@ namespace BNLib {
 
   }
 
-}
+  }}

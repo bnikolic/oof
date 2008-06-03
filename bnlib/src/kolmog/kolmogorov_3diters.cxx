@@ -13,6 +13,7 @@
 #include "kolmogorov_3diters_t.hxx"
 
 namespace BNLib {
+  namespace Kolmog {
 
   K3DIterBase::K3DIterBase( size_t Nx, size_t Ny, size_t Nz , size_t o ):
     Nx(Nx),
@@ -177,4 +178,4 @@ namespace BNLib {
   {
     return TKAverageParents( cube, Nx, Ny, pv ,np);
   }
-}
+  }}

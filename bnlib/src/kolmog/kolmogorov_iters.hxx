@@ -17,6 +17,8 @@
 
 
 namespace BNLib {
+  namespace Kolmog {
+
 
   /** 
      Base class for iterators over cells for kolmogorov phase screen
@@ -197,7 +199,7 @@ namespace BNLib {
 
     
   
-}
+  }}
 #endif
 
    
