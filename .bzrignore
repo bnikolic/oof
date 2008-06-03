@@ -170,3 +170,7 @@ CVS
 ./bnmin1/test/Makefile
 ./bnmin1/doc/Doxyfile
 ./bnmin1/bnmin1.pc
+./bnlib/src/kolmog/Makefile
+./bnlib/doc/kolmog
+./bnlib/doc/Kolmog.doxy
+./bnlib/bnlib.pc

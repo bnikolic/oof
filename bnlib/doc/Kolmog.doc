@@ -1,0 +1,19 @@
+/**
+
+\mainpage
+
+This is the documentation for the part of BNLib that can be used to
+generate three dimensional fields with statistics consistent with
+Kolmogorov hypotheis. This document is an extract from the complete
+documentation of BNLib. It is automatically generated from the source
+code using Doxygen.
+
+The parts of the code which are designed end-user accessiblitiy are in
+the BNLib namespace. The details of the implementation are in the
+BNLib::Kolmog namespace. Not all details are documented -- please see
+the source code for the definitive story.
+
+The main entry point is the function BNLib::Kolmogorov3D. You should
+start with the documentation of this function.
+
+*/
