@@ -13,6 +13,7 @@ import setup
 
 import pyfits
 import numarray
+import numpy
 
 import iofits4
 import oofreduce
@@ -59,12 +60,12 @@ def RemoveStartEnd(fnamein,
         time=h.data.field("time")
         mt  = max(time)
 
-        mask = numarray.logical_and( time > cut,
-                                     time < ( max(time) - cut))
+        mask = numpy.logical_and( time > cut,
+                                  time < ( max(time) - cut))
         print sum(mask)
 
         print len(h.data)
-        h.data = pyfits.FITS_rec(h.data[mask])
+        h.data = h.data[mask]
         print len(h.data)        
         res.append(h)
             
@@ -80,8 +81,8 @@ def SelectCR( din,
     Select a single pixel by column and row numbers
     """
 
-    return numarray.logical_and( din.field("col") == colno,
-                                 din.field("row") == rowno)
+    return numpy.logical_and( din.field("col") == colno,
+                              din.field("row") == rowno)
 
 def SinglePixelFile(fnamein,
                     fnameout,
@@ -105,12 +106,42 @@ def SinglePixelFile(fnamein,
 
         mask=SelectCR(h.data, colno, rowno)
 
-        h.data = pyfits.FITS_rec(h.data[mask])
+        h.data = h.data[mask]
         res.append(h)
             
     iofits4.Write(res,
                   fnameout,
                   overwrite=1)
+
+def CombineFiles( fnamelist,
+                  fnameout):
+    """Combine OOF observations in multiple files
+    
+    Designed for use with Mustang data after spliting out pixels into
+    separate files.
+    """
+    finl = [pyfits.open(x) for x in fnamelist]
+    # Open for second time, since some operations unexpectedly modify
+    # the data
+    clean = [pyfits.open(x) for x in fnamelist]
+
+    # Take primary HDU from the first file
+    res=[ finl[0][0] ]
+    for i in range(1,len(finl[0])):
+        rows=[ x[i].data.shape[0] for x in finl]
+        trows= sum(rows)
+
+        h1 = finl[0][i]
+        h1.data = finl[0][i].data._clone((trows,))
+        crow=0
+        for j,h in enumerate([x[i] for x in clean]):
+            h1.data[crow:crow+rows[j]]= h.data
+            crow+= rows[j]
+        res.append(h1)
+
+    iofits4.Write(res,
+                  fnameout,
+                  overwrite=1)        
 
 def PlotPixTimeSer(fnamein,
                    hduno,

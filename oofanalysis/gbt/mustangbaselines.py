@@ -76,3 +76,33 @@ def RemoveBaseline(fnamein,
 
 
 
+def Red20080606():
+    """Reductions on 6th june"""
+
+    # Plain reduction
+    oofreduce.Red("td/t18-raw-5-0-db.fits", nzmax=5)
+    oofplot.PlotDir("oofout/t18-raw-5-0-db-000/z5")
+    # Try bigger map, oversampling, as in Q-band
+    oofreduce.Red("td/t18-raw-5-0-db.fits", nzmax=5,
+                  npix=256,
+                  oversample=4.0,
+                  ds_fwhm=1.0,
+                  ds_extent=2.0)
+    oofplot.PlotDir("oofout/t18-raw-5-0-db-001/z5")
+    # Nothing interesting...
+
+    # Compare to another pixel
+    oofreduce.Red("td/t18-raw-7-0-db.fits", nzmax=5)
+    oofplot.PlotDir("oofout/t18-raw-7-0-db-000/z5")
+
+    
+def Red20080606_2():
+    
+    CombineFiles(["td/t18-raw-5-0-db.fits" , "td/t18-raw-7-0-db.fits"], 
+                 "td/t18-comb2.fits")
+    
+    oofreduce.Red("td/t18-comb2.fits", nzmax=5)    
+    oofplot.PlotDir("oofout/t18-comb2-000/z5")
+    oofplot.PlotDir("oofout/t18-comb2-000/z3")
+    oofplot.PlotDir("oofout/t18-comb2-000/z4")
+    
