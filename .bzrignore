@@ -174,3 +174,9 @@ CVS
 ./bnlib/doc/kolmog
 ./bnlib/doc/Kolmog.doxy
 ./bnlib/bnlib.pc
+./dust/persistence/stamp-h1
+./dust/persistence/config.h.in
+./dust/persistence/config.h
+./dust/stamp-h1
+./dust/config.h.in
+./dust/config.h
