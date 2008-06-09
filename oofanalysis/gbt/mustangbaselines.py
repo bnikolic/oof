@@ -5,14 +5,18 @@
 # Investigate effects on Mustang data
 
 import os
+import shutil
 
 import setup
 
 import pyfits
+import numpy
 import iofits4
 
 import mustang
 import baselinealgo
+import oofreduce
+import oofplot
 
 laptop_dirin="/home/bnikolic/data/gbt-oof/mustang2/"
 
@@ -42,14 +46,131 @@ def PrepareInputs(col=5, row=0):
         
 def RoughReduce():
 
-    oofreduce.Red("td/t18-poly-5-0.fits")
-    oofplot.PlotDir("oofout/t18-poly-5-0-000/z1")
-    RemoveBaseline("td/t18-poly-5-0.fits", "td/t18-poly-5-0-db.fits")
-    oofreduce.Red("td/t18-poly-5-0-db.fits")
-
+    if 0:
+        oofreduce.Red("td/t18-poly-5-0.fits")
+        oofplot.PlotDir("oofout/t18-poly-5-0-000/z1")
+        RemoveBaseline("td/t18-poly-5-0.fits", "td/t18-poly-5-0-db.fits")
+        oofreduce.Red("td/t18-poly-5-0-db.fits")
+        RemoveBaseline("td/t18-raw-5-0.fits", "td/t18-raw-5-0-db-lr.fits", rad=2e-4)
     if 0:
         oofreduce.Red("td/t18-raw-5-0.fits")
         oofplot.PlotDir("oofout/t18-raw-5-0-000/z1")
+    if 0:
+        PrepareInputs(5,1)
+        RemoveBaseline("td/t18-raw-5-1.fits", "td/t18-raw-5-1-db.fits")        
+        oofreduce.Red("td/t18-raw-5-1-db.fits", nzmax=5)
+        oofplot.PlotDir("oofout/t18-raw-5-1-db-000/z3")
+
+    if 0:
+        PrepareInputs(5,3)
+        RemoveBaseline("td/t18-raw-5-3.fits", "td/t18-raw-5-3-db.fits")        
+        oofreduce.Red("td/t18-raw-5-3-db.fits", nzmax=5)
+        oofplot.PlotDir("oofout/t18-raw-5-3-db-000/z3")
+
+    if 0:
+        PrepareInputs(7,1)
+        RemoveBaseline("td/t18-raw-7-1.fits", "td/t18-raw-7-1-db.fits")        
+        oofreduce.Red("td/t18-raw-7-1-db.fits", nzmax=5)
+        oofplot.PlotDir("oofout/t18-raw-7-1-db-000/z3")
+
+    if 0:
+        PrepareInputs(7,7)
+        RemoveBaseline("td/t18-raw-7-7.fits", "td/t18-raw-7-7-db.fits")        
+        oofreduce.Red("td/t18-raw-7-7-db.fits", nzmax=5)
+        oofplot.PlotDir("oofout/t18-raw-7-7-db-000/z3")
+
+    if 1:
+        PrepareInputs(0,7)
+        RemoveBaseline("td/t18-raw-0-7.fits", "td/t18-raw-0-7-db.fits")        
+        oofreduce.Red("td/t18-raw-0-7-db.fits", nzmax=5)
+        oofplot.PlotDir("oofout/t18-raw-0-7-db-000/z3")
+
+def DoAllPixels():
+    """Extract all pixels individuall, process to z=5, plot and copy plots
+    to a directory
+
+    """
+
+    pl= [ (2,1),(2,4), 
+          (2,6),
+          (3,3),
+          (3,6),
+          (4,0),
+          (1,6),
+          (2,0),
+          (2,3),
+          (2,7),
+          (3,0),
+          (3,4),
+          (3,7),
+          (4,1),
+          (1,4),
+          (1,5),
+          (2,2),
+          (2,5),
+          (3,2),
+          (3,5),
+          (4,2),
+          (4,3),
+          (1,3),
+          (1,1),
+          (4,7),
+          (4,6),
+          (4,4),
+          (4,5),
+          (0,6),
+          (0,7),
+          (0,5),
+          (7,0),
+          (5,0),
+          (5,1),
+          (5,3),
+          (0,4),
+          (7,1),
+          (6,5),
+          (6,2),
+          (0,1),
+          (0,0),
+          (7,3),
+          (6,7),
+          (6,3),
+          (6,0),
+          (5,6),
+          (7,7),
+          (7,6),
+          (7,4),
+          (7,2),
+          (6,6),
+          (6,4),
+          (6,1),
+          (5,7)]
+
+    pl = [(5,3)]
+
+    for c,r in pl:
+        try:
+            PrepareInputs(c,r)
+            fnameraw= "td/t18-raw-%i-%i.fits" % (c,r)
+            fnamedb = "td/t18-raw-%i-%i-db.fits" % (c,r)
+            RemoveBaseline(fnameraw , 
+                           fnamedb,
+                           rad=1.5e-4 )        
+            oofreduce.Red(fnamedb, nzmax=5)
+
+            for z in [3,5]:
+
+                oofplot.PlotDir("oofout/t18-raw-%i-%i-db-000/z%i" % (c,r,z))
+                shutil.copy( "oofout/t18-raw-%i-%i-db-000/z%i/plots/aperture-phase.png" % (c,r,z),
+                             "temp/plots/p%i%i-z%i.png" % (c,r,z))
+        except None, e :
+            print e
+            pass
+
+        
+    
+    
+
+
 
 def RemoveBaseline(fnamein,
                    fnameout,
@@ -65,7 +186,7 @@ def RemoveBaseline(fnamein,
                                       h.data.field("fnu"),
                                       baselinealgo.circleMask(0,0,rad) )
         
-        h.data = pyfits.FITS_rec(h.data[mask])
+        h.data = h.data[mask]
         for i,f in enumerate( fnu[numpy.array(mask)] ):
             h.data.field("fnu")[i]=float(f)
         res.append(h)
@@ -94,6 +215,9 @@ def Red20080606():
     # Compare to another pixel
     oofreduce.Red("td/t18-raw-7-0-db.fits", nzmax=5)
     oofplot.PlotDir("oofout/t18-raw-7-0-db-000/z5")
+
+    oofreduce.Red("td/t18-raw-5-1-db.fits", nzmax=5)
+    oofplot.PlotDir("oofout/t18-raw-5-1-db-000/z3")
 
     
 def Red20080606_2():
