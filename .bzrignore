@@ -180,3 +180,7 @@ CVS
 ./dust/stamp-h1
 ./dust/config.h.in
 ./dust/config.h
+./bnlib2/stamp-h1
+./bnlib2/config.h.in
+./bnlib2/config.h
+./bnlib2/bnlib2.pc
