@@ -2,7 +2,7 @@
 
 bin_PROGRAMS= t_minim
 
-t_minim_SOURCES = t_minim.cpp
+t_minim_SOURCES = t_minim.cpp quadmodel.hpp
 
 LDADD=../src/libbnmin1.la ${BOOST_UNIT_TEST_FRAMEWORK_LIB}
 INCLUDES=-I../src 

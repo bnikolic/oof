@@ -1,6 +1,6 @@
 /// Bojan Nikolic <bojan@bnikolic.co.uk>
 
-#include "minimmodel.hxx"
+#include "../src/minimmodel.hxx"
 #include <cmath>
 
 class QuadModel :
