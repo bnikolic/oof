@@ -23,7 +23,8 @@ namespace Minim {
     generator(seed),
     uni_dist(0,1),
     norm(generator, norm_dist),
-    uni(generator, uni_dist)
+    uni(generator, uni_dist),
+    f(NULL)
   {
   }
 
@@ -70,6 +71,8 @@ namespace Minim {
 	MCPoint mcp;
 	mcp.p=propose;
 	mcp.ll=proplogl;
+	if (f)
+	  f(mcp.fval);
 	res->push_back(mcp);
 	cpoint=propose;
 	clogl =proplogl;      

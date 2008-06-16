@@ -7,6 +7,7 @@
 #include <boost/test/unit_test.hpp>
 #include <boost/test/auto_unit_test.hpp>
 #include <boost/test/floating_point_comparison.hpp>
+#include <boost/bind.hpp>
 
 #include "minimmodel.hxx"
 #include "quadmodel.hpp"
@@ -57,6 +58,13 @@ BOOST_AUTO_TEST_CASE( QuadT1 )
 
 }
 
+void RecPars( const QuadModel & qm,
+	      std::vector<double> &x)
+{
+  x.resize(1);
+  x[0]=qm.a;
+}
+
 BOOST_AUTO_TEST_CASE( QuadMetro )
 {
   using namespace Minim;
@@ -82,7 +90,7 @@ BOOST_AUTO_TEST_CASE( QuadMetro )
   std::vector<double> sigmas(3,0.1);
 
   MetropolisMCMC metro(qo,sigmas);
-  
+  metro.f=boost::bind( RecPars, qm, _1);
   
   boost::shared_ptr< std::list<Minim::MCPoint>  >
     res( metro.sample(10000)) ;
@@ -93,6 +101,10 @@ BOOST_AUTO_TEST_CASE( QuadMetro )
 		       params[i],
 		       1);
   }
+
+  BOOST_CHECK_CLOSE( res->back().fval[0],
+		     params[0],
+		     1);
 
 
 

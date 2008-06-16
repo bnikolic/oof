@@ -15,6 +15,8 @@
 #include <boost/random/uniform_real.hpp>
 #include <boost/random/variate_generator.hpp>
 
+#include <boost/function.hpp>
+
 #include "minim.hxx"
 #include "minimmodel.hxx"
 
@@ -33,6 +35,9 @@ namespace Minim {
     std::vector<double> p;
     /// Log-likelihood of this point
     double ll;
+    /// A vector to store derived quantities at sample of the
+    /// distribution
+    std::vector<double> fval;
   };
 
   /** \brief Markov Chain Monte Carlo with Metropolis sampling
@@ -72,6 +77,13 @@ namespace Minim {
       {
       }
     };
+
+    // ---------- Public data -----------------------------
+
+    /// If this pointer is set, this function will be called at each
+    /// point in the distribution and values stored in parameter x
+    /// will be saved in the field fval.
+    boost::function< void (std::vector<double> &x) >  f;    
 
     // ---------- Construction / Destruction --------------
 
