@@ -7,4 +7,4 @@ Name: BNMin1
 Description: B. Nikolic's minimisation library
 Version: @VERSION@
 Libs:   ${libdir}/libbnmin1.la
-Cflags: @CFLAGS@
+Cflags: -I${includedir} @CFLAGS@
