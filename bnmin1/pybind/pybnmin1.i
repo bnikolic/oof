@@ -9,6 +9,7 @@
 #include "../src/lmmin.hxx"
 #include "../src/lmminutils.hxx"
 #include "../src/metropolis.hxx"
+#include "../src/priors.hxx"
 
 
 #include "../test/quadmodel.hpp"
@@ -40,6 +41,7 @@ namespace std {
 %include "../src/lmmin.hxx"
 %include "../src/lmminutils.hxx"
 %include "../src/metropolis.hxx"
+%include "../src/priors.hxx"
 
 %include "../test/quadmodel.hpp"
 

@@ -3,6 +3,7 @@
 # Illustration of using metropolis sampling form bnmin1
 
 import setup
+import pybnmin1
 
 pars= [1,2,3]
 
