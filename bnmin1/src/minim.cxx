@@ -10,6 +10,7 @@
 #include <cmath>
 
 #include "monitor.hxx"
+#include "paramalgo.hxx"
 
 #include <iostream>
 
@@ -30,12 +31,7 @@ namespace Minim {
 
   DParamCtr * ModelDesc::operator[] (const std::string &name) 
   {
-    for ( std::vector<DParamCtr>::iterator i ( pars.begin() ) ;
-	  i < pars.end() ;
-	  ++i ) 
-      if (i->name == name ) return &(*i);
-    
-    return NULL;
+    return findName(pars, name);
   }
 
   void ModelDesc::CopyParsFrom ( ModelDesc & mod2 )
