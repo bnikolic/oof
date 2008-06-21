@@ -110,4 +110,13 @@ BOOST_AUTO_TEST_CASE( QuadMetro )
 
 }
 
+BOOST_AUTO_TEST_CASE( Params_ByName )
+{
+  using namespace Minim;
 
+  QuadModel qm;
+  ModelDesc md(qm);
+  
+  BOOST_CHECK( md["a"]->p == &qm.a);
+  BOOST_CHECK( md["c"]->p == &qm.c);
+}
