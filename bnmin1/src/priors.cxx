@@ -33,6 +33,7 @@ namespace Minim {
     pr.p=par->p;
     pr.pmin=low;
     pr.pmax=high;
+    priorlist.push_back(pr);
   }
 
 
