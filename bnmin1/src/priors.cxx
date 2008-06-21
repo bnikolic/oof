@@ -6,6 +6,8 @@
 
 #include "priors.hxx"
 
+#include "paramalgo.hxx"
+
 namespace Minim {
 
   IndependentFlatPriors::IndependentFlatPriors(MLikelihood * mod):
@@ -24,7 +26,33 @@ namespace Minim {
 					double high)
   {
     fprior_t pr;
+    
+    DParamCtr * par=findName(_mpars,pname);
+    if ( par == NULL)
+      throw "Could not find parameter";
+    pr.p=par->p;
+    pr.pmin=low;
+    pr.pmax=high;
+  }
 
+
+  double IndependentFlatPriors::lLikely(void) const
+  {
+    double lpriorprop = 0 ;
+    for (priorlist_t::const_iterator i = priorlist.begin();
+	 i != priorlist.end();
+	 ++i)
+    {
+      const double p = * (i->p);
+      if (p < i->pmin or p > i->pmax)
+	lpriorprop += 1e9;
+    }
+    return lpriorprop + _mod->lLikely();
+  }
+  
+  void  IndependentFlatPriors::AddParams ( std::vector< Minim::DParamCtr > &pars )
+  {
+    _mod->AddParams(pars);
   }
 
 
