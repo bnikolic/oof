@@ -184,3 +184,5 @@ CVS
 ./bnlib2/config.h.in
 ./bnlib2/config.h
 ./bnlib2/bnlib2.pc
+./bnmin1/test/t_utils
+./bnmin1/test/t_utils
