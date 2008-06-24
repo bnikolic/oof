@@ -9,8 +9,8 @@ libcoordsys_la_SOURCES= coordsys.cxx coordsys.hxx \
 			csfileio.cxx csfileio.hxx
 
 
-libcoordsys_la_CFLAGS = -Wall
-libcoordsys_la_CPPFLAGS = -Wall
+libcoordsys_la_CFLAGS = -Wall   ${BN_CFLAGS}
+libcoordsys_la_CPPFLAGS = -Wall ${BN_CFLAGS}
 
 libcoordsys_la_LIBADD = 
 

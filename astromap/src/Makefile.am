@@ -20,15 +20,17 @@ libastromap_la_SOURCES= astromap.cxx astromap.hxx \
 			fitting_basic.cxx fitting_basic.hxx
 
 
-libastromap_la_CFLAGS = -Wall
-libastromap_la_CPPFLAGS = -Wall
+libastromap_la_CFLAGS = -Wall   ${BN_CFLAGS}
+libastromap_la_CPPFLAGS = -Wall ${BN_CFLAGS}
 
 if HAVEBNMIN1
-libastromap_la_LIBADD = -lfftw -lbnlib -lbnfits coordsys/libcoordsys.la \
-			dataser/libdataser.la -lbnfits	-lbnmin1
+libastromap_la_LIBADD = -lfftw ${BN_LIBS} \
+			coordsys/libcoordsys.la \
+			dataser/libdataser.la -lbnmin1
 else
-libastromap_la_LIBADD = -lfftw -lbnlib -lbnfits coordsys/libcoordsys.la \
-			dataser/libdataser.la -lbnfits
+libastromap_la_LIBADD = -lfftw  ${BN_LIBS} \
+			coordsys/libcoordsys.la \
+			dataser/libdataser.la 
 endif 
 
 

@@ -5,6 +5,14 @@ AstroMap Release Notes
 Development version (to be 1.2)
 -------------------------------
 
+Enhancements:
+
+  * AstroMap now produces and used pkg-config
+
+Dependencies:
+
+  * Changed BNFits 
+
 Version 1.1
 -----------
 

@@ -7,4 +7,4 @@ libbnlibkolmog_la_CPPFLAGS = -Wall
 
 libbnlibkolmog_la_LIBADD = 
 
-include_HEADERS = 	
+include_HEADERS =  kolmogorov_wrap.hxx

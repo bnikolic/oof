@@ -1,2 +1,2 @@
 %.cxx %.py:  %.i 
-	@SWIG@  -o $@ @SWIGFLAGS@ -c++ -python $<
+	@SWIG@  -o $@ @SWIGFLAGS@ ${BN_CFLAGS} -c++ -python $<

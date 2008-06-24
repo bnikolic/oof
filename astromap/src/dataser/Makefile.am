@@ -10,8 +10,8 @@ libdataser_la_SOURCES= dataseries.hxx dataseries.cxx \
 			mapdsutils.cxx mapdsutils.hxx
 
 
-libdataser_la_CFLAGS = -Wall
-libdataser_la_CPPFLAGS = -Wall
+libdataser_la_CFLAGS = -Wall   ${BN_CFLAGS}
+libdataser_la_CPPFLAGS = -Wall ${BN_CFLAGS}
 
 libdataser_la_LIBADD = 
 

@@ -16,7 +16,7 @@ AC_PROG_LIBTOOL
 AC_PROG_CC
 AC_PROG_CXX
 
-PKG_CHECK_MODULES([BN], [bnlib >= 1.1])
+PKG_CHECK_MODULES([BN], [bnlib >= 1.1 bnfits >= 1.2])
 
 
 AC_CHECK_HEADER( fftw.h,
