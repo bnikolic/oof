@@ -7,4 +7,4 @@ Name: BNLib
 Description: B. Nikolic's general utilities library
 Version: @VERSION@
 Libs:   ${libdir}/libbnlib.la
-Cflags: @CFLAGS@
+Cflags: -I${includedir} 

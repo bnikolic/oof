@@ -15,7 +15,7 @@
 #include <map>
 #include <memory>
 
-#include "bnrandom.hxx"
+#include "../bnrandom.hxx"
 #include "kolmogorov_3diters.hxx"
 #include "kolmogorov_3diters_face.hxx"
 #include "kolmogorov_3diters_edge.hxx"

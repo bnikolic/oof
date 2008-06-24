@@ -9,7 +9,7 @@
 #include "kolmogorov_iters.hxx"
 #include "kolmogorov_spec.hxx"
 
-#include "bnrandom.hxx"
+#include "../bnrandom.hxx"
 
 #include <cmath>
 

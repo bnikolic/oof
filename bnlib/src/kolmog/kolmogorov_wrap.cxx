@@ -10,7 +10,7 @@
 
 #include "kolmogorov.hxx"
 #include "kolmogorov_spec.hxx"
-#include "bnrandom.hxx"
+#include "../bnrandom.hxx"
 
 
 namespace BNLib {

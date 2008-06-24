@@ -10,7 +10,7 @@
 #ifndef __BNLIB_KOLMOGOROV_SPEC_HXX__
 #define __BNLIB_KOLMOGOROV_SPEC_HXX__
 
-#include "unaryfn.hxx"
+#include "../unaryfn.hxx"
 
 namespace BNLib {
 

@@ -8,7 +8,7 @@
 
 #include "kolmogorov_3dsfn.hxx"
 
-#include <bnrandom.hxx>
+#include "../bnrandom.hxx"
 #include <cmath>
 
 namespace BNLib {

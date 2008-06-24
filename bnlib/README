@@ -1,19 +1,17 @@
+BNLib README file
+=================
 
-Copyright: Bojan Nikolic 2005-2007
+Building from "maintainer" distribution
+---------------------------------------
 
-aclocal-1.9
-libtoolize
-automake-1.9 -a
-autoconf
+autoreconf -i
 
-aclocal 
-libtoolize
-automake -a 
-autoconf
+User build
+-----------
 
-configure as:
+Use the standard configure script::
 
- 	./configure --prefix=${HOME}/p/bnlib
+   ./configure --prefix=${HOME}/p/bnlib
 
 Or, even better: define prefix as:
 export set BNPREFIX=/home/bn204/d/p/bnprog-devel-main
