@@ -1,5 +1,5 @@
 AC_INIT(ASTROMAP, 
-        1.1, 
+        1.2, 
 	"Bojan Nikolic" <bojan@bnikolic.co.uk> )  
 
 AC_CONFIG_AUX_DIR(config)
@@ -16,17 +16,14 @@ AC_PROG_LIBTOOL
 AC_PROG_CC
 AC_PROG_CXX
 
+PKG_CHECK_MODULES([BN], [bnlib >= 1.1])
+
 
 AC_CHECK_HEADER( fftw.h,
 		 [echo "found fftw version 2" ],
 		 [AC_MSG_ERROR([Requires FFTW version 2] ) ] )
 
 AC_LANG_PUSH(C++)
-
-AC_CHECK_HEADERS( bndebug.hxx , 
-		  [echo "found bnlib"],
-		  [echo "Error: No bnlib" ]  
-		  )
 
 AC_CHECK_HEADERS( fitswrap.hxx , 
 		  [echo "found bnfits"],
@@ -50,5 +47,6 @@ AC_OUTPUT(Makefile
 	  src/coordsys/Makefile	
 	  src/dataser/Makefile	
 	  src/wcs/Makefile
-	  doc/Doxyfile)
+	  doc/Doxyfile
+	  astromap.pc)
 

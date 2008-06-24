@@ -1,20 +1,25 @@
+AstroMap README File
+====================
 
 Copyright Bojan Nikolic, 2005-2007, except src/wcs/* which is as
 indicated there
+
+Maintainer build
+----------------
+
+Need to do::
+
+     autoreconf -i
+
+
+Old build instructions
+----------------------
 
 Building:
 
 * SWIGFLAGS need to be defined to include headers from bnlib. e.g.:
 	
 	export SWIGFLAGS=-I/home/bn204/temp/oofbuild/s/include/
-
-*  If from RCS something like:
-
-aclocal-1.9
-libtoolize
-automake-1.9 -a
-autoconf
-
 
 ./configure CPPFLAGS="-I/home/bnikolic/p/bnlib/include -I/home/bnikolic/p/bnfits/include -I/home/bnikolic/s/include -g" CFLAGS="-I/home/bnikolic/p/bnlib/include -I/home/bnikolic/s/include -I/home/bnikolic/p/bnfits/include -g" LDFLAGS="-L/home/bnikolic/p/bnlib/lib -L/home/bnikolic/s/lib -L/home/bnikolic/p/bnfits/lib"  --prefix=/home/bnikolic/p/astromap 
 

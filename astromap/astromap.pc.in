@@ -1,0 +1,10 @@
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+libdir=@libdir@
+includedir=@includedir@
+
+Name: AstroMap
+Description: B. Nikolic's astronomy maps library
+Version: @VERSION@
+Libs:   ${libdir}/libastromap.la 
+Cflags: -I${includedir} 
