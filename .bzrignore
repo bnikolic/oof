@@ -184,3 +184,4 @@ CVS
 ./bnlib2/config.h.in
 ./bnlib2/config.h
 ./bnlib2/bnlib2.pc
+./dust/persistence/config
