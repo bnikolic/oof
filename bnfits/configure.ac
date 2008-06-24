@@ -1,5 +1,5 @@
 AC_INIT(BNFITS,
-	1.1,
+	1.2,
 	"Bojan Nikolic"   <bojan@bnikolic.co.uk>)
 
 
@@ -26,5 +26,6 @@ AC_CHECK_LIB( [cfitsio] , [ffopen] ,
 AC_CONFIG_SUBDIRS([pybind])	 
 
 AC_OUTPUT(Makefile 
-          src/Makefile)
+          src/Makefile
+	  bnfits.pc)
 
