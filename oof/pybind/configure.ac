@@ -23,6 +23,8 @@ AM_CHECK_PYTHON_HEADERS()
 AC_PATH_PROGS([SWIG],[swig])
 AC_SUBST(SWIGFLAGS)
 
+PKG_CHECK_MODULES([BN], [bnlib >= 1.2 bnmin1 >= 1.2 astromap >= 1.2 bnfits >= 1.2])
+
 AC_OUTPUT(Makefile)
 
 

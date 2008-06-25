@@ -10,8 +10,7 @@ liboofaperture_la_SOURCES = amplimod.cxx amplimod.hxx \
 				mkapertures.cxx mkapertures.hxx \
 				tophatmodel.cxx tophatmodel.hxx
 
-liboofaperture_la_CFLAGS = -Wall
-liboofaperture_la_CPPFLAGS = -Wall 
+liboofaperture_la_CFLAGS = -Wall   ${BN_CFLAGS}
+liboofaperture_la_CPPFLAGS = -Wall ${BN_CFLAGS}
 
-liboofaperture_la_LIBADD = -lastromap 
 

@@ -1,4 +1,3 @@
-
 AC_INIT(OOF,
 	1.2,
 	"Bojan Nikolic" <bojan@bnikolic.co.uk> )
@@ -20,12 +19,7 @@ AC_CONFIG_SUBDIRS([pybind])
 
 AC_LANG_PUSH(C++)
 
-AC_CHECK_HEADERS( astromap.hxx , 
-		  [echo "found AstroMap"],
-		  AC_MSG_ERROR(["Error: No AstroMap!!!" ] )
-		  )
-
-PKG_CHECK_MODULES([BN], [bnmin1 >= 1.2])
+PKG_CHECK_MODULES([BN], [bnlib >= 1.2 bnmin1 >= 1.2 astromap >= 1.2 bnfits >= 1.2])
 
 AC_LANG_POP(C++)
 

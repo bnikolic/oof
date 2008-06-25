@@ -1,12 +1,15 @@
+OOF README File
+===============
 
 Copyright: Bojan Nikolic
 
 
-aclocal-1.9
-libtoolize
-automake-1.9 -a
-autoconf
+Maintainer build
+----------------
 
+Need to do::
+
+     autoreconf -i
 
 
 ./configure CPPFLAGS="${CPPFLAGS} -I${HOME}/p/bnfits/include -I${HOME}/p/astromap/include -I${HOME}/p/bnmin1/include -I${HOME}/p/bnlib/include  -g" \

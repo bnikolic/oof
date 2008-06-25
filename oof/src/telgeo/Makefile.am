@@ -8,5 +8,5 @@ libtelgeo_la_SOURCES = telgeo.cxx telgeo.hxx \
 			telswitch.cxx telswitch.hxx \
 			primefoc.cxx primefoc.hxx
 
-libtelgeo_la_CFLAGS = -Wall
-libtelgeo_la_CPPFLAGS = -Wall 
+libtelgeo_la_CFLAGS = -Wall   ${BN_CFLAGS}
+libtelgeo_la_CPPFLAGS = -Wall ${BN_CFLAGS}

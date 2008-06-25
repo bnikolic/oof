@@ -11,9 +11,9 @@ liboof_la_SOURCES = obsphasescreen.cxx obsphasescreen.hxx \
 			obsfilefns.cxx obsfilefns.hxx \
 			oof_main.cxx oof_main.hxx
 
-liboof_la_CFLAGS = -Wall
-liboof_la_CPPFLAGS = -Wall 
+liboof_la_CFLAGS = -Wall   ${BN_CFLAGS}
+liboof_la_CPPFLAGS = -Wall ${BN_CFLAGS}
 
-liboof_la_LIBADD = -lastromap -lbnmin1 telgeo/libtelgeo.la aperture/liboofaperture.la \
+liboof_la_LIBADD = ${BN_LIBS} telgeo/libtelgeo.la aperture/liboofaperture.la \
 			farfield/libooffarfield.la
 
