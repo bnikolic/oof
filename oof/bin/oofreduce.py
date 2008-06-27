@@ -1,8 +1,9 @@
-# Bojan Nikolic <bojan@bnikolic.co.uk>,   <bn204@mrao.cam.ac.uk>
+# Bojan Nikolic <bojan@bnikolic.co.uk>, <bn204@mrao.cam.ac.uk>,
+# <b.nikolic@mrao.cam.ac.uk>
 #
 # Main OOF reduction script
 
-oofreducever = r"$Revision: 1.16 $"
+oofreducever = r"(CVS-based revnos obsoleted)"
 
 import math
 import os
@@ -252,7 +253,127 @@ def OffsetFname(fnamein):
     try1 = fbasename+"-offset.fits"
     if os.access(try1, os.F_OK) : return try1
     else: return None
+
+def RedOrder(obsfilename,
+             dirout,
+             extrafit= [],
+             ic = [],
+             zorder=5,
+             npix=128,
+             oversample=2.0,
+             ds_fwhm=1.0,
+             ds_extent =2.0,
+             ptable=None):
+    """Reduce OOF observation at single maximum order of Zernikes
+    (c.f. function Red() which steps through a number of orders)
+
+    :param obsfilename: Filename containing the observed data 
     
+    :param dirout: Directory where to place reduction output
+    
+    :param extrafit: List of parameter names which may not be fit by
+    default but the user wants to turn fitting on for
+
+    :param ic: a list of extra inititial conditions in format
+    (parname, parvalue) or a filename of a fit file containing the
+    initial conditions
+
+    :param zorder: Maximum Zernike Order to fit for
+    
+    :param ptable: FITS table of fit parameters to save in output (if
+    None, locals of this function are used)
+
+    :returns: Filename of the file containing the fit
+    """
+    wavel = GetObsWaveL(obsfilename)
+    
+    oc=MkObsCompare(obsfilename, 
+                    nzern=zorder,
+                    npix=npix, 
+                    oversample=oversample,
+                    ds_fwhm=ds_fwhm,
+                    ds_extent=ds_extent)
+
+    lmm=pybnmin1.LMMin(oc.downcast())
+    lmm.ftol=1e-4
+    
+    m1 = pybnmin1.ChiSqMonitor()
+    m1.thisown = 0
+    lmm.AddMon( m1)
+
+    for pname in extrafit :
+        lmm.getbyname(pname).dofit=1
+
+    if type(ic) == str :
+        bnmin1io.FLoad(lmm, ic)
+    else:
+        for parname, parvalue in ic:
+            lmm.getbyname(parname).setp(parvalue)
+            
+    lmm.solve()
+
+    fitname = os.path.join(dirout, "fitpars.fits")
+    bnmin1io.FSave(lmm, fitname)
+    fstattab= FitStatTab(lmm)        
+
+    #Save the covariance matrix
+    bnmin1io.CVSave(lmm,
+                    os.path.join(dirout, "cvmatrix")
+                    )        
+
+    pyoof.WriteAperture(oc,
+                        "!"+os.path.join(dirout, "aperture.fits"))
+
+    pyoof.WriteBeams(oc,
+                     "!"+os.path.join(dirout, "fitbeams.fits"))
+
+    oc.GetAperture().ZeroTilt();
+    pyoof.WriteAperture(oc,
+                        "!"+os.path.join(dirout, "aperture-notilt.fits"))
+
+    hdulist = pyfits.open(os.path.join(dirout, "aperture-notilt.fits"),mode='update')
+    for ext in range(0,2):
+        prihdr = hdulist[ext].header
+        prihdr.update('wave',wavel,'wavelength (m), floating value')
+    hdulist.flush()
+
+    # Save the fits file with information about the fit
+    if ptable is None:
+        ptable=iofits4.FnParTable(locals(),
+                                  " ")
+
+    iofits4.Write( [pyfits.PrimaryHDU() ,
+                    ptable,
+                    fstattab,
+                    ],
+                   os.path.join(dirout, "fitinfo.fits") ,
+                   overwrite=1)
+        
+
+    # Write out offset aperture and beams if exist
+    if OffsetFname(obsfilename):
+        bnmin1io.FAdd(lmm, OffsetFname(obsfilename), silent=True)
+        bnmin1io.FSave(lmm,
+                       os.path.join(dirout, "offsetpars.fits"))
+        pyoof.WriteAperture(oc,
+                            "!"+os.path.join(dirout, "aperture-offset.fits"))
+        pyoof.WriteBeams(oc,
+                         "!"+os.path.join(dirout, "offsetbeams.fits"))
+            
+        
+    # Write out perfect beams:
+    oc=MkObsCompare(obsfilename, nzern=1,
+                    npix=npix, oversample=oversample,
+                    ds_fwhm=ds_fwhm,
+                    ds_extent=ds_extent)
+        
+    lmm=pybnmin1.LMMin(oc.downcast())
+    bnmin1io.FLoad(lmm, fitname,
+                   silent=True)
+    pyoof.WriteBeams(oc,
+                     "!"+os.path.join(dirout, "perfectbeams.fits"))            
+    return fitname
+             
 def Red(obsfilename,
         prefdirout="oofout",
         extrafit= [],
@@ -266,6 +387,8 @@ def Red(obsfilename,
     "A general reduction script"
 
     """
+    See also documentation of RedOrder
+
     nzmax:  the maximum zernike order to go to.
     extrafit: list of parameter names to turn fitting on for
     extraic : a list of extra inititial conditions in format (parname, parvalue)
@@ -279,99 +402,24 @@ def Red(obsfilename,
 
     #The last recorded fit file goes into this variable to restart the
     #minimisation with higher number of Zernike from that point
-    lastfitf= None
+    lastfitf=extraic
 
-    wavel = GetObsWaveL(obsfilename)
-    
     for nzern in range(1, nzmax+1):
 
         print "Nzern = %i " % nzern
 
         cdirout = os.path.join(dirout, "z%i" % nzern )
 
-        oc=MkObsCompare(obsfilename, nzern=nzern,
-                        npix=npix, oversample=oversample,
-                        ds_fwhm=ds_fwhm,
-                        ds_extent=ds_extent)
-
-        lmm=pybnmin1.LMMin(oc.downcast())
-        lmm.ftol=1e-4
-        
-        m1 = pybnmin1.ChiSqMonitor()
-        m1.thisown = 0
-        lmm.AddMon( m1)
-
-        for pname in extrafit :
-            lmm.getbyname(pname).dofit=1
-
-        if lastfitf:
-            bnmin1io.FLoad(lmm, lastfitf)
-        else:
-            for parname, parvalue in extraic:
-                lmm.getbyname(parname).setp(parvalue)
-            
-        lmm.solve()
-
-        fitname = os.path.join(cdirout, "fitpars.fits")
-        bnmin1io.FSave(lmm, fitname)
-        fstattab= FitStatTab(lmm)        
-
-        #Save the covariance matrix
-        bnmin1io.CVSave(lmm,
-                        os.path.join(cdirout, "cvmatrix")
-                        )        
-
-        pyoof.WriteAperture(oc,
-                            "!"+os.path.join(cdirout, "aperture.fits"))
-
-        pyoof.WriteBeams(oc,
-                         "!"+os.path.join(cdirout, "fitbeams.fits"))
-
-        oc.GetAperture().ZeroTilt();
-        pyoof.WriteAperture(oc,
-                            "!"+os.path.join(cdirout, "aperture-notilt.fits"))
-
-        hdulist = pyfits.open(os.path.join(cdirout, "aperture-notilt.fits"),mode='update')
-        for ext in range(0,2):
-            prihdr = hdulist[ext].header
-            prihdr.update('wave',wavel,'wavelength (m), floating value')
-        hdulist.flush()
-
-        # Save the fits file with information about the fit
-        iofits4.Write( [pyfits.PrimaryHDU() ,
-                        ptable,
-                        fstattab,
-                        ],
-                       os.path.join(cdirout, "fitinfo.fits") ,
-                       overwrite=1)
-        
-
-        # Write out offset aperture and beams if exist
-        if OffsetFname(obsfilename):
-            bnmin1io.FAdd(lmm, OffsetFname(obsfilename), silent=True)
-            bnmin1io.FSave(lmm,
-                           os.path.join(cdirout, "offsetpars.fits"))
-            pyoof.WriteAperture(oc,
-                                "!"+os.path.join(cdirout, "aperture-offset.fits"))
-            pyoof.WriteBeams(oc,
-                         "!"+os.path.join(cdirout, "offsetbeams.fits"))
-            
-        
-        # Write out perfect beams:
-        oc=MkObsCompare(obsfilename, nzern=1,
-                        npix=npix, oversample=oversample,
-                        ds_fwhm=ds_fwhm,
-                        ds_extent=ds_extent)
-        
-        lmm=pybnmin1.LMMin(oc.downcast())
-        bnmin1io.FLoad(lmm, fitname,
-                       silent=True)
-        pyoof.WriteBeams(oc,
-                         "!"+os.path.join(cdirout, "perfectbeams.fits"))        
-
-
-        lastfitf=fitname
-
+        lastfitf=RedOrder(obsfilename,
+                          cdirout,
+                          extrafit=extrafit,
+                          ic=lastfitf,
+                          zorder=nzern,
+                          npix=npix, 
+                          oversample=oversample,
+                          ds_fwhm=ds_fwhm,
+                          ds_extent=ds_extent,
+                          ptable=ptable)
         
 
 def InvertDSFile (fnamein, fnameout ):

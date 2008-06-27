@@ -9,3 +9,4 @@ if "BNDEVEL" in os.environ:
     sys.path.extend([os.path.join(bndev,x) for x in ["bin", "lib"] ])
     
 sys.path.append("../../pygen/iofits")
+sys.path.append("../../pygen/pyxplot")

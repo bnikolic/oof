@@ -91,7 +91,7 @@ def DoAllPixels():
 
     """
 
-    pl= [ (2,1),(2,4), 
+    pl= [ (2,1), (2,4), 
           (2,6),
           (3,3),
           (3,6),
@@ -145,8 +145,6 @@ def DoAllPixels():
           (6,1),
           (5,7)]
 
-    pl = [(5,3)]
-
     for c,r in pl:
         try:
             PrepareInputs(c,r)
@@ -164,7 +162,10 @@ def DoAllPixels():
                              "temp/plots/p%i%i-z%i.png" % (c,r,z))
         except None, e :
             print e
+            print "Pixel not processed: " , c, r
             pass
+        except AttributeError :
+            print "Pixel has no data: " , c, r
 
         
     
