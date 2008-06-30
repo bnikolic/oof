@@ -16,10 +16,13 @@ import iofits4
 modcvs = r""
 
 def FSave(modeldesc , fnameout ):
+    """Save the current state of a model to a FITS file
 
-    "Save the current state to a fits file"
+    The output format is a simple binary table in the first FITS
+    extension hdu
 
-    """
+    :param fnameout: The output filename. Note that it will be
+    overwritten if it exists.
 
     """
 
@@ -47,12 +50,18 @@ def FSave(modeldesc , fnameout ):
 
     iofits4.Write(fout, fnameout , overwrite =True )
 
-def FLoad( modeldsc, fnamein, ext=1, silent=False):
+def FLoad(modeldsc, fnamein, ext=1, silent=False):
+    """Load a fit (that is a set of parameter values) from a FITS file
     
-    "Load a fit from a fits file"
+    :param modeldsc: Model which should be set to the supplied fit
+    
+    :param fnamein: the name of the file with the fit to set (see
+    FSave)
+    
+    :param ext: extension of the FITS file containing fit information
 
-    """
-
+    :param silent: Do not report parameters in the FITS file that do
+    not exist in the supplied model
     """
     
     fin=pyfits.open(fnamein)
