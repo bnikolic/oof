@@ -13,6 +13,16 @@ def ChainToArray(c):
         res[i]=x.p
     return res
 
+def sChainToArray(c):
+    """Like ChainToArray but avoid exception based code
+
+    This works around bugs introduced by multiple modules and swig.
+    """
+    res=numpy.zeros( (len(c), len(c[0].p) ))
+    for i in range(len(c)):
+        res[i]=c[i].p
+    return res
+
 def ChainToLkl(c):
     """Extract the likelihoods from a chain"""
     res=numpy.zeros( len(c))
