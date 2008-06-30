@@ -10,6 +10,7 @@ import pyfits
 import numpy
 
 import pybnmin1
+import bnmin1utils
 
 import iofits4
 
@@ -49,6 +50,40 @@ def FSave(modeldesc , fnameout ):
     fout.append(tabout)
 
     iofits4.Write(fout, fnameout , overwrite =True )
+
+def fSaveChain(modeldesc,
+               chain,
+               fnameout):
+    """
+    Save a MCMC chain to a FITS file
+
+    The chain is saved to the first extension HDU as a binary table
+    with parameter for column names. 
+
+    :param modeldesc: The model which the chain desribes (parameter
+    names are retrieved through this)
+    
+    :param chain: The actual chain
+
+    :param fnameout: The FITS file name to write to. Will be
+    overwritten.
+    
+    """
+    nrows=len(chain)
+    ncols=modeldesc.NParam()
+    coldefs=[ pyfits.Column(modeldesc.getbynumb(i).name,
+                            "E") for i in range(ncols)]
+    tabout=pyfits.new_table( coldefs , nrows=nrows )
+    for j, rowout in enumerate( tabout.data) :
+        p=list(chain[j].p)
+        for i in range(ncols):
+            rowout.setfield(i, p[i])
+    fout=iofits4.PrepFitsOut(modcvs)
+    fout.append(tabout)
+    iofits4.Write(fout, 
+                  fnameout, 
+                  overwrite=True)    
+    
 
 def FLoad(modeldsc, fnamein, ext=1, silent=False):
     """Load a fit (that is a set of parameter values) from a FITS file
