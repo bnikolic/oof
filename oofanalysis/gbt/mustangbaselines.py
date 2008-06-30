@@ -41,6 +41,9 @@ def PrepareInputs(col=5, row=0):
 
         mustang.RemoveStartEnd(ffout, ffout)
         mustang.CorrectDZ(ffout)
+        mustang.CorrectUFNU(ffout)
+        mustang.MaxUFNU(ffout)
+        
                             
 
         
@@ -85,67 +88,67 @@ def RoughReduce():
         oofreduce.Red("td/t18-raw-0-7-db.fits", nzmax=5)
         oofplot.PlotDir("oofout/t18-raw-0-7-db-000/z3")
 
+def MustangPL():
+    """Return of pixels on MUSTANG array in order they occurr"""
+    return [ (2,1), (2,4), 
+             (2,6),
+             (3,3),
+             (3,6),
+             (4,0),
+             (1,6),
+             (2,0),
+             (2,3),
+             (2,7),
+             (3,0),
+             (3,4),
+             (3,7),
+             (4,1),
+             (1,4),
+             (1,5),
+             (2,2),
+             (2,5),
+             (3,2),
+             (3,5),
+             (4,2),
+             (4,3),
+             (1,3),
+             (1,1),
+             (4,7),
+             (4,6),
+             (4,4),
+             (4,5),
+             (0,6),
+             (0,7),
+             (0,5),
+             (7,0),
+             (5,0),
+             (5,1),
+             (5,3),
+             (0,4),
+             (7,1),
+             (6,5),
+             (6,2),
+             (0,1),
+             (0,0),
+             (7,3),
+             (6,7),
+             (6,3),
+             (6,0),
+             (5,6),
+             (7,7),
+             (7,6),
+             (7,4),
+             (7,2),
+             (6,6),
+             (6,4),
+             (6,1),
+             (5,7)]
+
 def DoAllPixels():
-    """Extract all pixels individuall, process to z=5, plot and copy plots
-    to a directory
-
+    """Extract all pixels individually, process to z=5, plot and copy
+    plots to a directory
     """
-
-    pl= [ (2,1), (2,4), 
-          (2,6),
-          (3,3),
-          (3,6),
-          (4,0),
-          (1,6),
-          (2,0),
-          (2,3),
-          (2,7),
-          (3,0),
-          (3,4),
-          (3,7),
-          (4,1),
-          (1,4),
-          (1,5),
-          (2,2),
-          (2,5),
-          (3,2),
-          (3,5),
-          (4,2),
-          (4,3),
-          (1,3),
-          (1,1),
-          (4,7),
-          (4,6),
-          (4,4),
-          (4,5),
-          (0,6),
-          (0,7),
-          (0,5),
-          (7,0),
-          (5,0),
-          (5,1),
-          (5,3),
-          (0,4),
-          (7,1),
-          (6,5),
-          (6,2),
-          (0,1),
-          (0,0),
-          (7,3),
-          (6,7),
-          (6,3),
-          (6,0),
-          (5,6),
-          (7,7),
-          (7,6),
-          (7,4),
-          (7,2),
-          (6,6),
-          (6,4),
-          (6,1),
-          (5,7)]
-
-    for c,r in pl:
+    for c,r in MustangPL():
         try:
             PrepareInputs(c,r)
             fnameraw= "td/t18-raw-%i-%i.fits" % (c,r)
@@ -166,9 +169,47 @@ def DoAllPixels():
             pass
         except AttributeError :
             print "Pixel has no data: " , c, r
+        except ValueError:
+            pass
 
-        
+
+def tableDict(tin):
+    res={}
+    for r in tin.data:
+        res[r.field("Parameter")]=r.field("Value")
+    return res
+
+def FitChi(z=3):
     
+    for c,r in MustangPL():
+        try:
+            f=pyfits.open("oofout/t18-raw-%i-%i-db-000/z%i/fitinfo.fits" % (c,r,z))
+            d=tableDict(f[2])
+            print "C=%i, R=%i : %s " % (c,r,
+                                        str(d["chisquaredfinal"]))
+        except :
+            pass
+        
+def AllPixIC():
+    """Process all pixels, without stepping through Zernike orders and
+    starting from a single initial condition
+    """
+    for c,r in MustangPL():
+        try:
+            fnamedb = "td/t18-raw-%i-%i-db.fits" % (c,r)
+            oofreduce.RedOrder(fnamedb,
+                               "oofout/ic",
+                               ic="oofout/t18-raw-5-3-db-000/z5/fitpars.fits",
+                               zorder=5)
+            oofplot.PlotDir("oofout/ic")
+            shutil.copy("oofout/ic/plots/aperture-phase.png",
+                        "temp/plot-ic/p%i%i-ic-z5.png" % (c,r))
+        except None, e :
+            print "Pixel not processed: " , c, r
+        except AttributeError :
+            print "Pixel has no data: " , c, r
+        except IOError:
+            pass
     
 
 

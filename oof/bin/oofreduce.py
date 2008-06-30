@@ -125,6 +125,20 @@ def LoadOCData( fnamein,
 
 def MkFF ( fnamein,
            apphase):
+    """
+    Make the objects that calculate the far-field antenna response.
+    
+    :param fnamein: The name of file containing the
+    observation. Parameters such as telescope and chopthorw are
+    retrieved from this file
+
+    :param apphase: The object representing the aperture-plane
+    electric field distribution of the telescope.
+
+    :returns: The Far-Field object. GC is disabled on this object
+    since normally it will be passed to C++ objects that will want to
+    own it.
+    """
 
     wavel = GetObsWaveL(fnamein)
 
@@ -133,12 +147,13 @@ def MkFF ( fnamein,
     if telname == "GBT":
 
         recvname=GetRecvName(fnamein)
-        beamSeparationArcsec = GetBeamSeparation(fnamein)            
 
         if recvname == "qunbal":
+            beamSeparationArcsec = GetBeamSeparation(fnamein)            
             ff = pyoof.ChoppedFF( apphase , wavel)
             ff.hchop = -beamSeparationArcsec *  math.pi / 180.0 / 3600
         elif recvname == "Ka":
+            beamSeparationArcsec = GetBeamSeparation(fnamein)            
             ff = pyoof.ChoppedFF( apphase , wavel)
             ff.hchop = +beamSeparationArcsec *  math.pi / 180.0 / 3600
         elif recvname == "mustang":
@@ -173,8 +188,10 @@ def MkObsCompare(fnamein,
                  ds_fwhm=1.0,
                  ds_extent=2.0
                  ):
-
-    "Make an ObsCompare object from the given file"
+    """
+    Makes an ObsCompare object from the given file. This object allows
+    comparison of observations to models of the far-field response.
+    """
 
     tel = MkTel(fnamein)
 

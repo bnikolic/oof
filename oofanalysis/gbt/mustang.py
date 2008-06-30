@@ -44,6 +44,39 @@ def CorrectDZ(fnamein):
     iofits4.Write(res,
                   fnamein,
                   overwrite=1)
+
+def CorrectUFNU(fnamein):
+    """
+    Scale UFNU columns by 1e-3 since they seem to be out by that much
+    in the supplied files.
+    """
+    fin=pyfits.open(fnamein)    
+    res=[ fin[0]]
+    for h in fin[1:]:
+        for i,r in enumerate(h.data):
+            h.data.field("ufnu")[i] = r.field("ufnu")*1.0e-3
+        res.append(h)
+    iofits4.Write(res,
+                  fnamein,
+                  overwrite=1)
+
+def MaxUFNU(fnamein):
+    """
+    Replace all UFNU's by the maximum UFNU in the file. Useful to make
+    sure that the variation in UFNUs doesn't bias too much the final
+    fit.
+    """
+    fin=pyfits.open(fnamein)        
+    maxufnu=max([max(h.data.field("ufnu")) for h in fin[1:] ])
+    res=[ fin[0]]
+    for h in fin[1:]:
+        for i,r in enumerate(h.data):
+            h.data.field("ufnu")[i] = maxufnu
+        res.append(h)
+    iofits4.Write(res,
+                  fnamein,
+                  overwrite=1)    
+    
     
 
 def RemoveStartEnd(fnamein,
