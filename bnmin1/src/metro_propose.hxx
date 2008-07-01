@@ -15,7 +15,14 @@
 #include <boost/random/variate_generator.hpp>
 
 namespace Minim {
-  
+
+  /** \brief Helper class which handles the random number parts of the
+      Metropolis algorithm.
+
+      The two of this class functions are to generate the proposal
+      points (via displace()) and to generate uniform random numbers
+      for accepting less likely points.
+   */
   class MetroPropose {
 
   protected:
@@ -60,6 +67,10 @@ namespace Minim {
     }
   };
 
+  /**
+     Intead of displacing the entire vector at once, each parameter is
+     displaced in turn. See MetropolisMCMC::Options::Sequence.
+   */
   class MetroProposeSeq :
     public MetroPropose
   {
