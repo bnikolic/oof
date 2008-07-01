@@ -58,8 +58,26 @@ namespace Minim {
     {
       return uni();
     }
-    
-		 
+  };
+
+  class MetroProposeSeq :
+    public MetroPropose
+  {
+
+    size_t count;
+
+    const size_t n;
+
+  public:
+
+    // ---------- Construction / Destruction --------------
+
+    MetroProposeSeq(const std::vector<double> & sigmas,
+		    unsigned seed=0);
+
+    // ---------- Public interface --------------------------
+    virtual void displace( std::vector<double> &x);
+
   };
 
 }

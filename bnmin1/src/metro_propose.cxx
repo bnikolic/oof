@@ -32,6 +32,21 @@ namespace Minim {
   {
     return sigmas.size();
   }
+
+  MetroProposeSeq::MetroProposeSeq(const std::vector<double> & sigmas,
+				   unsigned seed):
+    MetroPropose(sigmas, seed),
+    count(0),
+    n(sigmas.size())
+  {
+  }
+
+  void MetroProposeSeq::displace( std::vector<double> &x)
+  {
+    const size_t i = count  % n;
+    x[i] += sigmas[i]* norm();
+    ++count;
+  }
     
 
 }

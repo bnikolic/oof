@@ -16,12 +16,16 @@ namespace Minim {
 
   MetropolisMCMC::MetropolisMCMC(MLikelihood & ml,
 				 const std::vector<double> & sigmas,
-				 unsigned seed):
+				 unsigned seed,
+				 Options opt):
     ModelDesc(ml),
     ml(ml),
-    prop(new MetroPropose(sigmas, seed) ),
     f(NULL)
   {
+    if (opt & Sequence)
+      prop.reset(new MetroProposeSeq(sigmas, seed));
+    else
+      prop.reset(new MetroPropose(sigmas, seed));
   }
 
   MetropolisMCMC::~MetropolisMCMC()

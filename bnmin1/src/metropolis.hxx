@@ -60,6 +60,10 @@ namespace Minim {
       }
     };
 
+    enum Options {
+      None=0,
+      Sequence=1};
+
     // ---------- Public data -----------------------------
 
     /// If this pointer is set, this function will be called at each
@@ -75,7 +79,8 @@ namespace Minim {
      */
     MetropolisMCMC(MLikelihood & ml,
 		   const std::vector<double> & sigmas,
-		   unsigned seed=0
+		   unsigned seed=0,
+		   Options opt=None
 		   );
     
     virtual ~MetropolisMCMC();
