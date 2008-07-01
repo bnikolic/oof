@@ -27,6 +27,11 @@ namespace Minim {
     for (size_t i =0 ; i < sigmas.size() ; ++i)
       x[i] += sigmas[i]* norm();
   }
+
+  size_t MetroPropose::nPars(void)
+  {
+    return sigmas.size();
+  }
     
 
 }

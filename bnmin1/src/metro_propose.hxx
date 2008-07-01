@@ -48,6 +48,17 @@ namespace Minim {
 
     /// Generate a proposal point by displacing the supplied point.
     virtual void displace( std::vector<double> &x);
+
+    /// Return the number of parameters for which we can propose
+    size_t nPars(void);
+
+    /// Generate a uniform number between zero and one for acceptance
+    /// probability
+    double raccept(void)
+    {
+      return uni();
+    }
+    
 		 
   };
 

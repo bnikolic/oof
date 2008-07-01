@@ -10,11 +10,8 @@
 #include <stdexcept>
 #include <list>
 #include <vector>
-#include <boost/random/mersenne_twister.hpp>
-#include <boost/random/normal_distribution.hpp>
-#include <boost/random/uniform_real.hpp>
-#include <boost/random/variate_generator.hpp>
 
+#include <boost/scoped_ptr.hpp>
 #include <boost/function.hpp>
 
 #include "minim.hxx"
@@ -25,6 +22,7 @@
 namespace Minim {
 
   class MLikelihood;
+  class MetroPropose;
 
   /** Structure containing the data recorded at each point in an MCMC
       distribution
@@ -47,24 +45,8 @@ namespace Minim {
   {
 
     MLikelihood & ml;
-
-    std::vector<double> sigmas;
-
-    // Random-number generation
-
-    typedef boost::mt19937  base_generator_type;
-    base_generator_type generator;
-    boost::normal_distribution<> norm_dist;
-    boost::uniform_real<> uni_dist;
     
-    /// Normal distribution for creating proposal points
-    boost::variate_generator<base_generator_type&, boost::normal_distribution<> > 
-      norm;
-
-    /// Uniform distribution for accepting according to probability
-    boost::variate_generator<base_generator_type&, boost::uniform_real<> > uni;
-
-    void displace( std::vector<double> &x);
+    boost::scoped_ptr<MetroPropose> prop;
 
   public:
 
@@ -95,6 +77,8 @@ namespace Minim {
 		   const std::vector<double> & sigmas,
 		   unsigned seed=0
 		   );
+    
+    virtual ~MetropolisMCMC();
 
     // ---------- Public interface --------------------------
 
