@@ -185,3 +185,4 @@ CVS
 ./bnlib2/config.h
 ./bnlib2/bnlib2.pc
 ./dust/persistence/config
+./bnmin1/test/t_unit

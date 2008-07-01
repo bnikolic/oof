@@ -1,8 +1,10 @@
 # Bojan Nikolic <bojan@bnikolic.co.uk>
 
-bin_PROGRAMS= t_minim
+bin_PROGRAMS= t_minim t_unit
 
 t_minim_SOURCES = t_minim.cpp quadmodel.hpp
+
+t_unit_SOURCES = t_unit.cpp
 
 LDADD=../src/libbnmin1.la ${BOOST_UNIT_TEST_FRAMEWORK_LIB}
 INCLUDES=-I../src 
