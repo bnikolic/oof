@@ -9,6 +9,9 @@ Development (to be V1.3)
 
    NEW FEATURES:
    
+   * Metropolis sampling can displace each parameter in turn (see
+     option Minim::MetropolisMCMC::Sequence)
+   
    ENHANCEMENT:
    
 
