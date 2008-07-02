@@ -144,25 +144,35 @@ def MustangPL():
              (6,1),
              (5,7)]
 
+def DoAPixel(c,r):
+    """
+    Process a single pixel and copy the output aperture phase plot to
+    temporary directory for visualisation
+    """
+    PrepareInputs(c,r)
+    fnameraw= "td/t18-raw-%i-%i.fits" % (c,r)
+    fnamedb = "td/t18-raw-%i-%i-db.fits" % (c,r)
+    RemoveBaseline(fnameraw , 
+                   fnamedb,
+                   rad=1.5e-4 )        
+    oofreduce.Red(fnamedb, nzmax=5)
+
+    for z in [3,5]:
+
+        oofplot.PlotDir("oofout/t18-raw-%i-%i-db-000/z%i" % (c,r,z))
+        shutil.copy( "oofout/t18-raw-%i-%i-db-000/z%i/plots/aperture-phase.png" % (c,r,z),
+                     "temp/plots/p%i%i-z%i.png" % (c,r,z))
+    
 def DoAllPixels():
-    """Extract all pixels individually, process to z=5, plot and copy
+    """
+    Extract all pixels individually, process to z=5, plot and copy
     plots to a directory
+    
+    See also DoAPixel
     """
     for c,r in MustangPL():
         try:
-            PrepareInputs(c,r)
-            fnameraw= "td/t18-raw-%i-%i.fits" % (c,r)
-            fnamedb = "td/t18-raw-%i-%i-db.fits" % (c,r)
-            RemoveBaseline(fnameraw , 
-                           fnamedb,
-                           rad=1.5e-4 )        
-            oofreduce.Red(fnamedb, nzmax=5)
-
-            for z in [3,5]:
-
-                oofplot.PlotDir("oofout/t18-raw-%i-%i-db-000/z%i" % (c,r,z))
-                shutil.copy( "oofout/t18-raw-%i-%i-db-000/z%i/plots/aperture-phase.png" % (c,r,z),
-                             "temp/plots/p%i%i-z%i.png" % (c,r,z))
+            DoAPixel(c,r)
         except None, e :
             print e
             print "Pixel not processed: " , c, r

@@ -106,7 +106,7 @@ def TestMetroIC():
     return MetroMustang("td/t18-raw-5-3-db.fits", 
                         amp_sigma=0.00001,
                         z_sigma=0.1,
-                        nsample=10000,
+                        nsample=20000,
                         ic="oofout/t18-raw-5-3-db-000/z5/fitpars.fits",
                         fnameout_chain="temp/metro_ic.fits")
 
@@ -114,8 +114,8 @@ def TestMetroIC2():
     return MetroMustang("td/t18-raw-5-1-db.fits", 
                         amp_sigma=0.00001,
                         z_sigma=0.1,
-                        nsample=10000,
-                        ic="oofout/t18-raw-5-3-db-000/z5/fitpars.fits",
+                        nsample=20000,
+                        ic="oofout/t18-raw-5-1-db-000/z5/fitpars.fits",
                         fnameout_chain="temp/metro_ic2.fits")
 
 def TestMetroIC3():
@@ -123,6 +123,6 @@ def TestMetroIC3():
                         amp_sigma=0.00001,
                         z_sigma=0.1,
                         nsample=20000,
-                        ic="oofout/t18-raw-5-3-db-000/z5/fitpars.fits",
+                        ic="oofout/t18-raw-6-2-db-000/z5/fitpars.fits",
                         fnameout_chain="temp/metro_ic3.fits")
 
