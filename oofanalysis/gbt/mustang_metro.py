@@ -4,6 +4,8 @@
 
 import setup
 
+import os
+
 import pybnmin1
 import bnmin1utils
 import bnmin1io
@@ -83,6 +85,12 @@ def plotParDist(fnamein,
     fits file. 
     """
     din=pyfits.open(fnamein)[1]
+    for pname in din.get_coldefs().names:
+        plotSinlgeParDist(din,
+                          pname,
+                          os.path.join(dirout, 
+                                       "p%s-dist.eps" % (pname,)))
+
     
                 
 
