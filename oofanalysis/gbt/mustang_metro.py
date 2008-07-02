@@ -9,6 +9,8 @@ import bnmin1utils
 import bnmin1io
 
 import oofreduce
+import pyxplot
+import pyfits
 
 def MetroMustang(fnamein,
                  amp_sigma=0.00001,
@@ -45,7 +47,8 @@ def MetroMustang(fnamein,
 
     metro=pybnmin1.MetropolisMCMC(oc.downcast(),
                                   sigmas,
-                                  33)
+                                  33,
+                                  pybnmin1.MetropolisMCMC.Sequence)
     if ic is not None:
         bnmin1io.FLoad(metro,
                        ic)
@@ -57,20 +60,61 @@ def MetroMustang(fnamein,
         bnmin1io.fSaveChain(metro, chain, 
                             fnameout_chain)
     return chain
+
+def plotSinlgeParDist(din,
+                      parname,
+                      fnameout):
+    """
+    Plot the distribution of a single parameter
+    """
+    d=din.data.field(parname)
+    pyxplot.histogram( [ (d, "")],
+                       fnameout,
+                       xax=pyxplot.axis(parname),
+                       width=pyxplot.MNRAS_SC,
+                       nbins=20,
+                       key=None)
+
+
+def plotParDist(fnamein,
+                dirout):
+    """
+    Plot the distribution of each parameter from a chain stored in a
+    fits file. 
+    """
+    din=pyfits.open(fnamein)[1]
     
+                
 
 def TestMetro():
 
     return MetroMustang("td/t18-raw-5-3-db.fits", 
                         amp_sigma=0.00001,
                         z_sigma=0.02,
-                        nsample=10)
+                        nsample=10,
+                        fnameout_chain="temp/t.fits")
 
 def TestMetroIC():
     return MetroMustang("td/t18-raw-5-3-db.fits", 
                         amp_sigma=0.00001,
-                        z_sigma=0.01,
+                        z_sigma=0.1,
                         nsample=10000,
                         ic="oofout/t18-raw-5-3-db-000/z5/fitpars.fits",
                         fnameout_chain="temp/metro_ic.fits")
+
+def TestMetroIC2():
+    return MetroMustang("td/t18-raw-5-1-db.fits", 
+                        amp_sigma=0.00001,
+                        z_sigma=0.1,
+                        nsample=10000,
+                        ic="oofout/t18-raw-5-3-db-000/z5/fitpars.fits",
+                        fnameout_chain="temp/metro_ic2.fits")
+
+def TestMetroIC3():
+    return MetroMustang("td/t18-raw-6-2-db.fits", 
+                        amp_sigma=0.00001,
+                        z_sigma=0.1,
+                        nsample=20000,
+                        ic="oofout/t18-raw-5-3-db-000/z5/fitpars.fits",
+                        fnameout_chain="temp/metro_ic3.fits")
 

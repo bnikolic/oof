@@ -51,6 +51,13 @@ def FSave(modeldesc , fnameout ):
 
     iofits4.Write(fout, fnameout , overwrite =True )
 
+def fittedParsNums(mod):
+    """Return sequence of the indices of parameters which are being fitted
+    for"""
+    res =[i for i in range(mod.NTotParam()) if mod.getbynumb(i).dofit]
+    return res
+
+
 def fSaveChain(modeldesc,
                chain,
                fnameout):
@@ -72,7 +79,7 @@ def fSaveChain(modeldesc,
     nrows=len(chain)
     ncols=modeldesc.NParam()
     coldefs=[ pyfits.Column(modeldesc.getbynumb(i).name,
-                            "E") for i in range(ncols)]
+                            "E") for i in fittedParsNums(modeldesc)]
     tabout=pyfits.new_table( coldefs , nrows=nrows )
     for j, rowout in enumerate( tabout.data) :
         p=list(chain[j].p)

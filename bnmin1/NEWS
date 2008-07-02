@@ -6,6 +6,8 @@ Development (to be V1.3)
 ========================
 
    BUG FIXES:
+   
+   * fSaveChain correctly names the table columns
 
    NEW FEATURES:
    
