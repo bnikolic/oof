@@ -41,10 +41,32 @@ def PrepareInputs(col=5, row=0):
 
         mustang.RemoveStartEnd(ffout, ffout)
         mustang.CorrectDZ(ffout)
-        mustang.CorrectUFNU(ffout)
-        mustang.MaxUFNU(ffout)
+        #mustang.CorrectUFNU(ffout)
+        #mustang.MaxUFNU(ffout)
+        mustang.SetUFNU(ffout)
+
+
+def PrepareInputsV2(col=5, row=0):
+
+    dirin="/home/bnikolic/data/gbt-oof/mustang3/"
+    for (fin, xfout ) in [ ("tpar18s56s58-02jul080854+2006.fits",
+                            "t18-poly-%i-%i-v2.fits"),
+                           ("tpar18s56s58-raw02jul080854+2006.fits",
+                            "t18-raw-%i-%i-v2.fits"),                           
+                           ]:
+
+        fout= xfout % ( col, row)
+        ffin = os.path.join(dirin, fin)
+        ffout= os.path.join("td", fout)
         
-                            
+        mustang.SinglePixelFile(ffin,
+                                ffout,
+                                col, row)
+
+        mustang.RemoveStartEnd(ffout, ffout)
+        mustang.CorrectDZ(ffout)
+        #mustang.MaxUFNU(ffout)
+        mustang.SetUFNU(ffout)
 
         
 def RoughReduce():
@@ -144,14 +166,21 @@ def MustangPL():
              (6,1),
              (5,7)]
 
-def DoAPixel(c,r):
+def DoAPixel(c,r,
+             ver=1):
     """
     Process a single pixel and copy the output aperture phase plot to
     temporary directory for visualisation
     """
-    PrepareInputs(c,r)
-    fnameraw= "td/t18-raw-%i-%i.fits" % (c,r)
-    fnamedb = "td/t18-raw-%i-%i-db.fits" % (c,r)
+    if ver == 1:
+        PrepareInputs(c,r)
+        fnameraw= "td/t18-raw-%i-%i.fits" % (c,r)
+    elif ver == 2:
+        PrepareInputsV2(c,r)
+        fnameraw= "td/t18-raw-%i-%i-v2.fits" % (c,r)
+    else:
+        raise "Unkown version"
+    fnamedb = fnameraw[:-5]+"-db.fits"
     RemoveBaseline(fnameraw , 
                    fnamedb,
                    rad=1.5e-4 )        
@@ -282,3 +311,13 @@ def Red20080606_2():
     oofplot.PlotDir("oofout/t18-comb2-000/z3")
     oofplot.PlotDir("oofout/t18-comb2-000/z4")
     
+
+def PlotVersions(ext):
+    
+    f1=pyfits.open("td/t18-raw-5-3-db.fits")
+    f2=pyfits.open("td/t18-raw-5-3-v2-db.fits")
+    pylab.clf()
+    for f in [f1,f2]:
+        x=f[ext].data.field("fnu")
+        pylab.plot(x / x.max() )
+

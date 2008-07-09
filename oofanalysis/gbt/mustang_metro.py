@@ -19,7 +19,8 @@ def MetroMustang(fnamein,
                  z_sigma=0.05,
                  nsample=100,
                  ic=None,
-                 fnameout_chain=None):
+                 fnameout_chain=None,
+                 nzern=5):
     """
     Sample posterior distribution given MUSTANG data using the
     Metropolis MCMC algorithm
@@ -39,13 +40,18 @@ def MetroMustang(fnamein,
     :param fnameout_chain: Name of FITS file to which the calculated
     chain should be written to.
     
+    :param nzern: The order of Zernike polynimals to fit to.
+    
     :returns: The calculated chain 
     """
     
     oc=oofreduce.MkObsCompare( fnamein, 
-                               nzern=5)
+                               nzern=nzern)
+    nzc_d= { 1: 2,
+             3 : 9,
+             5 : 20}
 
-    sigmas=pybnmin1.DoubleVector([ amp_sigma]+ [z_sigma]*20 )
+    sigmas=pybnmin1.DoubleVector([ amp_sigma]+ [z_sigma]*nzc_d[nzern] )
 
     metro=pybnmin1.MetropolisMCMC(oc.downcast(),
                                   sigmas,
@@ -102,13 +108,24 @@ def TestMetro():
                         nsample=10,
                         fnameout_chain="temp/t.fits")
 
-def TestMetroIC():
-    return MetroMustang("td/t18-raw-5-3-db.fits", 
-                        amp_sigma=0.00001,
-                        z_sigma=0.1,
-                        nsample=20000,
-                        ic="oofout/t18-raw-5-3-db-000/z5/fitpars.fits",
-                        fnameout_chain="temp/metro_ic.fits")
+def TestMetroIC(c,r,
+                nzern=5,
+                nsample=20000):
+    fnameout="temp/metro_ic_p%i%i_z%i.fits" % (c,r,nzern)
+    plotdir = "temp/ic_p%i%i_z%i" % (c,r,nzern)
+    r=MetroMustang("td/t18-raw-%i-%i-db.fits" % (c,r), 
+                   amp_sigma=0.00001,
+                   z_sigma=0.1,
+                   nsample=nsample,
+                   ic="oofout/t18-raw-%i-%i-db-000/z%i/fitpars.fits" % (c,r,nzern),
+                   fnameout_chain=fnameout,
+                   nzern=nzern)
+
+    plotParDist(fnameout, plotdir)
+    return r
+
+
+
 
 def TestMetroIC2():
     return MetroMustang("td/t18-raw-5-1-db.fits", 
