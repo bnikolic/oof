@@ -229,22 +229,26 @@ def MkObsCompare(fnamein,
 
     return oc
 
-def SimBeamDS(obsfilename, beamfilename):
+def SimBeamDS(obsfilename, 
+              beamfilename):
+    """
+    Simulate the data series given observing pattern and beam shape
+    
+    :param obsfilename: File name containing definition of the
+    observation being simulated -- this defines telescope, positions
+    where beam has been measured, etc ("FNU" column obviously can be
+    zero).
 
-    "Return the data series corresponding the simulated beams"
-              
-
+    :param beamfilename: FITS file containing beams to simulate
+    """
     obsfile=pyfits.open(obsfilename)
-
     res=[]
-
     for i in range(1, len(obsfile)):
-
         skym=pyplot.FitsMapLoad(beamfilename, i)
         mkds=MkMapResDS( obsfilename, i , skym)
         res.append(mkds.MkModelDS(skym))
-
     return res
+
 
 def FitStatTab(m):
 

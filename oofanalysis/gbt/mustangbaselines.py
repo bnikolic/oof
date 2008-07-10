@@ -321,3 +321,30 @@ def PlotVersions(ext):
         x=f[ext].data.field("fnu")
         pylab.plot(x / x.max() )
 
+
+def prepCheckRelativeAmp(col=5,
+                         row=3,
+                         poly=False):
+
+    if poly:
+        f1name=os.path.join(laptop_dirin, 
+                            "tpar18s56s58-apr080854+2006.fits")
+        f2name=os.path.join("/home/bnikolic/data/gbt-oof/mustang3/", 
+                            "tpar18s56s58-02jul080854+2006.fits")
+    else:
+        f1name=os.path.join(laptop_dirin, "tpar18s56s58-raw0854+2006.fits")
+        f2name=os.path.join("/home/bnikolic/data/gbt-oof/mustang3/", 
+                        "tpar18s56s58-raw02jul080854+2006.fits")
+    
+    mustang.SinglePixelFile(f1name,
+                            "temp/t1.fits",
+                            col, row)
+    mustang.SinglePixelFile(f2name,
+                            "temp/t2.fits",
+                            col, row)
+
+def RelativeAmp(fname):
+    f=pyfits.open(fname)
+    cf= max(f[2].data.field("fnu"))
+    print max(f[1].data.field("fnu"))/cf
+    print max(f[3].data.field("fnu"))/cf

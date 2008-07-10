@@ -1,10 +1,12 @@
-# Bojan Nikolic <bojan@bnikolic.co.uk>,   <bn204@mrao.cam.ac.uk>
+# Bojan Nikolic <bojan@bnikolic.co.uk>, <bn204@mrao.cam.ac.uk>,
+# <b.nikolic@mrao.cam.ac.uk>
 #
-# Various utilities for plotting OOF data
+# Utilities for plotting OOF data
 
 import os
 
 import pyfits
+import numpy
 
 import implot
 import pyplot
@@ -328,8 +330,28 @@ def PlotIllumFile( fnamein,
 
     return m
 
-    
 
+def dsToArray(ds):
+    """Convert a data series to a numpy array"""
+    res=[]
+    for i in range(ds.length()):
+        x=ds.getp(i)
+        res.append([x.dX, x.dY, x.fnu, x.ufnu])
+    return numpy.array(res)
+
+
+def dsObsModel(obsfilename,
+               beamfilename):
+    """Return the observed and the model data series"""
+    res=[]
+    sl=oofreduce.SimBeamDS(obsfilename,beamfilename)
+    fin=pyfits.open(obsfilename)
+    for i in range(len(sl)):
+        x=dsToArray(sl[i])
+        xo=fin[i+1].data.field("fnu")
+        res.append( [xo,x])
+    return res
+    
     
                   
     
