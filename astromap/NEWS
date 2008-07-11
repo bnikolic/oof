@@ -5,6 +5,11 @@ AstroMap Release Notes
 Development version (to be 1.2)
 -------------------------------
 
+Bug fixes:
+    
+  * Bi-Linear interpolation now checks for range and throws exceptions
+    instead of returning undefined results
+
 Enhancements:
 
   * AstroMap now produces and used pkg-config

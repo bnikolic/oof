@@ -53,11 +53,8 @@ BOOST_AUTO_TEST_CASE(t_MkBiLinearCoeffs_edge)
   }
 
   {
-    boost::scoped_ptr<MapPixLC> lc ( MkBiLinearCoeffs(9,9,m));
-    for (size_t i =0 ; i < 4 ; ++i)
-    {
-      BOOST_CHECK(lc->index[i] < 100);
-    }
+    BOOST_CHECK_THROW( boost::scoped_ptr<MapPixLC> lc ( MkBiLinearCoeffs(9,9,m)),
+		       IndexingError);
   }
 
 }
