@@ -2,6 +2,7 @@
 %{
 
 #include "../src/astromap.hxx"
+#include "../src/astromap_err.hxx"
 #include "../src/astromapio.hxx"
 #include "../src/mapops.hxx"
 #include "../src/pixiterators.hxx"
@@ -55,6 +56,7 @@ namespace std {
 %apply double & OUTPUT { double & minval, double & maxval};
 
 %include "../src/astromap.hxx"
+%include "../src/astromap_err.hxx"
 %include "../src/astromapio.hxx"
 %include "../src/mapops.hxx"
 %include "../src/pixiterators.hxx" 
