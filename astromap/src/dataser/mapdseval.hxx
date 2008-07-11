@@ -29,10 +29,17 @@ namespace AstroMap {
   */
   class MapPixLC {
     
-    std::valarray<unsigned> index;
-    std::valarray<double>   coeff;
 
   public:
+
+    // -------------- Public data ---------------------
+
+    /// The indexes of pixels in this linear combination
+    const std::valarray<unsigned> index;
+    /// The coefficient of each pixel in this combination
+    const std::valarray<double>   coeff;
+
+    // --------------- Construction/Destruction -------
     
     /**
      \param index The indices of pixels to be weighted together

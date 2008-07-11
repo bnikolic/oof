@@ -32,6 +32,31 @@ BOOST_AUTO_TEST_CASE(t_MkBiLinearCoeffs_correct_mid)
 
   for (size_t i =0 ; i < 4 ; ++i)
   {
-    //BOOST_CHECK_EQUAL(lc->coeff[i], 0.25);
+    BOOST_CHECK_EQUAL(lc->coeff[i], 0.25);
   }
+
+  BOOST_CHECK_EQUAL(lc->index[0], 55);
+}
+
+
+BOOST_AUTO_TEST_CASE(t_MkBiLinearCoeffs_edge)
+{
+  Map m(10,10);
+
+  {
+    boost::scoped_ptr<MapPixLC> lc ( MkBiLinearCoeffs(0,0,m));
+    for (size_t i =0 ; i < 4 ; ++i)
+    {
+      BOOST_CHECK(lc->index[i] >= 0);
+    }
+  }
+
+  {
+    boost::scoped_ptr<MapPixLC> lc ( MkBiLinearCoeffs(9,9,m));
+    for (size_t i =0 ; i < 4 ; ++i)
+    {
+      BOOST_CHECK(lc->index[i] < 100);
+    }
+  }
+
 }
