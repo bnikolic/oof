@@ -39,6 +39,11 @@ AC_LANG_POP(C++)
 AM_CONDITIONAL([HAVEBNMIN1], 
                [test x$ac_cv_header_minimmodel_hxx = xyes])
 
+AX_BOOST(1.34.0,
+	[echo "GOOD: You have BOOST ... we will be using that!" ],		     
+	AC_MSG_ERROR(["ERROR: No BOOST  ... ; you can find it at  http://www.boost.org/ "])  )
+
+
 AC_CONFIG_SUBDIRS([plot])	
 
 
@@ -48,5 +53,6 @@ AC_OUTPUT(Makefile
 	  src/dataser/Makefile	
 	  src/wcs/Makefile
 	  doc/Doxyfile
-	  astromap.pc)
+	  astromap.pc
+	  test/Makefile)
 

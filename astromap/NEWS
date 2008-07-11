@@ -5,13 +5,25 @@ AstroMap Release Notes
 Development version (to be 1.2)
 -------------------------------
 
+Bug fixes:
+    
+  * Bi-Linear interpolation now checks for range and throws exceptions
+    instead of returning undefined results
+
 Enhancements:
 
   * AstroMap now produces and used pkg-config
+  
+  * AstroMap specific errors are definied by an exception hierarchy in
+    astromap_err.hxx
+    
+  * AstroMap::version reports the version of the library
 
 Dependencies:
 
-  * Changed BNFits 
+  * Changed BNFits version
+  
+  * Depends for BOOST (for the testing framework)
 
 Version 1.1
 -----------

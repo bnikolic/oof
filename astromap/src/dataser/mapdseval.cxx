@@ -15,6 +15,7 @@
 
 
 #include "../astromap.hxx"
+#include "../astromap_err.hxx"
 #include "../pixextract.hxx"
 #include "../coordsys/coordsys.hxx"
 #include "dataseries.hxx"
@@ -143,6 +144,12 @@ namespace AstroMap {
 
     int xh = xl+1;
     int yh = yl+1;
+    
+    if ( xl < 0 or yl < 0 or xh >= (int)msample.nx or yl >=(int)msample.ny )
+    {
+    throw IndexingError(px, py,
+			"Trying to interpolate out of range");
+    }
     
     double xd = px - xl;
     double yd = py - yl;

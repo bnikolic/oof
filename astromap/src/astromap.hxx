@@ -92,7 +92,9 @@ namespace AstroMap {
    */
   Map * Clone (Map &m);
   
-
+  
+  /// Return the version of the AstroMap library
+  const char * version(void);
 
 
 }
