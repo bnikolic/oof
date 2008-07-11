@@ -11,6 +11,7 @@
 #include <bndebug.hxx>
 #include <cmath>
 
+#include "./config.h"
 #include "coordsys/coordsys.hxx"
 #include "coordsys/lincordsys.hxx"
 
@@ -111,6 +112,9 @@ namespace AstroMap {
     return new Map( m.nx, m.ny, m.cs->Clone());
   }
 
-
+  const char * version(void)
+  {
+    return PACKAGE_VERSION;
+  }
 
 }

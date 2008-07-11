@@ -16,6 +16,8 @@ Enhancements:
   
   * AstroMap specific errors are definied by an exception hierarchy in
     astromap_err.hxx
+    
+  * AstroMap::version reports the version of the library
 
 Dependencies:
 
