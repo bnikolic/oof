@@ -11,7 +11,9 @@ Enhancements:
 
 Dependencies:
 
-  * Changed BNFits 
+  * Changed BNFits version
+  
+  * Depends for BOOST (for the testing framework)
 
 Version 1.1
 -----------
