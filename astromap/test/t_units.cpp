@@ -15,6 +15,7 @@
 #include <boost/scoped_ptr.hpp>
 
 #include "astromap.hxx"
+#include "astromap_err.hxx"
 #include "dataser/mapdseval.hxx"
 
 using namespace AstroMap;
@@ -59,4 +60,11 @@ BOOST_AUTO_TEST_CASE(t_MkBiLinearCoeffs_edge)
     }
   }
 
+}
+
+BOOST_AUTO_TEST_CASE(IndexingError_constructs)
+{
+  IndexingError e( 1,1, "test");
+  BOOST_CHECK_EQUAL( std::string(e.what()),
+		     "test at pixel (1,1) ");
 }
