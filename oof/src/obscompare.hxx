@@ -88,14 +88,24 @@ namespace OOF {
     /*! Return the number of observations in this set */
     unsigned NObs(void);
 
-    /*! Return the model beam for the ith observation */
-    void  Beam (unsigned i , AstroMap::Map & res );
+    /** \brief Calculate the model beam for the i-th observation
+	
+	\param res The beam is stored in this map
+     */
+    void  Beam (unsigned i, AstroMap::Map & res);
 
     /*! Return the model beam for the ith observation */
     AstroMap::Map *  Beam (unsigned i  );
 
-    /*! Return just the plain beam  */
-    AstroMap::Map *  Beam (void  );
+    /*! \brief Calculate the plain beam
+    
+    That is the beam without any phase screens, and using the default
+    aperture model if there are multiple models available.
+    
+    \returns The beam in a newly allocated map 
+    
+    */
+    AstroMap::Map *  Beam (void);
 
     /*! Return the aperture */
     ApertureMod * GetAperture(void);

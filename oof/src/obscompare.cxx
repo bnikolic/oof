@@ -86,12 +86,15 @@ namespace OOF {
     farf->AddParams(pars);
   }
 
-  void ObsCompare::Beam (unsigned i , AstroMap::Map & res )
+  void ObsCompare::Beam (unsigned i,
+			 AstroMap::Map & res)
   {
-	(*ApScratch) = ( *aperture->getphase()) ;
-	phasescreens[i]->DePhase(*ApScratch) ;
-	
-	farf->Power( *aperture->getamp() , *ApScratch, res );
+    (*ApScratch) = ( *aperture->getPhase(i)) ;
+    phasescreens[i]->DePhase(*ApScratch) ;
+    
+    farf->Power(*aperture->getAmp(i), 
+		*ApScratch,
+		res);
   }
 
   AstroMap::Map *  ObsCompare::Beam (unsigned i  )

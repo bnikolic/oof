@@ -41,7 +41,7 @@ def PrepareInputs(col=5, row=0):
 
         mustang.RemoveStartEnd(ffout, ffout)
         mustang.CorrectDZ(ffout)
-        #mustang.CorrectUFNU(ffout)
+        mustang.CorrectUFNU(ffout)
         #mustang.MaxUFNU(ffout)
         mustang.SetUFNU(ffout)
 
