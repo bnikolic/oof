@@ -6,8 +6,13 @@ Development (to be V1.3)
 ========================
 
    BUG FIXES:
+   
+   * fSaveChain correctly names the table columns
 
    NEW FEATURES:
+   
+   * Metropolis sampling can displace each parameter in turn (see
+     option Minim::MetropolisMCMC::Sequence)
    
    ENHANCEMENT:
    

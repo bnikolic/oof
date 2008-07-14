@@ -45,6 +45,19 @@ def CorrectDZ(fnamein):
                   fnamein,
                   overwrite=1)
 
+def ScaleColumn(fnamein,
+                colname,
+                scale):
+    fin=pyfits.open(fnamein)    
+    res=[ fin[0]]
+    for h in fin[1:]:
+        for i,r in enumerate(h.data):
+            h.data.field(colname)[i] = r.field(colname)*scale
+        res.append(h)
+    iofits4.Write(res,
+                  fnamein,
+                  overwrite=1)
+    
 def CorrectUFNU(fnamein):
     """
     Scale UFNU columns by 1e-3 since they seem to be out by that much
@@ -72,6 +85,21 @@ def MaxUFNU(fnamein):
     for h in fin[1:]:
         for i,r in enumerate(h.data):
             h.data.field("ufnu")[i] = maxufnu
+        res.append(h)
+    iofits4.Write(res,
+                  fnamein,
+                  overwrite=1)    
+
+def SetUFNU(fnamein,
+            ufnu=1.0):
+    """
+    Set all of the unfu columns
+    """
+    fin=pyfits.open(fnamein)        
+    res=[ fin[0]]
+    for h in fin[1:]:
+        for i,r in enumerate(h.data):
+            h.data.field("ufnu")[i] = ufnu
         res.append(h)
     iofits4.Write(res,
                   fnamein,

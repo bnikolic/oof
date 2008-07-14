@@ -187,3 +187,4 @@ CVS
 ./dust/persistence/config
 ./astromap/test/Makefile
 ./astromap/test/t_units
+./bnmin1/test/t_unit

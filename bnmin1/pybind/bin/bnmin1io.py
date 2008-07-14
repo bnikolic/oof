@@ -10,16 +10,20 @@ import pyfits
 import numpy
 
 import pybnmin1
+import bnmin1utils
 
 import iofits4
 
 modcvs = r""
 
 def FSave(modeldesc , fnameout ):
+    """Save the current state of a model to a FITS file
 
-    "Save the current state to a fits file"
+    The output format is a simple binary table in the first FITS
+    extension hdu
 
-    """
+    :param fnameout: The output filename. Note that it will be
+    overwritten if it exists.
 
     """
 
@@ -47,12 +51,59 @@ def FSave(modeldesc , fnameout ):
 
     iofits4.Write(fout, fnameout , overwrite =True )
 
-def FLoad( modeldsc, fnamein, ext=1, silent=False):
-    
-    "Load a fit from a fits file"
+def fittedParsNums(mod):
+    """Return sequence of the indices of parameters which are being fitted
+    for"""
+    res =[i for i in range(mod.NTotParam()) if mod.getbynumb(i).dofit]
+    return res
 
+
+def fSaveChain(modeldesc,
+               chain,
+               fnameout):
     """
+    Save a MCMC chain to a FITS file
 
+    The chain is saved to the first extension HDU as a binary table
+    with parameter for column names. 
+
+    :param modeldesc: The model which the chain desribes (parameter
+    names are retrieved through this)
+    
+    :param chain: The actual chain
+
+    :param fnameout: The FITS file name to write to. Will be
+    overwritten.
+    
+    """
+    nrows=len(chain)
+    ncols=modeldesc.NParam()
+    coldefs=[ pyfits.Column(modeldesc.getbynumb(i).name,
+                            "E") for i in fittedParsNums(modeldesc)]
+    tabout=pyfits.new_table( coldefs , nrows=nrows )
+    for j, rowout in enumerate( tabout.data) :
+        p=list(chain[j].p)
+        for i in range(ncols):
+            rowout.setfield(i, p[i])
+    fout=iofits4.PrepFitsOut(modcvs)
+    fout.append(tabout)
+    iofits4.Write(fout, 
+                  fnameout, 
+                  overwrite=True)    
+    
+
+def FLoad(modeldsc, fnamein, ext=1, silent=False):
+    """Load a fit (that is a set of parameter values) from a FITS file
+    
+    :param modeldsc: Model which should be set to the supplied fit
+    
+    :param fnamein: the name of the file with the fit to set (see
+    FSave)
+    
+    :param ext: extension of the FITS file containing fit information
+
+    :param silent: Do not report parameters in the FITS file that do
+    not exist in the supplied model
     """
     
     fin=pyfits.open(fnamein)

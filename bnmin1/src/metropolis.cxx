@@ -9,53 +9,51 @@
 #include <cmath>
 
 #include "metropolis.hxx"
+#include "metro_propose.hxx"
 
 
 namespace Minim {
 
   MetropolisMCMC::MetropolisMCMC(MLikelihood & ml,
 				 const std::vector<double> & sigmas,
-				 unsigned seed
-				 ):
+				 unsigned seed,
+				 Options opt):
     ModelDesc(ml),
     ml(ml),
-    sigmas(sigmas),
-    generator(seed),
-    uni_dist(0,1),
-    norm(generator, norm_dist),
-    uni(generator, uni_dist),
     f(NULL)
   {
+    if (opt & Sequence)
+      prop.reset(new MetroProposeSeq(sigmas, seed));
+    else
+      prop.reset(new MetroPropose(sigmas, seed));
   }
 
-  void MetropolisMCMC::displace( std::vector<double> &x)
+  MetropolisMCMC::~MetropolisMCMC()
   {
-    for (size_t i =0 ; i < sigmas.size() ; ++i)
-      x[i] += sigmas[i]* norm();
   }
 
   std::list<MCPoint> *
   MetropolisMCMC::sample(size_t npropose)
   {
-    if (sigmas.size() != NParam() )
+    if (prop->nPars() != NParam() )
       throw Error("Number of sigmas not consistent with number of pars set to fit");
 
     std::auto_ptr< std::list<MCPoint> > res
       (new std::list<MCPoint> ) ;
 
     // Current point in chain
-    std::vector<double> cpoint( sigmas.size() );
+    std::vector<double> cpoint( prop->nPars());
     get(cpoint);
 
     // Current likelihood
     double clogl = - ml.lLikely();
     
-    std::vector<double> propose( sigmas.size() );
+    std::vector<double> propose( prop->nPars() );
     
     for(size_t sn =0 ; sn < npropose; ++sn)
     {
       propose=cpoint;
-      displace(propose);      
+      prop->displace(propose);      
       put(propose);
 
       double proplogl = - ml.lLikely();
@@ -66,7 +64,7 @@ namespace Minim {
       // exp(ldiff)
 
       if (ldiff > 0 or 
-	  uni() < exp(ldiff) )
+	  prop->raccept() < exp(ldiff) )
       {
 	MCPoint mcp;
 	mcp.p=propose;

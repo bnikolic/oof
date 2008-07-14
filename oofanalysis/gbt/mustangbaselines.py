@@ -41,10 +41,32 @@ def PrepareInputs(col=5, row=0):
 
         mustang.RemoveStartEnd(ffout, ffout)
         mustang.CorrectDZ(ffout)
-        mustang.CorrectUFNU(ffout)
-        mustang.MaxUFNU(ffout)
+        #mustang.CorrectUFNU(ffout)
+        #mustang.MaxUFNU(ffout)
+        mustang.SetUFNU(ffout)
+
+
+def PrepareInputsV2(col=5, row=0):
+
+    dirin="/home/bnikolic/data/gbt-oof/mustang3/"
+    for (fin, xfout ) in [ ("tpar18s56s58-02jul080854+2006.fits",
+                            "t18-poly-%i-%i-v2.fits"),
+                           ("tpar18s56s58-raw02jul080854+2006.fits",
+                            "t18-raw-%i-%i-v2.fits"),                           
+                           ]:
+
+        fout= xfout % ( col, row)
+        ffin = os.path.join(dirin, fin)
+        ffout= os.path.join("td", fout)
         
-                            
+        mustang.SinglePixelFile(ffin,
+                                ffout,
+                                col, row)
+
+        mustang.RemoveStartEnd(ffout, ffout)
+        mustang.CorrectDZ(ffout)
+        #mustang.MaxUFNU(ffout)
+        mustang.SetUFNU(ffout)
 
         
 def RoughReduce():
@@ -144,25 +166,42 @@ def MustangPL():
              (6,1),
              (5,7)]
 
+def DoAPixel(c,r,
+             ver=1):
+    """
+    Process a single pixel and copy the output aperture phase plot to
+    temporary directory for visualisation
+    """
+    if ver == 1:
+        PrepareInputs(c,r)
+        fnameraw= "td/t18-raw-%i-%i.fits" % (c,r)
+    elif ver == 2:
+        PrepareInputsV2(c,r)
+        fnameraw= "td/t18-raw-%i-%i-v2.fits" % (c,r)
+    else:
+        raise "Unkown version"
+    fnamedb = fnameraw[:-5]+"-db.fits"
+    RemoveBaseline(fnameraw , 
+                   fnamedb,
+                   rad=1.5e-4 )        
+    oofreduce.Red(fnamedb, nzmax=5)
+
+    for z in [3,5]:
+
+        oofplot.PlotDir("oofout/t18-raw-%i-%i-db-000/z%i" % (c,r,z))
+        shutil.copy( "oofout/t18-raw-%i-%i-db-000/z%i/plots/aperture-phase.png" % (c,r,z),
+                     "temp/plots/p%i%i-z%i.png" % (c,r,z))
+    
 def DoAllPixels():
-    """Extract all pixels individually, process to z=5, plot and copy
+    """
+    Extract all pixels individually, process to z=5, plot and copy
     plots to a directory
+    
+    See also DoAPixel
     """
     for c,r in MustangPL():
         try:
-            PrepareInputs(c,r)
-            fnameraw= "td/t18-raw-%i-%i.fits" % (c,r)
-            fnamedb = "td/t18-raw-%i-%i-db.fits" % (c,r)
-            RemoveBaseline(fnameraw , 
-                           fnamedb,
-                           rad=1.5e-4 )        
-            oofreduce.Red(fnamedb, nzmax=5)
-
-            for z in [3,5]:
-
-                oofplot.PlotDir("oofout/t18-raw-%i-%i-db-000/z%i" % (c,r,z))
-                shutil.copy( "oofout/t18-raw-%i-%i-db-000/z%i/plots/aperture-phase.png" % (c,r,z),
-                             "temp/plots/p%i%i-z%i.png" % (c,r,z))
+            DoAPixel(c,r)
         except None, e :
             print e
             print "Pixel not processed: " , c, r
@@ -272,3 +311,49 @@ def Red20080606_2():
     oofplot.PlotDir("oofout/t18-comb2-000/z3")
     oofplot.PlotDir("oofout/t18-comb2-000/z4")
     
+
+def PlotVersions(ext):
+    
+    f1=pyfits.open("td/t18-raw-5-3-db.fits")
+    f2=pyfits.open("td/t18-raw-5-3-v2-db.fits")
+    pylab.clf()
+    for f in [f1,f2]:
+        x=f[ext].data.field("fnu")
+        pylab.plot(x / x.max() )
+
+
+def prepCheckRelativeAmp(col=5,
+                         row=3,
+                         poly=False):
+
+    if poly:
+        f1name=os.path.join(laptop_dirin, 
+                            "tpar18s56s58-apr080854+2006.fits")
+        f2name=os.path.join("/home/bnikolic/data/gbt-oof/mustang3/", 
+                            "tpar18s56s58-02jul080854+2006.fits")
+    else:
+        f1name=os.path.join(laptop_dirin, "tpar18s56s58-raw0854+2006.fits")
+        f2name=os.path.join("/home/bnikolic/data/gbt-oof/mustang3/", 
+                        "tpar18s56s58-raw02jul080854+2006.fits")
+    
+    mustang.SinglePixelFile(f1name,
+                            "temp/t1.fits",
+                            col, row)
+    mustang.SinglePixelFile(f2name,
+                            "temp/t2.fits",
+                            col, row)
+
+def plotScaled():
+    for f in [pyfits.open("temp/t%i.fits"%i ) for i in [1,2]]:
+        fnumax=max([max(f[j].data.field("fnu")) for j in [1,2,3]])
+        r=[]
+        for j in [1,2,3]:
+            r.extend(list(f[j].data.field("fnu")/fnumax ))
+        pylab.plot(numpy.array(r))
+    
+
+def RelativeAmp(fname):
+    f=pyfits.open(fname)
+    cf= max(f[2].data.field("fnu"))
+    print max(f[1].data.field("fnu"))/cf
+    print max(f[3].data.field("fnu"))/cf

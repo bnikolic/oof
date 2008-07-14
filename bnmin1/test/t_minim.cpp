@@ -110,4 +110,49 @@ BOOST_AUTO_TEST_CASE( QuadMetro )
 
 }
 
+BOOST_AUTO_TEST_CASE( QuadMetro_Seq )
+{
+  using namespace Minim;
+
+  const double params[]= { 1, 2, 3};
+
+  std::vector<double> x(3);
+  x[0]=-1; x[1]=0; x[2]=1;
+  
+  std::vector<double> obs(3);
+  QuadModel qm;
+  qm.a=params[0]; 
+  qm.b=params[1]; 
+  qm.c=params[2];
+  qm.eval(x, obs);
+  
+  QuadObs qo ( x,obs);
+
+  std::vector<double> scratch(3);
+  qo.residuals(scratch);
+  qo.sigma=0.01;
+
+  std::vector<double> sigmas(3,0.1);
+
+  MetropolisMCMC metro(qo,sigmas,33, MetropolisMCMC::Sequence);
+  metro.f=boost::bind( RecPars, qm, _1);
+  
+  boost::shared_ptr< std::list<Minim::MCPoint>  >
+    res( metro.sample(30000)) ;
+
+  for (size_t i = 0 ; i < sigmas.size(); ++i)
+  {
+    BOOST_CHECK_CLOSE( res->back().p[i],
+		       params[i],
+		       1);
+  }
+
+  BOOST_CHECK_CLOSE( res->back().fval[0],
+		     params[0],
+		     1);
+
+
+
+}
+
 
