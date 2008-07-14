@@ -20,7 +20,8 @@ def MetroMustang(fnamein,
                  nsample=100,
                  ic=None,
                  fnameout_chain=None,
-                 nzern=5):
+                 nzern=5,
+                 multiamp=False):
     """
     Sample posterior distribution given MUSTANG data using the
     Metropolis MCMC algorithm
@@ -41,15 +42,24 @@ def MetroMustang(fnamein,
     chain should be written to.
     
     :param nzern: The order of Zernike polynimals to fit to.
+
+    :param multiamp: Fit for the relative amplitudes of the maps
     
     :returns: The calculated chain 
     """
-    
-    oc=oofreduce.MkObsCompare( fnamein, 
-                               nzern=nzern)
-    nzc_d= { 1: 2,
-             3 : 9,
-             5 : 20}
+
+    if multiamp is False:
+        oc=oofreduce.MkObsCompare(fnamein, 
+                                  nzern=nzern)
+    else:
+        oc=oofreduce.MkObsCompare(fnamein, 
+                                  nzern=nzern,
+                                  nobs=3)
+        
+    nzc_d= {1: 2,
+            2: 5,
+            3 : 9,
+            5 : 20}
 
     sigmas=pybnmin1.DoubleVector([ amp_sigma]+ [z_sigma]*nzc_d[nzern] )
 
@@ -110,7 +120,8 @@ def TestMetro():
 
 def TestMetroIC(c,r,
                 nzern=5,
-                nsample=20000):
+                nsample=20000,
+                multiamp=False):
     fnameout="temp/metro_ic_p%i%i_z%i.fits" % (c,r,nzern)
     plotdir = "temp/ic_p%i%i_z%i" % (c,r,nzern)
     r=MetroMustang("td/t18-raw-%i-%i-db.fits" % (c,r), 
@@ -119,8 +130,8 @@ def TestMetroIC(c,r,
                    nsample=nsample,
                    ic="oofout/t18-raw-%i-%i-db-000/z%i/fitpars.fits" % (c,r,nzern),
                    fnameout_chain=fnameout,
-                   nzern=nzern)
-
+                   nzern=nzern,
+                   multiamp=multiamp)
     plotParDist(fnameout, plotdir)
     return r
 

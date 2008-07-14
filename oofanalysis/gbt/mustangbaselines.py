@@ -43,7 +43,7 @@ def PrepareInputs(col=5, row=0):
         mustang.CorrectDZ(ffout)
         mustang.CorrectUFNU(ffout)
         #mustang.MaxUFNU(ffout)
-        mustang.SetUFNU(ffout)
+        #mustang.SetUFNU(ffout)
 
 
 def PrepareInputsV2(col=5, row=0):

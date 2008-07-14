@@ -186,24 +186,35 @@ def MkObsCompare(fnamein,
                  nzern=6,
                  oversample=2.0,
                  ds_fwhm=1.0,
-                 ds_extent=2.0
+                 ds_extent=2.0,
+                 nobs=1
                  ):
     """
     Makes an ObsCompare object from the given file. This object allows
     comparison of observations to models of the far-field response.
+    
+    :param nobs: if greater than one setup separate models for each
+    observation in the set
     """
 
-    tel = MkTel(fnamein)
-
-    wavel= GetObsWaveL(fnamein)
-
+    tel=MkTel(fnamein)
+    wavel=GetObsWaveL(fnamein)
     recv= GetRecvName(fnamein)
-    if recv ==  "mustang" :
-        aperture = pyoof.MkMUSTANGAp ( tel,
-                                     wavel,
-                                     npix,
-                                     nzern,
-                                     oversample)
+
+    if recv=="mustang":
+        if nobs==1:
+            aperture=pyoof.MkMUSTANGAp(tel,
+                                       wavel,
+                                       npix,
+                                       nzern,
+                                       oversample)
+        else:
+            aperture=pyoof.MkMgMltiAmpAp(tel,
+                                         wavel,
+                                         npix,
+                                         nzern,
+                                         oversample,
+                                         nobs)
     else:
         aperture = pyoof.MkSimpleAp ( tel,
                                       wavel,
@@ -213,20 +224,25 @@ def MkObsCompare(fnamein,
 
     aperture.thisown=0
 
-    obsff  = MkFF (fnamein, aperture.getphase())
+    obsff  = MkFF (fnamein, 
+                   aperture.getphase())
     
-    oc= pyoof.ObsCompare( aperture,
-                          aperture.getphase() ,
-                          obsff);
+    oc= pyoof.ObsCompare(aperture,
+                         aperture.getphase(),
+                         obsff);
 
     skymapsample=oc.Beam();
 
     
     # now just load the observations and done...
     #
-    LoadOCData( fnamein, tel, skymapsample, aperture.getphase(), oc,
-                fwhm=ds_fwhm, extent=ds_extent)
-
+    LoadOCData(fnamein,
+               tel,
+               skymapsample,
+               aperture.getphase(),
+               oc,
+               fwhm=ds_fwhm,
+               extent=ds_extent)
     return oc
 
 def SimBeamDS(obsfilename, 
