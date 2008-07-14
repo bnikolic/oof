@@ -20,15 +20,19 @@ namespace OOF {
   class PhaseMod;
   class AmpliMod;
 
-  /*! 
-   *  A class to represent the aperture field distribution.
+  /** \brief Represent the aperture field distribution
+      
    */
-  class ApertureMod : public Minim::Model  {
+  class ApertureMod : 
+    public Minim::Model  
+  {
 
   public:
-    /*! The wavelength of the EM field ... in the same units as the
-     * coordinate system of the maps in order for the FFT coordinate
-     * system to work OK*/ 
+    /** \brief The wavelength of the EM field
+
+     In the same units as the coordinate system of the maps in order
+     for the FFT coordinate system to work OK
+    */ 
     const double wavel;
 
   private:
@@ -83,9 +87,13 @@ namespace OOF {
      */
     const AstroMap::Map * getphase(void);
 
-    /** \brief Recalculate and return pointer to amplitude map */
+    /** \brief Recalculate and return pointer to amplitude map
+
+    */
     const AstroMap::Map * getamp(void);
 
+    /** \brief Remove the tilt terms from the aperture model
+     */
     void ZeroTilt(void);
 
     // ------ Inherited functions rom Minim::Model ---------
@@ -93,6 +101,8 @@ namespace OOF {
     virtual    void     AddParams ( std::vector< Minim::DParamCtr > &pars );
 
     //  ------ Utility functons to help with python
+    
+    /// Cast to Minim::Model (python helper)
     Minim::Model * downcast(void);
     
 

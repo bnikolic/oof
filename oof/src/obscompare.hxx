@@ -76,8 +76,13 @@ namespace OOF {
 
     // ------- Member functions -----------------------
 
-    /*! Add an observation to the current set. Note ownership of both
-     *  pointers will be taken. */
+    /** Add an observation to the current set
+	
+    \note Ownership of both pointers is taken
+    
+    \param 
+    
+    */
     void AddObs( MapToResidual * rc , ObsPhaseScreen * ps);
 
     /*! Return the number of observations in this set */
