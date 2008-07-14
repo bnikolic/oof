@@ -51,6 +51,11 @@ namespace OOF {
     
     return mphase;
   }
+  
+  const AstroMap::Map * ApertureMod::getPhase(size_t i)
+  {
+    return getphase();
+  }
 
   const AstroMap::Map * ApertureMod::getamp(void)
   {
@@ -58,6 +63,11 @@ namespace OOF {
     amplimodel->Calc(*mamp);
 
     return mamp;
+  }
+  
+  const AstroMap::Map * ApertureMod::getAmp(size_t i)
+  {
+    return getamp();
   }
 
   void ApertureMod::AddParams ( std::vector< Minim::DParamCtr > &pars )

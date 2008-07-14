@@ -50,8 +50,17 @@ namespace OOF {
     
     // -----    Constructors & Destructors   ------------
 
-    /*!
-     * n is the maximum zernike polynomial order 
+    /**
+       \param n        the maximum zernike polynomial order 
+
+       \param msample A sample aperture map which
+       dimensions/coordinate system is used to setup the zernike
+       polynomials
+       
+       \param telgeo Telescope geometry (ownership not taken)
+       
+       \bug telgeo should be const
+
      */
     RZernModel ( unsigned n , AstroMap::Map & msample, TelGeometry * telgeo );
 

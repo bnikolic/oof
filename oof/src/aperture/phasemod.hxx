@@ -29,7 +29,12 @@ namespace OOF {
     virtual ~PhaseMod(void);
 
     // ------ Member functions ----------------------------
-    
+
+    /** \brief Calculate the phase model
+	
+    \param m The calculate phase is stored in this map
+
+     */
     virtual void Calc( AstroMap::Map &m) const = 0 ;
 
     /*! Remove the tilt from the aperture */

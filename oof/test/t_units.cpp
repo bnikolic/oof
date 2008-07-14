@@ -14,7 +14,37 @@
 
 #include <boost/scoped_ptr.hpp>
 
+#include "aperture/aperturemod.hxx"
+#include "aperture/gaussampmod.hxx"
+#include "aperture/zernmodel.hxx"
+#include "telgeo/telswitch.hxx"
+#include "telgeo/telgeo.hxx"
+#include "astromap.hxx"
+
+
+using namespace OOF;
+
 BOOST_AUTO_TEST_CASE(t_empty)
 {
+
+}
+
+BOOST_AUTO_TEST_CASE(t_ApertureMod_nmod)
+{
+  AstroMap::Map m1(128,128);
+
+  boost::scoped_ptr<TelGeometry> tel(MkALMA());
+  
+  ApertureMod am( new RZernModel(1,m1,tel.get()),
+		  new GaussAmpMod(tel.get(),m1),
+		  1.0,
+		  m1);
+  
+  BOOST_CHECK_EQUAL( am.getphase(),
+		     am.getPhase(3));
+
+  BOOST_CHECK_EQUAL( am.getamp(),
+		     am.getAmp(3));
+  
 
 }

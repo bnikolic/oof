@@ -83,14 +83,38 @@ namespace OOF {
 
     // ------ Member Functions  ----------------------------
 
-    /** \brief Recalculate and return pointer to the phase map.
+    /** \brief Recalculate and return pointer to the phase map
+	
+	\note see getPhase()
      */
-    const AstroMap::Map * getphase(void);
+    virtual const AstroMap::Map * getphase(void);
+
+    /** \brief Return the i-th aperture phase model
+	
+    There is normally only one model for the aperture, corresponding
+    to the assumption that telescope system remains unchanged between
+    the beam map observations at various foucus settings.  In this
+    case this functions should return the same aperture
+    phase/amplitude regdless of the value of parameter i. (Ie., it
+    returns getphase()).
+
+    However, sometimes this is not a good assumption, or potential
+    pre-processing problems need to be investigated.  By providing a
+    different model for each focus seting this can be taken into
+    account. To do this override these functions in derived classes.
+    */
+    virtual const AstroMap::Map * getPhase(size_t i);
 
     /** \brief Recalculate and return pointer to amplitude map
 
     */
-    const AstroMap::Map * getamp(void);
+    virtual const AstroMap::Map * getamp(void);
+
+    /** \brief Return the i-th aperture amplitude model
+
+    \note see getPhase()     
+     */
+    virtual const AstroMap::Map * getAmp(size_t i);
 
     /** \brief Remove the tilt terms from the aperture model
      */
