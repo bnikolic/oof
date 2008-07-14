@@ -188,3 +188,5 @@ CVS
 ./astromap/test/Makefile
 ./astromap/test/t_units
 ./bnmin1/test/t_unit
+./oof/test/t_units
+./oof/test/Makefile

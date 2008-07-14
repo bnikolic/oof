@@ -32,7 +32,8 @@ AC_OUTPUT(Makefile
 	  src/aperture/Makefile 
 	  src/telgeo/Makefile
 	  src/farfield/Makefile
-	  doc/Doxyfile)
+	  doc/Doxyfile
+	  test/Makefile)
 
 
 
