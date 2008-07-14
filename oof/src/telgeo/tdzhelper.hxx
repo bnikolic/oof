@@ -1,8 +1,8 @@
-/*!
-  Bojan Nikolic
-  $Id: tdzhelper.hxx,v 1.2 2005/09/05 01:12:36 bnikolic Exp $
+/**
+   \file tdzhelper.hxx
+   Bojan Nikolic <bojan@bnikolic.co.uk>, <b.nikolic@mrao.cam.ac.uk>
 
-  Simple template class to use when calculating defocus phase 
+   Simple template class to use when calculating defocus phase 
 */
 #ifndef _OOF_TDZHELPER_HXX__
 #define _OOF_TDZHELPER_HXX__
