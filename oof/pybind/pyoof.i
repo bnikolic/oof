@@ -16,6 +16,7 @@
 #include "../src/aperture/phasemod.hxx"
 #include "../src/aperture/zernmodel.hxx"
 #include "../src/aperture/aperturemod.hxx"
+#include "../src/aperture/multi_apmod.cxx"
 
 #include "../src/aperture/amplimod.hxx"
 #include "../src/aperture/gaussampmod.hxx"
@@ -39,8 +40,8 @@
   
 %include "minimmodel.hxx"
 %include <fft.hxx>
-%include "astromap.hxx"
-%include "coordsys.hxx"
+%import "astromap.hxx"
+%import "coordsys.hxx"
 
 
 %include "../src/oof_main.hxx"
@@ -52,6 +53,7 @@
 %include "../src/aperture/phasemod.hxx"
 %include "../src/aperture/zernmodel.hxx"
 %include "../src/aperture/aperturemod.hxx"
+%include "../src/aperture/multi_apmod.cxx"
 
 %include "../src/aperture/amplimod.hxx"
 %include "../src/aperture/gaussampmod.hxx"
