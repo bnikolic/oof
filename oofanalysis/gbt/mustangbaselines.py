@@ -343,6 +343,15 @@ def prepCheckRelativeAmp(col=5,
                             "temp/t2.fits",
                             col, row)
 
+def plotScaled():
+    for f in [pyfits.open("temp/t%i.fits"%i ) for i in [1,2]]:
+        fnumax=max([max(f[j].data.field("fnu")) for j in [1,2,3]])
+        r=[]
+        for j in [1,2,3]:
+            r.extend(list(f[j].data.field("fnu")/fnumax ))
+        pylab.plot(numpy.array(r))
+    
+
 def RelativeAmp(fname):
     f=pyfits.open(fname)
     cf= max(f[2].data.field("fnu"))
