@@ -61,7 +61,10 @@ def MetroMustang(fnamein,
             3 : 9,
             5 : 20}
 
-    sigmas=pybnmin1.DoubleVector([ amp_sigma]+ [z_sigma]*nzc_d[nzern] )
+    sigmal=[ amp_sigma]+ [z_sigma]*nzc_d[nzern]
+    if multiamp is not False:
+        sigmal.extend([0.01]*(3-1))    
+    sigmas=pybnmin1.DoubleVector(sigmal)
 
     metro=pybnmin1.MetropolisMCMC(oc.downcast(),
                                   sigmas,

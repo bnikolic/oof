@@ -22,7 +22,8 @@ namespace OOF {
 		amplimodel,
 		wavel,
 		mapsample),
-    amp_r(nobs, 1.0),
+    amp_r(nobs-1,
+	  1.0),
     mamp(AstroMap::Clone(mapsample))
   {
   }
@@ -47,10 +48,11 @@ namespace OOF {
 
   void MultiAmp_ApModel::AddParams(std::vector< Minim::DParamCtr > &pars)
   {
-    for (size_t i=0; i < amp_r.size(); ++i)
+    ApertureMod::AddParams(pars);
+    for (size_t i=0; i<amp_r.size(); ++i)
     {
-      std::string pname = (boost::format("amp_r%i") % i).str();
-      std::string pdesc = (boost::format("%i-th / zeroth obs v. amplitude") %i).str();
+      std::string pname = (boost::format("amp_r%i") % (i+1)).str();
+      std::string pdesc = (boost::format("%i-th / zeroth obs v. amplitude") % (i+1)).str();
       
       pars.push_back(Minim::DParamCtr(&amp_r[i],      
 				      pname, 
