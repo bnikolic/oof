@@ -15,6 +15,7 @@
 #include <boost/scoped_ptr.hpp>
 
 #include "aperture/aperturemod.hxx"
+#include "aperture/multi_apmod.hxx"
 #include "aperture/gaussampmod.hxx"
 #include "aperture/zernmodel.hxx"
 #include "telgeo/telswitch.hxx"
@@ -45,6 +46,24 @@ BOOST_AUTO_TEST_CASE(t_ApertureMod_nmod)
 
   BOOST_CHECK_EQUAL( am.getamp(),
 		     am.getAmp(3));
+  
+
+}
+
+BOOST_AUTO_TEST_CASE(t_MultiAmp_ApModel_basic)
+{
+  AstroMap::Map m1(128,128);
+
+  boost::scoped_ptr<TelGeometry> tel(MkALMA());
+  
+  MultiAmp_ApModel am( new RZernModel(1,m1,tel.get()),
+		       new GaussAmpMod(tel.get(),m1),
+		       1.0,
+		       m1,
+		       3);
+
+  BOOST_CHECK_EQUAL(am.getAR(1), 1.0);
+  
   
 
 }

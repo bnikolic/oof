@@ -8,7 +8,8 @@ liboofaperture_la_SOURCES = amplimod.cxx amplimod.hxx \
 				zernmodel.hxx zernmodel.cxx \
 				gaussampmod.hxx gaussampmod.cxx \
 				mkapertures.cxx mkapertures.hxx \
-				tophatmodel.cxx tophatmodel.hxx
+				tophatmodel.cxx tophatmodel.hxx\
+				multi_apmod.cxx multi_apmod.hxx
 
 liboofaperture_la_CFLAGS = -Wall   ${BN_CFLAGS}
 liboofaperture_la_CPPFLAGS = -Wall ${BN_CFLAGS}
