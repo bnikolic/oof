@@ -13,6 +13,12 @@ In Development (to be 1.2)
    
    * OOF now has a unit-test framework in test subdirectory
    
+   * Can fit for relative amplitude of illumination between the
+     observations in a set
+     
+   * SWIG wrapping introduces use of %import where appropriate, which
+     should lead to cleaner modules
+   
    BUILD/DEPS:
    
    * If checks for BN-libraries fail, configure will now report error
