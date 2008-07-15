@@ -102,6 +102,11 @@ namespace OOF {
     pre-processing problems need to be investigated.  By providing a
     different model for each focus seting this can be taken into
     account. To do this override these functions in derived classes.
+    
+    \note These functions return pointers to internal caching
+    structures (in interest of efficiency). Any subsequent call to
+    this object may invalidate the data held in these structures.
+
     */
     virtual const AstroMap::Map * getPhase(size_t i);
 
