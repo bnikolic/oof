@@ -10,6 +10,8 @@
 
 #include <astromap.hxx>
 
+#include "../oof_err.hxx"
+
 
 namespace OOF {
 
@@ -40,6 +42,12 @@ namespace OOF {
     }
     else
     {
+      if (i > amp_r.size() )
+      {
+	throw NObsError(amp_r.size()+1,
+			i,
+			"in multiple amplitude model calculation");
+      }
       (*mamp) = (*getamp());
       (*mamp) *= amp_r[i-1];
       return mamp.get();

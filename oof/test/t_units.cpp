@@ -14,6 +14,9 @@
 
 #include <boost/scoped_ptr.hpp>
 
+#include "oof_err.hxx"
+
+
 #include "aperture/aperturemod.hxx"
 #include "aperture/multi_apmod.hxx"
 #include "aperture/gaussampmod.hxx"
@@ -28,6 +31,11 @@ using namespace OOF;
 BOOST_AUTO_TEST_CASE(t_empty)
 {
 
+}
+
+BOOST_AUTO_TEST_CASE(t_NObsError_runs)
+{
+  NObsError(1,2,"test");
 }
 
 BOOST_AUTO_TEST_CASE(t_ApertureMod_nmod)
@@ -63,7 +71,8 @@ BOOST_AUTO_TEST_CASE(t_MultiAmp_ApModel_basic)
 		       3);
 
   BOOST_CHECK_EQUAL(am.getAR(1), 1.0);
-  
-  
 
+  am.getAmp(0);am.getAmp(1);am.getAmp(2);
+  BOOST_CHECK_THROW(am.getAmp(3),
+		    NObsError);
 }
