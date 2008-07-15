@@ -66,7 +66,7 @@ def PrepareInputsV2(col=5, row=0):
         mustang.RemoveStartEnd(ffout, ffout)
         mustang.CorrectDZ(ffout)
         #mustang.MaxUFNU(ffout)
-        mustang.SetUFNU(ffout)
+        #mustang.SetUFNU(ffout)
 
         
 def RoughReduce():

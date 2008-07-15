@@ -89,12 +89,14 @@ def escapeAxisName(n):
     
 def plotSinlgeParDist(din,
                       parname,
-                      fnameout):
+                      fnameout,
+                      burn=0):
     """
     Plot the distribution of a single parameter
     """
     d=din.data.field(parname)
-    pyxplot.histogram( [ (d, "")],
+    x=d[burn*len(d):]
+    pyxplot.histogram( [ (x, "")],
                        fnameout,
                        xax=pyxplot.axis(escapeAxisName(parname)),
                        width=pyxplot.MNRAS_SC,
@@ -103,7 +105,8 @@ def plotSinlgeParDist(din,
 
 
 def plotParDist(fnamein,
-                dirout):
+                dirout,
+                burn=0):
     """
     Plot the distribution of each parameter from a chain stored in a
     fits file. 
@@ -113,7 +116,8 @@ def plotParDist(fnamein,
         plotSinlgeParDist(din,
                           pname,
                           os.path.join(dirout, 
-                                       "p%s-dist.eps" % (pname,)))
+                                       "p%s-dist.eps" % (pname,)),
+                          burn=burn)
 
     
                 
@@ -137,6 +141,23 @@ def TestMetroIC(c,r,
                    z_sigma=0.1,
                    nsample=nsample,
                    ic="oofout/t18-raw-%i-%i-db-000/z%i/fitpars.fits" % (c,r,nzern),
+                   fnameout_chain=fnameout,
+                   nzern=nzern,
+                   multiamp=multiamp)
+    plotParDist(fnameout, plotdir)
+    return r
+
+def TestMetroIC_V2(c,r,
+                   nzern=5,
+                   nsample=20000,
+                   multiamp=False):
+    fnameout="temp/metro_ic_p%i%i_z%i-v2.fits" % (c,r,nzern)
+    plotdir = "temp/ic_p%i%i_z%i-v2" % (c,r,nzern)
+    r=MetroMustang("td/t18-raw-%i-%i-v2-db.fits" % (c,r), 
+                   amp_sigma=0.00001,
+                   z_sigma=0.1,
+                   nsample=nsample,
+                   ic="oofout/t18-raw-%i-%i-v2-db-000/z%i/fitpars.fits" % (c,r,nzern),
                    fnameout_chain=fnameout,
                    nzern=nzern,
                    multiamp=multiamp)
