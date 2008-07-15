@@ -82,6 +82,11 @@ def MetroMustang(fnamein,
                             fnameout_chain)
     return chain
 
+def escapeAxisName(n):
+    """Escape LaTeX control characters"""
+    n=n.replace(r"_",r"\_")
+    return n
+    
 def plotSinlgeParDist(din,
                       parname,
                       fnameout):
@@ -91,7 +96,7 @@ def plotSinlgeParDist(din,
     d=din.data.field(parname)
     pyxplot.histogram( [ (d, "")],
                        fnameout,
-                       xax=pyxplot.axis(parname),
+                       xax=pyxplot.axis(escapeAxisName(parname)),
                        width=pyxplot.MNRAS_SC,
                        nbins=20,
                        key=None)
