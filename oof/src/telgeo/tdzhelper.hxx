@@ -11,11 +11,13 @@
 
 namespace OOF {
 
-  template<class TGeo>  class DzHelper : public BNLib::BinaryDD {
-
+  /** \brief Wrap SecDeltaPath as binary function
+   */
+  template<class TGeo>  class DzHelper : 
+    public BNLib::BinaryDD 
+  {
     const TGeo &geo;
     double dz;
-    
   public:
     
     DzHelper(    const TGeo &geo,  double dz ):
@@ -30,9 +32,11 @@ namespace OOF {
     }
   };
 
-  /*! Provide a choice of functions to use to calculate the path and
-   *  allow calculation of deflections in any direction.
-   */
+  /** \brief Wrap functions on telescope gemetry as binary functions
+
+      Provide a choice of functions to use to calculate the path and
+      allow calculation of deflections in any direction.
+  */
   template<class TGeo,   
 	   double (*SecFn) (double, double, 
 			    double, double, double, 

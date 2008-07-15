@@ -17,11 +17,14 @@ namespace AstroMap {
 
 namespace OOF {
 
-  /*! Calculates the far field from an aperture
-   *  representation. Subclasses can add observation-dependant
-   *  features like chopping or convolution for a known source extent.
+  /** \brief Calculate the far field from an aperture representation
+   
+     Subclasses can add observation-dependant features like chopping
+     or convolution for a known source extent.
    */
-  class FarF : public Minim::Model {
+  class FarF: 
+    public Minim::Model 
+  {
 
     /*! This will do the actuall far-field calculation
      */

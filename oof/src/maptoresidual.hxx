@@ -13,17 +13,17 @@
 
 namespace OOF {
 
-  /*!
-  *  Abstract class which returns residuals given a beam map. It
-  *  basically defines the residuals half of the Minim::Model
-  *  interface.
-  *
+  /** \brief Calculate residuals given a beam map
+    
+     Abstract class which returns residuals given a beam map. It
+     basically defines the residuals half of the Minim::Model
+     interface.
   */
   class MapToResidual {
 
   public:
 
-    /* ----- Constructors / Destructors  ----------------*/
+n    /* ----- Constructors / Destructors  ----------------*/
     
     /* We have to know what sorts of maps we are dealing with so
        probably all actuall implementations will have constructors

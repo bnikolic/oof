@@ -9,8 +9,12 @@
 
 namespace OOF {
 
-  /*! Describes the geometry when using a cassegrain focus */
-  class  GBTGeo :  public  TelGeometry {
+  /**
+     \brief Gemetry at GBT Gregorian focus 
+  */
+  class  GBTGeo :  
+    public  TelGeometry 
+  {
 
   public:
 
