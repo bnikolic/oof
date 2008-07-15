@@ -92,7 +92,7 @@ namespace OOF {
 	
 	\param res The beam is stored in this map
      */
-    void  Beam (unsigned i, AstroMap::Map & res);
+    void  Beam (unsigned i, AstroMap::Map &res) const;
 
     /*! Return the model beam for the ith observation */
     AstroMap::Map *  Beam (unsigned i  );
