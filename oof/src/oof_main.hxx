@@ -1,5 +1,5 @@
 /**
-   \file bnmin_main.hxx
+   \file oof_main.hxx
    Bojan Nikolic <bojan@bnikolic.co.uk>
 
    The main include file for the OOF application

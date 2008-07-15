@@ -1,8 +1,8 @@
-/*
-  Bojan Nikolic
-  $Id: telswitch.hxx,v 1.1 2005/06/25 13:39:40 bnikolic Exp $
+/**
+   \file telswitch.hxx
+   Bojan Nikolic <bojan@bnikolic.co.uk>, <b.nikolic@mrao.cam.ac.uk>
 
-  Return telescope geometries for supported telescopes 
+   Return telescope geometries for supported telescopes 
 */
 #ifndef _OOF_TELSWITCH_HXX__
 #define _OOF_TELSWITCH_HXX__

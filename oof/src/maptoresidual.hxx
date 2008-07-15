@@ -1,6 +1,6 @@
-/*!
-  Bojan Nikolic
-  $Id: maptoresidual.hxx,v 1.3 2005/08/24 18:51:26 bnikolic Exp $
+/**
+   \file maptoresidual.hxx
+   Bojan Nikolic <bojan@bnikolic.co.uk>, <b.nikolic@mrao.cam.ac.uk>
 
 */
 
@@ -23,7 +23,7 @@ namespace OOF {
 
   public:
 
-n    /* ----- Constructors / Destructors  ----------------*/
+    /* ----- Constructors / Destructors  ----------------*/
     
     /* We have to know what sorts of maps we are dealing with so
        probably all actuall implementations will have constructors
