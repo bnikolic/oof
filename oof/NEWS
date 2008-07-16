@@ -6,6 +6,8 @@ In Development (to be 1.2)
 ==========================
 
    BUG FIXES:
+   
+   * Check maximum Zernike order in fit to prevent uncontrolled crash
 
    ENHANCEMENT:
 

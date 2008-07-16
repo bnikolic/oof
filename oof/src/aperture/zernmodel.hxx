@@ -37,13 +37,20 @@ namespace OOF {
   /*! 
    * An aperture phase model using rasterized zernike polynomials
    */
-  class RZernModel  : public PhaseMod {
+  class RZernModel: 
+    public PhaseMod 
+  {
 
     /*! The higherst radial order of zernikes that is present */
     unsigned maxzorder;
 
     /*!  Rasterised  zernike polys are stored here */
     AstroMap::LCMaps * lcm;
+
+    /** Check that maximum Zernike order is reasonable give map size
+     */
+    static void checkNZern(size_t nz, 
+			   const AstroMap::Map &msample);
 
     
   public:
@@ -62,7 +69,9 @@ namespace OOF {
        \bug telgeo should be const
 
      */
-    RZernModel ( unsigned n , AstroMap::Map & msample, TelGeometry * telgeo );
+    RZernModel(unsigned n, 
+	       AstroMap::Map & msample,
+	       TelGeometry * telgeo);
 
     virtual ~RZernModel();
 
