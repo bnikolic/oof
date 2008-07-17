@@ -304,6 +304,52 @@ def PlotZernFile( fnamein,
                     plotwedge=plotwedge)
     return m
 
+def PlotZernDict(d,
+                 fnameout,
+                 npix=256,
+                 telgeo=pyoof.GBTGeo(),
+                 phaserange=None,
+                 plotwedge=True):
+    """
+    Plot aperture phase distribution from a dictionary of Zernike
+    polynomial coefficients.
+    
+    :param d: dictionary with zernike coefficients, in OOF numbering
+    convention; i.e., { "z4" : 1.0 } means one radian of classical
+    defocus
+
+    :param fnameout: Name of file to plot to; PGPLOT convention
+    
+    :param npix: Size of map in pixels to rasterise the aperture on
+    
+    :param telgeo: Telescope geometry (used just for dish radius)
+
+    :returns: the plotted map
+
+    """
+
+    m = pyplot.Map(npix,npix)
+    pyplot.MkApCS(m, telgeo.DishEffRadius() * 1.05)
+
+    zm = pyoof.RZernModel (5, 
+                           m, 
+                           telgeo )
+
+    md=pybnmin1.ModelDesc(zm.downcast())
+    for k in d.keys():
+        if k not in ["z1", "z2"] and k[0]=="z":
+            md.getbyname(k).setp(d[k])
+
+    zm.Calc(m)
+
+    implot.plotmap( m,
+                    fnameout,
+                    colmap="heat",
+                    contours=[-2,-1.5,-1,-0.5,0,0.5,1,1.5,2],
+                    valrange=phaserange,
+                    plotwedge=plotwedge)
+    return m
+
     
 def PlotIllumFile( fnamein,
                    fnameout,

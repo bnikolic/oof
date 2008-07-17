@@ -82,6 +82,16 @@ def MetroMustang(fnamein,
                             fnameout_chain)
     return chain
 
+def medianPars(fnamein):
+    """
+    Return the median value of each parameter in a chain
+    """
+    din=pyfits.open(fnamein)[1]
+    res={}
+    for n in din.data.names:
+        res[n]=numpy.median(din.data.field(n))
+    return res
+
 def escapeAxisName(n):
     """Escape LaTeX control characters"""
     n=n.replace(r"_",r"\_")
@@ -150,14 +160,20 @@ def TestMetroIC(c,r,
 def TestMetroIC_V2(c,r,
                    nzern=5,
                    nsample=20000,
-                   multiamp=False):
+                   multiamp=False,
+                   ic_v=2):
     fnameout="temp/metro_ic_p%i%i_z%i-v2.fits" % (c,r,nzern)
     plotdir = "temp/ic_p%i%i_z%i-v2" % (c,r,nzern)
+    if ic_v is 2:
+        ic="oofout/t18-raw-%i-%i-v2-db-000/z%i/fitpars.fits" % (c,r,nzern)
+    elif ic_v is 1:
+        ic="oofout/t18-raw-%i-%i-db-000/z%i/fitpars.fits" % (c,r,nzern)
+        
     r=MetroMustang("td/t18-raw-%i-%i-v2-db.fits" % (c,r), 
                    amp_sigma=0.00001,
                    z_sigma=0.1,
                    nsample=nsample,
-                   ic="oofout/t18-raw-%i-%i-v2-db-000/z%i/fitpars.fits" % (c,r,nzern),
+                   ic=ic,
                    fnameout_chain=fnameout,
                    nzern=nzern,
                    multiamp=multiamp)
