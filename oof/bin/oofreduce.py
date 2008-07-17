@@ -300,7 +300,9 @@ def RedOrder(obsfilename,
              oversample=2.0,
              ds_fwhm=1.0,
              ds_extent =2.0,
-             ptable=None):
+             ptable=None,
+             multiamp=False,
+             nofit=[]):
     """Reduce OOF observation at single maximum order of Zernikes
     (c.f. function Red() which steps through a number of orders)
 
@@ -320,6 +322,11 @@ def RedOrder(obsfilename,
     :param ptable: FITS table of fit parameters to save in output (if
     None, locals of this function are used)
 
+    :param multiamp: Fit for relative amplitudes of the maps
+
+    :param nofit: Turn off parameters which fitting might be on by
+    default. Seel also extrafit
+
     :returns: Filename of the file containing the fit
     """
     wavel = GetObsWaveL(obsfilename)
@@ -329,7 +336,8 @@ def RedOrder(obsfilename,
                     npix=npix, 
                     oversample=oversample,
                     ds_fwhm=ds_fwhm,
-                    ds_extent=ds_extent)
+                    ds_extent=ds_extent,
+                    nobs=(multiamp and 3) or 1)
 
     lmm=pybnmin1.LMMin(oc.downcast())
     lmm.ftol=1e-4
@@ -340,6 +348,8 @@ def RedOrder(obsfilename,
 
     for pname in extrafit :
         lmm.getbyname(pname).dofit=1
+    for pname in nofit:
+        lmm.getbyname(pname).dofit=0
 
     if type(ic) == str :
         bnmin1io.FLoad(lmm, ic)
@@ -419,7 +429,8 @@ def Red(obsfilename,
         npix=128,
         oversample=2.0,
         ds_fwhm=1.0,
-        ds_extent =2.0):
+        ds_extent =2.0,
+        **args):
 
     "A general reduction script"
 
@@ -456,7 +467,8 @@ def Red(obsfilename,
                           oversample=oversample,
                           ds_fwhm=ds_fwhm,
                           ds_extent=ds_extent,
-                          ptable=ptable)
+                          ptable=ptable,
+                          **args)
         
 
 def InvertDSFile (fnamein, fnameout ):

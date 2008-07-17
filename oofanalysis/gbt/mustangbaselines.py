@@ -167,7 +167,8 @@ def MustangPL():
              (5,7)]
 
 def DoAPixel(c,r,
-             ver=1):
+             ver=1,
+             multiamp=False):
     """
     Process a single pixel and copy the output aperture phase plot to
     temporary directory for visualisation
@@ -184,7 +185,8 @@ def DoAPixel(c,r,
     RemoveBaseline(fnameraw , 
                    fnamedb,
                    rad=1.5e-4 )        
-    oofreduce.Red(fnamedb, nzmax=5)
+    oofreduce.Red(fnamedb, nzmax=5,
+                  multiamp=multiamp)
 
     for z in [3,5]:
 
