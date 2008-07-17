@@ -338,7 +338,7 @@ def PlotZernDict(d,
     md=pybnmin1.ModelDesc(zm.downcast())
     for k in d.keys():
         if k not in ["z1", "z2"] and k[0]=="z":
-            md.getbyname(k).setp(d[k])
+            md.getbyname(k).setp(float(d[k]))
 
     zm.Calc(m)
 
