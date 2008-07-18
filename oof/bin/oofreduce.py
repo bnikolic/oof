@@ -50,6 +50,10 @@ def GetObsWaveL(fnamein):
     
     return  3e8 / filein[0].header["freq"]
 
+def isGBTName(n):
+    """Does this name correspond to the GBT?"""
+    return n in ["GBT", "90GBT"]
+
 def GetRecvName(fnamein):
 
     "Return the name of the receiver in use"
@@ -60,7 +64,7 @@ def GetRecvName(fnamein):
         return fin[0].header["recv"]
     else:
         # Guess
-        if fin[0].header["telesc"] == "GBT":
+        if isGBTName(fin[0].header["telesc"]):
             wavel = GetObsWaveL(fnamein)
             if wavel < 0.005 :
                 return  "mustang"
@@ -144,7 +148,7 @@ def MkFF ( fnamein,
 
     telname= pyfits.open(fnamein)[0].header["telesc"]
 
-    if telname == "GBT":
+    if isGBTName(telname):
 
         recvname=GetRecvName(fnamein)
 

@@ -104,6 +104,18 @@ def SetUFNU(fnamein,
     iofits4.Write(res,
                   fnamein,
                   overwrite=1)    
+
+def SetTelsc(fnamein,
+             telesc):
+    """
+    Set telescope name
+    """
+    fin=pyfits.open(fnamein)        
+    fin[0].header.update("TELESC",telesc)
+    iofits4.Write(fin,
+                  fnamein,
+                  overwrite=1)        
+
     
     
 

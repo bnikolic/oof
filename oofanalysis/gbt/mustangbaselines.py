@@ -21,7 +21,8 @@ import oofplot
 laptop_dirin="/home/bnikolic/data/gbt-oof/mustang2/"
 
 
-def PrepareInputs(col=5, row=0):
+def PrepareInputs(col=5, row=0,
+                  do90=False):
 
     """Extract single pixel from input data, copies to shorter path, remove start/end"""
 
@@ -42,6 +43,8 @@ def PrepareInputs(col=5, row=0):
         mustang.RemoveStartEnd(ffout, ffout)
         mustang.CorrectDZ(ffout)
         mustang.CorrectUFNU(ffout)
+        if do90:
+            mustang.SetTelsc(ffout,"90GBT")
         #mustang.MaxUFNU(ffout)
         #mustang.SetUFNU(ffout)
 
@@ -168,13 +171,15 @@ def MustangPL():
 
 def DoAPixel(c,r,
              ver=1,
-             multiamp=False):
+             multiamp=False,
+             do90=False):
     """
     Process a single pixel and copy the output aperture phase plot to
     temporary directory for visualisation
     """
     if ver == 1:
-        PrepareInputs(c,r)
+        PrepareInputs(c,r,
+                      do90=do90)
         fnameraw= "td/t18-raw-%i-%i.fits" % (c,r)
     elif ver == 2:
         PrepareInputsV2(c,r)
@@ -194,7 +199,7 @@ def DoAPixel(c,r,
         shutil.copy( "oofout/t18-raw-%i-%i-db-000/z%i/plots/aperture-phase.png" % (c,r,z),
                      "temp/plots/p%i%i-z%i.png" % (c,r,z))
     
-def DoAllPixels():
+def DoAllPixels(**args):
     """
     Extract all pixels individually, process to z=5, plot and copy
     plots to a directory
@@ -203,7 +208,7 @@ def DoAllPixels():
     """
     for c,r in MustangPL():
         try:
-            DoAPixel(c,r)
+            DoAPixel(c,r,**args)
         except None, e :
             print e
             print "Pixel not processed: " , c, r
