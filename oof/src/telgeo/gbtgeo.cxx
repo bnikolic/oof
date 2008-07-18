@@ -1,6 +1,7 @@
-/*!
-  Bojan Nikolic
-  $Id: gbtgeo.cxx,v 1.7 2005/09/09 17:46:24 bnikolic Exp $
+/**
+   \file gbtgeo.cxx
+   Bojan Nikolic <bojan@bnikolic.co.uk>
+
 */
 
 #include "gbtgeo.hxx"

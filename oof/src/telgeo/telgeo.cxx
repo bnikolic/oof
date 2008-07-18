@@ -1,6 +1,6 @@
-/*
-  Bojan Nikolic
-  $Id: telgeo.cxx,v 1.1 2005/06/25 12:08:57 bnikolic Exp $
+/**
+   \file telgeo.cxx
+    Bojan Nikolic <bojan@bnikolic.co.uk>
 
 */
 

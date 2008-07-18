@@ -1,7 +1,6 @@
-/*
-  Bojan Nikolic
-  $Id: telswitch.cxx,v 1.2 2005/08/17 20:43:37 bnikolic Exp $
-
+/**
+   \file telswitch.cxx
+    Bojan Nikolic <bojan@bnikolic.co.uk>
 */
 
 #include "telswitch.hxx"
