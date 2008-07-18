@@ -359,3 +359,5 @@ def RelativeAmp(fname):
     cf= max(f[2].data.field("fnu"))
     print max(f[1].data.field("fnu"))/cf
     print max(f[3].data.field("fnu"))/cf
+
+#oofreduce.RedOrder("td/t18-raw-5-3-db.fits", "oofout/test1", zorder=4, ic="oofout/t18-raw-5-3-db-003/z3/fitpars.fits", multiamp=True, nofit=["amp_r1", "amp_r2"])

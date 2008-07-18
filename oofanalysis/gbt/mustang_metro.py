@@ -12,6 +12,7 @@ import bnmin1io
 
 import oofreduce
 import pyxplot
+from pyhlp import twod
 import pyfits
 
 def MetroMustang(fnamein,
@@ -114,6 +115,20 @@ def plotSinlgeParDist(din,
                        width=pyxplot.MNRAS_SC,
                        nbins=20,
                        key=None)
+
+def plotTwoPar(din,
+               p1, p2,
+               fnameout,
+               burn=0):
+    d1,d2=[din.data.field(x) for x in [p1,p2]]
+    x1=d1[burn*len(d1):]
+    x2=d2[burn*len(d2):]
+    
+    twod.hist2d(x1,x2,
+                fnameout,
+                xlabel=escapeAxisName(p1),
+                ylabel=escapeAxisName(p2),
+                bins=20)
 
 
 def plotParDist(fnamein,
