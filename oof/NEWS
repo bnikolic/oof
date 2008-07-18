@@ -20,6 +20,9 @@ In Development (to be 1.2)
      
    * SWIG wrapping introduces use of %import where appropriate, which
      should lead to cleaner modules
+     
+   * New telescope "90GBT" which is GBT with aperture diameter set to
+     90m (for experimental analysis of MUSTANG data)
    
    BUILD/DEPS:
    

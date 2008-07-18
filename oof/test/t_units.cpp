@@ -86,3 +86,10 @@ BOOST_AUTO_TEST_CASE(t_TruncGBT_truncation)
   BOOST_CHECK_EQUAL( g->DishEffRadius(), 33);
 
 }
+
+BOOST_AUTO_TEST_CASE(t_90GBT)
+{
+  boost::scoped_ptr<TelGeometry> g(TelSwitch("90GBT"));
+  BOOST_CHECK_EQUAL( g->DishEffRadius(), 45);  
+}
+

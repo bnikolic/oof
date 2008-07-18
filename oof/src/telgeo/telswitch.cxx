@@ -44,25 +44,29 @@ namespace OOF {
   {
     
     if ( ! strcmp( telname , "ALMA" )  )
-      {
-	return MkALMA() ;
-      }
+    {
+      return MkALMA() ;
+    }
     if ( ! strcmp( telname , "ALMANoSec" )  )
-      {
-	return MkALMANoSec() ;
-      }
+    {
+      return MkALMANoSec() ;
+    }
     else if ( !strcmp (telname, "APEX") ) 
-      {
-	return MkALMA() ;
-      }
+    {
+      return MkALMA() ;
+    }
     else if ( !strcmp (telname, "GBT") ) 
-      {
-	return new GBTGeo();
-      }
+    {
+      return new GBTGeo();
+    }
+    else if ( !strcmp (telname, "90GBT") )
+    {
+      return new TruncGBT(45);
+    }
     else
-      {
-	return NULL;
-      }
+    {
+      return NULL;
+    }
 
   }
 
