@@ -67,7 +67,7 @@ namespace OOF {
     
     } ;
     
-    DMaskFN fn ( PrimRadius );
+    DMaskFN fn ( DishEffRadius() );
     WorldSet( Dish , fn );    
   }
 
@@ -246,6 +246,16 @@ namespace OOF {
 
     return delta;
 
+  }
+
+  TruncGBT::TruncGBT(double R):
+    primRadius(R)
+  {
+  }
+
+  double TruncGBT::DishEffRadius(void) const
+  {
+    return primRadius;
   }
 
 

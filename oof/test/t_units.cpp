@@ -23,6 +23,7 @@
 #include "aperture/zernmodel.hxx"
 #include "telgeo/telswitch.hxx"
 #include "telgeo/telgeo.hxx"
+#include "telgeo/gbtgeo.hxx"
 #include "astromap.hxx"
 
 
@@ -75,4 +76,13 @@ BOOST_AUTO_TEST_CASE(t_MultiAmp_ApModel_basic)
   am.getAmp(0);am.getAmp(1);am.getAmp(2);
   BOOST_CHECK_THROW(am.getAmp(3),
 		    NObsError);
+}
+
+
+BOOST_AUTO_TEST_CASE(t_TruncGBT_truncation)
+{
+  boost::scoped_ptr<GBTGeo> g( new TruncGBT(33) );
+
+  BOOST_CHECK_EQUAL( g->DishEffRadius(), 33);
+
 }
