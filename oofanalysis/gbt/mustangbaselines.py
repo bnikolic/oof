@@ -357,6 +357,26 @@ def plotScaled():
         for j in [1,2,3]:
             r.extend(list(f[j].data.field("fnu")/fnumax ))
         pylab.plot(numpy.array(r))
+
+def vectorise(fnamein):
+    time=[]
+    fnu=[]
+    for h in pyfits.open(fnamein)[1:]:
+        dt=h.data.field("time")
+        if len(time):
+            dt=dt+time[-1]
+        time.extend(list(dt))
+        fnu.extend(list(h.data.field("fnu")))
+    return numpy.array(time),numpy.array(fnu)
+    
+
+def CompPixelData():
+    x1,y1=vectorise("td/t18-raw-5-3-db.fits")
+    x2,y2=vectorise("td/t18-raw-6-2-db.fits")
+    plot("temp/test.eps",[x1,y1,x2,y2],
+         xlabel=r"$t$",
+         ylabel=r"$f_\nu$",
+         )
     
 
 def RelativeAmp(fname):
