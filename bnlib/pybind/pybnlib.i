@@ -1,6 +1,7 @@
 %module pybnlib
 %{
 
+#include "../src/bnlib_main.hxx"
 #include "../src/unaryfn.hxx"
 #include "../src/unaryfnutils.hxx"
 #include "../src/binaryfn.hxx"
@@ -49,6 +50,7 @@ namespace std {
    %template(Position3DV) vector<BNLib::Position3D>;
 }
 
+%include "../src/bnlib_main.hxx"
 %include "../src/unaryfn.hxx"
 %include "../src/unaryfnutils.hxx"
 %include "../src/binaryfn.hxx"

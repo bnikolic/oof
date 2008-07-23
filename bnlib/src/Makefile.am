@@ -23,7 +23,8 @@ libbnlib_la_SOURCES= interpolate.hxx interpolate.cxx \
 			tophat.cxx tophat.hxx \
 			integrateutils.cxx integrateutils.hxx\
 			unaryfnutils.cxx unaryfnutils.hxx\
-			quadratic_bfn.cxx quadratic_bfn.hxx 
+			quadratic_bfn.cxx quadratic_bfn.hxx \
+			bnlib_main.cxx bnlib_main.hxx
 
 
 libbnlib_la_CFLAGS = -Wall
@@ -53,4 +54,5 @@ include_HEADERS = 	unaryfn.hxx \
 			tophat.hxx\
 			integrateutils.hxx\
 			unaryfnutils.hxx \
-			quadratic_bfn.hxx
+			quadratic_bfn.hxx\
+			bnlib_main.hxx
