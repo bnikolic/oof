@@ -23,6 +23,8 @@ In Development (to be 1.2)
      
    * New telescope "90GBT" which is GBT with aperture diameter set to
      90m (for experimental analysis of MUSTANG data)
+     
+   * Easier generation of simulated FITS file: oofreduce.genSimFile()
    
    BUILD/DEPS:
    
