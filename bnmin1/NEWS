@@ -13,6 +13,9 @@ Development (to be V1.3)
    
    * Metropolis sampling can displace each parameter in turn (see
      option Minim::MetropolisMCMC::Sequence)
+     
+   * Experimental flat priors for MCMC (see
+     Minim::IndependentFlatPriors)
    
    ENHANCEMENT:
    
