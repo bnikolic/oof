@@ -190,3 +190,6 @@ CVS
 ./bnmin1/test/t_unit
 ./oof/test/t_units
 ./oof/test/Makefile
+./bnmin1/test/t_utils
+./bnmin1/test/t_utils
+

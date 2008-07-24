@@ -37,8 +37,17 @@ def ChainMostLkl(c):
 
 
 def SetIC(m,ic):
-    """ Set the parameters of a model from a list"""
-    mod = pybnmin1.ModelDesc(m.downcast())
+    """ Set the parameters of a model from a list
+    
+    If model has an attribute "downcast", this is called as a function
+    to cast the model to a form suitable for ModelDesc class (this
+    eases cross-module integration with bnmin1).
+
+    """
+    if getattr(m, "downcast", False):
+        mod = pybnmin1.ModelDesc(m.downcast())
+    else:
+        mod = pybnmin1.ModelDesc(m)
     for i,x in enumerate(ic):
         mod.getbynumb(i).setp(x)
     

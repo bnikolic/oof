@@ -8,6 +8,8 @@
 #include <boost/test/auto_unit_test.hpp>
 #include <boost/test/floating_point_comparison.hpp>
 #include <boost/bind.hpp>
+#include <boost/assign/list_of.hpp>
+#include <boost/assign/std/vector.hpp>
 
 #include "minimmodel.hxx"
 #include "quadmodel.hpp"
@@ -15,6 +17,7 @@
 #include "monitor.hxx"
 #include "minimio.hxx"
 #include "metropolis.hxx"
+#include "priors.hxx"
 
 
 BOOST_AUTO_TEST_CASE( Initialisation )
@@ -155,4 +158,58 @@ BOOST_AUTO_TEST_CASE( QuadMetro_Seq )
 
 }
 
+
+BOOST_AUTO_TEST_CASE( Params_ByName )
+{
+  using namespace Minim;
+
+  QuadModel qm;
+  ModelDesc md(qm);
+  
+  BOOST_CHECK( md["a"]->p == &qm.a);
+  BOOST_CHECK( md["c"]->p == &qm.c);
+}
+
+BOOST_AUTO_TEST_CASE( QuadPrior )
+{
+  using namespace Minim;
+  using namespace boost::assign;
+
+  const double params[]= { 1, 2, 3};
+
+  // Abcissa values at which the quardratic function is "observed"
+  std::vector<double> x;
+  x +=  -1, 0 , 1;
+
+  // Corresponding "observation"
+  std::vector<double> obs(3);
+
+  QuadModel qm;
+  qm.a=params[0]; 
+  qm.b=params[1]; 
+  qm.c=params[2];
+  qm.eval(x, obs);
+  
+  std::auto_ptr<QuadObs> qo (new QuadObs( x,obs));
+
+  std::vector<double> scratch(3);
+  qo->residuals(scratch);
+  qo->sigma=0.01;
+
+  IndependentFlatPriors qifp( qo.release() );
+  std::vector<double> sigmas(3,0.1);
+
+  qifp.AddPrior("a", -10,10);
+  qifp.AddPrior("b", -10,10);
+  qifp.AddPrior("c", -10,2);
+
+  MetropolisMCMC metro(qifp,sigmas);
+  boost::shared_ptr< std::list<Minim::MCPoint>  >
+    res( metro.sample(10000)) ;
+
+  BOOST_CHECK_CLOSE( res->back().p[2],
+		     2.0,
+		     1);
+
+}
 

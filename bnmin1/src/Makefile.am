@@ -13,7 +13,9 @@ libbnmin1_la_SOURCES = minimmodel.hxx minimmodel.cxx \
 			lmminutils.cxx lmminutils.hxx\
 			bnmin_main.cxx bnmin_main.hxx \
 			metropolis.cxx metropolis.hxx\
-			metro_propose.cxx metro_propose.hxx
+			metro_propose.cxx metro_propose.hxx\
+			priors.cxx priors.hxx\
+			paramalgo.cxx paramalgo.hxx
 
 libbnmin1_la_LIBADD = f77/libminpda.la -lgsl  -lgslcblas
 
@@ -21,4 +23,4 @@ libbnmin1_la_CFLAGS = -Wall
 libbnmin1_la_CPPFLAGS = -Wall
 
 include_HEADERS = lmmin.hxx minim.hxx minimmodel.hxx paramctr.hxx pda.hxx monitor.hxx \
-			minimio.hxx lmminutils.hxx bnmin_main.hxx
+			minimio.hxx lmminutils.hxx bnmin_main.hxx priors.hxx metropolis.hxx
