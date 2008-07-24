@@ -19,6 +19,7 @@
 #include <iostream>
 #include <memory>
 
+#include "../oof_err.hxx"
 #include "../telgeo/cassegrain.hxx"
 
 
@@ -32,10 +33,22 @@ namespace OOF {
     AstroMap::ShrinkCS(m , dishradius );
   }
 
-  RZernModel::RZernModel ( unsigned n , AstroMap::Map & msample, TelGeometry * telgeo ) :
+  void RZernModel::checkNZern(size_t nz, 
+			      const AstroMap::Map &msample)
+  {
+    if( nz >= msample.nx/2 )
+    {
+      throw UseError("Maximum Zernike order too high given map size");
+    }
+  }
+
+  RZernModel::RZernModel(unsigned n, 
+			 AstroMap::Map & msample, 
+			 TelGeometry * telgeo) :
     maxzorder(n),
     lcm( ENFORCE( new AstroMap::LCMaps() ))
   {
+    checkNZern(n, msample);
 
     // Calculate the dish mask
     std::auto_ptr<AstroMap::Map> mask ( AstroMap::Clone(msample)) ;

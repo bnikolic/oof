@@ -17,11 +17,13 @@ import mustang
 import baselinealgo
 import oofreduce
 import oofplot
+import oofcol
 
 laptop_dirin="/home/bnikolic/data/gbt-oof/mustang2/"
 
 
-def PrepareInputs(col=5, row=0):
+def PrepareInputs(col=5, row=0,
+                  do90=False):
 
     """Extract single pixel from input data, copies to shorter path, remove start/end"""
 
@@ -41,9 +43,11 @@ def PrepareInputs(col=5, row=0):
 
         mustang.RemoveStartEnd(ffout, ffout)
         mustang.CorrectDZ(ffout)
-        #mustang.CorrectUFNU(ffout)
+        mustang.CorrectUFNU(ffout)
+        if do90:
+            mustang.SetTelsc(ffout,"90GBT")
         #mustang.MaxUFNU(ffout)
-        mustang.SetUFNU(ffout)
+        #mustang.SetUFNU(ffout)
 
 
 def PrepareInputsV2(col=5, row=0):
@@ -66,7 +70,7 @@ def PrepareInputsV2(col=5, row=0):
         mustang.RemoveStartEnd(ffout, ffout)
         mustang.CorrectDZ(ffout)
         #mustang.MaxUFNU(ffout)
-        mustang.SetUFNU(ffout)
+        #mustang.SetUFNU(ffout)
 
         
 def RoughReduce():
@@ -167,24 +171,38 @@ def MustangPL():
              (5,7)]
 
 def DoAPixel(c,r,
-             ver=1):
+             ver=1,
+             multiamp=False,
+             do90=False,
+             usepoly=False,
+             base_rad=1.5e-4,
+             ):
     """
     Process a single pixel and copy the output aperture phase plot to
     temporary directory for visualisation
     """
     if ver == 1:
-        PrepareInputs(c,r)
+        PrepareInputs(c,r,
+                      do90=do90)
         fnameraw= "td/t18-raw-%i-%i.fits" % (c,r)
+        fnamepoly="td/t18-poly-%i-%i.fits" % (c,r)
     elif ver == 2:
         PrepareInputsV2(c,r)
         fnameraw= "td/t18-raw-%i-%i-v2.fits" % (c,r)
     else:
         raise "Unkown version"
-    fnamedb = fnameraw[:-5]+"-db.fits"
-    RemoveBaseline(fnameraw , 
-                   fnamedb,
-                   rad=1.5e-4 )        
-    oofreduce.Red(fnamedb, nzmax=5)
+    if usepoly :
+        obsfname=fnamepoly
+    else:
+        fnamedb = fnameraw[:-5]+"-db.fits"
+        RemoveBaseline(fnameraw , 
+                       fnamedb,
+                       rad=base_rad)        
+        obsfname=fnamedb
+
+    oofreduce.Red(obsfname, 
+                  nzmax=5,
+                  multiamp=multiamp)
 
     for z in [3,5]:
 
@@ -192,7 +210,7 @@ def DoAPixel(c,r,
         shutil.copy( "oofout/t18-raw-%i-%i-db-000/z%i/plots/aperture-phase.png" % (c,r,z),
                      "temp/plots/p%i%i-z%i.png" % (c,r,z))
     
-def DoAllPixels():
+def DoAllPixels(**args):
     """
     Extract all pixels individually, process to z=5, plot and copy
     plots to a directory
@@ -201,7 +219,7 @@ def DoAllPixels():
     """
     for c,r in MustangPL():
         try:
-            DoAPixel(c,r)
+            DoAPixel(c,r,**args)
         except None, e :
             print e
             print "Pixel not processed: " , c, r
@@ -350,6 +368,50 @@ def plotScaled():
         for j in [1,2,3]:
             r.extend(list(f[j].data.field("fnu")/fnumax ))
         pylab.plot(numpy.array(r))
+
+def vectorise(fnamein):
+    time=[]
+    fnu=[]
+    for h in pyfits.open(fnamein)[1:]:
+        dt=h.data.field("time")
+        if len(time):
+            dt=dt+time[-1]
+        time.extend(list(dt))
+        fnu.extend(list(h.data.field("fnu")))
+    return numpy.array(time),numpy.array(fnu)
+    
+
+def CompPixelData(c,r,**kw):
+    x1,y1=vectorise("td/t18-raw-5-3-db.fits")
+    x2,y2=vectorise("td/t18-raw-%i-%i-db.fits" % (c,r))
+    plot("temp/test.eps",[x1,y1,x2,y2],
+         xlabel=r"$t$",
+         ylabel=r"$f_\nu$",
+         **kw
+         )
+
+def ObsVsFitGen(dirin):
+    obsfilename=oofcol.getpar(dirin,"fitinfo.fits","obsfilename")
+    oofreduce.genSimFile(os.path.join(dirin,"fitbeams.fits"),
+                         obsfilename,
+                         os.path.join(dirin,"simds.fits"), 
+                         1,2)
+
+def ObsVsFitPlot(dirin,simdir=None,**kw):
+    if simdir is None:
+        simdir=dirin
+    obsfilename=oofcol.getpar(dirin,"fitinfo.fits","obsfilename")
+    x1,y1=vectorise(obsfilename)
+    x2,y2=vectorise(os.path.join(simdir,"simds.fits"))
+    diff(None,y1,y2,
+         os.path.join(dirin,"plots","obsvsfit.eps"),
+         xlabel=r"$t$",
+         ylabel=r"$f_\nu$",
+         **kw
+         )
+
+    
+                         
     
 
 def RelativeAmp(fname):
@@ -357,3 +419,5 @@ def RelativeAmp(fname):
     cf= max(f[2].data.field("fnu"))
     print max(f[1].data.field("fnu"))/cf
     print max(f[3].data.field("fnu"))/cf
+
+#oofreduce.RedOrder("td/t18-raw-5-3-db.fits", "oofout/test1", zorder=4, ic="oofout/t18-raw-5-3-db-003/z3/fitpars.fits", multiamp=True, nofit=["amp_r1", "amp_r2"])

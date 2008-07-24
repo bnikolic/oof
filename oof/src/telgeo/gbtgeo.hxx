@@ -9,16 +9,20 @@
 
 namespace OOF {
 
-  /*! Describes the geometry when using a cassegrain focus */
-  class  GBTGeo :  public  TelGeometry {
-
-  public:
-
-    /* ----------- Data members ------------*/
+  /**
+     \brief Gemetry at GBT Gregorian focus 
+  */
+  class  GBTGeo :  
+    public  TelGeometry 
+  {
 
     /*! Radius of the primary reflector */
     double PrimRadius;
-    
+
+  public:
+
+    /* -------------- Public data  ---------------*/
+
     /*! Focal length of the primary */
     double PrimF;
     
@@ -68,6 +72,31 @@ namespace OOF {
   double SecDeltaPathV2 (double x, double y,
 			 double XGBT, double YGBT , double ZGBT,
 			 const GBTGeo & geo);
+
+
+  /** \brief GBT geometry with a truncated aperture
+   */
+  class TruncGBT :
+    public GBTGeo
+  {
+
+    double primRadius;
+
+  public:
+    
+    // ---------- Construction / Destruction --------------    
+
+    /**
+       \param R The aperture radius to use
+     */
+    TruncGBT(double R);
+
+
+    // ---------- Inherited from GBTGeo -------------------
+
+    virtual double DishEffRadius(void) const ;    
+
+  };
 
 
   

@@ -1,7 +1,6 @@
-/*
-  Bojan Nikolic
-  $Id: telswitch.cxx,v 1.2 2005/08/17 20:43:37 bnikolic Exp $
-
+/**
+   \file telswitch.cxx
+    Bojan Nikolic <bojan@bnikolic.co.uk>
 */
 
 #include "telswitch.hxx"
@@ -45,25 +44,29 @@ namespace OOF {
   {
     
     if ( ! strcmp( telname , "ALMA" )  )
-      {
-	return MkALMA() ;
-      }
+    {
+      return MkALMA() ;
+    }
     if ( ! strcmp( telname , "ALMANoSec" )  )
-      {
-	return MkALMANoSec() ;
-      }
+    {
+      return MkALMANoSec() ;
+    }
     else if ( !strcmp (telname, "APEX") ) 
-      {
-	return MkALMA() ;
-      }
+    {
+      return MkALMA() ;
+    }
     else if ( !strcmp (telname, "GBT") ) 
-      {
-	return new GBTGeo();
-      }
+    {
+      return new GBTGeo();
+    }
+    else if ( !strcmp (telname, "90GBT") )
+    {
+      return new TruncGBT(45);
+    }
     else
-      {
-	return NULL;
-      }
+    {
+      return NULL;
+    }
 
   }
 

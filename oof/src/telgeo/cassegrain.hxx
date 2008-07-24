@@ -11,8 +11,11 @@
 
 namespace OOF {
 
-  /*! Describes the geometry when using a cassegrain focus */
-  class  CassegrainGeo :  public  TelGeometry {
+  /** \brief Geometry at a cassegrain focus 
+   */
+  class  CassegrainGeo :  
+    public  TelGeometry 
+  {
 
   public:
 

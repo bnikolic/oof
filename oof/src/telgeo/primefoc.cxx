@@ -1,6 +1,6 @@
-/*
-  Bojan Nikoic
-  $Id: primefoc.cxx,v 1.3 2005/08/31 14:08:31 bnikolic Exp $
+/**
+   \file primefoc.cxx
+    Bojan Nikolic <bojan@bnikolic.co.uk>
 */
 
 #include "primefoc.hxx"

@@ -1,9 +1,7 @@
-/*
-  Bojan Nikolic
-  $Id: obsphasescreen.hxx,v 1.3 2005/08/24 21:21:14 bnikolic Exp $
-
-  An abstract class to represent a phase screen present during an
-  observed map, e.g., defocus or a pointing shift
+/**
+  \file obsphasescreen.hxx
+  Bojan Nikolic <bn204@mrao.cam.ac.uk>, <bojan@bnikolic.co.uk>
+  
 */
 #ifndef _OOF_OBSPHASESCREEN_HXX__
 #define _OOF_OBSPHASESCREEN_HXX__
@@ -12,6 +10,10 @@
 
 namespace OOF {
 
+  /**
+     An abstract class to represent a phase screen present during an
+     observed map, e.g., defocus or a pointing shift
+   */
   class ObsPhaseScreen {
 
   public:

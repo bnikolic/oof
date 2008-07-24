@@ -50,6 +50,10 @@ def GetObsWaveL(fnamein):
     
     return  3e8 / filein[0].header["freq"]
 
+def isGBTName(n):
+    """Does this name correspond to the GBT?"""
+    return n in ["GBT", "90GBT"]
+
 def GetRecvName(fnamein):
 
     "Return the name of the receiver in use"
@@ -60,7 +64,7 @@ def GetRecvName(fnamein):
         return fin[0].header["recv"]
     else:
         # Guess
-        if fin[0].header["telesc"] == "GBT":
+        if isGBTName(fin[0].header["telesc"]):
             wavel = GetObsWaveL(fnamein)
             if wavel < 0.005 :
                 return  "mustang"
@@ -144,7 +148,7 @@ def MkFF ( fnamein,
 
     telname= pyfits.open(fnamein)[0].header["telesc"]
 
-    if telname == "GBT":
+    if isGBTName(telname):
 
         recvname=GetRecvName(fnamein)
 
@@ -186,24 +190,35 @@ def MkObsCompare(fnamein,
                  nzern=6,
                  oversample=2.0,
                  ds_fwhm=1.0,
-                 ds_extent=2.0
+                 ds_extent=2.0,
+                 nobs=1
                  ):
     """
     Makes an ObsCompare object from the given file. This object allows
     comparison of observations to models of the far-field response.
+    
+    :param nobs: if greater than one setup separate models for each
+    observation in the set
     """
 
-    tel = MkTel(fnamein)
-
-    wavel= GetObsWaveL(fnamein)
-
+    tel=MkTel(fnamein)
+    wavel=GetObsWaveL(fnamein)
     recv= GetRecvName(fnamein)
-    if recv ==  "mustang" :
-        aperture = pyoof.MkMUSTANGAp ( tel,
-                                     wavel,
-                                     npix,
-                                     nzern,
-                                     oversample)
+
+    if recv=="mustang":
+        if nobs==1:
+            aperture=pyoof.MkMUSTANGAp(tel,
+                                       wavel,
+                                       npix,
+                                       nzern,
+                                       oversample)
+        else:
+            aperture=pyoof.MkMgMltiAmpAp(tel,
+                                         wavel,
+                                         npix,
+                                         nzern,
+                                         oversample,
+                                         nobs)
     else:
         aperture = pyoof.MkSimpleAp ( tel,
                                       wavel,
@@ -213,24 +228,31 @@ def MkObsCompare(fnamein,
 
     aperture.thisown=0
 
-    obsff  = MkFF (fnamein, aperture.getphase())
+    obsff  = MkFF (fnamein, 
+                   aperture.getphase())
     
-    oc= pyoof.ObsCompare( aperture,
-                          aperture.getphase() ,
-                          obsff);
+    oc= pyoof.ObsCompare(aperture,
+                         aperture.getphase(),
+                         obsff);
 
     skymapsample=oc.Beam();
 
     
     # now just load the observations and done...
     #
-    LoadOCData( fnamein, tel, skymapsample, aperture.getphase(), oc,
-                fwhm=ds_fwhm, extent=ds_extent)
-
+    LoadOCData(fnamein,
+               tel,
+               skymapsample,
+               aperture.getphase(),
+               oc,
+               fwhm=ds_fwhm,
+               extent=ds_extent)
     return oc
 
 def SimBeamDS(obsfilename, 
-              beamfilename):
+              beamfilename,
+              fwhm=1.0,
+              extent=2):
     """
     Simulate the data series given observing pattern and beam shape
     
@@ -240,12 +262,20 @@ def SimBeamDS(obsfilename,
     zero).
 
     :param beamfilename: FITS file containing beams to simulate
+    
+    :param fwhm: FWHM of kernel used to interpolate beam
+    
+    :param extent: extent of kernel used to interpolate the beam
     """
     obsfile=pyfits.open(obsfilename)
     res=[]
     for i in range(1, len(obsfile)):
         skym=pyplot.FitsMapLoad(beamfilename, i)
-        mkds=MkMapResDS( obsfilename, i , skym)
+        mkds=MkMapResDS(obsfilename, 
+                        i,
+                        skym,
+                        fwhm=fwhm,
+                        extent=extent)
         res.append(mkds.MkModelDS(skym))
     return res
 
@@ -284,7 +314,9 @@ def RedOrder(obsfilename,
              oversample=2.0,
              ds_fwhm=1.0,
              ds_extent =2.0,
-             ptable=None):
+             ptable=None,
+             multiamp=False,
+             nofit=[]):
     """Reduce OOF observation at single maximum order of Zernikes
     (c.f. function Red() which steps through a number of orders)
 
@@ -304,6 +336,11 @@ def RedOrder(obsfilename,
     :param ptable: FITS table of fit parameters to save in output (if
     None, locals of this function are used)
 
+    :param multiamp: Fit for relative amplitudes of the maps
+
+    :param nofit: Turn off parameters which fitting might be on by
+    default. Seel also extrafit
+
     :returns: Filename of the file containing the fit
     """
     wavel = GetObsWaveL(obsfilename)
@@ -313,7 +350,8 @@ def RedOrder(obsfilename,
                     npix=npix, 
                     oversample=oversample,
                     ds_fwhm=ds_fwhm,
-                    ds_extent=ds_extent)
+                    ds_extent=ds_extent,
+                    nobs=(multiamp and 3) or 1)
 
     lmm=pybnmin1.LMMin(oc.downcast())
     lmm.ftol=1e-4
@@ -324,6 +362,8 @@ def RedOrder(obsfilename,
 
     for pname in extrafit :
         lmm.getbyname(pname).dofit=1
+    for pname in nofit:
+        lmm.getbyname(pname).dofit=0
 
     if type(ic) == str :
         bnmin1io.FLoad(lmm, ic)
@@ -403,7 +443,8 @@ def Red(obsfilename,
         npix=128,
         oversample=2.0,
         ds_fwhm=1.0,
-        ds_extent =2.0):
+        ds_extent =2.0,
+        **args):
 
     "A general reduction script"
 
@@ -440,7 +481,8 @@ def Red(obsfilename,
                           oversample=oversample,
                           ds_fwhm=ds_fwhm,
                           ds_extent=ds_extent,
-                          ptable=ptable)
+                          ptable=ptable,
+                          **args)
         
 
 def InvertDSFile (fnamein, fnameout ):
@@ -460,6 +502,46 @@ def InvertDSFile (fnamein, fnameout ):
     pass
 
 
+def genSimFile(beamfname,
+               obsfname,
+               fnameout,
+               ds_fwhm,
+               ds_extent):
+    """
+    Generate a simulated observation 
+    
+    The simulated file is created from beams stored in a FITS file and
+    another observe file.
+    
+    :param beamfname: FITS file containing the beams at each focus
+    
+    :param obsfname: Sample observation file which defines sky
+    sampling, telescope, etc
+
+    :param fnameout: Name of file to write
+    
+    :param ds_fwhm: FWHM of kernel used to iterpolate observed beams
+    onto positions of the telescope
+    
+    :param ds_Extent: Extent of the kernel used to iterpolate observed
+    beams onto positions of the telescope
+    """
+    fin=pyfits.open(obsfname)
+    beamds=SimBeamDS(obsfname,beamfname,
+                     fwhm=ds_fwhm,
+                     extent=ds_extent)
+    res=[fin[0]]
+    for j,hdu in enumerate(fin[1:]):
+        fnu=hdu.data.field("fnu")
+        ufnu=hdu.data.field("ufnu")
+        cds=beamds[j]
+        for i in range(len(fnu)):
+            hdu.data.field("fnu")[i]=cds.getp(i).fnu
+            hdu.data.field("ufnu")[i]=0
+        res.append(hdu)
+    iofits4.Write(res, 
+                  fnameout, 
+                  overwrite=1)
     
 
         

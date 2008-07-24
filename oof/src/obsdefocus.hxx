@@ -1,7 +1,6 @@
-/*
-  Bojan Nikolic
-  $Id: obsdefocus.hxx,v 1.2 2005/08/17 15:57:16 bnikolic Exp $
-
+/**
+   \file obsdefocus.hxx
+   Bojan Nikolic <bojan@bnikolic.co.uk>, <b.nikolic@mrao.cam.ac.uk>   
 */
 
 #ifndef _OOF_OBSDEFOCUS_HXX__

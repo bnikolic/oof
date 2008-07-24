@@ -1,8 +1,8 @@
-/*
-  Bojan Nikolic
-  $Id: telgeo.hxx,v 1.2 2005/08/09 01:09:19 bnikolic Exp $
+/**
+   \file telgeo.hxx
+   Bojan Nikolic <bojan@bnikolic.co.uk>, <b.nikolic@mrao.cam.ac.uk>
 
-  Classes to describe relevant parameters of telescope geometry
+   Classes to describe relevant parameters of telescope geometry
 */
 
 #ifndef _OOF_TELGEO_HXX__
@@ -15,10 +15,10 @@ namespace AstroMap {
 
 namespace OOF {
 
-  /*! Defines interface of functions needed to describe the telescope
-   *  geometry oof analysis.
-   *
-   */
+  /** Defines interface of functions needed to describe the telescope
+      geometry oof analysis.
+   
+  */
   class TelGeometry {
 
 

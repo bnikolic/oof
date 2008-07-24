@@ -16,10 +16,15 @@
 
 namespace OOF {
 
-  /*! This map takes dataseries observations and compares them to
-    model `skyviews` or beams convolved for the effects of
-    observations  */
-  class MapToResidualDS : public MapToResidual {
+  /** \brief Residuals from dataseries observations
+
+     This class takes dataseries observations and compares them to
+     model `skyviews` or beams convolved for the effects of
+     observations
+  */
+  class MapToResidualDS : 
+    public MapToResidual 
+  {
 
     /*! The observed dataseries. This class takes ownership */
     AstroMap::DataSeries * obsds;
@@ -35,9 +40,13 @@ namespace OOF {
 
     /* ----- Constructors / Destructors  ----------------*/
 
-    /*! obsds is the obseved data sereis, this class will take
-    ownership. msample is a sample skyview map. fwhm_px is the FWHM of
-    the interpolation kernel in terms of pixels. */
+    /**
+       \param obsds The obseved data series, we take ownership
+       
+       \param msample A sample skyview map
+
+       \param fwhm_px the FWHM of the interpolation kernel (in pixels)
+    */
     MapToResidualDS(  AstroMap::DataSeries * obsds, 
 		      AstroMap::Map const & msample,
 		      double fwhm_px, double extent_px);

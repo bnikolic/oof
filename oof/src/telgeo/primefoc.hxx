@@ -12,9 +12,11 @@
 
 namespace OOF {
   
-  /** Prime focus telescope geometry 
+  /** \brief Geometry at a prime focus of a telescope
    */
-  class  PrimeFocusGeo : public  TelGeometry {
+  class  PrimeFocusGeo : 
+    public  TelGeometry 
+  {
 
   public:
 

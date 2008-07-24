@@ -9,7 +9,8 @@ liboof_la_SOURCES = obsphasescreen.cxx obsphasescreen.hxx \
 			maptoresidual.cxx maptoresidual.hxx\
 			maptoresidual_ds.cxx maptoresidual_ds.hxx \
 			obsfilefns.cxx obsfilefns.hxx \
-			oof_main.cxx oof_main.hxx
+			oof_main.cxx oof_main.hxx \
+			oof_err.cxx oof_err.hxx
 
 liboof_la_CFLAGS = -Wall   ${BN_CFLAGS}
 liboof_la_CPPFLAGS = -Wall ${BN_CFLAGS}

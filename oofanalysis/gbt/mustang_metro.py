@@ -12,6 +12,7 @@ import bnmin1io
 
 import oofreduce
 import pyxplot
+from pyhlp import twod
 import pyfits
 
 def MetroMustang(fnamein,
@@ -20,7 +21,8 @@ def MetroMustang(fnamein,
                  nsample=100,
                  ic=None,
                  fnameout_chain=None,
-                 nzern=5):
+                 nzern=5,
+                 multiamp=False):
     """
     Sample posterior distribution given MUSTANG data using the
     Metropolis MCMC algorithm
@@ -41,17 +43,29 @@ def MetroMustang(fnamein,
     chain should be written to.
     
     :param nzern: The order of Zernike polynimals to fit to.
+
+    :param multiamp: Fit for the relative amplitudes of the maps
     
     :returns: The calculated chain 
     """
-    
-    oc=oofreduce.MkObsCompare( fnamein, 
-                               nzern=nzern)
-    nzc_d= { 1: 2,
-             3 : 9,
-             5 : 20}
 
-    sigmas=pybnmin1.DoubleVector([ amp_sigma]+ [z_sigma]*nzc_d[nzern] )
+    if multiamp is False:
+        oc=oofreduce.MkObsCompare(fnamein, 
+                                  nzern=nzern)
+    else:
+        oc=oofreduce.MkObsCompare(fnamein, 
+                                  nzern=nzern,
+                                  nobs=3)
+        
+    nzc_d= {1: 2,
+            2: 5,
+            3 : 9,
+            5 : 20}
+
+    sigmal=[ amp_sigma]+ [z_sigma]*nzc_d[nzern]
+    if multiamp is not False:
+        sigmal.extend([0.01]*(3-1))    
+    sigmas=pybnmin1.DoubleVector(sigmal)
 
     metro=pybnmin1.MetropolisMCMC(oc.downcast(),
                                   sigmas,
@@ -69,23 +83,57 @@ def MetroMustang(fnamein,
                             fnameout_chain)
     return chain
 
+def medianPars(fnamein,
+               burn=0):
+    """
+    Return the median value of each parameter in a chain
+    """
+    din=pyfits.open(fnamein)[1]
+    res={}
+    for n in din.data.names:
+        fd=din.data.field(n)
+        res[n]=numpy.median(fd[burn*len(fd):])
+    return res
+
+def escapeAxisName(n):
+    """Escape LaTeX control characters"""
+    n=n.replace(r"_",r"\_")
+    return n
+    
 def plotSinlgeParDist(din,
                       parname,
-                      fnameout):
+                      fnameout,
+                      burn=0):
     """
     Plot the distribution of a single parameter
     """
     d=din.data.field(parname)
-    pyxplot.histogram( [ (d, "")],
+    x=d[burn*len(d):]
+    pyxplot.histogram( [ (x, "")],
                        fnameout,
-                       xax=pyxplot.axis(parname),
+                       xax=pyxplot.axis(escapeAxisName(parname)),
                        width=pyxplot.MNRAS_SC,
                        nbins=20,
                        key=None)
 
+def plotTwoPar(din,
+               p1, p2,
+               fnameout,
+               burn=0):
+    d1,d2=[din.data.field(x) for x in [p1,p2]]
+    x1=d1[burn*len(d1):]
+    x2=d2[burn*len(d2):]
+    
+    twod.hist2d(x1,x2,
+                fnameout,
+                xlabel=escapeAxisName(p1),
+                ylabel=escapeAxisName(p2),
+                bins=20)
+
 
 def plotParDist(fnamein,
-                dirout):
+                dirout,
+                burn=0):
     """
     Plot the distribution of each parameter from a chain stored in a
     fits file. 
@@ -95,7 +143,8 @@ def plotParDist(fnamein,
         plotSinlgeParDist(din,
                           pname,
                           os.path.join(dirout, 
-                                       "p%s-dist.eps" % (pname,)))
+                                       "p%s-dist.eps" % (pname,)),
+                          burn=burn)
 
     
                 
@@ -110,7 +159,8 @@ def TestMetro():
 
 def TestMetroIC(c,r,
                 nzern=5,
-                nsample=20000):
+                nsample=20000,
+                multiamp=False):
     fnameout="temp/metro_ic_p%i%i_z%i.fits" % (c,r,nzern)
     plotdir = "temp/ic_p%i%i_z%i" % (c,r,nzern)
     r=MetroMustang("td/t18-raw-%i-%i-db.fits" % (c,r), 
@@ -119,8 +169,35 @@ def TestMetroIC(c,r,
                    nsample=nsample,
                    ic="oofout/t18-raw-%i-%i-db-000/z%i/fitpars.fits" % (c,r,nzern),
                    fnameout_chain=fnameout,
-                   nzern=nzern)
+                   nzern=nzern,
+                   multiamp=multiamp)
+    plotParDist(fnameout, plotdir)
+    return r
 
+def TestMetroIC_V2(c,r,
+                   nzern=5,
+                   nsample=20000,
+                   multiamp=False,
+                   ic_v=2):
+    fnameout="temp/metro_ic_p%i%i_z%i_ic%i-v2.fits" % (c,r,nzern,ic_v)
+    plotdir = "temp/ic_p%i%i_z%i-v2" % (c,r,nzern)
+    if ic_v is 2:
+        ic="oofout/t18-raw-%i-%i-v2-db-000/z%i/fitpars.fits" % (c,r,nzern)
+    elif ic_v is 1:
+        ic="oofout/t18-raw-%i-%i-db-000/z%i/fitpars.fits" % (c,r,nzern)
+    elif ic_v is 0:
+        #Well, need to at least load amp, and offsets so we are not
+        #hunting around for ever to burn in
+        ic="oofout/t18-raw-%i-%i-v2-db-000/z%i/fitpars.fits" % (c,r,1)
+        
+    r=MetroMustang("td/t18-raw-%i-%i-v2-db.fits" % (c,r), 
+                   amp_sigma=0.00001,
+                   z_sigma=0.1,
+                   nsample=nsample,
+                   ic=ic,
+                   fnameout_chain=fnameout,
+                   nzern=nzern,
+                   multiamp=multiamp)
     plotParDist(fnameout, plotdir)
     return r
 

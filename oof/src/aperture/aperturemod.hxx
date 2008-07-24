@@ -20,15 +20,19 @@ namespace OOF {
   class PhaseMod;
   class AmpliMod;
 
-  /*! 
-   *  A class to represent the aperture field distribution.
+  /** \brief Represent the aperture field distribution
+      
    */
-  class ApertureMod : public Minim::Model  {
+  class ApertureMod : 
+    public Minim::Model  
+  {
 
   public:
-    /*! The wavelength of the EM field ... in the same units as the
-     * coordinate system of the maps in order for the FFT coordinate
-     * system to work OK*/ 
+    /** \brief The wavelength of the EM field
+
+     In the same units as the coordinate system of the maps in order
+     for the FFT coordinate system to work OK
+    */ 
     const double wavel;
 
   private:
@@ -79,13 +83,46 @@ namespace OOF {
 
     // ------ Member Functions  ----------------------------
 
-    /** \brief Recalculate and return pointer to the phase map.
+    /** \brief Recalculate and return pointer to the phase map
+	
+	\note see getPhase()
      */
-    const AstroMap::Map * getphase(void);
+    virtual const AstroMap::Map * getphase(void);
 
-    /** \brief Recalculate and return pointer to amplitude map */
-    const AstroMap::Map * getamp(void);
+    /** \brief Return the i-th aperture phase model
+	
+    There is normally only one model for the aperture, corresponding
+    to the assumption that telescope system remains unchanged between
+    the beam map observations at various foucus settings.  In this
+    case this functions should return the same aperture
+    phase/amplitude regdless of the value of parameter i. (Ie., it
+    returns getphase()).
 
+    However, sometimes this is not a good assumption, or potential
+    pre-processing problems need to be investigated.  By providing a
+    different model for each focus seting this can be taken into
+    account. To do this override these functions in derived classes.
+    
+    \note These functions return pointers to internal caching
+    structures (in interest of efficiency). Any subsequent call to
+    this object may invalidate the data held in these structures.
+
+    */
+    virtual const AstroMap::Map * getPhase(size_t i);
+
+    /** \brief Recalculate and return pointer to amplitude map
+
+    */
+    virtual const AstroMap::Map * getamp(void);
+
+    /** \brief Return the i-th aperture amplitude model
+
+    \note see getPhase()     
+     */
+    virtual const AstroMap::Map * getAmp(size_t i);
+
+    /** \brief Remove the tilt terms from the aperture model
+     */
     void ZeroTilt(void);
 
     // ------ Inherited functions rom Minim::Model ---------
@@ -93,6 +130,8 @@ namespace OOF {
     virtual    void     AddParams ( std::vector< Minim::DParamCtr > &pars );
 
     //  ------ Utility functons to help with python
+    
+    /// Cast to Minim::Model (python helper)
     Minim::Model * downcast(void);
     
 

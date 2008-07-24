@@ -23,12 +23,17 @@ PKG_CHECK_MODULES([BN], [bnlib >= 1.2 bnmin1 >= 1.2 astromap >= 1.2 bnfits >= 1.
 
 AC_LANG_POP(C++)
 
+AX_BOOST(1.34.0,
+	[echo "GOOD: You have BOOST ... we will be using that!" ],		     
+	AC_MSG_ERROR(["ERROR: No BOOST  ... ; you can find it at  http://www.boost.org/ "])  )
+
 AC_OUTPUT(Makefile
 	  src/Makefile
 	  src/aperture/Makefile 
 	  src/telgeo/Makefile
 	  src/farfield/Makefile
-	  doc/Doxyfile)
+	  doc/Doxyfile
+	  test/Makefile)
 
 
 

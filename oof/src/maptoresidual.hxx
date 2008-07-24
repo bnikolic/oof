@@ -1,6 +1,6 @@
-/*!
-  Bojan Nikolic
-  $Id: maptoresidual.hxx,v 1.3 2005/08/24 18:51:26 bnikolic Exp $
+/**
+   \file maptoresidual.hxx
+   Bojan Nikolic <bojan@bnikolic.co.uk>, <b.nikolic@mrao.cam.ac.uk>
 
 */
 
@@ -13,11 +13,11 @@
 
 namespace OOF {
 
-  /*!
-  *  Abstract class which returns residuals given a beam map. It
-  *  basically defines the residuals half of the Minim::Model
-  *  interface.
-  *
+  /** \brief Calculate residuals given a beam map
+    
+     Abstract class which returns residuals given a beam map. It
+     basically defines the residuals half of the Minim::Model
+     interface.
   */
   class MapToResidual {
 

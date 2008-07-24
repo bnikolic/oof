@@ -86,12 +86,15 @@ namespace OOF {
     farf->AddParams(pars);
   }
 
-  void ObsCompare::Beam (unsigned i , AstroMap::Map & res )
+  void ObsCompare::Beam (unsigned i,
+			 AstroMap::Map & res) const
   {
-	(*ApScratch) = ( *aperture->getphase()) ;
-	phasescreens[i]->DePhase(*ApScratch) ;
-	
-	farf->Power( *aperture->getamp() , *ApScratch, res );
+    (*ApScratch) = ( *aperture->getPhase(i)) ;
+    phasescreens[i]->DePhase(*ApScratch) ;
+    
+    farf->Power(*aperture->getAmp(i), 
+		*ApScratch,
+		res);
   }
 
   AstroMap::Map *  ObsCompare::Beam (unsigned i  )
@@ -114,22 +117,17 @@ namespace OOF {
     return res;
   }
 
-  void  ObsCompare::residuals ( std::vector< double > & res ) const
+  void ObsCompare::residuals(std::vector<double> &res) const
   {
-    // do this the simple minded way first....
-
-    std::vector<double>::iterator resiter ( res.begin() );
+    std::vector<double>::iterator resiter (res.begin());
 
     for (unsigned i = 0  ; i < rescalculators.size() ; ++i ) 
-      {
-	(*ApScratch) = ( *aperture->getphase()) ;
-	phasescreens[i]->DePhase(*ApScratch) ;
-	
-	farf->Power( *aperture->getamp() , *ApScratch, * SkyScratch );
-	
-	resiter += rescalculators[i]->residuals( *SkyScratch , resiter );
-      }
-    
+    {
+      Beam(i,
+	   *SkyScratch);
+      resiter += rescalculators[i]->residuals(*SkyScratch, 
+					      resiter);
+    }
   }
 
   ApertureMod * ObsCompare::GetAperture(void)

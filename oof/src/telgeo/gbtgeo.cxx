@@ -1,6 +1,7 @@
-/*!
-  Bojan Nikolic
-  $Id: gbtgeo.cxx,v 1.7 2005/09/09 17:46:24 bnikolic Exp $
+/**
+   \file gbtgeo.cxx
+   Bojan Nikolic <bojan@bnikolic.co.uk>
+
 */
 
 #include "gbtgeo.hxx"
@@ -66,7 +67,7 @@ namespace OOF {
     
     } ;
     
-    DMaskFN fn ( PrimRadius );
+    DMaskFN fn ( DishEffRadius() );
     WorldSet( Dish , fn );    
   }
 
@@ -245,6 +246,16 @@ namespace OOF {
 
     return delta;
 
+  }
+
+  TruncGBT::TruncGBT(double R):
+    primRadius(R)
+  {
+  }
+
+  double TruncGBT::DishEffRadius(void) const
+  {
+    return primRadius;
   }
 
 

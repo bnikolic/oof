@@ -1,7 +1,6 @@
-/*!
-  Bojan Nikolic
-  $Id: cassegrain.cxx,v 1.8 2005/09/06 01:35:00 bnikolic Exp $
-
+/** 
+    \file cassegrain.cxx
+    Bojan Nikolic <bojan@bnikolic.co.uk>
 */
 
 

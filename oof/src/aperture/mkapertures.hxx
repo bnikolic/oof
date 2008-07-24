@@ -10,6 +10,7 @@
 #define __OOF_MKAPERTURES_HXX__
 
 #include <astromap_fwd.hxx>
+#include <stdlib.h>
 
 
 namespace  OOF {
@@ -54,6 +55,21 @@ namespace  OOF {
 			     unsigned npix,
 			     unsigned nzern ,
 			     double oversample );
+
+  /** \brief Make an aperture model suitable for MUSTANG/GBT, with
+      possiblity of fitting for relative amplitude
+      
+      \param nobs Number of observations which constitute this set
+
+   */
+  ApertureMod * MkMgMltiAmpAp(TelGeometry * telgeo ,
+			      double wavel,
+			      unsigned npix,
+			      unsigned nzern ,
+			      double oversample,
+			      size_t nobs);
+
+  
 
 
 

@@ -6,10 +6,25 @@ In Development (to be 1.2)
 ==========================
 
    BUG FIXES:
+   
+   * Check maximum Zernike order in fit to prevent uncontrolled crash
 
    ENHANCEMENT:
 
    * OOF::version() reports the version of the package
+   
+   * OOF now has a unit-test framework in test subdirectory
+   
+   * Can fit for relative amplitude of illumination between the
+     observations in a set
+     
+   * SWIG wrapping introduces use of %import where appropriate, which
+     should lead to cleaner modules
+     
+   * New telescope "90GBT" which is GBT with aperture diameter set to
+     90m (for experimental analysis of MUSTANG data)
+     
+   * Easier generation of simulated FITS file: oofreduce.genSimFile()
    
    BUILD/DEPS:
    
@@ -17,6 +32,8 @@ In Development (to be 1.2)
      and stop the build
      
    * Depends on BNMin1 V1.2
+
+   * Depends on Boost
 
    DISTRIBUTION:
 

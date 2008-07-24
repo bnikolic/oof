@@ -33,12 +33,12 @@ namespace OOF {
 
   class TelGeometry;
 
-  /*!
-   * Represents an illumination model with a gaussian taper. The taper
-   * is controlled with the sigma parameter so that amplitude at dish
-   * edge is: exp( -1.0 / ( 2* sigma) ) the value at centre of the
-   * illumination.
-   *
+  /** \brief Illumination model with a Gaussian taper
+    
+    The taper is controlled with the sigma parameter so that amplitude
+    at dish edge is: exp( -1.0 / ( 2* sigma) ) the value at centre of
+    the illumination.
+   
    */
   class GaussAmpMod : public AmpliMod {
 
