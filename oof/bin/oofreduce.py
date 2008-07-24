@@ -250,7 +250,9 @@ def MkObsCompare(fnamein,
     return oc
 
 def SimBeamDS(obsfilename, 
-              beamfilename):
+              beamfilename,
+              fwhm=1.0,
+              extent=2):
     """
     Simulate the data series given observing pattern and beam shape
     
@@ -260,12 +262,20 @@ def SimBeamDS(obsfilename,
     zero).
 
     :param beamfilename: FITS file containing beams to simulate
+    
+    :param fwhm: FWHM of kernel used to interpolate beam
+    
+    :param extent: extent of kernel used to interpolate the beam
     """
     obsfile=pyfits.open(obsfilename)
     res=[]
     for i in range(1, len(obsfile)):
         skym=pyplot.FitsMapLoad(beamfilename, i)
-        mkds=MkMapResDS( obsfilename, i , skym)
+        mkds=MkMapResDS(obsfilename, 
+                        i,
+                        skym,
+                        fwhm=fwhm,
+                        extent=extent)
         res.append(mkds.MkModelDS(skym))
     return res
 
@@ -492,6 +502,46 @@ def InvertDSFile (fnamein, fnameout ):
     pass
 
 
+def genSimFile(beamfname,
+               obsfname,
+               fnameout,
+               ds_fwhm,
+               ds_extent):
+    """
+    Generate a simulated observation 
+    
+    The simulated file is created from beams stored in a FITS file and
+    another observe file.
+    
+    :param beamfname: FITS file containing the beams at each focus
+    
+    :param obsfname: Sample observation file which defines sky
+    sampling, telescope, etc
+
+    :param fnameout: Name of file to write
+    
+    :param ds_fwhm: FWHM of kernel used to iterpolate observed beams
+    onto positions of the telescope
+    
+    :param ds_Extent: Extent of the kernel used to iterpolate observed
+    beams onto positions of the telescope
+    """
+    fin=pyfits.open(obsfname)
+    beamds=SimBeamDS(obsfname,beamfname,
+                     fwhm=ds_fwhm,
+                     extent=ds_extent)
+    res=[fin[0]]
+    for j,hdu in enumerate(fin[1:]):
+        fnu=hdu.data.field("fnu")
+        ufnu=hdu.data.field("ufnu")
+        cds=beamds[j-1]
+        for i in range(len(fnu)):
+            hdu.data.field("fnu")[i]=cds.getp(i).fnu
+            hdu.data.field("ufnu")[i]=0
+        res.append(hdu)
+    iofits4.Write(res, 
+                  fnameout, 
+                  overwrite=1)
     
 
         
