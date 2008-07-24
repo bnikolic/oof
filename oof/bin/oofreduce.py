@@ -534,7 +534,7 @@ def genSimFile(beamfname,
     for j,hdu in enumerate(fin[1:]):
         fnu=hdu.data.field("fnu")
         ufnu=hdu.data.field("ufnu")
-        cds=beamds[j-1]
+        cds=beamds[j]
         for i in range(len(fnu)):
             hdu.data.field("fnu")[i]=cds.getp(i).fnu
             hdu.data.field("ufnu")[i]=0

@@ -17,6 +17,7 @@ import mustang
 import baselinealgo
 import oofreduce
 import oofplot
+import oofcol
 
 laptop_dirin="/home/bnikolic/data/gbt-oof/mustang2/"
 
@@ -378,6 +379,27 @@ def CompPixelData(c,r,**kw):
          ylabel=r"$f_\nu$",
          **kw
          )
+
+def ObsVsFitGen(dirin):
+    obsfilename=oofcol.getpar(dirin,"fitinfo.fits","obsfilename")
+    oofreduce.genSimFile(os.path.join(dirin,"fitbeams.fits"),
+                         obsfilename,
+                         os.path.join(dirin,"simds.fits"), 
+                         1,2)
+
+def ObsVsFitPlot(dirin,**kw):
+    obsfilename=oofcol.getpar(dirin,"fitinfo.fits","obsfilename")
+    x1,y1=vectorise(obsfilename)
+    x2,y2=vectorise(os.path.join(dirin,"simds.fits"))
+    diff(None,y1,y2,
+         os.path.join(dirin,"plots","obsvsfit.eps"),
+         xlabel=r"$t$",
+         ylabel=r"$f_\nu$",
+         **kw
+         )
+
+    
+                         
     
 
 def RelativeAmp(fname):
