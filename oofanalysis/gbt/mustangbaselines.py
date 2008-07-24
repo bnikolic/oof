@@ -173,7 +173,10 @@ def MustangPL():
 def DoAPixel(c,r,
              ver=1,
              multiamp=False,
-             do90=False):
+             do90=False,
+             usepoly=False,
+             base_rad=1.5e-4,
+             ):
     """
     Process a single pixel and copy the output aperture phase plot to
     temporary directory for visualisation
@@ -182,16 +185,23 @@ def DoAPixel(c,r,
         PrepareInputs(c,r,
                       do90=do90)
         fnameraw= "td/t18-raw-%i-%i.fits" % (c,r)
+        fnamepoly="td/t18-poly-%i-%i.fits" % (c,r)
     elif ver == 2:
         PrepareInputsV2(c,r)
         fnameraw= "td/t18-raw-%i-%i-v2.fits" % (c,r)
     else:
         raise "Unkown version"
-    fnamedb = fnameraw[:-5]+"-db.fits"
-    RemoveBaseline(fnameraw , 
-                   fnamedb,
-                   rad=1.5e-4 )        
-    oofreduce.Red(fnamedb, nzmax=5,
+    if usepoly :
+        obsfname=fnamepoly
+    else:
+        fnamedb = fnameraw[:-5]+"-db.fits"
+        RemoveBaseline(fnameraw , 
+                       fnamedb,
+                       rad=base_rad)        
+        obsfname=fnamedb
+
+    oofreduce.Red(obsfname, 
+                  nzmax=5,
                   multiamp=multiamp)
 
     for z in [3,5]:
@@ -387,10 +397,12 @@ def ObsVsFitGen(dirin):
                          os.path.join(dirin,"simds.fits"), 
                          1,2)
 
-def ObsVsFitPlot(dirin,**kw):
+def ObsVsFitPlot(dirin,simdir=None,**kw):
+    if simdir is None:
+        simdir=dirin
     obsfilename=oofcol.getpar(dirin,"fitinfo.fits","obsfilename")
     x1,y1=vectorise(obsfilename)
-    x2,y2=vectorise(os.path.join(dirin,"simds.fits"))
+    x2,y2=vectorise(os.path.join(simdir,"simds.fits"))
     diff(None,y1,y2,
          os.path.join(dirin,"plots","obsvsfit.eps"),
          xlabel=r"$t$",
