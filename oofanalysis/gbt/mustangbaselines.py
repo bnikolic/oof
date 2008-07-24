@@ -370,12 +370,13 @@ def vectorise(fnamein):
     return numpy.array(time),numpy.array(fnu)
     
 
-def CompPixelData():
+def CompPixelData(c,r,**kw):
     x1,y1=vectorise("td/t18-raw-5-3-db.fits")
-    x2,y2=vectorise("td/t18-raw-6-2-db.fits")
+    x2,y2=vectorise("td/t18-raw-%i-%i-db.fits" % (c,r))
     plot("temp/test.eps",[x1,y1,x2,y2],
          xlabel=r"$t$",
          ylabel=r"$f_\nu$",
+         **kw
          )
     
 
