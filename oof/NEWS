@@ -26,6 +26,9 @@ In Development (to be 1.2)
      
    * Easier generation of simulated FITS file: oofreduce.genSimFile()
    
+   * oofreduce.Red() now returns the directory to which fits were
+     output
+   
    BUILD/DEPS:
    
    * If checks for BN-libraries fail, configure will now report error

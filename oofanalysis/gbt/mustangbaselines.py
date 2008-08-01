@@ -409,15 +409,36 @@ def ObsVsFitPlot(dirin,simdir=None,**kw):
          ylabel=r"$f_\nu$",
          **kw
          )
-
-    
-                         
-    
-
 def RelativeAmp(fname):
     f=pyfits.open(fname)
     cf= max(f[2].data.field("fnu"))
     print max(f[1].data.field("fnu"))/cf
     print max(f[3].data.field("fnu"))/cf
+
+def CombineGood():
+    goodpix= [ (5,3),
+               (5,1),
+               (4,6)]
+    mustang.CombineFiles(["td/t18-raw-4-6-db.fits","td/t18-raw-5-1-db.fits" , "td/t18-raw-5-3-db.fits"], "td/t18-comb4.fits")
+
+
+
+
+def doTwoPix(c,r):
+    """
+    
+    """
+    obsfname="td/comb-2px-%i-%i.fits" % (c,r)
+    mustang.CombineFiles(["td/t18-raw-%i-%i-db.fits" %(c,r), "td/t18-raw-5-3-db.fits"],
+                         obsfname)
+    r=oofreduce.Red(obsfname, nzmax=5)    
+    oofplot.PlotDir(os.path.join(r,"z5"))
+    shutil.copy(os.path.join(r,"z5","plots","aperture-phase.png"),
+                "temp/comb-2px/p%i%i-z5.png" % (c,r))
+    
+    
+    
+    
+
 
 #oofreduce.RedOrder("td/t18-raw-5-3-db.fits", "oofout/test1", zorder=4, ic="oofout/t18-raw-5-3-db-003/z3/fitpars.fits", multiamp=True, nofit=["amp_r1", "amp_r2"])

@@ -454,6 +454,8 @@ def Red(obsfilename,
     nzmax:  the maximum zernike order to go to.
     extrafit: list of parameter names to turn fitting on for
     extraic : a list of extra inititial conditions in format (parname, parvalue)
+
+    :returns: The directory containing the fits
     """
 
     ptable=iofits4.FnParTable(locals(),
@@ -483,6 +485,7 @@ def Red(obsfilename,
                           ds_extent=ds_extent,
                           ptable=ptable,
                           **args)
+    return dirout
         
 
 def InvertDSFile (fnamein, fnameout ):
