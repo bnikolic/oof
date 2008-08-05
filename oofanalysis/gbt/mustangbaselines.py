@@ -426,15 +426,22 @@ def CombineGood():
 
 def doTwoPix(c,r):
     """
-    
+    Compute a pixel with pixel 5,3 and compute the phase map
     """
     obsfname="td/comb-2px-%i-%i.fits" % (c,r)
     mustang.CombineFiles(["td/t18-raw-%i-%i-db.fits" %(c,r), "td/t18-raw-5-3-db.fits"],
                          obsfname)
-    r=oofreduce.Red(obsfname, nzmax=5)    
-    oofplot.PlotDir(os.path.join(r,"z5"))
-    shutil.copy(os.path.join(r,"z5","plots","aperture-phase.png"),
+    dirout=oofreduce.Red(obsfname, nzmax=5)    
+    oofplot.PlotDir(os.path.join(dirout,"z5"))
+    shutil.copy(os.path.join(dirout,"z5","plots","aperture-phase.png"),
                 "temp/comb-2px/p%i%i-z5.png" % (c,r))
+
+def doAllTwoPix():
+    for c,r in MustangPL():
+        try:
+            doTwoPix(c,r)
+        except IOError, e:
+            print "not processed"
     
     
     
