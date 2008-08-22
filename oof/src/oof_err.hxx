@@ -23,6 +23,9 @@ namespace  OOF {
     
     UseError(const std::string &w);
 
+    virtual ~UseError() throw()
+    {};
+
   };
 
   /** \brief Errors due to inconsistent number of observations in set
@@ -41,6 +44,10 @@ namespace  OOF {
     NObsError(size_t expectedN, 
 	      size_t suppliedN, 
 	      const std::string &extratext);
+
+    virtual ~NObsError() throw()
+    {}
+    
 
   };
 
