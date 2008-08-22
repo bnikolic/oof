@@ -25,11 +25,6 @@ AC_CHECK_HEADER( fftw.h,
 
 AC_LANG_PUSH(C++)
 
-AC_CHECK_HEADERS( fitswrap.hxx , 
-		  [echo "found bnfits"],
-		  [echo "Error: No bnfits" ]  
-		  )
-
 AC_CHECK_HEADERS( minimmodel.hxx , 
 		  [echo "Found minimisation library, will build fitting routines "]
 		  )
