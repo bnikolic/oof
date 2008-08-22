@@ -25,4 +25,7 @@ export set SWIG=/usr/bin/swig
 # Additional paths if necessary
 export set LDFLAGS="${LDFLAGS} -L/usr/lib64 -L/soft/star64/lib/"
 
+# FLAG to find boost if necessary
+export BOOSTFLAG="--with-boost=/home/bn204/d/p/boost_1_35_0bin/"
+
 bash oofbuild.sh
