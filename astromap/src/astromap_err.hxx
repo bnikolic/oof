@@ -24,6 +24,9 @@ namespace AstroMap{
     
     UseError(const std::string &w);
 
+    virtual ~UseError() throw()
+    {};
+
   };
 
   /**
@@ -38,6 +41,9 @@ namespace AstroMap{
 
     IndexingError(int i, int j,
 		  const std::string &w);
+
+    virtual ~IndexingError() throw()
+    {}
 
   };
 
