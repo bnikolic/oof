@@ -2,13 +2,20 @@
 BNLib Release Notes  
 ======================
 
-In Development (to be V1.2.1)
-=============================
+In Development (to be V1.3)
+===========================
+
+Version 1.2.1
+=============
 
 Enhancements:
 
    * Add BNLib::version() to report the version of the library as a
      string
+
+Distribution:
+	
+   * Published on the web
 
 Version 1.2
 ===========
