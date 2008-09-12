@@ -17,5 +17,12 @@ namespace std {
 %include "../src/fitserr.hxx"
 %include "../src/fitswrap.hxx"
 %include "../src/fitsops.hxx"
+
+%extend BNFits::FIOExc {
+	const char * __str__()
+	{
+	return self->what();	
+	}
+}
  
 
