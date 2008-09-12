@@ -28,10 +28,10 @@ namespace AstroMap {
   // Writing routines
 
   void FitsWrite ( Map & m,
-		   BNFits::FitsF &fout);
+		   BNFits::FitsF &fout) throw (BNFits::FIOExc);
 
   void FitsWrite ( Map & m,
-		   const char * fnameout );
+		   const char * fnameout ) throw (BNFits::FIOExc);
 
   void FitsWrite ( std::vector<Map *> mvect,
 		   const char * fnameout );

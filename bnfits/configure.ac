@@ -1,5 +1,5 @@
 AC_INIT(BNFITS,
-	1.2,
+	1.2.1,
 	"Bojan Nikolic"   <bojan@bnikolic.co.uk>)
 
 

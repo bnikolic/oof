@@ -73,7 +73,7 @@ namespace AstroMap {
 
 
   void FitsWrite ( Map & m,
-		   BNFits::FitsF &fout)
+		   BNFits::FitsF &fout) throw (BNFits::FIOExc)
 
   {
     using namespace BNFits;
@@ -92,22 +92,11 @@ namespace AstroMap {
   }
 
   void FitsWrite ( Map & m,
-		   const char * fnameout )
+		   const char * fnameout ) throw (BNFits::FIOExc)
   {
     using namespace BNFits;
-
-    try {
-      FitsF fout ( fnameout, FitsF::create);
-      FitsWrite( m, fout);
-
-    }     
-    catch (FIOExc exc ) 
-      {
-	std::cerr<<"\n ERROR: Writing image failed with following error:\n";
-	std::cerr<<exc.what();
-	std::cerr<<"\n Unkown results writen";
-      }
-    
+    FitsF fout (fnameout, FitsF::create);
+    FitsWrite(m, fout);
   }
 
   void FitsWrite ( std::vector<Map *> mvect,

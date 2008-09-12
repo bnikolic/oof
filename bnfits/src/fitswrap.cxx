@@ -1,5 +1,7 @@
-/* Bojan Nikolic
-   $Id: fitswrap.cxx,v 1.8 2006/04/02 23:34:36 bnikolic Exp $
+/**
+   \file fitswrap.cxx
+   
+   Bojan Nikolic <bojan@bnikolic.co.uk> , <b.nikolic@mrao.cam.ac.uk>
 */
 
 #include "fitswrap.hxx"
@@ -17,26 +19,29 @@ namespace BNFits {
   {
     int status = 0;
 
-    int iomode ;
+    int iomode;
     if ( mode == read ) 
-      {
+    {
       iomode = READONLY;
-
-      if ( fits_open_file(&file, fname , iomode, &status))
-	throw ( FIOExc(fname ,"Error opening FITS file", status) ); 
-      }
+      if (fits_open_file(&file, fname, iomode, &status))
+	throw (FIOExc(fname ,
+		      "Error opening FITS file",
+		      status)); 
+    }
     else if ( mode == create )
-      {
-	fits_create_file( &file, fname , &status ) ;
-	  
-      }
+    {
+      if (fits_create_file( &file, fname , &status ))
+	throw (FIOExc(fname ,
+		      "Could not create FITS file (exists already?)",
+		      status));
+    }
     else if ( readwrite == mode )
-      {
-	iomode = READWRITE;
-
-      if ( fits_open_file(&file, fname , iomode, &status))
-	throw ( FIOExc(fname ,"Error opening FITS file for read/write", status) ); 
-      }
+    {
+      iomode = READWRITE;
+      
+      if (fits_open_file(&file, fname, iomode, &status))
+	throw (FIOExc(fname ,"Error opening FITS file for read/write", status) ); 
+    }
 
   }
 

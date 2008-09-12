@@ -4,6 +4,15 @@ BNFits Release Notes
 In Development (to be V1.3)
 ---------------------------
 
+To be Version 1.2.1
+-------------------
+
+BUG FIXES:
+
+  * Try to create a file that already exists now raises FitsF
+    exception
+
+
 Version 1.2
 -----------
 

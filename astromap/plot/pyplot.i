@@ -52,6 +52,8 @@ namespace std {
    %template(SizeTVector) vector<size_t>; 
 }
 
+%import "fitserr.hxx"
+
 %apply int & OUTPUT { int &pxOUT, int &pyOUT };
 %apply double & OUTPUT { double & minval, double & maxval};
 
