@@ -1,7 +1,9 @@
-/*! Bojan Nikolic
-    $Id:
+/** 
+    \file fitsops.hxx
 
-    Some operations on FITS files.
+   Bojan Nikolic <bojan@bnikolic.co.uk>, <b.nikolic@mrao.cam.ac.uk>
+
+   Some operations on FITS files.
 */
 #ifndef _BNFITS_FITSOPS_HXX__
 #define _BNFITS_FITSOPS_HXX__

@@ -1,5 +1,7 @@
-/*! Bojan Nikolic
-    $Id: fitserr.cxx,v 1.1 2005/06/09 12:30:23 bnikolic Exp $
+/**
+   \file fitserr.cxx
+
+   Bojan Nikolic <bojan@bnikolic.co.uk>, <b.nikolic@mrao.cam.ac.uk>
 */
 
 #include "fitserr.hxx"

@@ -1,6 +1,7 @@
-/*! Bojan Nikolic
-    $Id:
+/**
+   \file fitsops.cxx
 
+   Bojan Nikolic <bojan@bnikolic.co.uk>, <b.nikolic@mrao.cam.ac.uk>
 */
 
 #include "fitsops.hxx"

@@ -1,5 +1,7 @@
-/* Bojan Nikolic
-   $Id: fitswrap.hxx,v 1.8 2006/04/02 23:34:36 bnikolic Exp $
+/**
+   \file fitswrap.hxx
+   
+   Bojan Nikolic <bojan@bnikolic.co.uk>, <b.nikolic@mrao.cam.ac.uk>
    
    Simple wrapper for cfitsio
 */

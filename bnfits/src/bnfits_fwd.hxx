@@ -1,8 +1,9 @@
-/*
-  Bojan Nikolic
-  $Id: bnfits_fwd.hxx,v 1.1 2005/08/18 14:19:20 bnikolic Exp $
+/**
+   \file bnfits_fwd.hxx
+   
+   Bojan Nikolic <bojan@bnikolic.co.uk>, <b.nikolic@mrao.cam.ac.uk>
 
-  Forward declarations for bnfits
+   Forward declarations for bnfits
 */
 
 #ifndef _BNFITS_BNFITS_FWD__HXX_

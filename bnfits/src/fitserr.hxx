@@ -1,9 +1,9 @@
 /** \file fitserr.hxx
     
-    Bojan Nikolic <bojan@bnikolic.co.uk> , <bn204@mrao.cam.ac.uk>
-
-    Some basic facilities for signaling and processing errors arrising
-    out of FITS I/O
+   Bojan Nikolic <bojan@bnikolic.co.uk>, <b.nikolic@mrao.cam.ac.uk>
+   
+   Some basic facilities for signaling and processing errors arrising
+   out of FITS I/O
 */
 #ifndef _BNFITS_FITSERR_HXX__ 
 #define _BNFITS_FITSERR_HXX__ 
