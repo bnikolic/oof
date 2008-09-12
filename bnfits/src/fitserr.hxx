@@ -1,5 +1,6 @@
-/*! Bojan Nikolic
-    $Id: fitserr.hxx,v 1.1 2005/06/09 12:30:23 bnikolic Exp $
+/** \file fitserr.hxx
+    
+    Bojan Nikolic <bojan@bnikolic.co.uk> , <bn204@mrao.cam.ac.uk>
 
     Some basic facilities for signaling and processing errors arrising
     out of FITS I/O
@@ -12,23 +13,32 @@
 namespace BNFits {
 
   
-
   /*! Make up a nice message about what went wrong */
-  std::string MkMsg (std::string fname, std::string msg, int fitsstatus) ;
+  std::string MkMsg (const std::string &fname, 
+		     const std::string &msg, 
+		     int fitsstatus);
 
-  class FIOExc : public std::runtime_error {
+  class FIOExc: 
+    public std::runtime_error
+  {
 
   public:
     
-    FIOExc ( std::string fname, std::string msg, int fitsstatus);
+    FIOExc (const std::string &fname, 
+	    const std::string &msg, 
+	    int fitsstatus);
 
   };
 
-  class NoSuchHdr : public FIOExc {
+  class NoSuchHdr: 
+    public FIOExc 
+  {
     
   public:
     
-    NoSuchHdr( std::string fname, unsigned hdrno, int fitsstatus);
+    NoSuchHdr(const std::string &fname, 
+	      const unsigned &hdrno, 
+	      int fitsstatus);
   };
 
 

@@ -8,7 +8,9 @@
 
 namespace BNFits {
 
-  std::string MkMsg (std::string fname, std::string msg, int fitsstatus) 
+  std::string MkMsg(const std::string &fname, 
+		    const std::string &msg, 
+		    int fitsstatus) 
   {
     std::ostringstream s;
     
@@ -17,16 +19,20 @@ namespace BNFits {
     return s.str();
   }
 
-  FIOExc::FIOExc( std::string fname, std::string msg, int fitsstatus):
-    std::runtime_error( MkMsg( fname, msg , fitsstatus))
+  FIOExc::FIOExc(const std::string &fname,
+		 const std::string &msg, 
+		 int fitsstatus):
+    std::runtime_error(MkMsg( fname, msg , fitsstatus))
   {
   }
 
   
-  NoSuchHdr::NoSuchHdr( std::string fname, unsigned hdrno, int fitsstatus) :
-    FIOExc ( fname , 
-	     std::string("Requested header could not be read"),
-	     fitsstatus)
+  NoSuchHdr::NoSuchHdr(const std::string &fname, 
+		       const unsigned &hdrno, 
+		       int fitsstatus):
+    FIOExc (fname , 
+	    std::string("Requested header could not be read"),
+	    fitsstatus)
   {
   }
 
