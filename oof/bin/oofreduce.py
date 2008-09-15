@@ -42,6 +42,11 @@ def GetBeamSeparation(fnamein):
         beamsep = 57.8
     return beamsep
 
+def GetTelescope(fnamein):
+    "Return the telescope string"
+    filein = pyfits.open(fnamein)
+    return  filein[0].header["telesc"]
+
 def GetObsWaveL(fnamein):
 
     "Return the observing wavelength"
@@ -344,7 +349,8 @@ def RedOrder(obsfilename,
     :returns: Filename of the file containing the fit
     """
     wavel = GetObsWaveL(obsfilename)
-    
+    telescope = GetTelescope(obsfilename)
+    print "multiamp = %s" % (multiamp)
     oc=MkObsCompare(obsfilename, 
                     nzern=zorder,
                     npix=npix, 
@@ -396,6 +402,7 @@ def RedOrder(obsfilename,
     for ext in range(0,2):
         prihdr = hdulist[ext].header
         prihdr.update('wave',wavel,'wavelength (m), floating value')
+        prihdr.update('telesc',telescope,'Telescope (and aperture)')
     hdulist.flush()
 
     # Save the fits file with information about the fit
@@ -547,11 +554,4 @@ def genSimFile(beamfname,
                   overwrite=1)
     
 
-        
     
-
-
-
-
-
-

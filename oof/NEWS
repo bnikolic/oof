@@ -5,6 +5,16 @@ OOF Release Notes
 In Development (to be 1.3)
 ==========================
 
+   BUG FIXES:
+
+   ENHANCEMENTS:
+   
+   * Write the name of the telescope to the output aperture file
+     (aperture-notilt.fits)
+
+   BUILD/DEPS:
+
+   DISTRIBUTION:
 
 Version 1.2
 ===========
