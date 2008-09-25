@@ -1,6 +1,6 @@
 
 AC_INIT(BNLIB,
-	1.2.1,
+	1.2.2,
 	"Bojan Nikolic"   <bojan@bnikolic.co.uk>)
 
 AC_CONFIG_AUX_DIR(config)
