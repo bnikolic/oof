@@ -161,27 +161,22 @@ def SinglePixelFile(fnamein,
                     fnameout,
                     colno,
                     rowno):
-
     """
     Extract single pixel of data from a multi-pixel Mustang data file
 
     excample usage:
-    SinglePixelFile("/home/bnikolic/data/gbt-oof/mustang/agbt08a/agbt08a-056-08-s82s83s843C279.fits",
-                    "/home/bnikolic/data/gbt-oof/mustang/agbt08a/c67.fits" , 6, 7)
+    >>> SinglePixelFile("/home/bnikolic/data/gbt-oof/mustang/agbt08a/agbt08a-056-08-s82s83s843C279.fits",
+                        "/home/bnikolic/data/gbt-oof/mustang/agbt08a/c67.fits" , 6, 7)
                     
     """
-
-
     fin=pyfits.open(fnamein)
-
     res=[ fin[0]]
     for h in fin[1:]:
-
         mask=SelectCR(h.data, colno, rowno)
-
-        h.data = h.data[mask]
+        newdata=h.data._clone((sum(mask),))
+        newdata=h.data[mask]
+        h.data=newdata
         res.append(h)
-            
     iofits4.Write(res,
                   fnameout,
                   overwrite=1)
