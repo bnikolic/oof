@@ -153,9 +153,11 @@ def SelectCR( din,
     """
     Select a single pixel by column and row numbers
     """
-
-    return numpy.logical_and( din.field("col") == colno,
-                              din.field("row") == rowno)
+    r=numpy.logical_and(din.field("col") == colno,
+                        din.field("row") == rowno)
+    #Possible work-around for a bug: make sure the returned value has
+    #boolean type
+    return numpy.array(r,dtype=numpy.bool)
 
 def SinglePixelFile(fnamein,
                     fnameout,
@@ -174,7 +176,7 @@ def SinglePixelFile(fnamein,
     for h in fin[1:]:
         mask=SelectCR(h.data, colno, rowno)
         newdata=h.data._clone((sum(mask),))
-        newdata=h.data[mask]
+        newdata[:]=numpy.array(h.data)[mask]
         h.data=newdata
         res.append(h)
     iofits4.Write(res,
