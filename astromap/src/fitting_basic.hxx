@@ -23,8 +23,7 @@ namespace BNLib{
 namespace AstroMap {
 
   /**
-     \brief Fit single functions of two variables to a region in a map.
-     
+     \brief Fit functions to a in a map
    */
   class FittableMap :
     public Minim::Minimisable
@@ -56,33 +55,31 @@ namespace AstroMap {
        
        \note still need to add parameters after construction
      */
-    FittableMap(const Map       & map);
+    FittableMap(const Map &map);
 
     // ---------- Public interface         -------------
 
     /** \brief Set the model to fit for
      */
-    void SetModel(BNLib::BinaryDD * mod);
+    void SetModel(BNLib::BinaryDD *mod);
 
     /** \brief return a copy of the scratch map
 	
      */
-    Map * ScratchCopy(void);
+    Map *ScratchCopy(void);
     
 
     // ---------- Inherited from Minimisable -----------
-    
-    virtual void  residuals ( std::vector< double > & res ) ;
-    virtual unsigned   nres (void)  ; 
-
+    virtual void residuals( std::vector< double > &res);
+    virtual unsigned nres(void); 
   };
 
   /**
      \brief Fit a gaussian to a map.
    */
   class GaussMapModel:
-    public FittableMap {
-    
+    public FittableMap 
+  {
   public:
 
     // ---------- Public data ------------
@@ -95,13 +92,10 @@ namespace AstroMap {
 
     // ------------ Construction/ destruction ----------
     
-    GaussMapModel( const Map  & map);
+    GaussMapModel(const Map  &map);
 
     // ---------- Inherited from Minimisable -----------
-
-    virtual    void     AddParams ( std::vector< Minim::DParamCtr > &pars );
-    
-
+    virtual void AddParams(std::vector< Minim::DParamCtr > &pars);
   };
 
 }
