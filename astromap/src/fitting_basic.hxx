@@ -35,7 +35,7 @@ namespace AstroMap {
     const Map & map;
 
     /// A scratch map to compute the model on
-    Map mtemp;
+    mutable Map mtemp;
 
   public:
 
@@ -70,8 +70,8 @@ namespace AstroMap {
     
 
     // ---------- Inherited from Minimisable -----------
-    virtual void residuals( std::vector< double > &res);
-    virtual unsigned nres(void); 
+    virtual void residuals( std::vector< double > &res) const;
+    virtual unsigned nres(void) const; 
   };
 
   /**

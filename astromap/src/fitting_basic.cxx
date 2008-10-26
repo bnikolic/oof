@@ -25,7 +25,7 @@ namespace AstroMap {
     model=mod;
   }
 
-  void  FittableMap::residuals ( std::vector< double > & res ) 
+  void FittableMap::residuals( std::vector< double > & res )  const
   {
     if (worldcs) 
     {
@@ -43,7 +43,7 @@ namespace AstroMap {
       }
   }
 
-  unsigned   FittableMap::nres (void) 
+  unsigned FittableMap::nres(void) const
   {
     return map.nx * map.ny;
   }
