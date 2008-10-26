@@ -38,9 +38,9 @@ namespace BNLib {
     double dx ( x1- x0);
     double dy ( y1- y0);
 
-    return amp * exp ( -1.0 * ( 1.0/(2*sigma)   *  ( pow(dx,2) + pow(dy,2 ) ) +
-				rho *  ( dx*dy)  +
-				diff   *  ( pow(dx,2) - pow(dy,2 ) )));
+    return amp * exp ( -1.0 * ( 1.0/(2*sigma)   *  (pow(dx,2) + pow(dy,2) +
+						    rho *  ( dx*dy)  +
+						    diff   *  ( pow(dx,2) - pow(dy,2 )))));
 
   }  
 
