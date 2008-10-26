@@ -159,13 +159,10 @@ namespace std {
 
 %include "../config.h"
 
-#ifdef HAVE_MINIMMODEL_HXX
-
 %include "paramctr.hxx"
 %include "minimmodel.hxx"
 %include "../src/fitting_basic.hxx"
 
-#endif
 
 void cpgldev(void);
 int cpgbeg(int unit, const char *file, int nxsub, int nysub);

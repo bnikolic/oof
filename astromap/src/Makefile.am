@@ -24,16 +24,9 @@ libastromap_la_SOURCES= astromap.cxx astromap.hxx \
 libastromap_la_CFLAGS = -Wall   ${BN_CFLAGS}
 libastromap_la_CPPFLAGS = -Wall ${BN_CFLAGS}
 
-if HAVEBNMIN1
 libastromap_la_LIBADD = -lfftw ${BN_LIBS} \
 			coordsys/libcoordsys.la \
 			dataser/libdataser.la -lbnmin1
-else
-libastromap_la_LIBADD = -lfftw  ${BN_LIBS} \
-			coordsys/libcoordsys.la \
-			dataser/libdataser.la 
-endif 
-
 
 include_HEADERS = 	astromap.hxx mapops.hxx \
 			mapset.hxx tmapset.hxx	 \

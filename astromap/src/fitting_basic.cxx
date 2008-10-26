@@ -6,8 +6,6 @@
 
 #include "fitting_basic.hxx"
 
-#if HAVE_MINIMMODEL_HXX
-
 #include "binaryfn.hxx"
 #include "mapset.hxx"
 
@@ -107,4 +105,4 @@ namespace AstroMap {
 
 }
 
-#endif //HAVE_MINIMMODEL_HXX
+

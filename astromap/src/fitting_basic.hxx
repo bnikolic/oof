@@ -11,8 +11,6 @@
 
 #include "../config.h"
 
-#if HAVE_MINIMMODEL_HXX
-
 #include "minimmodel.hxx"
 #include "astromap.hxx"
 #include "gaussian.hxx"
@@ -107,7 +105,5 @@ namespace AstroMap {
   };
 
 }
-
-#endif // HAVE_MINIMMODEL_HXX
 
 #endif

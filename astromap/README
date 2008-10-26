@@ -4,12 +4,21 @@ AstroMap README File
 Copyright Bojan Nikolic, 2005-2007, except src/wcs/* which is as
 indicated there
 
+Building
+--------
+
+My normal invocation::
+   
+   PKG_CONFIG_PATH=/home/bnikolic/d/p/bnprog-devel-main/lib/pkgconfig/ ./configure --prefix=/home/bnikolic/d/p/bnprog-devel-main
+
 Maintainer build
 ----------------
 
 Need to do::
 
      autoreconf -i
+
+
 
 
 Old build instructions
