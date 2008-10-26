@@ -25,16 +25,21 @@ namespace AstroMap {
     model=mod;
   }
 
-  void FittableMap::residuals( std::vector< double > & res )  const
+  void FittableMap::eval(Map &m) const
   {
     if (worldcs) 
     {
-      WorldSet(mtemp, *model);
+      WorldSet(m, *model);
     }
     else
     {
-      PixelSet(mtemp, *model);
+      PixelSet(m, *model);
     }
+  }
+
+  void FittableMap::residuals( std::vector< double > & res )  const
+  {
+    eval(mtemp);
 
     for ( size_t j =0 ; j < map.ny ; ++j) 
       for ( size_t i =0 ; i < map.nx ; ++i)

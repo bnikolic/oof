@@ -67,6 +67,10 @@ namespace AstroMap {
 	
      */
     Map *ScratchCopy(void);
+
+    /** \brief Set a map according to the current model
+     */
+    void eval(Map &m) const;
     
 
     // ---------- Inherited from Minimisable -----------
