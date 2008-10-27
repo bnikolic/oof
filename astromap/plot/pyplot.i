@@ -130,6 +130,11 @@ namespace std {
      void set  ( unsigned x, unsigned y, double val) {
 	self->get(x,y)=val;
      }
+
+     std::vector<double> * vect(void) {
+     	return new std::vector<double>( &((*self)[0]),
+	       	   			&((*self)[self->size()]));
+     }
 	
 
 }
