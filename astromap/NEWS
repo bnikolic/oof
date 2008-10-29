@@ -11,6 +11,12 @@ Enhancements:
      
       numpy.array(m.vect())
 
+Building:
+
+  * In order to migrate fully to pkg-config conditional compilation of
+    fitting codes has become mandatory for the time beeing. Please
+    ensure BNMin1 is in the pkg-config path
+
 To be Version 1.2.1
 -------------------
 

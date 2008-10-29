@@ -5,6 +5,11 @@ BNLib Release Notes
 In Development (to be V1.3)
 ===========================
 
+Enhancements:
+
+  * Definition of Gaussian parameters in gaussian.cxx has been
+    rationalised. Note that meaning of rho and diff has changed!
+
 Version 1.2.2
 =============
 
