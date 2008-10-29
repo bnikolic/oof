@@ -57,6 +57,12 @@ namespace std {
 %apply int & OUTPUT { int &pxOUT, int &pyOUT };
 %apply double & OUTPUT { double & minval, double & maxval};
 
+%catches(AstroMap::IndexingError) BiLinearMapInterp(const double *,
+			                                      const double *,
+			                                      double  *,
+							      size_t ,
+							      const Map &);
+
 %include "../src/astromap.hxx"
 %include "../src/astromap_err.hxx"
 %include "../src/astromapio.hxx"
@@ -167,7 +173,6 @@ namespace std {
 %include "paramctr.hxx"
 %include "minimmodel.hxx"
 %include "../src/fitting_basic.hxx"
-
 
 void cpgldev(void);
 int cpgbeg(int unit, const char *file, int nxsub, int nysub);

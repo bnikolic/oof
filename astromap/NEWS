@@ -11,6 +11,9 @@ Enhancements:
      
       numpy.array(m.vect())
 
+  * Indexing errors in map interpolation are caught in python wrap and
+    do not cause an abort of the program
+
 Building:
 
   * In order to migrate fully to pkg-config conditional compilation of
