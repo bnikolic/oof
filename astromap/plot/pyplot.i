@@ -130,6 +130,11 @@ namespace std {
      void set  ( unsigned x, unsigned y, double val) {
 	self->get(x,y)=val;
      }
+
+     std::vector<double> * vect(void) {
+     	return new std::vector<double>( &((*self)[0]),
+	       	   			&((*self)[self->size()]));
+     }
 	
 
 }
@@ -159,13 +164,10 @@ namespace std {
 
 %include "../config.h"
 
-#ifdef HAVE_MINIMMODEL_HXX
-
 %include "paramctr.hxx"
 %include "minimmodel.hxx"
 %include "../src/fitting_basic.hxx"
 
-#endif
 
 void cpgldev(void);
 int cpgbeg(int unit, const char *file, int nxsub, int nysub);

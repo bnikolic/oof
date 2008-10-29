@@ -6,8 +6,6 @@
 
 #include "fitting_basic.hxx"
 
-#if HAVE_MINIMMODEL_HXX
-
 #include "binaryfn.hxx"
 #include "mapset.hxx"
 
@@ -27,16 +25,21 @@ namespace AstroMap {
     model=mod;
   }
 
-  void  FittableMap::residuals ( std::vector< double > & res ) 
+  void FittableMap::eval(Map &m) const
   {
     if (worldcs) 
     {
-      WorldSet(mtemp, *model);
+      WorldSet(m, *model);
     }
     else
     {
-      PixelSet(mtemp, *model);
+      PixelSet(m, *model);
     }
+  }
+
+  void FittableMap::residuals( std::vector< double > & res )  const
+  {
+    eval(mtemp);
 
     for ( size_t j =0 ; j < map.ny ; ++j) 
       for ( size_t i =0 ; i < map.nx ; ++i)
@@ -45,7 +48,7 @@ namespace AstroMap {
       }
   }
 
-  unsigned   FittableMap::nres (void) 
+  unsigned FittableMap::nres(void) const
   {
     return map.nx * map.ny;
   }
@@ -107,4 +110,4 @@ namespace AstroMap {
 
 }
 
-#endif //HAVE_MINIMMODEL_HXX
+
