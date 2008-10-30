@@ -1,0 +1,7 @@
+AstroMap known bugs
+===================
+
+* When called form python, FitsMapLoad() returns an object which is
+  not automatically deleted, leading to potential memory leaks. 
+  
+  Work around by calling the __swig_destroy__ method
