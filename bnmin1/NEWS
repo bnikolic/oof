@@ -5,6 +5,9 @@ BNMin1 Release Notes
 Development (to be V1.4)
 ========================
 
+Enhancements:
+
+  * New parameter utilitiy functions in bnmin1utils.py
 
 Version 1.3
 ===========

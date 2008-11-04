@@ -14,8 +14,8 @@ import pyxplot
 
 
 def MkIllMap(npix,
-             noise=0.3,):
-                 
+             noise=0.3,
+             width=70):
     m1=pyplot.Map(npix,npix)
     fm=pyplot.GaussMapModel(m1)
     fm.worldcs=False
@@ -75,6 +75,24 @@ def plotmode(n=1000):
                   
     return xx, xy
     
+def MkMapFit(m):
+    fm=pyplot.GaussMapModel(m)
+    bnmin1utils.SetIC(fm, [1,m.nx/2,m.ny/2,
+                           70,0.5,0.3])
+    lmm=pybnmin1.LMMin(fm)
+    lmm.solve()
+    return [ lmm.getbyname(p).getp() for p in ["amp"]]
+
+def PlotAmpBias(npix=64,n=100,noise=0.5):
+    r=[]
+    for i in range(n):
+        r.append(MkMapFit(MkIllMap(npix,noise=noise))[0])
+    pyxplot.histogram([[r, ""]],
+                      "o/amphist-%i.eps" % (noise*10,),
+                      width=10,
+                      xlabel="Amplitude",
+                      nbins=50)    
+
 
 
 

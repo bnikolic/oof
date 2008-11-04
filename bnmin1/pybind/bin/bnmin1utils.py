@@ -50,5 +50,26 @@ def SetIC(m,ic):
         mod = pybnmin1.ModelDesc(m)
     for i,x in enumerate(ic):
         mod.getbynumb(i).setp(x)
+
+def ParDict(m):
+    """Return parameters of the model as a dictionary"""
+    if getattr(m, "downcast", False):
+        md=pybnmin1.ModelDesc(m.downcast())
+    else:
+        md=pybnmin1.ModelDesc(m)
+    d={}
+    for i in range(md.NTotParam()):
+        p=md.getbynumb(i)
+        d[p.name]=p.getp()
+    return d
+
+def ParList(m):
+    """Return parameters of the model as a dictionary"""
+    md=pybnmin1.ModelDesc(m)
+    d=[]
+    for i in range(md.NTotParam()):
+        p=md.getbynumb(i)
+        d.append( (p.name,p.getp()))
+    return d
     
     
