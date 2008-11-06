@@ -9,6 +9,12 @@ Enhancements:
 
   * New parameter utilitiy functions in bnmin1utils.py
 
+Bug-fixes:
+
+  * Likelihood calculation from square of residuals now correctly
+    takes into account a factor of two arising from standard gaussian
+    noise likelihood calculation
+
 Version 1.3
 ===========
 

@@ -49,7 +49,9 @@ namespace Minim {
     double ss=0;
     for (size_t i=0; i < res.size() ; ++i)
       ss += std::pow(res[i],2);
-    return ss;
+
+    // Account for the (2 sigma^2) at the bottom of likelihood....
+    return 0.5*ss;
   }
 
 }
