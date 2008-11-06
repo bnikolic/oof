@@ -14,6 +14,7 @@
 #include <vector>
 #include <map>
 #include <memory>
+#include <string.h>
 
 #include "../bnrandom.hxx"
 #include "kolmogorov_3diters.hxx"

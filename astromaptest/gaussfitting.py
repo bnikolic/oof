@@ -232,4 +232,42 @@ def plotMCMCbias():
                       relative=True,
                       key=None)    
 
+def plotParamMargs(x,
+                   nbins=50):
+
+    r=bnmin1utils.ChainToArray(x) 
+    pyxplot.histogram([[r[:,0], ""],],
+                      "o/mcmc_amp.eps",
+                      width=10,
+                      xlabel="Amplitude",
+                      nbins=nbins,
+                      relative=True,
+                      key=None)      
+
+    pyxplot.histogram([[r[:,3], ""],],
+                      "o/mcmc_sigma.eps",
+                      width=10,
+                      xlabel="Width",
+                      nbins=nbins,
+                      relative=True,
+                      key=None)      
+
+    pyxplot.histogram([[r[:,1], ""],],
+                      "o/mcmc_pos.eps",
+                      width=10,
+                      xlabel="Position",
+                      nbins=nbins,
+                      relative=True,
+                      key=None)      
+
+    pyxplot.histogram([[r[:,4], ""],],
+                      "o/mcmc_rot.eps",
+                      width=10,
+                      xlabel="Rotation",
+                      nbins=nbins,
+                      relative=True,
+                      key=None)      
+    
+    
+
     

@@ -10,6 +10,10 @@ Enhancements:
   * Definition of Gaussian parameters in gaussian.cxx has been
     rationalised. Note that meaning of rho and diff has changed!
 
+Bug fixes:
+
+  * memset was used without including the official header -- fixed 
+
 Version 1.2.2
 =============
 

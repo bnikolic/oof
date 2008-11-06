@@ -10,6 +10,7 @@
 
 #include "../bnrandom.hxx"
 #include <cmath>
+#include <string.h>
 
 namespace BNLib {
 
