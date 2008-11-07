@@ -7,6 +7,7 @@
 
 #include <memory>
 #include <stdlib.h>
+#include <string.h>
 
 #include "telgeo.hxx"
 #include "cassegrain.hxx"
