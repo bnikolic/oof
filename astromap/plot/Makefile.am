@@ -19,7 +19,7 @@ libastromapplot_la_CPPFLAGS = -Wall -DCMAPDATADIR="$(datadir)" ${BN_CFLAGS}
 _pyplot_la_LDFLAGS = -module @X_LIBS@
 _pyplot_la_LIBADD  = ../src/libastromap.la \
 			libastromapplot.la \
-			-lpgplot -lcpgplot  -lX11 -lg2c -lpng
+			-lpgplot -lcpgplot  -lX11 -lpng
 
 
 _pyplot_la_SOURCES =  pyplot.i

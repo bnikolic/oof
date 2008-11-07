@@ -20,6 +20,8 @@ Building:
     fitting codes has become mandatory for the time beeing. Please
     ensure BNMin1 is in the pkg-config path
 
+  * Support for the news GNU toolchain (gcc 4.3, gfortran, etc)
+
 To be Version 1.2.1
 -------------------
 
