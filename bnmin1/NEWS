@@ -15,6 +15,13 @@ Bug-fixes:
     takes into account a factor of two arising from standard gaussian
     noise likelihood calculation
 
+  * PrettyPrint did not conform to new BOOST version... disabled for
+    the time being
+
+Building:
+
+  * Support for the new gfortran compilers
+
 Version 1.3
 ===========
 
