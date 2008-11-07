@@ -8,6 +8,7 @@
 
 #include <memory>
 #include <iostream>
+#include <typeinfo>
 
 #include <bndebug.hxx>
 #include <fitswrap.hxx>

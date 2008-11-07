@@ -7,6 +7,7 @@
 #include "astromapio.hxx"
 
 #include <iostream>
+#include <typeinfo>
 
 #include <fitswrap.hxx>
 #include <tfitsops.hxx>
