@@ -13,7 +13,8 @@ import bnmin1utils
 import pybnmin1
 
 import pyxplot
-from pyhlp import obsdst, twod
+from pyhlp import obsdst, twod, pyximgplot
+
 
 
 def MkIllMap(npix,
@@ -179,6 +180,7 @@ def MapMCMC(npix=64,
             noise=0.5,
             width=70,
             posfit=True,
+            twofit=False,
             ns=1000):
     ic=[1/noise,npix/2,npix/2,
         width,0.5,0.3]
@@ -195,8 +197,13 @@ def MapMCMC(npix=64,
 
     fm=pyplot.GaussMapModel(m1)
     bnmin1utils.SetIC(fm, ic)
+
+    if twofit:
+        steps=[0.05, 1.0, 0,0,0,0]
+    else:
+        steps=[0.05, 1.0, 1.0, 1.0, 0.05, 0.05]
     mm=pybnmin1.MetropolisMCMC(fm,
-                               [0.05, 1.0, 1.0, 1.0, 0.05, 0.05],
+                               steps,
                                33)
 
     return mm.sample(ns)
@@ -236,7 +243,7 @@ def plotParamMargs(x,
                    nbins=50):
 
     r=bnmin1utils.ChainToArray(x) 
-    pyxplot.histogram([[r[:,0], ""],],
+    pyxplot.histogram([[r[:,0]*0.5, ""],],
                       "o/mcmc_amp.eps",
                       width=10,
                       xlabel="Amplitude",
@@ -266,8 +273,100 @@ def plotParamMargs(x,
                       xlabel="Rotation",
                       nbins=nbins,
                       relative=True,
-                      key=None)      
+                      key=None)     
+
+    pl= ["Amplitude", "x-position", "y-position",
+         "width", "squint", "rotation"]
+    for i in range(len(pl)):
+        pyxplot.histogram([[r[:,i], ""],],
+                          "o/mcmc-%i.eps" % (i,),
+                          width=10,
+                          xlabel="Rotation",
+                          nbins=nbins,
+                          relative=True,
+                          key=None)     
+        for j in range(i+1,len(pl)):
+            twod.hist2d(r[:,i],r[:,j],
+                        "o/mcmc-%i-%i.eps" % (i,j),
+                        xlabel=pl[i],
+                        ylabel=pl[j])        
+            
     
     
+def UniformSample(npix=64,
+                  noise=0.5,
+                  width=70,
+                  n=100):
+
+    ic=[1/noise,npix/2,npix/2,
+        width,0.5,0.3]
+
+    m1=pyplot.Map(npix,npix)
+    f2=pyplot.GaussMapModel(m1)
+    f2.worldcs=False
+    bnmin1utils.SetIC(f2,ic)
+    f2.eval(m1)
+    mnoise=pyplot.Map(npix, npix)
+    pyplot.NormDist(mnoise, 1.0 )
+    m1.add(mnoise)
+    
+    fm=pyplot.GaussMapModel(m1)
+    amprange=numpy.arange(1.0,3.0, 2.0/n)
+    posrange=numpy.arange(npix/2-10,npix/2+10,20.0/n)
+
+    res=numpy.zeros( (len(amprange),len(posrange)))
+    for i,a in enumerate(amprange):
+        for j,p in enumerate(posrange):
+            ic[0]=a
+            ic[1]=p
+            bnmin1utils.SetIC(fm, ic)
+            res[i,j]=-fm.lLikely()
+
+    return res
+
+def plotuniform(x):
+    x=x.transpose()
+    pyximgplot.plotmap(x,
+                       "o/uniform.eps",
+                       width=10,
+                       colmap=twod.rainbow2.get(),
+                       xlabel="Amplitude",
+                       ylabel="x-position",
+                       xrange=(1.0,3.0),
+                       yrange=(-10,10),
+                       cblabel="log-likelihood")
+
+    x=x- numpy.max(numpy.max(x))
+    x=numpy.exp(x)
+    pyximgplot.plotmap(x,
+                       "o/uniform-exp.eps",
+                       width=10,
+                       colmap=twod.rainbow2.get(),
+                       xlabel="Amplitude",
+                       ylabel="x-position",
+                       xrange=(1.0,3.0),
+                       yrange=(-10,10),
+                       cblabel="likelihood")
+    
+            
+def scatterPlot(x,n=-1):
+    r=bnmin1utils.ChainToArray(x) 
+    twod.pos(r[:n],
+             "o/statter-%i.eps"%n,
+             xlabel="Amplitude",
+             ylabel="x-position",
+             xrange=(1,3),
+             yrange=(22,42))
+
+    twod.hist2d(r[:n,0],r[:n,1],
+                "o/mcmc2h-%i.eps"%n,
+                xlabel="Amplitude",
+                ylabel="x-position",
+                range=((1,3),(22,42)))
+
+
+                
+             
+
 
     
