@@ -15,38 +15,64 @@ namespace Minim {
 
   /** A class to describe a model parameter
    */
-  template <class T>  class ParamCtr {
+  template<class T>
+  class ParamCtr
+  {
   public:
     /// Pointer to the actual value being controlled
     T * p;
+
     /// A name for this parameter
     std::string name;
+
     /// If false the parametar is excluded from fitting
     bool dofit;
+
     /// A comment explaining what the parametar does
     std::string comment;
 
-    ParamCtr( T* pp , std::string pname , bool pdofit , 
-	      const std::string &pcomment): 
-      p(pp) , name(pname) , dofit(pdofit) , comment(pcomment) {};
+    ParamCtr(T* pp,
+	     std::string pname,
+	     bool pdofit, 
+	     const std::string &pcomment): 
+      p(pp),
+      name(pname),
+      dofit(pdofit),
+      comment(pcomment)
+    {
+    }
     
-    /// if we want vectors of these, best to have an default
-    /// contructors. 
-    ParamCtr(void) : p(NULL), name(""), dofit(false) , comment("") {};
-
-    T  getp (void) { return *p; };
-    void setp (T pp ) { *p = pp ; };
-
-    /// Returns the name as a c-type string
-    const char * getname(void) { return name.c_str() ; }
-
-    /*! Returns the comment as a c-type string */
-    const char * getcomment(void) { 
-      return comment.c_str() ; 
+    /** Default constructor for interoperation with stl containers
+     */
+    ParamCtr(void):
+      p(NULL),
+      name(""),
+      dofit(false),
+      comment("")
+    {
     }
 
+    T  getp(void) 
+    {
+      return *p;
+    }
 
+    void setp(T pp)
+    { 
+      *p = pp;
+    }
 
+    /// Returns the name as a c-type string
+    const char * getname(void)
+    { 
+      return name.c_str(); 
+    }
+
+    /*! Returns the comment as a c-type string */
+    const char * getcomment(void) 
+    { 
+      return comment.c_str(); 
+    }
   };
 
   /// A floating point double parameter
