@@ -15,6 +15,10 @@ Bug-fixes:
     takes into account a factor of two arising from standard gaussian
     noise likelihood calculation
 
+  * ParamCtr constructor signature rationalised to not copy the name
+    parameter. Unlikely to cause problems, but noted here for
+    completeness.
+
   * PrettyPrint did not conform to new BOOST version... disabled for
     the time being
 

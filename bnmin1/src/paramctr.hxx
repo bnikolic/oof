@@ -32,7 +32,7 @@ namespace Minim {
     std::string comment;
 
     ParamCtr(T* pp,
-	     std::string pname,
+	     const std::string &pname,
 	     bool pdofit, 
 	     const std::string &pcomment): 
       p(pp),
