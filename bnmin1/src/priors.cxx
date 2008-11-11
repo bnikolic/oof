@@ -10,18 +10,18 @@
 
 namespace Minim {
 
-  IndependentFlatPriors::IndependentFlatPriors(MLikelihood * mod):
+  IndependentPriors::IndependentPriors(MLikelihood * mod):
     _mod(mod)
   {
     _mod->AddParams(_mpars);
   }
 
-  IndependentFlatPriors::~IndependentFlatPriors(void)
+  IndependentPriors::~IndependentPriors(void)
   {
   }
   
   
-  void IndependentFlatPriors::AddPrior( const std::string & pname,
+  void IndependentPriors::AddPrior( const std::string & pname,
 					double low,
 					double high)
   {
@@ -36,26 +36,33 @@ namespace Minim {
     priorlist.push_back(pr);
   }
 
-
-  double IndependentFlatPriors::lLikely(void) const
-  {
-    double lpriorprop = 0 ;
-    for (priorlist_t::const_iterator i = priorlist.begin();
-	 i != priorlist.end();
-	 ++i)
-    {
-      const double p = * (i->p);
-      if (p < i->pmin or p > i->pmax)
-	lpriorprop += 1e9;
-    }
-    return lpriorprop + _mod->lLikely();
-  }
-  
-  void  IndependentFlatPriors::AddParams ( std::vector< Minim::DParamCtr > &pars )
+  void  IndependentPriors::AddParams ( std::vector< Minim::DParamCtr > &pars )
   {
     _mod->AddParams(pars);
   }
 
+  double IndependentFlatPriors::lLikely(void) const
+  {
+    double lpriorprop = 0 ;
+    for (priorlist_t::const_iterator i = pbegin();
+	 i != pend();
+	 ++i)
+    {
+      const double p = * (i->p);
+      if (p < i->pmin or p > i->pmax)
+	lpriorprop += lkl_h;
+    }
+    return lpriorprop + IndependentPriors::lLikely();
+  }
+
+  IndependentFlatPriors::IndependentFlatPriors(MLikelihood * mod):
+    IndependentPriors(mod)
+  {
+  }
+  
+  IndependentFlatPriors::~IndependentFlatPriors(void)
+  {
+  }
 
 }
 

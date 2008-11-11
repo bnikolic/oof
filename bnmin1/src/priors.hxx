@@ -16,13 +16,13 @@
 
 namespace Minim {
   
-  /** \brief Flat, independent priors on each parameter
+  /** \brief Independent priors on each parameter
       
       \bug Interface presented by this class has not yet been fully
       finalised.
 
    */
-  class IndependentFlatPriors:
+  class IndependentPriors:
     public MLikelihood 
   {
 
@@ -36,11 +36,16 @@ namespace Minim {
       double pmax;
     };
     
+  public:
     typedef std::list<fprior_t> priorlist_t;
-    
+
+  private:
     priorlist_t priorlist;
 
   public:
+
+    /// --------------- Public data -----------------------
+    static const double lkl_h=1e9;
 
     // ---------- Construction / Destruction --------------
 
@@ -48,11 +53,9 @@ namespace Minim {
 
        \note This class takes ownership of the supplied pointer
     */
-    IndependentFlatPriors(MLikelihood * mod);
+    IndependentPriors(MLikelihood * mod);
 
-    /// Write out the constructor so that incomplete types in auto
-    /// pointers get properly deleted
-    ~IndependentFlatPriors(void);
+    virtual ~IndependentPriors(void);
 
     // ---------- Public interface  --------------------------
 
@@ -61,12 +64,48 @@ namespace Minim {
     void AddPrior( const std::string & pname,
 		   double low,
 		   double high);
-    
+
+    /// Support iteration overpriors
+    priorlist_t::const_iterator pbegin(void) const
+    {
+      return priorlist.begin();
+    }
+
+    /// Support iteration overpriors
+    priorlist_t::const_iterator pend(void) const
+    {
+      return priorlist.end();
+    }
+
+    // ------------   Inherited from Model   ----------------
+    void AddParams (std::vector<Minim::DParamCtr> &pars);
+
+    // Inherited from MLikelihood
+    double lLikely(void) const
+    {
+      return _mod->lLikely();
+    }
+
+  };
+
+  class IndependentFlatPriors:
+    public IndependentPriors
+
+  {
+  public:
+
+    // ---------- Construction / Destruction --------------
+
+    /** 
+	Construct with reference to an existing model
+    */
+    IndependentFlatPriors(MLikelihood * mod);
+
+    virtual ~IndependentFlatPriors(void);
+
+    // ---------- Public interface  --------------------------
     // Inherited from MLikelihood
     double lLikely(void) const;
-    // Inherited from Model
-    void     AddParams ( std::vector< Minim::DParamCtr > &pars );
-
   };
   
 
