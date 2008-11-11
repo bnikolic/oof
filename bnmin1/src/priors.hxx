@@ -43,7 +43,11 @@ namespace Minim {
   public:
 
     // ---------- Construction / Destruction --------------
-    
+
+    /** Construct with reference to an existing model
+
+       \note This class takes ownership of the supplied pointer
+    */
     IndependentFlatPriors(MLikelihood * mod);
 
     /// Write out the constructor so that incomplete types in auto

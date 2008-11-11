@@ -9,6 +9,8 @@
 #include <boost/assign/list_of.hpp>
 
 #include "metro_propose.hxx"
+#include "priors.hxx"
+#include "quadmodel.hpp"
 
 BOOST_AUTO_TEST_CASE( MetroPropose_raccept )
 {
@@ -47,5 +49,16 @@ BOOST_AUTO_TEST_CASE( MetroProposeSeq_displace )
 
 }
 
+BOOST_AUTO_TEST_CASE(FlatPrior_NoParam)
+{
+  std::vector<double> dummy;
+  Minim::IndependentFlatPriors pr(new QuadObs(dummy,dummy));
+
+  pr.AddPrior("c", 0,1);
+
+  BOOST_CHECK_THROW(pr.AddPrior("d", 0,1),
+		    const char *);
+  
+}
 
 
