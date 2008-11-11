@@ -28,8 +28,8 @@ namespace Minim {
     fprior_t pr;
     
     DParamCtr * par=findName(_mpars,pname);
-    if ( par == NULL)
-      throw "Could not find parameter";
+    if (par == NULL)
+      throw ParamError(pname+" not found");
     pr.p=par->p;
     pr.pmin=low;
     pr.pmax=high;

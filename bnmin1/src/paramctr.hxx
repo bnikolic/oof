@@ -10,6 +10,7 @@
 #define _BNMIN_PARAMCTR_HXX__
 
 #include <string>
+#include <stdexcept>
 
 namespace Minim {
 
@@ -77,6 +78,26 @@ namespace Minim {
 
   /// A floating point double parameter
   typedef ParamCtr<double>  DParamCtr;
+
+  class ParamError:
+    public std::runtime_error
+  {
+  public:
+    /// Use only if could not establish the parameter
+    ParamError(const std::string &msg):
+      std::runtime_error("Parameter not identified: " +msg)
+    {}
+
+    ParamError(const DParamCtr&p,
+	       const std::string &msg):
+      std::runtime_error(p.name+msg)
+    {}
+    
+    virtual ~ParamError() throw()
+    {}
+
+  };
+  
 
 
 }

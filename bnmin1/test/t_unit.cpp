@@ -57,7 +57,7 @@ BOOST_AUTO_TEST_CASE(FlatPrior_NoParam)
   pr.AddPrior("c", 0,1);
 
   BOOST_CHECK_THROW(pr.AddPrior("d", 0,1),
-		    const char *);
+		    Minim::ParamError);
   
 }
 
