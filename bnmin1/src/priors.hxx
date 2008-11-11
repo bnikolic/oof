@@ -107,6 +107,26 @@ namespace Minim {
     // Inherited from MLikelihood
     double lLikely(void) const;
   };
+
+  class LogFlatPriors:
+    public IndependentPriors
+
+  {
+  public:
+
+    // ---------- Construction / Destruction --------------
+
+    /** 
+	Construct with reference to an existing model
+    */
+    LogFlatPriors(MLikelihood * mod);
+
+    virtual ~LogFlatPriors(void);
+
+    // ---------- Public interface  --------------------------
+    // Inherited from MLikelihood
+    double lLikely(void) const;
+  };
   
 
 

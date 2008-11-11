@@ -7,6 +7,8 @@ Development (to be V1.4)
 
 Enhancements:
 
+  * Call for specifying log-flat priors (Minim::LogFlatPriors)
+
   * New parameter utilitiy functions in bnmin1utils.py
 
 Bug-fixes:

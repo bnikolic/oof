@@ -7,6 +7,7 @@
 #include "priors.hxx"
 
 #include "paramalgo.hxx"
+#include <cmath>
 
 namespace Minim {
 
@@ -63,6 +64,36 @@ namespace Minim {
   IndependentFlatPriors::~IndependentFlatPriors(void)
   {
   }
+
+  LogFlatPriors::LogFlatPriors(MLikelihood * mod):
+    IndependentPriors(mod)
+  {
+  }
+  
+  LogFlatPriors::~LogFlatPriors(void)
+  {
+  }
+
+  double LogFlatPriors::lLikely(void) const
+  {
+    double lpriorprop = 0 ;
+    for (priorlist_t::const_iterator i = pbegin();
+	 i != pend();
+	 ++i)
+    {
+      const double p = * (i->p);
+      if (p < i->pmin or p > i->pmax)
+      {
+	lpriorprop += lkl_h;
+      }
+      else
+      {
+	lpriorprop += std::log(p);
+      }
+    }
+    return lpriorprop + IndependentPriors::lLikely();
+  }
+
 
 }
 
