@@ -1,7 +1,7 @@
 
 lib_LTLIBRARIES = libminpda.la 
 
-libminpda_la_FFLAGS= -ff2c -fno-range-check
+libminpda_la_FFLAGS= -ff2c 
 
 if GFORTRAN
 	libminpda_la_FFLAGS+= -fno-range-check

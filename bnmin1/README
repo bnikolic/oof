@@ -1,7 +1,25 @@
-aclocal-1.9
-libtoolize
-automake-1.9 -a
-autoconf
+BNMin1 ReadMe File
+==================
+
+Building
+--------
+
+The requirements are fully docummented in the configure.ac
+file. 
+
+At MRAO I build with::
+
+	PKG_CONFIG_PATH=${BNDEST}/lib/pkgconfig SWIG=/usr/bin/swig ./configure --prefix=${BNDEST} --with-boost=/home/bn204/d/p/boost_1_35_0bin
+
+
+Maintaner build
+---------------
+
+autoreconf -i
+
+
+Old notes
+---------
 
 Note on 64 bit systems extra linker flags may need to be passed to
 pick up correct libgsl:
