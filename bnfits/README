@@ -3,19 +3,12 @@ BNFits README File
 
 Copyright Bojan Nikolic 2004-2007
 
-Old build instructions
-----------------------
-
-./configure CPPFLAGS="-I/home/bnikolic/p/bnlib/include -g" CFLAGS="-I/home/bnikolic/p/bnlib/include -g" LDFLAGS=-L/home/bnikolic/p/bnlib/lib  --prefix=/home/bnikolic/p/bnfits 
 
 
-on hathor:
-    
-  ./configure CPPFLAGS="${CPPFLAGS} -I${HOME}/p/bnlib/include -g" CFLAGS="${CFLAGS} -I${HOME}/p/bnlib/include -g" LDFLAGS=-L${HOME}/p/bnlib/lib  --prefix=${HOME}/p/bnfits 
+Build instructions
+------------------
 
 
-./configure 	CPPFLAGS="-I${BNPREFIX}/include -I/home/bn204/s/include" \
-			CFLAGS="-I${BNPREFIX}/include -I/home/bn204/s/include" \
-			SWIGFLAGS="-I${BNPREFIX}/include" \
-			LDFLAGS="-L${BNPREFIX}/lib -L/home/bn204/s/lib"\
-			 --prefix=${BNPREFIX} 
+On my laptop I build as::
+   
+   PKG_CONFIG_PATH=/home/bnikolic/d/p/bnprog-devel-main/lib/pkgconfig/  ./configure --prefix=/home/bnikolic/d/p/bnprog-devel-main
