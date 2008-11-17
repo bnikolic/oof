@@ -15,22 +15,28 @@ namespace Minim {
   static Minim::LMMin* LMMin_this;
   static int LMMin_lock (0);
 
-  extern "C" void LMMin_helper ( int *m, int *n, double *x, double *fvec, int *iflag)
+  extern "C" void LMMin_helper (int *m,
+				int *n,
+				double *x,
+				double *fvec,
+				int *iflag)
   {
-    
     LMMin_this->copytopars(x);
     LMMin_this->ResEval();
     LMMin_this->copyres(fvec);
-    
   }
   
   
-  LMMin::LMMin( Minimisable &pm ) : Minimiser(pm),
-				    ftol(1e-3), xtol(1e-3) , gtol(1e-3),
-				    maxfev(1000) , epsfcn(0.0),
-				    fjac(  NParam() * NRes() ) ,
-				    ldfjac( NRes() ),
-				    ipvt ( NParam() )
+  LMMin::LMMin( Minimisable &pm ): 
+    Minimiser(pm),
+    ftol(1e-3), 
+    xtol(1e-3),
+    gtol(1e-3),
+    maxfev(1000),
+    epsfcn(0.0),
+    fjac(NParam() * NRes()),
+    ldfjac(NRes()),
+    ipvt(NParam())
   {   
     MonitorChi_stride=NParam();
   }
