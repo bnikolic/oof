@@ -44,6 +44,7 @@ BOOST_AUTO_TEST_CASE( QuadT1 )
   qo.residuals(scratch);
 
   LMMin minimiser(qo);
+  minimiser.ftol=minimiser.xtol=minimiser.gtol=1e-5;
   ChiSqMonitor mon;
   minimiser.AddMon(&mon);
   minimiser.solve();
