@@ -30,4 +30,6 @@ void F77FUNC(pda_lmdif) ( void (*fcn)(int *m, int *n , double *x, double *fvec, 
 			  double *qtf,
 			  double *wa1, double *wa2, double *wa3,
 			  double *wa4);
+
+  double F77FUNC(pda_d1mach) (int *i);
 }

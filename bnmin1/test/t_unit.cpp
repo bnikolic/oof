@@ -2,6 +2,8 @@
 
 #define BOOST_AUTO_TEST_MAIN
 
+#include <limits>
+
 #include <boost/test/unit_test.hpp>
 #include <boost/test/auto_unit_test.hpp>
 #include <boost/test/floating_point_comparison.hpp>
@@ -10,7 +12,9 @@
 
 #include "metro_propose.hxx"
 #include "priors.hxx"
+#include "../src/pda.hxx"
 #include "quadmodel.hpp"
+
 
 BOOST_AUTO_TEST_CASE( MetroPropose_raccept )
 {
@@ -62,3 +66,14 @@ BOOST_AUTO_TEST_CASE(FlatPrior_NoParam)
 }
 
 
+
+BOOST_AUTO_TEST_CASE(PDA_D1MACH)
+{
+  
+  int i=3;
+  double x = pda_d1mach__(&i);
+  // Curiously this is a factor of two smaller than expected...
+  BOOST_CHECK_EQUAL(x*2,
+		    std::numeric_limits<double>::epsilon());
+		    
+}
