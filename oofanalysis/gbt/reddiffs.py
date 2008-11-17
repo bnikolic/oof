@@ -13,7 +13,7 @@ import oofplot
 
 datadir="/home/bnikolic/data/gbt-oof/q-band/reddiff/"
 
-def Red():
+def Red(fittol=None):
     oofreduce.Red(os.path.join(datadir,
                                "s19-1-db.fits"),
                   extrafit=[ "beamgainf" ],
@@ -24,7 +24,8 @@ def Red():
                   ds_fwhm=1.0,
                   ds_extent=2.0,
                   nzmax=7,
-                  prefdirout="oofout/reddiff")    
+                  prefdirout="oofout/reddiff",
+                  fittol=fittol)    
 
 def Todds():
     oofreduce.Red(os.path.join(datadir,

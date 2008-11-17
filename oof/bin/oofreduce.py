@@ -321,7 +321,8 @@ def RedOrder(obsfilename,
              ds_extent =2.0,
              ptable=None,
              multiamp=False,
-             nofit=[]):
+             nofit=[],
+             fittol=None):
     """Reduce OOF observation at single maximum order of Zernikes
     (c.f. function Red() which steps through a number of orders)
 
@@ -345,6 +346,9 @@ def RedOrder(obsfilename,
 
     :param nofit: Turn off parameters which fitting might be on by
     default. Seel also extrafit
+    
+    :fittol: Relative tolerance for the fit. If none, the library
+    default is used.
 
     :returns: Filename of the file containing the fit
     """
@@ -376,6 +380,9 @@ def RedOrder(obsfilename,
     else:
         for parname, parvalue in ic:
             lmm.getbyname(parname).setp(parvalue)
+
+    if fittol:
+        lmm.ftol=lmm.xtol=lmm.gtol=fittol
             
     lmm.solve()
 
