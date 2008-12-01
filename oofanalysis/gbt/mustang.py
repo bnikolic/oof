@@ -159,6 +159,7 @@ def SelectCR( din,
     #boolean type
     return numpy.array(r,dtype=numpy.bool)
 
+
 def SinglePixelFile(fnamein,
                     fnameout,
                     colno,
@@ -182,6 +183,86 @@ def SinglePixelFile(fnamein,
     iofits4.Write(res,
                   fnameout,
                   overwrite=1)
+
+
+def residualsW(obsfname,
+               beamfname):
+    """
+    Compute noise-weighted residuals
+
+    :returns: List of noise-weighted residuals arrays, one for each
+    de-focus setting
+    """
+    res=[]
+    odata=pyfits.open(obsfname)
+    dslist=oofplot.dsObsModel(obsfname,
+                              beamfname)
+    for i,(obsd,modeld) in enumerate(dslist):
+        res.append((obsd-modeld[:,2])/modeld[:,3])
+    return res    
+
+def SinglePixelChiSq(obsfname,
+                     beamfname,
+                     col,
+                     row,
+                     res=None):
+    """
+    Compute the chi-sq contribution of a single pixel
+
+    :param obsfname: FITS file with the observed time stream data
+
+    :param res: If res is passed, use these residuals rather than
+    re-computing for each pixel separately. (see PixelChiSq() )
+
+    """
+    if res is None:
+        res=residualsW(obsfname,
+                       beamfname)
+    odata=pyfits.open(obsfname)
+    r=0
+    for i,x in enumerate(res):
+        mask=SelectCR(odata[i+1].data,
+                      col,row)
+        r+= numpy.sum((res[i][mask])**2)
+    return r
+
+def PixelList(obsfname):
+    """
+    Return every unique pixel present in file as a (col,row) pair
+    """
+    d=pyfits.open(obsfname)[1].data
+    pl=zip(d.field("col"), 
+           d.field("row"))
+    return numpy.unique(pl)
+
+def PixelChiSq(obsfname,
+               beamfname,
+               doprint=True):
+    """
+    Return sorted list of per-pixel chi-squared contributions
+    """
+    residuals=residualsW(obsfname,
+                         beamfname)
+    res=[]
+    for c,r in PixelList(obsfname):
+        chsq=SinglePixelChiSq(obsfname,
+                              beamfname,
+                              c,r,
+                              residuals)
+        res.append( (chsq, (c,r)))
+    res.sort()
+    if doprint:
+        printPixelChiSq(res)
+    return res
+
+def printPixelChiSq(res):
+    """
+    Print the results of PixelChiSq in easier to read format
+    """
+    for ch, (c,r) in res:
+        print "Col=%i, Row=%i :  Chi-sq=%g" % (c, r, ch)
+
+               
 
 def CombineFiles( fnamelist,
                   fnameout):
