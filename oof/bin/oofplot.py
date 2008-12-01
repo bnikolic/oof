@@ -388,7 +388,34 @@ def dsToArray(ds):
 
 def dsObsModel(obsfilename,
                beamfilename):
-    """Return the observed and the model data series"""
+    """Return the observed and the model data series
+    
+    :param obsfilename: FITS file containing the observed time-stream
+    data
+    
+    :param beamfilename: FITS file containing simulated beams. This would 
+    typically be one of the "fitbeams.fits" files in the oofout directory.
+    
+    :returns: A list with one entry for each defocus setting, in same
+    order as in the obsfilename observation file. 
+    
+    Each entry in this list is itself a list of two entries. The first
+    is the observed flux data, the second is an array representation
+    of model data. This array has columns "dx", "dy", "fnu", "ufnu"
+    just as in FITS file. Therefore the flux (usually the quantitity
+    of interest) is in the third column of this array!
+
+    :note: Data are kept in same order as in the input file. This
+    means that for multi-pixel mustang data, data belonging to each
+    pixel will stay together.
+
+    For example, to plot observed and model data:
+
+    >>> r=oofplot.dsObsModel("td/allpx-noqd.fits", "oofout/allpx-noqd-000/z5/fitbeams.fits")
+    >>> pylab.plot(r[0][0]) # First defocus setting, original data
+    >>> pylab.plot(r[0][1][:,2]) # First defocus setting, model flux
+
+    """
     res=[]
     sl=oofreduce.SimBeamDS(obsfilename,beamfilename)
     fin=pyfits.open(obsfilename)
