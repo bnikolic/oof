@@ -13,7 +13,9 @@
 #include "metro_propose.hxx"
 #include "priors.hxx"
 #include "../src/pda.hxx"
+#include "gradientminim.hxx"
 #include "quadmodel.hpp"
+
 
 
 BOOST_AUTO_TEST_CASE( MetroPropose_raccept )
@@ -77,3 +79,15 @@ BOOST_AUTO_TEST_CASE(PDA_D1MACH)
 		    std::numeric_limits<double>::epsilon());
 		    
 }
+
+
+BOOST_AUTO_TEST_CASE(BFGS2Minim_constructs)
+{
+  std::vector<double> x(5,1.0);
+  std::vector<double> obs(5,2.0);
+  
+  QuadGrad qg(x,obs);
+  Minim::BFGS2Minim m(qg);
+
+}
+

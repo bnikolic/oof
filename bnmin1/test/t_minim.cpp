@@ -18,6 +18,7 @@
 #include "minimio.hxx"
 #include "metropolis.hxx"
 #include "priors.hxx"
+#include "gradientminim.hxx"
 
 
 BOOST_AUTO_TEST_CASE( Initialisation )
@@ -214,3 +215,52 @@ BOOST_AUTO_TEST_CASE( QuadPrior )
 
 }
 
+
+BOOST_AUTO_TEST_CASE(BFGS2Minim_QuadRes)
+{
+  using namespace Minim;
+
+  std::vector<double> x(3);
+  x[0]=-1; x[1]=0; x[2]=1;
+  
+  std::vector<double> obs(3);
+  QuadModel qm;
+  qm.a=1; qm.b=2; qm.c=3;
+  qm.eval(x, obs);
+
+  BOOST_CHECK(obs[2] != 0);  
+
+  std::vector<double> g(3);
+  qm.grad(0, g);
+  BOOST_CHECK_EQUAL(g[0], 1);
+  BOOST_CHECK(g[1] == 0);
+
+  
+  QuadGrad qg(x,obs);
+  BFGS2Minim m(qg);
+
+  BOOST_CHECK(qg.lLikely() > 0);
+  std::vector<double> scratch;
+  qg.lGrd(scratch);
+
+
+  BOOST_CHECK(scratch.size() == 3);  
+  BOOST_CHECK(scratch[2] != 0);  
+  BOOST_CHECK(scratch[0] != 0);  
+  BOOST_CHECK(scratch[1] != 0);  
+
+  m.solve();
+
+  BOOST_CHECK_CLOSE(qg.qm.a,
+		    1.0,
+		    1e-3);
+
+  BOOST_CHECK_CLOSE(qg.qm.b,
+		    2.0,
+		    1e-3);
+
+  BOOST_CHECK_CLOSE(qg.qm.c,
+		    3.0,
+		    1e-3);
+
+}

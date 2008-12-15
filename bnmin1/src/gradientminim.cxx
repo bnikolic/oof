@@ -10,7 +10,11 @@
 
 #include <gsl/gsl_multimin.h>
 
+
 #include <boost/mem_fn.hpp>
+
+#include <iostream>
+#include <stdexcept>
 
 namespace Minim {
 
@@ -42,7 +46,8 @@ namespace Minim {
     double f(const gsl_vector * X)
     {
       setpars(X);
-      return model.lLikely();
+      const double res=model.lLikely();
+      return res;
     }
 
     void df(const gsl_vector * X, 
@@ -77,6 +82,10 @@ namespace Minim {
   double bngsl_f(const gsl_vector * X, 
 		 void * PARAMS)
   {
+    if (not PARAMS)
+    {
+      throw std::runtime_error("BNGSL not passed a pointer to data class");
+    }
     return reinterpret_cast<GSLGradWrap*>(PARAMS)->f(X);
   }
 
@@ -84,6 +93,10 @@ namespace Minim {
 		void * PARAMS, 
 		gsl_vector * G)  
   {
+    if (not PARAMS)
+    {
+      throw std::runtime_error("BNGSL not passed a pointer to data class");
+    }
     reinterpret_cast<GSLGradWrap*>(PARAMS)->df(X,G);
   }
 
@@ -92,7 +105,11 @@ namespace Minim {
 		  double * f, 
 		  gsl_vector * G)
   {
-    reinterpret_cast<GSLGradWrap*>(PARAMS)->df(X,G);
+    if (not PARAMS)
+    {
+      throw std::runtime_error("BNGSL not passed a pointer to data class");
+    }
+    reinterpret_cast<GSLGradWrap*>(PARAMS)->fdf(X,f,G);
   }
   
     
@@ -113,6 +130,7 @@ namespace Minim {
     mfunc.f=&bngsl_f;
     mfunc.df=&bngsl_df;
     mfunc.fdf=&bngsl_fdf;
+    mfunc.params=reinterpret_cast<void*>(&w);
     
     gsl_vector *startp = gsl_vector_alloc(NParam());
     std::vector<double> startv(NParam());
@@ -138,7 +156,9 @@ namespace Minim {
       status = gsl_multimin_fdfminimizer_iterate(s);
       
       if (status)
-	break;
+      {
+	throw std::runtime_error("Problem in minimisation iteration");
+      }
       
       status = gsl_multimin_test_gradient(s->gradient,
 					  1e-3);
