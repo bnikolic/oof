@@ -29,7 +29,7 @@ def PrepSinglePixelData(fnamein,
 
 def MkTPar18SinglePx(col,row,
                      qd=False,
-                     reddate="21nov08",
+                     reddate="21nov08b2",
                      datain="/home/bnikolic/data/gbt-oof/mustang4/"):
     if qd:
         post="qd"
