@@ -5,6 +5,11 @@ BNMin1 Release Notes
 Development (to be V1.4)
 ========================
 
+New features:
+
+  * Class for Broyden-Fletcher-Goldfarb-Shanno minimisation, binding
+    to the GSL implementation
+
 Enhancements:
 
   * Class for specifying log-flat priors (Minim::LogFlatPriors)

@@ -22,8 +22,8 @@ namespace Minim {
 
   public:
 
-    /** Compute the gradient of the likelihood with respect to each
-	parameter.
+    /** Compute the gradient of the negative-log-likelihood, i.e., its
+	derivative with respect to each model parameters
      */ 
     virtual void lGrd(std::vector<double> &o) const = 0;
   };
