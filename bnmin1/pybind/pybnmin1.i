@@ -12,8 +12,6 @@
 #include "../src/priors.hxx"
 
 
-#include "../test/quadmodel.hpp"
-
 
 %}
 
@@ -43,5 +41,5 @@ namespace std {
 %include "../src/metropolis.hxx"
 %include "../src/priors.hxx"
 
-%include "../test/quadmodel.hpp"
+
 
