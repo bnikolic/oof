@@ -17,7 +17,8 @@ libbnmin1_la_SOURCES = minimmodel.hxx minimmodel.cxx \
 			priors.cxx priors.hxx\
 			paramalgo.cxx paramalgo.hxx \
 			gradientmodel.cxx gradientmodel.hxx\
-			gradientminim.cxx gradientminim.hxx
+			gradientminim.cxx gradientminim.hxx \
+			robustline.cxx robustline.hxx
 
 libbnmin1_la_LIBADD = f77/libminpda.la -lgsl  -lgslcblas
 
@@ -26,4 +27,4 @@ libbnmin1_la_CPPFLAGS = -Wall
 
 include_HEADERS = lmmin.hxx minim.hxx minimmodel.hxx paramctr.hxx pda.hxx monitor.hxx \
 			minimio.hxx lmminutils.hxx bnmin_main.hxx priors.hxx metropolis.hxx \
-			gradientmodel.hxx gradientminim.hxx
+			gradientmodel.hxx gradientminim.hxx robustline.hxx

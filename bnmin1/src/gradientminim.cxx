@@ -154,10 +154,11 @@ namespace Minim {
     {
       ++iter;
       status = gsl_multimin_fdfminimizer_iterate(s);
-      
+
       if (status)
       {
-	throw std::runtime_error("Problem in minimisation iteration");
+	break;
+	//throw std::runtime_error("Problem in minimisation iteration");
       }
       
       status = gsl_multimin_test_gradient(s->gradient,

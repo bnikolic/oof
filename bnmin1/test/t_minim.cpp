@@ -19,6 +19,7 @@
 #include "metropolis.hxx"
 #include "priors.hxx"
 #include "gradientminim.hxx"
+#include "robustline.hxx"
 
 
 BOOST_AUTO_TEST_CASE( Initialisation )
@@ -262,5 +263,50 @@ BOOST_AUTO_TEST_CASE(BFGS2Minim_QuadRes)
   BOOST_CHECK_CLOSE(qg.qm.c,
 		    3.0,
 		    1e-3);
+
+}
+
+
+BOOST_AUTO_TEST_CASE(t_RobustLineObsMod)
+{
+  
+  std::vector<double> xvals = boost::assign::list_of(1)(2)(3)(4)(5)(6)(7)(8)(9)(10);  
+  std::vector<double> yvals = boost::assign::list_of(1)(2)(3)(4)(5)(6)(7)(80)(9)(10);  
+
+  Minim::RobustLineObsMod rom(xvals, yvals);
+  rom.a=0;
+  rom.b=0;
+
+  BOOST_CHECK_CLOSE(rom.lLikely(),
+		    127.0,
+		    1e-10);  
+
+  std::vector<double> grad;
+  rom.lGrd(grad);
+  BOOST_CHECK_CLOSE(grad[1],
+		    -10.0,
+		    1e-10);  
+
+  BOOST_CHECK_CLOSE(grad[0],
+		    -55.0,
+		    1e-10);  
+  
+
+  Minim::BFGS2Minim m(rom);
+  m.solve();
+
+
+  BOOST_CHECK_CLOSE(rom.a,
+		    1.0,
+		    5);  
+
+  BOOST_CHECK_CLOSE(rom.b,
+		    0.17,
+		    5);  
+
+  BOOST_CHECK_CLOSE(rom.lLikely(),
+		    72.0,
+		    1);  
+  
 
 }
