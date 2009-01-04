@@ -292,8 +292,13 @@ BOOST_AUTO_TEST_CASE(t_RobustLineObsMod)
 		    1e-10);  
   
 
-  Minim::BFGS2Minim m(rom);
-  m.solve();
+  for(size_t i=0; i<10000; ++i)
+  {
+    rom.a=0;
+    rom.b=0;  
+    Minim::BFGS2Minim m(rom);
+    m.solve();
+  }
 
 
   BOOST_CHECK_CLOSE(rom.a,

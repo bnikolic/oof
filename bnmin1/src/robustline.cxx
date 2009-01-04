@@ -14,6 +14,7 @@ namespace Minim {
 
   RobustLineObsMod::RobustLineObsMod(std::vector<double> xobs,
 				     std::vector<double> yobs):
+    nobs(xobs.size()),
     xobs(xobs),
     yobs(yobs),
     ysigma(xobs.size(),1.0)
@@ -22,8 +23,8 @@ namespace Minim {
 
   void RobustLineObsMod::residuals(std::vector<double> &res) const
   {
-    res.resize(xobs.size());
-    for(size_t i =0; i<xobs.size(); ++i)
+    res.resize(nobs);
+    for(size_t i =0; i<nobs; ++i)
     {
       res[i]=(yobs[i]-xobs[i]*a-b)/ysigma[i];
     }
@@ -31,8 +32,8 @@ namespace Minim {
 
   void RobustLineObsMod::dres_da(std::vector<double> &res) const
   {
-    res.resize(xobs.size());
-    for(size_t i =0; i<xobs.size(); ++i)
+    res.resize(nobs);
+    for(size_t i =0; i<nobs; ++i)
     {
       res[i]=-xobs[i]/ysigma[i];
     }
@@ -40,8 +41,8 @@ namespace Minim {
 
   void RobustLineObsMod::dres_db(std::vector<double> &res) const
   {
-    res.resize(xobs.size());
-    for(size_t i =0; i<xobs.size(); ++i)
+    res.resize(nobs);
+    for(size_t i =0; i<nobs; ++i)
     {
       res[i]=-1.0/ysigma[i];
     }
@@ -53,7 +54,7 @@ namespace Minim {
     residuals(res);
 
     double tot=0;
-    for(size_t i=0; i<res.size(); ++i)
+    for(size_t i=0; i<nobs; ++i)
     {
       tot+=fabs(res[i]);
     }

@@ -19,6 +19,8 @@ namespace Minim {
     public LGradientModel
   {
 
+    const size_t nobs;
+
     std::vector<double> xobs;
     std::vector<double> yobs;
 
