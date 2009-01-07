@@ -2,8 +2,8 @@
 BNMin1 Release Notes  
 ======================
 
-Development (to be V1.4)
-========================
+Version 1.4
+===========
 
 New features:
 
@@ -32,6 +32,10 @@ Bug-fixes:
 Building:
 
   * Support for the new gfortran compilers
+
+Distribution:
+
+  * To be sent to ESO & published on web-site
 
 Version 1.3
 ===========
