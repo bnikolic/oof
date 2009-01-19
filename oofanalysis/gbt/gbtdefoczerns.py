@@ -71,21 +71,31 @@ def Decompose(nzmax=5,
     :param do90: Do the procedure for the 90-m parameterisation and
     illumination
 
+    :returns: Dictionary of zernike coefficients representing unit
+    defocus
+
     Example:
     
     >>> Decompose(do90=True)
 
 
     """
+    res={}
     for n in range(2,
                    nzmax+1):
         for l in range(-n,n+1,2):
             x=Overlap(n,l,
                       **kwargs)
+            k=ooffitconv.OOFnltoOOFk(n,l)
+            res["z%i"%k]=x
             print "n=%i l=%i , k=%i, coeff: %g" % (n, l,
-                                                   ooffitconv.OOFnltoOOFk(n,l),
+                                                   k,
                                                    x
                                                    )
+    return res
+
+    
+    
     
 
 
