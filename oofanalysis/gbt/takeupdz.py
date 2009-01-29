@@ -48,7 +48,7 @@ def GBTTakeup(fnamein,
            fnameout):
     """
     Take up as much of surface error with the GBT subreflector
-    movement
+    movement as possible
     
     :param fnamein: Input file name. The file format should be similar
     to "fitpars.fits" produced by OOF.
