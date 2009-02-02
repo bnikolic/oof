@@ -60,7 +60,8 @@ def fittedParsNums(mod):
 
 def fSaveChain(modeldesc,
                chain,
-               fnameout):
+               fnameout,
+               kwrds={}):
     """
     Save a MCMC chain to a FITS file
 
@@ -68,29 +69,41 @@ def fSaveChain(modeldesc,
     with parameter for column names. 
 
     :param modeldesc: The model which the chain desribes (parameter
-    names are retrieved through this)
+    names are retrieved through this). OR, a list of strings, in which
+    case we assume these are column names.
     
     :param chain: The actual chain
 
     :param fnameout: The FITS file name to write to. Will be
     overwritten.
     
+    :param kwrds: Keywords to add to the primary header to
+    
     """
-    nrows=len(chain)
-    ncols=modeldesc.NParam()
-    coldefs=[ pyfits.Column(modeldesc.getbynumb(i).name,
-                            "E") for i in fittedParsNums(modeldesc)]
-    tabout=pyfits.new_table( coldefs , nrows=nrows )
-    for j, rowout in enumerate( tabout.data) :
-        p=list(chain[j].p)
-        for i in range(ncols):
-            rowout.setfield(i, p[i])
     fout=iofits4.PrepFitsOut(modcvs)
+    for k in kwrds.keys():
+        fout[0].header.update(k, kwrds[k])
+    nrows=len(chain)
+    if type(modeldesc) is list:
+        colnames=modeldesc
+        ncols=len(colnames)
+    else:
+        ncols=modeldesc.NParam()
+        colnames=[modeldesc.getbynumb(i).name 
+                  for i in fittedParsNums(modeldesc)]
+    coldefs=[pyfits.Column(colname,"E") 
+             for colname in colnames]
+    tabout=pyfits.new_table(coldefs,
+                            nrows=nrows)
+    if type(chain) is not numpy.ndarray:
+        chain=bnmin1utils.ChainToArray(chain)
+    for i in range(ncols):
+        tabout.data.field(i)[:]=chain[:,i]
     fout.append(tabout)
     iofits4.Write(fout, 
                   fnameout, 
                   overwrite=True)    
-    
+
 
 def FLoad(modeldsc, fnamein, ext=1, silent=False):
     """Load a fit (that is a set of parameter values) from a FITS file
