@@ -14,6 +14,12 @@ Bug fixes:
 
   * memset was used without including the official header -- fixed 
 
+Building:
+
+  * Building of the python binding is now optional. You can pass
+    "--disable-pybinding" to the "configure" script to disable
+    configruation and building of the bindings
+
 Version 1.2.2
 =============
 

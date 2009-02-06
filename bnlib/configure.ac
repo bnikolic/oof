@@ -22,7 +22,17 @@ AM_PATH_GSL(1.5,
 	[AC_DEFINE([BN_HAVE_GSL], [1] ,  [Define if GSLv1.5 exists.])],
 	AC_MSG_WARN(Tested version of GSL not found, but you might be OK anyway) )
 
-AC_CONFIG_SUBDIRS([pybind])	
+AC_ARG_ENABLE(pybinding,
+	      [AS_HELP_STRING([--disable-pybinding],
+                              [Do not configure and build the python bindings])],
+              [dopybind=$enableval],
+	      [dopybind=--enable-pybinding])
+
+AM_CONDITIONAL([PYBIND_OPT], 
+	       [test "x$dopybind" != xno])
+
+AS_IF([test "x$dopybind" != xno],
+      AC_CONFIG_SUBDIRS([pybind]))
 
 AC_OUTPUT(Makefile 
           src/Makefile
