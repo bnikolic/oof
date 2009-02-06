@@ -471,7 +471,7 @@ namespace BNLib {
 		       size_t Ny,
 		       size_t Nz,
 		       RDist &rfn,
-		       Kolmgorov3DOptions opt) throw (const char *)
+		       int opt) throw (const char *)
   {
     return TKolmogorov3D(cube, Nx, Ny, Nz, rfn, opt);
   }

@@ -1,7 +1,7 @@
 
 #include <iostream>
 
-#include "../../src/kolmogorov_3d.hxx"
+#include "../../src/kolmog/kolmogorov_3d.hxx"
 #include "../../src/bnrandom.hxx"
 
 
