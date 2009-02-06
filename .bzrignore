@@ -192,4 +192,6 @@ CVS
 ./oof/test/Makefile
 ./bnmin1/test/t_utils
 ./bnmin1/test/t_utils
-
+./bnlib/test/kvolume
+./bnlib/test/Makefile
+*.tar.bz2
