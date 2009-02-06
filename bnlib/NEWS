@@ -2,8 +2,8 @@
 BNLib Release Notes  
 ======================
 
-In Development (to be V1.3)
-===========================
+Version 1.3
+===========
 
 Enhancements:
 
@@ -12,6 +12,9 @@ Enhancements:
 
   * Kolmogorov3D() now takes int instead of enum for the option since
     this is required for mixing the options
+
+  * New example program "test/kvolume" which illustrates how to
+    generate a three D turbulent volume and output it to a file
 
 Bug fixes:
 
