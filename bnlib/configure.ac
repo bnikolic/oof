@@ -38,6 +38,7 @@ AC_OUTPUT(Makefile
           src/Makefile
 	  src/kolmog/Makefile
 	  cbind/Makefile
+	  test/Makefile
 	  doc/Doxyfile
 	  doc/Kolmog.doxy
 	  bnlib.pc

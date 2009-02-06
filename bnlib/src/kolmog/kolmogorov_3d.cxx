@@ -292,7 +292,7 @@ namespace BNLib {
 			size_t Ny,
 			size_t Nz,
 			RDist &rfn,
-			Kolmgorov3DOptions opt) throw (const char *)
+			int opt) throw (const char *)
   {
     using namespace Kolmog;
 

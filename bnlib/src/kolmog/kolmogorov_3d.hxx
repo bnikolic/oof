@@ -71,7 +71,7 @@ namespace BNLib {
 		       size_t Ny,
 		       size_t Nz,
 		       RDist &rfn,
-		       Kolmgorov3DOptions opt=KInitialEFB) throw (const char *);
+		       int opt=KInitialEFB) throw (const char *);
 
   /**
      As Kolmogorov3D, but generate on single precision ("float") grid.

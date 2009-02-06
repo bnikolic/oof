@@ -10,6 +10,9 @@ Enhancements:
   * Definition of Gaussian parameters in gaussian.cxx has been
     rationalised. Note that meaning of rho and diff has changed!
 
+  * Kolmogorov3D() now takes int instead of enum for the option since
+    this is required for mixing the options
+
 Bug fixes:
 
   * memset was used without including the official header -- fixed 
