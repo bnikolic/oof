@@ -2,13 +2,18 @@
 BNMin1 Release Notes  
 ======================
 
-In Development (to be Version 1.5)
-==================================
+Version 1.5
+===========
 
 Enhancements:
 
   * fSaveChain is now more flexible and can add keywords to the FITS
     file and take both raw chains and chains as numpy arrays
+
+Building:
+
+  * Boost configure script is now better and finding the correct
+    libraries
 
 
 Version 1.4

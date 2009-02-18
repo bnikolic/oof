@@ -2,8 +2,8 @@
 OOF Release Notes  
 ======================
 
-In Development (to be 1.3)
-==========================
+Version 1.3
+===========
 
    BUG FIXES:
 
@@ -16,6 +16,9 @@ In Development (to be 1.3)
      (aperture-notilt.fits)
 
    BUILD/DEPS:
+
+  * Boost configure script is now better and finding the correct
+    libraries
 
    DISTRIBUTION:
 

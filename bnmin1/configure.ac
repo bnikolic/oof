@@ -23,9 +23,8 @@ AM_PATH_GSL(1.6)
 
 AC_LANG_PUSH(C++)
 
-AX_BOOST(1.34.0,
-	[echo "GOOD: You have BOOST ... we will be using that!" ],		     
-	AC_MSG_ERROR(["ERROR: No BOOST  ... ; you can find it at  http://www.boost.org/ "])  )
+AX_BOOST_BASE([1.34.0])
+AX_BOOST_UNIT_TEST_FRAMEWORK()
 
 AC_LANG_POP(C++)
 
