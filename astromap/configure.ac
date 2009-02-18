@@ -1,5 +1,5 @@
 AC_INIT(ASTROMAP, 
-        1.3, 
+        1.3-rc1, 
 	"Bojan Nikolic" <bojan@bnikolic.co.uk> )  
 
 AC_CONFIG_AUX_DIR(config)
@@ -31,10 +31,8 @@ AC_CHECK_HEADERS( minimmodel.hxx ,
 
 AC_LANG_POP(C++)
 
-AX_BOOST(1.34.0,
-	[echo "GOOD: You have BOOST ... we will be using that!" ],		     
-	AC_MSG_ERROR(["ERROR: No BOOST  ... ; you can find it at  http://www.boost.org/ "])  )
-
+AX_BOOST_BASE([1.34.0])
+AX_BOOST_UNIT_TEST_FRAMEWORK()
 
 AC_CONFIG_SUBDIRS([plot])	
 

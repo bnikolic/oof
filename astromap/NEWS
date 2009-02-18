@@ -22,6 +22,9 @@ Building:
 
   * Support for the news GNU toolchain (gcc 4.3, gfortran, etc)
 
+  * Upgrade to BOOST configuration macros to speed up configuration
+    and hopefully make more reliable
+
 To be Version 1.2.1
 -------------------
 
