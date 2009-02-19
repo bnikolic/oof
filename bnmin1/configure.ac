@@ -19,7 +19,9 @@ AC_PROG_F77
 
 AM_CONDITIONAL([GFORTRAN], [test "$ac_ct_F77" = "gfortran"])
 
-AM_PATH_GSL(1.9)
+AM_PATH_GSL(1.9,
+	[],
+	AC_MSG_ERROR(Could not find the required version of GSL))
 
 AC_LANG_PUSH(C++)
 

@@ -20,10 +20,10 @@ libbnmin1_la_SOURCES = minimmodel.hxx minimmodel.cxx \
 			gradientminim.cxx gradientminim.hxx \
 			robustline.cxx robustline.hxx
 
-libbnmin1_la_LIBADD = f77/libminpda.la -lgsl  -lgslcblas
+libbnmin1_la_LIBADD = f77/libminpda.la  $(GSL_LIBS)
 
-libbnmin1_la_CFLAGS = -Wall
-libbnmin1_la_CPPFLAGS = -Wall
+libbnmin1_la_CFLAGS = -Wall $(GSL_CFLAGS)
+libbnmin1_la_CPPFLAGS = -Wall $(GSL_CFLAGS)
 
 include_HEADERS = lmmin.hxx minim.hxx minimmodel.hxx paramctr.hxx pda.hxx monitor.hxx \
 			minimio.hxx lmminutils.hxx bnmin_main.hxx priors.hxx metropolis.hxx \
