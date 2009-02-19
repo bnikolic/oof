@@ -27,10 +27,10 @@ libbnlib_la_SOURCES= interpolate.hxx interpolate.cxx \
 			bnlib_main.cxx bnlib_main.hxx
 
 
-libbnlib_la_CFLAGS = -Wall
-libbnlib_la_CPPFLAGS = -Wall
+libbnlib_la_CFLAGS = -Wall $(GSL_CFLAGS)
+libbnlib_la_CPPFLAGS = -Wall $(GSL_CFLAGS)
 
-libbnlib_la_LIBADD = -lgsl -lgslcblas kolmog/libbnlibkolmog.la 
+libbnlib_la_LIBADD = $(GSL_LIBS) kolmog/libbnlibkolmog.la 
 
 include_HEADERS = 	unaryfn.hxx \
 			interpolate.hxx \
