@@ -19,7 +19,7 @@ AC_PROG_F77
 
 AM_CONDITIONAL([GFORTRAN], [test "$ac_ct_F77" = "gfortran"])
 
-AM_PATH_GSL(1.6)
+AM_PATH_GSL(1.9)
 
 AC_LANG_PUSH(C++)
 

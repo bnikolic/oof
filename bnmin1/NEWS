@@ -47,6 +47,9 @@ Building:
 
   * Support for the new gfortran compilers
 
+  * (Late update to notes) Requires GSL 1.9 because of the BFGSv2
+    algorithm
+
 Distribution:
 
   * To be sent to ESO & published on web-site
