@@ -1,6 +1,6 @@
 
 AC_INIT(BNLIB,
-	1.3,
+	1.3.1,
 	"Bojan Nikolic"   <bojan@bnikolic.co.uk>)
 
 AC_CONFIG_AUX_DIR(config)
@@ -33,6 +33,9 @@ AM_CONDITIONAL([PYBIND_OPT],
 
 AS_IF([test "x$dopybind" != xno],
       AC_CONFIG_SUBDIRS([pybind]))
+
+AX_BOOST_BASE([1.34.0])
+AX_BOOST_PROGRAM_OPTIONS()
 
 AC_OUTPUT(Makefile 
           src/Makefile
