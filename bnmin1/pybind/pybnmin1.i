@@ -10,6 +10,7 @@
 #include "../src/lmminutils.hxx"
 #include "../src/metropolis.hxx"
 #include "../src/priors.hxx"
+#include "../src/twoerrline.hxx"
 
 
 
@@ -40,6 +41,7 @@ namespace std {
 %include "../src/lmminutils.hxx"
 %include "../src/metropolis.hxx"
 %include "../src/priors.hxx"
+%include "../src/twoerrline.hxx"
 
 
 

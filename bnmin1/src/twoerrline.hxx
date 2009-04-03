@@ -27,7 +27,8 @@ namespace Minim {
   /** Compute maximum-likelihood line-fit to data with known errors in
       both x and y values.
 
-      Follows numerical recipes
+      Computes the best fit using standard BFGS minimisation of the
+      chi-squared function. Does not compute the covariance matrix.
 
    */
   void LFit_MaxL(const std::vector<double> &xvals,
