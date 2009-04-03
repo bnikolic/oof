@@ -22,7 +22,8 @@ namespace Minim {
     xobs(xvals.size()),
     yobs(yvals.size()),
     sigmax(sigmax),
-    sigmay(sigmay)
+    sigmay(sigmay),
+    nobs(xvals.size())
   {
     for (size_t i=0; i<xobs.size(); ++i)
     {
@@ -30,6 +31,13 @@ namespace Minim {
       yobs[i]=yvals[i];
     }
   }
+
+  void LineTwoErrML::residuals(u::vector<double> &res) const
+  {
+    u::scalar_vector<double> ub(xobs.size(),b);
+    res=yobs-xobs*a-ub;
+  }
+
 
   double LineTwoErrML::lLikely(void) const
   {
@@ -49,6 +57,31 @@ namespace Minim {
 
     res[0]= -1.0* u::inner_prod(xobs,rr) / st - u::inner_prod(rr,rr)/ pow(st,2)* a* pow(sigmax,2);
     res[1]= -1.0* u::sum(rr) / st;
+  }
+
+  LineTwoErr_LavMarq::LineTwoErr_LavMarq(const std::vector<double> &xvals,
+					 const std::vector<double> &yvals,
+					 double sigmax,
+					 double sigmay):
+    LineTwoErrML(xvals,
+		 yvals,
+		 sigmax,
+		 sigmay)
+  {
+  }
+
+  unsigned LineTwoErr_LavMarq::nres (void) const
+  {
+    return nobs;
+  }
+
+  void  LineTwoErr_LavMarq::residuals (std::vector<double> &res) const
+  {
+    u::vector<double> rr(nobs);
+    LineTwoErrML::residuals(rr);
+    std::copy(rr.begin(),
+	      rr.end(),
+	      res.begin());
   }
 
 }

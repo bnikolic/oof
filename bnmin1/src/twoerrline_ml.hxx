@@ -14,6 +14,7 @@
 #include <boost/numeric/ublas/vector.hpp>
 
 #include "linemodel.hxx"
+#include "minimmodel.hxx"
 
 namespace Minim {
 
@@ -34,6 +35,9 @@ namespace Minim {
 
   public:
 
+    // ---------- Public data  -----------------------    
+
+    const size_t nobs;
 
     // ------------ Construction / Destruction ----------------
     
@@ -42,9 +46,32 @@ namespace Minim {
 		 double sigmax,
 		 double sigmay);
 
+    // ------------- Public interface -------------------------
+
+    /// Evalute the residuals from the current line
+    void residuals(u::vector<double> &res) const;
+
     // -------------------- Inherited functions ---------------
     double lLikely(void) const;
     void lGrd(std::vector< double > &res) const;
+  };
+
+  class LineTwoErr_LavMarq:
+    public Minimisable,
+    public LineTwoErrML
+  {
+
+  public:
+    
+    LineTwoErr_LavMarq(const std::vector<double> &xvals,
+		       const std::vector<double> &yvals,
+		       double sigmax,
+		       double sigmay);
+
+    // -------------------- Inherited functions ---------------
+    virtual void  residuals (std::vector<double> &res) const;    
+    virtual unsigned nres (void) const;     
+
   };
 
 

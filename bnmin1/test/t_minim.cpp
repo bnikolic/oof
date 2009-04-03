@@ -343,3 +343,21 @@ BOOST_AUTO_TEST_CASE(t_LineTwoErrML)
   BOOST_CHECK_CLOSE(1+lml.b, 1.0, 1e-2);  
   
 }
+
+BOOST_AUTO_TEST_CASE(t_LineTwoErr_LavMarq)
+{
+  std::vector<double> x=boost::assign::list_of(1)(2);
+  std::vector<double> obs=boost::assign::list_of(1)(2);
+
+  Minim::LineTwoErr_LavMarq lml(x, obs,
+				1.0, 1.0);
+  lml.a=1.0;
+  lml.b=1.0;
+
+  Minim::LMMin m(lml);
+  m.solve();
+  
+  BOOST_CHECK_CLOSE(lml.a, 1.0, 1e-2);  
+  BOOST_CHECK_CLOSE(1+lml.b, 1.0, 1e-2);  
+  
+}
