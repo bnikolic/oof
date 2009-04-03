@@ -32,11 +32,17 @@ namespace Minim {
     const double sigmay;
 
   public:
+
+
+    // ------------ Construction / Destruction ----------------
     
     LineTwoErrML(const std::vector<double> &xvals,
 		 const std::vector<double> &yvals,
 		 double sigmax,
 		 double sigmay);
+
+    
+    
 
   };
 

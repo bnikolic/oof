@@ -9,14 +9,14 @@
 #ifndef _BNMIN_ROBUSTLINE_HXX__
 #define _BNMIN_ROBUSTLINE_HXX__
 
-#include "gradientmodel.hxx"
+#include "linemodel.hxx"
 
 namespace Minim {
 
   /** Line Model and robust line observation rolled into one
    */
   class RobustLineObsMod :
-    public LGradientModel
+    public LineMod
   {
 
     const size_t nobs;
@@ -27,14 +27,6 @@ namespace Minim {
     std::vector<double> ysigma;
     
   public:
-
-    // ---------- Public data  -----------------------
-
-    /// The linear coefficient of the line
-    double a;
-
-    /// The constant coefficient of the line
-    double b;
 
     // ---------- Construction / Destruction --------------
 
@@ -57,10 +49,6 @@ namespace Minim {
 
     double lLikely(void) const;
     void lGrd(std::vector< double > &res) const;
-    void AddParams(std::vector< Minim::DParamCtr > &pars);
-
-    
-		     
 
   };
 

@@ -92,21 +92,5 @@ namespace Minim {
       }
     }
   }
-  
-  
-  void RobustLineObsMod::AddParams(std::vector< Minim::DParamCtr > &pars)
-  {
-    ParamCtr<double> pa(&a, 
-			"a", 
-			true, 
-			"Linear term");
-    ParamCtr<double> pb(&b, 
-			"b", 
-			true, 
-			"Constant term");
-    pars.push_back(pa);
-    pars.push_back(pb);
-  }
-    
 
 }
