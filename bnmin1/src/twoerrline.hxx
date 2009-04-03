@@ -30,8 +30,8 @@ namespace Minim {
       Follows numerical recipes
 
    */
-  void LFit_MaxL(std::vector<double> &xvals,
-		 std::vector<double> &yvals,
+  void LFit_MaxL(const std::vector<double> &xvals,
+		 const std::vector<double> &yvals,
 		 double sigma_x,
 		 double sigma_y,
 		 LineFit &res);

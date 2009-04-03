@@ -38,8 +38,8 @@ namespace Minim {
 
     // ---------- Construction / Destruction --------------
 
-    RobustLineObsMod(std::vector<double> xobs,
-		     std::vector<double> yobs);
+    RobustLineObsMod(const std::vector<double> &xobs,
+		     const std::vector<double> &yobs);
 
 
     void residuals (std::vector<double> &res) const;

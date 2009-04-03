@@ -5,7 +5,10 @@ BNMin1 Release Notes
 In Development (to be V1.6)
 ===========================
 
+Bug-fixes:
 
+  * RobustLineObsMod constructor now takes parameters as
+    const-references
 
 Version 1.5
 ===========

@@ -12,8 +12,8 @@
 
 namespace Minim {
 
-  RobustLineObsMod::RobustLineObsMod(std::vector<double> xobs,
-				     std::vector<double> yobs):
+  RobustLineObsMod::RobustLineObsMod(const std::vector<double> &xobs,
+				     const std::vector<double> &yobs):
     nobs(xobs.size()),
     xobs(xobs),
     yobs(yobs),
