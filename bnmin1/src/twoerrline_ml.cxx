@@ -10,6 +10,7 @@
 #include "twoerrline_ml.hxx"
 
 #include <boost/numeric/ublas/storage.hpp>
+#include <boost/numeric/ublas/io.hpp>
 
 
 namespace Minim {
@@ -34,17 +35,19 @@ namespace Minim {
   {
     u::scalar_vector<double> ub(xobs.size(),b);
     const double ressq=std::pow(u::norm_2(yobs-xobs*a-ub),2);
-    return 0.5*ressq/(pow(sigmay,2)+ pow(sigmax*a,2));
+    const double r=0.5*ressq/(pow(sigmay,2)+ pow(sigmax*a,2));
+    return r;
   }
 
   void LineTwoErrML::lGrd(std::vector< double > &res) const
   {
+    res.resize(2);
     u::scalar_vector<double> ub(xobs.size(),b);
     const u::vector<double> rr(yobs-xobs*a-ub);
     
     const double st=(pow(sigmay,2)+ pow(sigmax*a,2));
 
-    res[0]= -1.0* u::inner_prod(xobs,rr) / st;
+    res[0]= -1.0* u::inner_prod(xobs,rr) / st - u::inner_prod(rr,rr)/ pow(st,2)* a* pow(sigmax,2);
     res[1]= -1.0* u::sum(rr) / st;
   }
 

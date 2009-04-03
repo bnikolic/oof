@@ -20,6 +20,7 @@
 #include "priors.hxx"
 #include "gradientminim.hxx"
 #include "robustline.hxx"
+#include "twoerrline_ml.hxx"
 
 
 BOOST_AUTO_TEST_CASE( Initialisation )
@@ -292,7 +293,7 @@ BOOST_AUTO_TEST_CASE(t_RobustLineObsMod)
 		    1e-10);  
   
 
-  for(size_t i=0; i<10000; ++i)
+  for(size_t i=0; i<1; ++i)
   {
     rom.a=0;
     rom.b=0;  
@@ -314,4 +315,31 @@ BOOST_AUTO_TEST_CASE(t_RobustLineObsMod)
 		    1);  
   
 
+}
+
+BOOST_AUTO_TEST_CASE(t_LineTwoErrML)
+{
+
+  /**
+  std::vector<double> x(10), obs(10);
+  for (size_t i=0; i <x.size(); ++i)
+  {
+    x[i]=i;
+    obs[i]=i;
+  }
+  */
+  std::vector<double> x=boost::assign::list_of(1)(2);
+  std::vector<double> obs=boost::assign::list_of(1)(2);
+
+  Minim::LineTwoErrML lml(x, obs,
+			  1.0, 1.0);
+  lml.a=1.0;
+  lml.b=1.0;
+
+  Minim::BFGS2Minim m(lml);
+  m.solve();
+  
+  BOOST_CHECK_CLOSE(lml.a, 1.0, 1e-2);  
+  BOOST_CHECK_CLOSE(1+lml.b, 1.0, 1e-2);  
+  
 }

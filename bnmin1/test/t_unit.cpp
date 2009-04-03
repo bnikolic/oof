@@ -16,6 +16,8 @@
 #include "gradientminim.hxx"
 #include "quadmodel.hpp"
 
+#include "twoerrline_ml.hxx"
+
 
 
 BOOST_AUTO_TEST_CASE( MetroPropose_raccept )
@@ -91,3 +93,16 @@ BOOST_AUTO_TEST_CASE(BFGS2Minim_constructs)
 
 }
 
+BOOST_AUTO_TEST_CASE(LineTwoErrML_basics)
+{
+
+  std::vector<double> x(5,1.0);
+  std::vector<double> obs(5,2.0);
+  
+  Minim::LineTwoErrML lml(x, obs,
+			  0.1, 0.1);
+
+  lml.a=0; lml.b=2;
+  BOOST_CHECK_EQUAL(lml.lLikely(),0);
+  
+}
