@@ -12,7 +12,8 @@
 #define _BNMIN1_TWOERRLINE_ML_HXX__
 
 #include <boost/numeric/ublas/vector.hpp>
-#include "gradientmodel.hxx"
+
+#include "linemodel.hxx"
 
 namespace Minim {
 
@@ -23,7 +24,7 @@ namespace Minim {
      
    */
   class LineTwoErrML:
-    public LGradientModel
+    public LineMod
   {
 
     u::vector<double> xobs;
@@ -41,9 +42,9 @@ namespace Minim {
 		 double sigmax,
 		 double sigmay);
 
-    
-    
-
+    // -------------------- Inherited functions ---------------
+    double lLikely(void) const;
+    void lGrd(std::vector< double > &res) const;
   };
 
 
