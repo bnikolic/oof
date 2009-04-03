@@ -18,7 +18,9 @@ libbnmin1_la_SOURCES = minimmodel.hxx minimmodel.cxx \
 			paramalgo.cxx paramalgo.hxx \
 			gradientmodel.cxx gradientmodel.hxx\
 			gradientminim.cxx gradientminim.hxx \
-			robustline.cxx robustline.hxx
+			robustline.cxx robustline.hxx\
+			twoerrline.cxx twoerrline.hxx\
+			twoerrline_ml.cxx twoerrline_ml.hxx
 
 libbnmin1_la_LIBADD = f77/libminpda.la  $(GSL_LIBS)
 
