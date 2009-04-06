@@ -38,7 +38,6 @@ namespace Minim {
     res=yobs-xobs*a-ub;
   }
 
-
   double LineTwoErrML::lLikely(void) const
   {
     u::scalar_vector<double> ub(xobs.size(),b);
@@ -63,26 +62,37 @@ namespace Minim {
 					 const std::vector<double> &yvals,
 					 double sigmax,
 					 double sigmay):
-    LineTwoErrML(xvals,
-		 yvals,
-		 sigmax,
-		 sigmay)
+    m(xvals,
+      yvals,
+      sigmax,
+      sigmay)
   {
+    m.a=1.0;
+    m.b=1.0;
   }
 
   unsigned LineTwoErr_LavMarq::nres (void) const
   {
-    return nobs;
+    return m.nobs;
   }
+
 
   void  LineTwoErr_LavMarq::residuals (std::vector<double> &res) const
   {
-    u::vector<double> rr(nobs);
-    LineTwoErrML::residuals(rr);
+    res.resize(m.nobs);
+    u::vector<double> rr(m.nobs);
+    m.residuals(rr);
     std::copy(rr.begin(),
 	      rr.end(),
 	      res.begin());
   }
+
+  void LineTwoErr_LavMarq::AddParams(std::vector< Minim::DParamCtr > &pars)
+  {
+    m.AddParams(pars);
+  }
+
+
 
 }
 

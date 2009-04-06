@@ -351,13 +351,14 @@ BOOST_AUTO_TEST_CASE(t_LineTwoErr_LavMarq)
 
   Minim::LineTwoErr_LavMarq lml(x, obs,
 				1.0, 1.0);
-  lml.a=1.0;
-  lml.b=1.0;
-
   Minim::LMMin m(lml);
+  m.ftol=m.xtol=m.gtol=1e-5;
+  Minim::ChiSqMonitor mon;
+  m.AddMon(&mon);
   m.solve();
-  
-  BOOST_CHECK_CLOSE(lml.a, 1.0, 1e-2);  
-  BOOST_CHECK_CLOSE(1+lml.b, 1.0, 1e-2);  
+
+  const double ra=m.getbyname("a")->getp();
+  BOOST_CHECK_CLOSE(ra, 1.0, 1e-2);  
+  BOOST_CHECK_CLOSE(1+m.getbyname("b")->getp(), 1.0, 1e-2);  
   
 }

@@ -57,10 +57,9 @@ namespace Minim {
   };
 
   class LineTwoErr_LavMarq:
-    public Minimisable,
-    public LineTwoErrML
+    public Minimisable
   {
-
+    LineTwoErrML m;
   public:
     
     LineTwoErr_LavMarq(const std::vector<double> &xvals,
@@ -69,6 +68,7 @@ namespace Minim {
 		       double sigmay);
 
     // -------------------- Inherited functions ---------------
+    void AddParams(std::vector< Minim::DParamCtr > &pars);    
     virtual void  residuals (std::vector<double> &res) const;    
     virtual unsigned nres (void) const;     
 
