@@ -43,5 +43,13 @@ namespace std {
 %include "../src/priors.hxx"
 %include "../src/twoerrline.hxx"
 
+%extend Minim::LineFit {
+	
+	double get_a_var(void) 
+	{
+	return self->cv[0];
+	}
+}
+
 
 

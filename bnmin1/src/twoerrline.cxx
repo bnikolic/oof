@@ -7,9 +7,14 @@
    Fit lines to data which have errors in both coordinates
 */
 
+#include <boost/scoped_ptr.hpp>
+
 #include "twoerrline.hxx"
 #include "twoerrline_ml.hxx"
 #include "gradientminim.hxx"
+#include "lmmin.hxx"
+#include "lmminutils.hxx"
+
 
 namespace Minim {
 
@@ -35,6 +40,36 @@ namespace Minim {
     res.a=lml.a;
     res.b=lml.b;
     
+  }
+
+  void LFit_LM(const std::vector<double> &xvals,
+	       const std::vector<double> &yvals,
+	       double sigma_x,
+	       double sigma_y,
+	       LineFit &res)
+  {
+    Minim::LineTwoErr_LavMarq lml(xvals, 
+				  yvals,
+				  sigma_x,
+				  sigma_y);
+    Minim::LMMin m(lml);
+
+    m.getbyname("a")->setp(res.a);
+    m.getbyname("b")->setp(res.b);
+
+    m.solve();
+    
+    res.a=m.getbyname("a")->getp();
+    res.b=m.getbyname("b")->getp();
+    
+    boost::scoped_ptr<std::vector<double> > cv(CVMatrix(m,
+							1e-5));
+
+    std::copy(cv->begin(),
+	      cv->end(),
+	      res.cv.begin());
+    
+
   }
 
 }

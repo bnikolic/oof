@@ -37,6 +37,18 @@ namespace Minim {
 		 double sigma_y,
 		 LineFit &res);
 
+  /** Compute maximum-likelihood line-fit to data with known errors in
+      both x and y values.
+
+      This version uses the lavenberg-marquand algorithm.
+
+   */
+  void LFit_LM(const std::vector<double> &xvals,
+	       const std::vector<double> &yvals,
+	       double sigma_x,
+	       double sigma_y,
+	       LineFit &res);
+
 }
 
 #endif
