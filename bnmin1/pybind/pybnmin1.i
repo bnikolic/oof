@@ -49,6 +49,16 @@ namespace std {
 	{
 	return self->cv[0];
 	}
+
+	double get_b_var(void) 
+	{
+	return self->cv[3];
+	}
+
+	double get_ab(void) 
+	{
+	return self->cv[1];
+	}
 }
 
 

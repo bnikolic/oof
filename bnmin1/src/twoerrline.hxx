@@ -40,7 +40,12 @@ namespace Minim {
   /** Compute maximum-likelihood line-fit to data with known errors in
       both x and y values.
 
-      This version uses the lavenberg-marquand algorithm.
+      This version uses the lavenberg-marquand algorithm. This version
+      calculates the co-variance matrix.
+
+      \bug Monte-Carlo simulations suggest that there is a factor two
+      error in the calculation of the variances and covariances. This
+      should not, however, affect relative errors.
 
    */
   void LFit_LM(const std::vector<double> &xvals,

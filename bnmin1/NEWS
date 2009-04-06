@@ -5,6 +5,11 @@ BNMin1 Release Notes
 In Development (to be V1.6)
 ===========================
 
+New features:
+
+  * Computation of best-fitting lines to data with errors in booth of
+    the coordinates. See "twoerrline.hxx"
+
 Bug-fixes:
 
   * RobustLineObsMod constructor now takes parameters as
