@@ -30,12 +30,14 @@ namespace Minim {
 
     u::vector<double> xobs;
     u::vector<double> yobs;
-    const double sigmax;
-    const double sigmay;
 
   public:
 
     // ---------- Public data  -----------------------    
+
+    const double sigmax;
+
+    const double sigmay;
 
     const size_t nobs;
 

@@ -82,6 +82,8 @@ namespace Minim {
     res.resize(m.nobs);
     u::vector<double> rr(m.nobs);
     m.residuals(rr);
+    const double st= pow((pow(m.sigmay,2)+ pow(m.sigmax*m.a,2)), 0.5);
+    rr=rr/st;
     std::copy(rr.begin(),
 	      rr.end(),
 	      res.begin());
