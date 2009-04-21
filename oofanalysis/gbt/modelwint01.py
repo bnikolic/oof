@@ -396,6 +396,8 @@ def PolyPrint():
 
 
 def Ruze ( rms , freq  ):
-
+    if type(rms) is list:
+        rms=numpy.array(rms)
+        rms=(rms**2).sum()**0.5
     return math.exp(-1.0 * (4* math.pi * rms / (3e8/freq))**2)
 
