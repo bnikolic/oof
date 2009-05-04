@@ -12,17 +12,21 @@
 #include "paramctr.hxx"
 #include "minimmodel.hxx"
 
+/// Namespace for the BNMin1 library
 namespace Minim {
 
   // Forward declarations
   class Monitor;
 
   
-  /*!
-   * This class can hold the model description but can not do the
-   * actuall minimisation as it does not demand that the model has a
-   * figure-of-merit function.
-   */
+  /** \brief Description of a model for an obseration, providing
+      functions for handling parameters
+
+   This class can hold the model description but can not do the
+   actuall minimisation as it does not demand that the model has a
+   figure-of-merit function.
+
+  */
   class ModelDesc {
     
   protected :
@@ -89,10 +93,14 @@ namespace Minim {
   };
 
 
-  /** Demands that a Minimisable is passed hence provides a "solve"
-      function interface
+  /** \brief Provides the "solve" interface function
+
+      Demands that a Minimisable is passed to the constructor, hence
+      provides the "solve" function interface
    */
-  class Minimiser : public ModelDesc {
+  class Minimiser: 
+    public ModelDesc 
+  {
 
   private:
     unsigned iter;

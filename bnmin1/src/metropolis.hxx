@@ -24,8 +24,7 @@ namespace Minim {
   class MLikelihood;
   class MetroPropose;
 
-  /** Structure containing the data recorded at each point in an MCMC
-      distribution
+  /** \brief Data to be recorded at each point in an MCMC distribution
   */
   struct MCPoint
   {

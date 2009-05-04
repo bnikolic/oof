@@ -21,7 +21,7 @@ namespace Minim {
   namespace u = boost::numeric::ublas;
 
   /**
-     Fit straight-line model to data with noise in both coordinates
+     \brief Fit straight-line model to data with noise in both coordinates
      
    */
   class LineTwoErrML:
@@ -58,6 +58,12 @@ namespace Minim {
     void lGrd(std::vector< double > &res) const;
   };
 
+
+  /**
+     \brief Fit straight-line model to data with noise in both
+     coordinates, using the Levengberg-Marquand algorithm
+     
+   */
   class LineTwoErr_LavMarq:
     public Minimisable
   {

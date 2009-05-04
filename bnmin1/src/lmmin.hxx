@@ -14,9 +14,12 @@
 
 namespace Minim {
   
-  /// Implemnation of the Lavenburg-Marquant minimisation
-  /// algorithm. See file f77/pda_lmdiff.f for more details.
-  class LMMin : 
+  /** \brief Implemnation of the Lavenburg-Marquant minimisation
+      algorithm
+      
+      See file f77/pda_lmdiff.f for more details.
+  */
+  class LMMin: 
     public Minimiser 
   {
 
@@ -70,9 +73,10 @@ namespace Minim {
     // ---------- Construction / Destruction --------------
 
     /// Tolerances are initialised to some normal defaults
-    LMMin( Minimisable &pm ) ;
+    LMMin(Minimisable &pm) ;
       
-    virtual ~LMMin (void) { };
+    virtual ~LMMin(void)
+    {};
 
     // ------------------ Inherited from Minimiser -------------
     virtual void solve(void);

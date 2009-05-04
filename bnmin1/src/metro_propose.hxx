@@ -46,6 +46,10 @@ namespace Minim {
     
     // ---------- Construction / Destruction --------------
 
+    /**
+       \param sigmas Standard error to be used for each of the
+       parameters that is being varied in the model
+     */
     MetroPropose(const std::vector<double> & sigmas,
 		 unsigned seed=0);
     
@@ -67,7 +71,8 @@ namespace Minim {
     }
   };
 
-  /**
+  /** \brief Proposes each parameter in turn
+
      Intead of displacing the entire vector at once, each parameter is
      displaced in turn. See MetropolisMCMC::Options::Sequence.
    */

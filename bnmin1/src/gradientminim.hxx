@@ -18,9 +18,9 @@ namespace Minim {
   // Forwards
   class LGradientModel;
 
-  /**
-     Minimisation using the Broyden-Fletcher-Goldfarb-Shanno version 2
-     algorithm.
+  /** \brief Minimisation using the Broyden-Fletcher-Goldfarb-Shanno
+     version 2 algorithm
+
    */
   class BFGS2Minim :
     public ModelDesc

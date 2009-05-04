@@ -17,7 +17,9 @@ namespace Minim {
 
 
   
-  /*! This class defines the model parameters but not the residuals.
+  /** \brief Interface for defining parameters contained in a model
+      
+      This class defines the model parameters but not the residuals.
    */
   class Model {
     

@@ -31,8 +31,11 @@ namespace Minim {
 
   };
 
-  /*! A very simple monitor ... just print out the chi square */
-  class ChiSqMonitor : public Monitor {
+  /**
+     \brief Monitors the chi-square value  */
+  class ChiSqMonitor: 
+    public Monitor 
+  {
 
   public:
 
@@ -41,11 +44,13 @@ namespace Minim {
 
   };
 
-  /*! Print out the parameters */
-  class ParsMonitor : public Monitor {
-
+  /** \brief Monitors the value of the parameters */
+  class ParsMonitor: 
+    public Monitor 
+  {
+    
   public:
-
+    
     virtual void Iter ( Minimiser * m);    
 
   };
