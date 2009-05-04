@@ -14,6 +14,9 @@
 
 namespace Minim {
 
+  /** \brief Results of a line fit
+
+   */
   struct LineFit
   {
     /// Linear coefficient

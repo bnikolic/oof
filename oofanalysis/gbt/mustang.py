@@ -459,3 +459,14 @@ def doSigPlots():
         BothPlots("td/s56-sc.fits", ((7,0),(7,1)), "plots/compare7071-sc-osc", trange=(0,50), hdu=1)
 
     BothPlots("td/s56-p18.fits", ((7,0),(7,1)), "plots/7071-p18", trange=(71,76), hdu=2)
+
+
+
+def FigsForMRAOTalk():
+    oofreduce.Red("/home/bnikolic/data/gbt-oof/AGBT09A_052_01/Raw/s8-1.fits",nzmax=8)
+    oofreduce.Red("/home/bnikolic/data/gbt-oof/AGBT09A_052_01/Raw/s15-1.fits",nzmax=8)
+
+    oofreduce.Red("/home/bnikolic/data/gbt-oof/AGBT08C_078_02/Raw/s140-1.fits",nzmax=8)
+
+    oofplot.PlotDir("oofout/s8-1-000/z7", bbox=[ -6e-4 * x for x in [-1 ,1,-1,1] ])
+    oofplot.PlotDir("oofout/s15-1-000/z7", bbox=[ -6e-4 * x for x in [-1 ,1,-1,1] ])

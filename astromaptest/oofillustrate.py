@@ -30,7 +30,7 @@ def PlotZern(nmax=6,
     m = pyplot.Map(npix, npix)
     pyplot.MkApCS(m, 1.2)
 
-    mask = pyoof.Clone(m)
+    mask = pyplot.Clone(m)
     tel1.DishMask(mask)
 
     for n in range(1,nmax):
@@ -49,6 +49,13 @@ def PlotZern(nmax=6,
                             colmap="heat",
                             contours=contours,
                             contcolour=0)
+
+def PlotZernLatexCmds(nmax):
+    for n in range(1,nmax):
+        for i in range (0, n+1 ):
+            l= -n + 2*i
+            print '\includegraphics[clip,width=0.16\columnwidth]{figs/zern/ZPoly-%i%i}&' %(n,l)
+    
 
 
 def ZPAll():
