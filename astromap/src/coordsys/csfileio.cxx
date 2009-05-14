@@ -1,7 +1,8 @@
-/*
-  Bojan Nikolic
-  $Id: csfileio.cxx,v 1.2 2005/08/18 18:33:23 bnikolic Exp $
+/**
+   \file csfileio.cxx
+   Bojan Nikolic <b.nikolic@mrao.cam.ac.uk>
 
+   Initial version 2002
 */
 
 #include "csfileio.hxx"
@@ -18,8 +19,10 @@
 
 namespace AstroMap {
 
-  void FitsWrite(  CoordSys & cs, BNFits::FitsF & fout,
-		   int nx, int ny)
+  void FitsWrite(CoordSys &cs,
+		 BNFits::FitsF &fout,
+		 int nx,
+		 int ny)
   {
     
     int crpixx = nx /2;
@@ -76,7 +79,7 @@ namespace AstroMap {
     
   }
 
-  CoordSys * FitsCSLoad( BNFits::FitsF & fin )
+  CoordSys * FitsCSLoad(BNFits::FitsF &fin)
   {
 
     LinCS * res  = new LinCS();
