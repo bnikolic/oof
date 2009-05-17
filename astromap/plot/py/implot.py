@@ -28,7 +28,8 @@ def plotmap(mapp,
             plotwedge=1 ,
             pgbeg=1 ,
             transf=2  ,
-            bbox=None ,
+            bbox=None,
+            abox=None,
             plotbox=1 ,
             title=None,
             width=0,
@@ -43,6 +44,10 @@ def plotmap(mapp,
 
     """
     bbox: a list definig the part of the map that should be plotted.
+
+    :param abox: Defines a subset of the original array to
+    plot. Unlike bbox this is the pixel coordinates and actually
+    removes the data from the final image.
 
     valrange: if range is defined, restrict the range of values plotted
            to the that specified. Othervise cover the whole range of
@@ -85,7 +90,13 @@ def plotmap(mapp,
         pyplot.cpgwedg("RI",1,2, valrange[0] , valrange[1], " ")
         
 
-    pyplot.Plot(mapp, valrange[0] , valrange[1])
+    if abox is None:
+        pyplot.Plot(mapp, valrange[0] , valrange[1])
+    else:
+        pyplot.Plot(mapp, 
+                    valrange[0],
+                    valrange[1],
+                    *abox)
     
     if title != None :
         pyplot.cpglab("","", title )

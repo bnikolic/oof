@@ -23,6 +23,17 @@ namespace AstroMap {
 	    double minval,
 	    double maxval);
 
+  /** Plot only a subsection of supplied array
+      
+   */
+  void Plot(Map &m,
+	    double minval,
+	    double maxval,
+	    size_t xmin,
+	    size_t xmax,
+	    size_t ymin,
+	    size_t ymax);
+
 
   /*! Contours the supplied map at contour levels supplied in contlevels */
   void Contour(Map &m,

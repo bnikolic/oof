@@ -57,9 +57,13 @@ namespace AstroMap {
   }
 
 
-  void Plot (Map &m, 
-	     double minval, 
-	     double maxval)
+  void Plot(Map &m,
+	    double minval,
+	    double maxval,
+	    size_t xmin,
+	    size_t xmax,
+	    size_t ymin,
+	    size_t ymax)
   {
 
 
@@ -76,12 +80,25 @@ namespace AstroMap {
     cpgimag( &data[0], 
 	     m.nx, 
 	     m.ny, 
-	     1 , 
-	     m.nx, 
-	     1, 
-	     m.ny,
+	     xmin , 
+	     xmax, 
+	     ymin, 
+	     ymax,
 	     minval, maxval,
 	     trmatrix);
+  }
+
+  void Plot (Map &m, 
+	     double minval, 
+	     double maxval)
+  {
+    Plot(m,
+	 minval,
+	 maxval,
+	 1 , 
+	 m.nx, 
+	 1, 
+	 m.ny);
   }
 
   void Contour (Map &m , 
