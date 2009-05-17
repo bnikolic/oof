@@ -105,6 +105,12 @@ namespace std {
 	return (*self).max();
 	}
 
+    double max_fin() {
+        double vmin, vmax;
+	self->min_max_fin(vmin,vmax);
+	return vmax;
+	}
+
     double sum() {
 	return (*self).sum();
 	}

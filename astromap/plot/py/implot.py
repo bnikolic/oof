@@ -141,8 +141,10 @@ def MkSynthesisContours( m , step=0.5,
     if nlevels==0 or nlevels is None:
         return None
 
-    contours =       [ m.max() * step**i for i in range(nlevels)  ]
-    contours.extend( [ -m.max() * step**i for i in range(nlevels)  ])
+    mmax=m.max_fin()
+    
+    contours =       [ mmax * step**i for i in range(nlevels)  ]
+    contours.extend( [ mmax * step**i for i in range(nlevels)  ])
 
     return contours
 

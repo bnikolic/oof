@@ -78,44 +78,82 @@ namespace AstroMap {
       }
     
   }
+  
+  /* Load a coordinate system defined by CR* variables
+     
+   */
+  bool FitsCSLoad_CR(BNFits::FitsF &fin,
+		     LinCS *res)
+  {
+    try 
+    {
+      
+      double crpixx = BNFits::ReadKeywrd<double> (fin, "CRPIX1");
+      double crpixy = BNFits::ReadKeywrd<double> (fin, "CRPIX2");
+      
+      double crvalx = BNFits::ReadKeywrd<double> (fin, "CRVAL1");
+      double crvaly = BNFits::ReadKeywrd<double> (fin, "CRVAL2");
+      
+      double crdeltx = BNFits::ReadKeywrd<double> (fin, "CDELT1");
+      double crdelty = BNFits::ReadKeywrd<double> (fin, "CDELT2");
+      
+      res->TM[0] = crdeltx ;
+      res->TM[1] = 0 ;
+      res->TM[2] = crvalx - crdeltx * crpixx ;
+      
+      res->TM[3] =0;
+      res->TM[4] =crdelty;
+      res->TM[5] = crvaly - crdelty * crpixy ;    
+      
+    }
+    catch ( const BNFits::FIOExc & exc ) 
+    {
+      return false;
+    }
+
+    return true;
+    
+  }
+
+  bool FitsCSLoad_CD(BNFits::FitsF &fin,
+		     LinCS *res)
+  {
+    try 
+    {
+      res->TM[0] = BNFits::ReadKeywrd<double> (fin, "CD1_1");
+      res->TM[1] = BNFits::ReadKeywrd<double> (fin, "CD1_2");
+      res->TM[2] = BNFits::ReadKeywrd<double> (fin, "CRVAL1") - 
+	res->TM[0]*BNFits::ReadKeywrd<double> (fin, "CRPIX1");
+      
+      res->TM[3] = BNFits::ReadKeywrd<double> (fin, "CD2_1");
+      res->TM[4] = BNFits::ReadKeywrd<double> (fin, "CD2_2");
+      res->TM[5] = BNFits::ReadKeywrd<double> (fin, "CRVAL2") - 
+	res->TM[4]*BNFits::ReadKeywrd<double> (fin, "CRPIX2");    
+      
+    }
+    catch ( const BNFits::FIOExc & exc ) 
+    {
+      return false;
+    }
+
+    return true;
+    
+  }
 
   CoordSys * FitsCSLoad(BNFits::FitsF &fin)
   {
 
     LinCS * res  = new LinCS();
 
-    try 
+    if (not FitsCSLoad_CR(fin,res) )
     {
-      double crpixx = BNFits::ReadKeywrd<double> (fin, "CRPIX1");
-      double crpixy = BNFits::ReadKeywrd<double> (fin, "CRPIX2");
-
-      double crvalx = BNFits::ReadKeywrd<double> (fin, "CRVAL1");
-      double crvaly = BNFits::ReadKeywrd<double> (fin, "CRVAL2");
-
-      double crdeltx = BNFits::ReadKeywrd<double> (fin, "CDELT1");
-      double crdelty = BNFits::ReadKeywrd<double> (fin, "CDELT2");
-
-      res->TM[0] = crdeltx ;
-      res->TM[1] = 0 ;
-      res->TM[2] = crvalx - crdeltx * crpixx ;
-
-      res->TM[3] =0;
-      res->TM[4] =crdelty;
-      res->TM[5] = crvaly - crdelty * crpixy ;    
-
+      if (not FitsCSLoad_CD(fin,res) )
+      {
+	// No coordinate system recorded, no problem, contiue with
+	// default	
+      }
     }
-    catch ( const BNFits::FIOExc & exc ) 
-    {
-      // No coordinate system recorded, no problem, contiue with
-      // default
-    }
-
-
-
-
-
     return res;
-
   }
 
 }
