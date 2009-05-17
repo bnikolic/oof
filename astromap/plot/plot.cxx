@@ -1,7 +1,8 @@
-/*
-  Bojan Nikolic
-  $Id: plot.cxx,v 1.3 2005/09/12 18:26:50 bnikolic Exp $
-
+/**
+   \file plot.cxx
+   Bojan Nikolic <b.nikolic@mrao.cam.ac.uk>
+   Initial version 2003
+   Revised 2009
 */
 
 #include "plot.hxx"
@@ -15,9 +16,11 @@
 namespace AstroMap {
 
 
-  void Plot ( Map & m )
+  void Plot (Map &m)
   {
-    Plot( m , m.min(),    m.max());
+    Plot(m, 
+	 m.min(),    
+	 m.max());
   }
 
   /*
@@ -25,7 +28,9 @@ namespace AstroMap {
    * array to be ploted to float precision and extract and convert the
    * transition matrix.
    */
-  void PGData( Map &m, std::valarray<float> & data , float *trmatrix )
+  void PGData(Map &m, 
+	      std::valarray<float> &data, 
+	      float *trmatrix)
   {
 
     // Convert main array to floats.
@@ -52,7 +57,9 @@ namespace AstroMap {
   }
 
 
-  void Plot ( Map & m, double minval, double maxval )
+  void Plot (Map &m, 
+	     double minval, 
+	     double maxval)
   {
 
 
@@ -77,7 +84,8 @@ namespace AstroMap {
 	     trmatrix);
   }
 
-  void Contour ( Map &m , std::vector<double> &contlevels )
+  void Contour (Map &m , 
+		std::vector<double> &contlevels)
   {
 
     std::valarray<float> data( m.size() );
