@@ -39,6 +39,13 @@ namespace AstroMap {
   void Contour(Map &m,
 	       std::vector<double> &contlevels);
 
+  void Contour(Map &m,
+	       std::vector<double> &contlevels,
+	       size_t xmin,
+	       size_t xmax,
+	       size_t ymin,
+	       size_t ymax);
+
 
 
 }

@@ -105,7 +105,13 @@ def plotmap(mapp,
         pyplot.cpgsci(contcolour)
 
     if contours != None:
-        pyplot.Contour( mapp , ConvVect(contours) )
+        if abox is None:
+            pyplot.Contour(mapp, 
+                           ConvVect(contours))
+        else:
+            pyplot.Contour(mapp,
+                           ConvVect(contours),
+                           *abox)
 
     finishplot(fout)
 

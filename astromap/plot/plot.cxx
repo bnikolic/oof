@@ -101,8 +101,12 @@ namespace AstroMap {
 	 m.ny);
   }
 
-  void Contour (Map &m , 
-		std::vector<double> &contlevels)
+  void Contour(Map &m,
+	       std::vector<double> &contlevels,
+	       size_t xmin,
+	       size_t xmax,
+	       size_t ymin,
+	       size_t ymax)
   {
 
     std::valarray<float> data( m.size() );
@@ -116,14 +120,20 @@ namespace AstroMap {
 
     cpgcont( &data[0], 
 	     m.nx, m.ny, 
-	     1 , m.nx, 
-	     1 , m.ny,
+	     xmin, xmax, 
+	     ymin, ymax,
 	     &cl[0], 
 	     cl.size(), 
 	     trmatrix);
-    
+  }
 
-    
+  void Contour (Map &m , 
+		std::vector<double> &contlevels)
+  {
+    Contour(m,
+	    contlevels,
+	    1 , m.nx, 
+	    1 , m.ny);
   }
 
 
