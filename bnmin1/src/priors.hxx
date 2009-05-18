@@ -77,13 +77,28 @@ namespace Minim {
       return priorlist.end();
     }
 
+    /** \brief Likelihood (without prior multiplied in)
+
+     */
+    double llprob(void) const
+    {
+      return _mod->lLikely();
+    }
+
+    /** \brief Prior probability at current point
+     */
+    virtual double pprob(void) const
+    {
+      return 0;
+    }
+
     // ------------   Inherited from Model   ----------------
     void AddParams (std::vector<Minim::DParamCtr> &pars);
 
     // Inherited from MLikelihood
     double lLikely(void) const
     {
-      return _mod->lLikely();
+      return llprob()+pprob();
     }
 
   };
@@ -104,8 +119,9 @@ namespace Minim {
     virtual ~IndependentFlatPriors(void);
 
     // ---------- Public interface  --------------------------
-    // Inherited from MLikelihood
-    double lLikely(void) const;
+
+    // Inherited
+    double pprob(void) const;
   };
 
   class LogFlatPriors:
@@ -124,8 +140,8 @@ namespace Minim {
     virtual ~LogFlatPriors(void);
 
     // ---------- Public interface  --------------------------
-    // Inherited from MLikelihood
-    double lLikely(void) const;
+    // Inherited
+    double pprob(void) const;
   };
   
 

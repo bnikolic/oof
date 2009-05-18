@@ -65,7 +65,19 @@ BOOST_AUTO_TEST_CASE(FlatPrior_NoParam)
   std::vector<double> dummy;
   Minim::IndependentFlatPriors pr(new QuadObs(dummy,dummy));
 
+  BOOST_CHECK_EQUAL(pr.llprob(), pr.lLikely());
+
   pr.AddPrior("c", 0,1);
+
+  Minim::ModelDesc md(pr);
+  md["c"]->setp(0.5);
+  
+  BOOST_CHECK_EQUAL(pr.pprob(), 0);
+
+  md["c"]->setp(2);
+  
+  BOOST_CHECK(pr.pprob()> 1e5);
+  
 
   BOOST_CHECK_THROW(pr.AddPrior("d", 0,1),
 		    Minim::ParamError);

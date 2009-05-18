@@ -8,9 +8,13 @@
 
 namespace Minim {
 
-  NestedS::NestedS(void):
+  NestedS::NestedS(MLikelihood & ml,
+		   std::list<MCPoint> start,
+		   const std::vector<double> & sigmas,
+		   unsigned seed):
     Zseq(1,0.0),
-    Xseq(1,0.0)
+    Xseq(1,0.0),
+    ml(ml)
   {
   }
 

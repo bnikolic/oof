@@ -10,10 +10,14 @@
 
 #include <set>
 #include <vector>
+#include <list>
 
 #include "mcpoint.hxx"
 
 namespace Minim {
+
+  // Forward declarations
+  class MLikelihood;
 
   /** \brief Nested Sampler
       
@@ -36,13 +40,28 @@ namespace Minim {
      */
     std::vector<double> Xseq;
     
+    /** \brief The model defining the likelihood function
+     */
+    MLikelihood & ml;
+
+    
   public:
 
     // -------------- Construction/Destruction ---------------------
-    
-    NestedS(void);
 
-    ~NestedS(void);
+    /**
+       \param ml The likelihood to be explored
+
+       \param start The starting set of points. The likelihod
+       functions will be re-calculated so they need not be supplied in
+       the MCPoint structure
+     */
+    NestedS(MLikelihood & ml,
+	    std::list<MCPoint> start,
+	    const std::vector<double> & sigmas,
+	    unsigned seed=43);
+
+    ~NestedS();
 
     // -------------- Public Interface -----------------------------
 

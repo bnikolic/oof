@@ -42,7 +42,7 @@ namespace Minim {
     _mod->AddParams(pars);
   }
 
-  double IndependentFlatPriors::lLikely(void) const
+  double IndependentFlatPriors::pprob(void) const
   {
     double lpriorprop = 0 ;
     for (priorlist_t::const_iterator i = pbegin();
@@ -53,7 +53,7 @@ namespace Minim {
       if (p < i->pmin or p > i->pmax)
 	lpriorprop += lkl_h;
     }
-    return lpriorprop + IndependentPriors::lLikely();
+    return lpriorprop;
   }
 
   IndependentFlatPriors::IndependentFlatPriors(MLikelihood * mod):
@@ -74,7 +74,7 @@ namespace Minim {
   {
   }
 
-  double LogFlatPriors::lLikely(void) const
+  double LogFlatPriors::pprob(void) const
   {
     double lpriorprop = 0 ;
     for (priorlist_t::const_iterator i = pbegin();
@@ -91,7 +91,7 @@ namespace Minim {
 	lpriorprop += std::log(p);
       }
     }
-    return lpriorprop + IndependentPriors::lLikely();
+    return lpriorprop;
   }
 
 
