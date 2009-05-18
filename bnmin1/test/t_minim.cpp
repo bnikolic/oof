@@ -401,6 +401,8 @@ BOOST_AUTO_TEST_CASE(t_NestedSampling)
 	    startset,
 	    sigmas);
   
-  const double res=s.sample(100);
+  const double res=s.sample(30);
+
+  BOOST_CHECK_CLOSE(res,0.0, 10);
 	  
 }

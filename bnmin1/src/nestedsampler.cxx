@@ -5,6 +5,7 @@
 */
 
 #include <cmath>
+#include <iostream>
 
 #include "nestedsampler.hxx"
 #include "priors.hxx"
@@ -44,8 +45,12 @@ namespace Minim {
       std::set<MCPoint>::iterator worst( --ss.end() );
 
       const double Llow=exp(-worst->ll);
-      const double X=exp(-Xseq.size()/N());
+      const double X=exp(-((double)Xseq.size())/N());
       const double w=Xseq[Xseq.size()-1]-X;
+
+      std::cout<<"Llow:"<<Llow
+	       <<" w:" <<w
+	       <<std::endl;
       
       Zseq.push_back(Zseq[Zseq.size()-1] + Llow* w);
       Xseq.push_back(X);
