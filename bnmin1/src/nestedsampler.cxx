@@ -5,10 +5,12 @@
 */
 
 #include "nestedsampler.hxx"
+#include "priors.hxx"
+#include "minim.hxx"
 
 namespace Minim {
 
-  NestedS::NestedS(MLikelihood & ml,
+  NestedS::NestedS(IndependentPriors & ml,
 		   std::list<MCPoint> start,
 		   const std::vector<double> & sigmas,
 		   unsigned seed):
@@ -20,6 +22,22 @@ namespace Minim {
 
   NestedS::~NestedS(void)
   {
+  }
+
+  void llPoint(IndependentPriors & ml,
+	       const std::list<MCPoint> &lp,
+	       std::set<MCPoint> &res)
+  {
+    ModelDesc m(ml);
+    for(std::list<MCPoint>::const_iterator i(lp.begin());
+	i != lp.end();
+	++i)
+    {
+      MCPoint p=*i;
+      m.put(p.p);
+      p.ll=ml.llprob();
+      res.insert(p);
+    }
   }
 
 }

@@ -17,7 +17,7 @@
 namespace Minim {
 
   // Forward declarations
-  class MLikelihood;
+  class IndependentPriors;
 
   /** \brief Nested Sampler
       
@@ -42,7 +42,7 @@ namespace Minim {
     
     /** \brief The model defining the likelihood function
      */
-    MLikelihood & ml;
+    IndependentPriors &ml;
 
     
   public:
@@ -50,13 +50,16 @@ namespace Minim {
     // -------------- Construction/Destruction ---------------------
 
     /**
-       \param ml The likelihood to be explored
+       \param ml The definition of the likelihood and priors to
+       explored. Note that IndependentPriors is required here
+       information about priors separately from likelihood is requied
+       for nested sampling.
 
        \param start The starting set of points. The likelihod
        functions will be re-calculated so they need not be supplied in
        the MCPoint structure
      */
-    NestedS(MLikelihood & ml,
+    NestedS(IndependentPriors & ml,
 	    std::list<MCPoint> start,
 	    const std::vector<double> & sigmas,
 	    unsigned seed=43);
@@ -64,12 +67,19 @@ namespace Minim {
     ~NestedS();
 
     // -------------- Public Interface -----------------------------
-
-    
-    
-    
     
   };
+
+  /** 
+      Calculate the log-likelihood at the supplied points and insert
+      into supplied set
+
+      \note pure likelihood is calcuted, disregarding prior
+      information.
+   */
+  void llPoint(IndependentPriors & ml,
+	       const std::list<MCPoint> &lp,
+	       std::set<MCPoint> &res);
 
 
 }

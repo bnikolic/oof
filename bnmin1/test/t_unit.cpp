@@ -20,6 +20,7 @@
 #include "twoerrline_ml.hxx"
 
 #include "mcpoint.hxx"
+#include "nestedsampler.hxx"
 
 
 
@@ -137,4 +138,30 @@ BOOST_AUTO_TEST_CASE(MCPoint_Less)
   
   BOOST_CHECK_EQUAL(ps.begin()->ll,
 		    20);
+}
+
+BOOST_AUTO_TEST_CASE(llPoint_Wrks)
+{
+  std::vector<double> dummy;
+  Minim::IndependentFlatPriors pr(new QuadObs(dummy,
+					      dummy));
+  pr.AddPrior("c", 0,1);
+
+
+  Minim::MCPoint p1; 
+  p1.p=boost::assign::list_of(0.5)(0.5)(0.5);
+
+  Minim::MCPoint p2; 
+  p2.p=boost::assign::list_of(0.5)(0.5)(0.5);
+
+  std::list<Minim::MCPoint> lp;
+  lp.push_back(p1); 
+  lp.push_back(p2);
+
+  std::set<Minim::MCPoint> res;
+  
+  llPoint(pr, lp, res);
+
+  BOOST_CHECK_EQUAL(res.begin()->ll,0);
+  
 }
