@@ -9,6 +9,7 @@
 #include "nestedsampler.hxx"
 #include "priors.hxx"
 #include "minim.hxx"
+#include "prior_sampler.hxx"
 
 namespace Minim {
 
@@ -18,7 +19,9 @@ namespace Minim {
 		   unsigned seed):
     Zseq(1,0.0),
     Xseq(1,0.0),
-    ml(ml)
+    ml(ml),
+    md(ml),
+    ps(new CPriorSampler(ml, sigmas, seed))
   {
     llPoint(ml,
 	    start,
@@ -38,14 +41,26 @@ namespace Minim {
   {
     for (size_t i=0; i<j; ++i)
     {
-      const double Llow=exp(- (--ss.end())->ll);
+      std::set<MCPoint>::iterator worst( --ss.end() );
+
+      const double Llow=exp(-worst->ll);
       const double X=exp(-Xseq.size()/N());
       const double w=Xseq[Xseq.size()-1]-X;
       
       Zseq.push_back(Zseq[Zseq.size()-1] + Llow* w);
       Xseq.push_back(X);
 
-      // Now just need to replace the Llow object!
+      // Now just need to replace the Llow object
+      md.put(worst->p);
+      const double newl = ps->advance(-worst->ll,
+				      100);
+
+      MCPoint np;
+      md.put(np.p);
+      np.ll=-newl;
+      ss.erase(worst);
+      ss.insert(np);
+      
     }
     return Zseq[Zseq.size()-1];
   }

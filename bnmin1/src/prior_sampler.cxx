@@ -21,6 +21,10 @@ namespace Minim
   {
   }
 
+  CPriorSampler::~CPriorSampler()
+  {
+  }
+
   double CPriorSampler::advance(double L,
 				size_t maxprop)
   {

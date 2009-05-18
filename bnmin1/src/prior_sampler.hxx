@@ -42,6 +42,8 @@ namespace Minim
 		  const std::vector<double> &sigmas,
 		  unsigned seed=0);
 
+    ~CPriorSampler();
+
     // -------------- Public Interface -----------------------------
 
     /**

@@ -12,12 +12,16 @@
 #include <vector>
 #include <list>
 
+#include <boost/scoped_ptr.hpp>
+
 #include "mcpoint.hxx"
+#include "minim.hxx"
 
 namespace Minim {
 
   // Forward declarations
   class IndependentPriors;
+  class CPriorSampler;
 
   /** \brief Nested Sampler
       
@@ -43,6 +47,12 @@ namespace Minim {
     /** \brief The model defining the likelihood function
      */
     IndependentPriors &ml;
+
+    ModelDesc md;
+
+    /** \brief The constrained prior sampler to replace points
+     */
+    boost::scoped_ptr<CPriorSampler> ps;
 
     
   public:
