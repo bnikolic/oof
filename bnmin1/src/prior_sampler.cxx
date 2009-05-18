@@ -47,6 +47,7 @@ namespace Minim
       md.put(propose);
 
       const double propllikel= -ml.llprob();
+
       if (propllikel > L)
       {
 	const double proplprior  = - ml.pprob();
@@ -65,7 +66,7 @@ namespace Minim
     // Store current point in the model
     md.put(cpoint);
     
-    if (not cllikel > L)
+    if (not (cllikel > L))
       throw "Could not obtain a better point";
     return cllikel;
     

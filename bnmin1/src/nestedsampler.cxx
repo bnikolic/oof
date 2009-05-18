@@ -56,7 +56,8 @@ namespace Minim {
 				      100);
 
       MCPoint np;
-      md.put(np.p);
+      np.p.resize(md.NParam());
+      md.get(np.p);
       np.ll=-newl;
       ss.erase(worst);
       ss.insert(np);
