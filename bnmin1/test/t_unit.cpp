@@ -21,6 +21,7 @@
 
 #include "mcpoint.hxx"
 #include "nestedsampler.hxx"
+#include "prior_sampler.hxx"
 
 
 
@@ -164,4 +165,14 @@ BOOST_AUTO_TEST_CASE(llPoint_Wrks)
 
   BOOST_CHECK_EQUAL(res.begin()->ll,0);
   
+}
+
+BOOST_AUTO_TEST_CASE(prior_sampler_constr)
+{
+  std::vector<double> dummy;
+  Minim::IndependentFlatPriors pr(new QuadObs(dummy,
+					      dummy));
+  std::vector<double> sigs(3, 0.1);
+  Minim::CPriorSampler a(pr, sigs);
+		
 }
