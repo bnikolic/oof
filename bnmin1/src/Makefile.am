@@ -13,6 +13,7 @@ libbnmin1_la_SOURCES = minimmodel.hxx minimmodel.cxx \
 			lmminutils.cxx lmminutils.hxx\
 			bnmin_main.cxx bnmin_main.hxx \
 			metropolis.cxx metropolis.hxx\
+			mcpoint.cxx mcpoint.hxx\
 			metro_propose.cxx metro_propose.hxx\
 			priors.cxx priors.hxx\
 			paramalgo.cxx paramalgo.hxx \

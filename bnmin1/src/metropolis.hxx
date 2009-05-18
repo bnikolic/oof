@@ -16,6 +16,7 @@
 
 #include "minim.hxx"
 #include "minimmodel.hxx"
+#include "mcpoint.hxx"
 
 
 
@@ -23,19 +24,6 @@ namespace Minim {
 
   class MLikelihood;
   class MetroPropose;
-
-  /** \brief Data to be recorded at each point in an MCMC distribution
-  */
-  struct MCPoint
-  {
-    /// The actual parameters
-    std::vector<double> p;
-    /// Log-likelihood of this point
-    double ll;
-    /// A vector to store derived quantities at sample of the
-    /// distribution
-    std::vector<double> fval;
-  };
 
   /** \brief Markov Chain Monte Carlo with Metropolis sampling
    */
