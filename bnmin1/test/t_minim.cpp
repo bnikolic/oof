@@ -21,6 +21,7 @@
 #include "gradientminim.hxx"
 #include "robustline.hxx"
 #include "twoerrline_ml.hxx"
+#include "nestedsampler.hxx"
 
 
 BOOST_AUTO_TEST_CASE( Initialisation )
@@ -29,7 +30,7 @@ BOOST_AUTO_TEST_CASE( Initialisation )
   Model m;
 }
 
-BOOST_AUTO_TEST_CASE( QuadT1 )
+QuadObs * mkStdObs(void)
 {
   using namespace Minim;
 
@@ -41,12 +42,20 @@ BOOST_AUTO_TEST_CASE( QuadT1 )
   qm.a=1; qm.b=2; qm.c=3;
   qm.eval(x, obs);
   
-  QuadObs qo ( x,obs);
+  return new QuadObs( x,obs);
+
+}
+
+BOOST_AUTO_TEST_CASE( QuadT1 )
+{
+  using namespace Minim;
+
+  boost::scoped_ptr<QuadObs> qo(mkStdObs());
 
   std::vector<double> scratch(3);
-  qo.residuals(scratch);
+  qo->residuals(scratch);
 
-  LMMin minimiser(qo);
+  LMMin minimiser(*qo);
   minimiser.ftol=minimiser.xtol=minimiser.gtol=1e-5;
   ChiSqMonitor mon;
   minimiser.AddMon(&mon);
@@ -54,13 +63,13 @@ BOOST_AUTO_TEST_CASE( QuadT1 )
 
   PrettyPrint(minimiser);
 
-  BOOST_CHECK_EQUAL( qo.qm.a,
+  BOOST_CHECK_EQUAL( qo->qm.a,
 		     1);
 
-  BOOST_CHECK_EQUAL( qo.qm.b,
+  BOOST_CHECK_EQUAL( qo->qm.b,
 		     2);
 
-  BOOST_CHECK_EQUAL( qo.qm.c,
+  BOOST_CHECK_EQUAL( qo->qm.c,
 		     3);
 
 }
@@ -361,4 +370,37 @@ BOOST_AUTO_TEST_CASE(t_LineTwoErr_LavMarq)
   BOOST_CHECK_CLOSE(ra, 1.0, 1e-2);  
   BOOST_CHECK_CLOSE(1+m.getbyname("b")->getp(), 1.0, 1e-2);  
   
+}
+
+BOOST_AUTO_TEST_CASE(t_NestedSampling)
+{  
+  using namespace Minim;
+  IndependentFlatPriors obs(mkStdObs());
+  
+  std::list<Minim::MCPoint> startset;
+  Minim::MCPoint p; 
+
+  p.p=boost::assign::list_of(0)(0)(0);
+  startset.push_back(p);
+
+  p.p=boost::assign::list_of(2)(0)(0);
+  startset.push_back(p);
+
+  p.p=boost::assign::list_of(0)(1)(5);
+  startset.push_back(p);
+
+  p.p=boost::assign::list_of(3)(1)(10);
+  startset.push_back(p);
+
+  p.p=boost::assign::list_of(-3)(2)(10);
+  startset.push_back(p);
+  
+  std::vector<double> sigmas(3,0.1);
+
+  NestedS s(obs,
+	    startset,
+	    sigmas);
+  
+  const double res=s.sample(100);
+	  
 }
