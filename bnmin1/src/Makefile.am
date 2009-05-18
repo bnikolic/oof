@@ -22,7 +22,8 @@ libbnmin1_la_SOURCES = minimmodel.hxx minimmodel.cxx \
 			robustline.cxx robustline.hxx\
 			twoerrline.cxx twoerrline.hxx\
 			twoerrline_ml.cxx twoerrline_ml.hxx\
-			linemodel.cxx linemodel.hxx
+			linemodel.cxx linemodel.hxx\
+			nestedsampler.cxx nestedsampler.hxx
 
 libbnmin1_la_LIBADD = f77/libminpda.la  $(GSL_LIBS)
 
