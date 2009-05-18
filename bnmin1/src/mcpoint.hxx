@@ -25,6 +25,14 @@ namespace Minim {
     std::vector<double> fval;
   };
 
+  /** \brief Define ordering of MCPoints on basis of their likelihood
+
+      Should be useful for nested sampling
+  */
+  inline bool operator< (const MCPoint &a, const MCPoint &b)
+  {
+    return a.ll < b.ll;
+  }
 
 
 

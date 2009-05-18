@@ -3,6 +3,7 @@
 #define BOOST_AUTO_TEST_MAIN
 
 #include <limits>
+#include <set>
 
 #include <boost/test/unit_test.hpp>
 #include <boost/test/auto_unit_test.hpp>
@@ -17,6 +18,8 @@
 #include "quadmodel.hpp"
 
 #include "twoerrline_ml.hxx"
+
+#include "mcpoint.hxx"
 
 
 
@@ -105,4 +108,21 @@ BOOST_AUTO_TEST_CASE(LineTwoErrML_basics)
   lml.a=0; lml.b=2;
   BOOST_CHECK_EQUAL(lml.lLikely(),0);
   
+}
+
+BOOST_AUTO_TEST_CASE(MCPoint_Less)
+{
+  Minim::MCPoint a,b;
+  a.ll=10; b.ll=20;
+  
+  BOOST_CHECK( a<b);
+  a.ll=30;
+  BOOST_CHECK( b<a);
+
+  std::set<Minim::MCPoint> ps;
+  ps.insert(a);
+  ps.insert(b);
+  
+  BOOST_CHECK_EQUAL(ps.begin()->ll,
+		    20);
 }
