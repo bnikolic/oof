@@ -67,6 +67,14 @@ namespace Minim {
     ~NestedS();
 
     // -------------- Public Interface -----------------------------
+
+    /** \brief Number of points in the current set
+     */
+    size_t N(void);
+
+    /** \brief Take j samples and return evidence estimate
+     */
+    double sample(size_t j);
     
   };
 
