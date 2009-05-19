@@ -10,6 +10,10 @@
 #include <boost/bind.hpp>
 #include <boost/assign/list_of.hpp>
 #include <boost/assign/std/vector.hpp>
+#include <boost/random.hpp>
+#include <boost/random/mersenne_twister.hpp>
+#include <boost/random/normal_distribution.hpp>
+#include <boost/random/uniform_real.hpp>
 
 #include "minimmodel.hxx"
 #include "quadmodel.hpp"
@@ -407,20 +411,16 @@ BOOST_AUTO_TEST_CASE(t_NestedSampling_Gauss)
   std::list<Minim::MCPoint> startset;
   Minim::MCPoint p; 
 
-  p.p=boost::assign::list_of(-0.9)(0)(0);
-  startset.push_back(p);
+  boost::mt19937 rng;
+  boost::uniform_01<boost::mt19937> zeroone(rng);
 
-  p.p=boost::assign::list_of(1.001)(0)(0);
-  startset.push_back(p);
-
-  p.p=boost::assign::list_of(0)(-1.002)(0);
-  startset.push_back(p);
-
-  p.p=boost::assign::list_of(0)(1.003)(0);
-  startset.push_back(p);
-
-  p.p=boost::assign::list_of(0)(0)(1.004);
-  startset.push_back(p);
+  for (int i=-1; i <=1 ; i+=2)
+    for (int j=-1; j <=1 ; j+=2)
+      for (int k=-1; k <=1 ; k+=2)
+      {
+	p.p=boost::assign::list_of(i+zeroone()*1e-3)(j+zeroone()*1e-3)(k+zeroone()*1e-3);
+	startset.push_back(p);
+      }
 
   std::vector<double> sigmas(3,0.1);
 
@@ -428,9 +428,10 @@ BOOST_AUTO_TEST_CASE(t_NestedSampling_Gauss)
 	    startset,
 	    sigmas);
   
-  const double res=s.sample(15);
+  const double res=s.sample(100);
 
-  BOOST_CHECK_CLOSE(res,0.0, 10);
+  // Analytically expect about 0.6, i.e., erf(1)^3
+  BOOST_CHECK_CLOSE(res, 0.6, 80);
 	  
 }
 
