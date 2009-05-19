@@ -8,12 +8,25 @@
 
 */
 
+#include <string>
+#include <stdexcept>
+
 #ifndef __BNMIN_BNMIN_MAIN_HPP__
 #define __BNMIN_BNMIN_MAIN_HPP__
 namespace Minim {
 
 
   const char * version(void);
+
+  /** \brief Base class for run-time errors within the library 
+   */
+  class BaseErr:
+    public std::runtime_error
+  {
+  public:
+    BaseErr(const std::string &s);
+
+  };
 
 
 }

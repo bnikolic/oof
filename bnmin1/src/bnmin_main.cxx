@@ -14,6 +14,11 @@ namespace Minim {
     return PACKAGE_VERSION;
   }
 
+  BaseErr::BaseErr(const std::string &s):
+    std::runtime_error(s)
+  {
+  }
+
 
 }
 

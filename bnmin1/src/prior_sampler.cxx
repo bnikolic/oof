@@ -8,6 +8,7 @@
 
 #include "priors.hxx"
 #include "metro_propose.hxx"
+#include "bnmin_main.hxx"
 
 namespace Minim
 {
@@ -67,7 +68,7 @@ namespace Minim
     md.put(cpoint);
     
     if (not (cllikel > L))
-      throw "Could not obtain a better point";
+      throw BaseErr("Could not obtain a better point");
     return cllikel;
     
   }
