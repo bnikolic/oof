@@ -68,7 +68,14 @@ namespace Minim {
        \param start The starting set of points. The likelihod
        functions will be re-calculated so they need not be supplied in
        the MCPoint structure
-     */
+       
+       \param sigmas The step sizes used in the generation of nested
+       samples. These should be derived similarly similarly to step
+       sizes for Metropolis
+       
+       \param seed Seed for the random number generator
+
+    */
     NestedS(IndependentPriors & ml,
 	    std::list<MCPoint> start,
 	    const std::vector<double> & sigmas,

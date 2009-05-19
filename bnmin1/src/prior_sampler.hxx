@@ -22,8 +22,9 @@ namespace Minim
 
   /** \brief Constrained prior sampler
       
-      Generate a point at position proportional to sample distribution
-      with constraint that likelihood is higher than supplied limit
+      Generate a new point at a position with probabilitiy
+      proportional to prior distribution and sujbject to constraint
+      that the likelihood is higher than supplied limit
    */
   class CPriorSampler
   {
@@ -37,7 +38,11 @@ namespace Minim
   public:
 
     // -------------- Construction/Destruction ---------------------
-    
+
+    /**
+       \note We need separately the prior and the likelihood hence
+       inheritance from indepenedentPriors
+     */
     CPriorSampler(IndependentPriors &ml,
 		  const std::vector<double> &sigmas,
 		  unsigned seed=0);
