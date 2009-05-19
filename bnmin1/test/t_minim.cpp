@@ -395,6 +395,45 @@ BOOST_AUTO_TEST_CASE(t_LineTwoErr_LavMarq)
   
 }
 
+BOOST_AUTO_TEST_CASE(t_NestedSampling_Gauss)
+{  
+  using namespace Minim;
+  IndependentFlatPriors obs(new GaussObs(3));
+
+  obs.AddPrior("p0", -1.01,1.01);
+  obs.AddPrior("p1", -1.01,1.01);
+  obs.AddPrior("p2", -1.01,1.01);
+  
+  std::list<Minim::MCPoint> startset;
+  Minim::MCPoint p; 
+
+  p.p=boost::assign::list_of(-1)(0)(0);
+  startset.push_back(p);
+
+  p.p=boost::assign::list_of(1)(0)(0);
+  startset.push_back(p);
+
+  p.p=boost::assign::list_of(0)(-1)(0);
+  startset.push_back(p);
+
+  p.p=boost::assign::list_of(0)(1)(0);
+  startset.push_back(p);
+
+  p.p=boost::assign::list_of(0)(0)(1);
+  startset.push_back(p);
+
+  std::vector<double> sigmas(3,0.1);
+
+  NestedS s(obs,
+	    startset,
+	    sigmas);
+  
+  const double res=s.sample(10);
+
+  BOOST_CHECK_CLOSE(res,0.0, 10);
+	  
+}
+
 BOOST_AUTO_TEST_CASE(t_NestedSampling)
 {  
   using namespace Minim;
@@ -429,3 +468,4 @@ BOOST_AUTO_TEST_CASE(t_NestedSampling)
   BOOST_CHECK_CLOSE(res,0.0, 10);
 	  
 }
+
