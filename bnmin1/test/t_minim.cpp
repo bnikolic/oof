@@ -433,8 +433,11 @@ BOOST_AUTO_TEST_CASE(t_NestedSampling_Gauss)
   
   const double res=s.sample(100);
 
-  /// Result should be 0.5* erf(sigma/sqrt(2))
-  BOOST_CHECK_CLOSE(res, 0.0393, 80);
+  BOOST_CHECK_CLOSE(res, 
+		    // Note pre-factor 8 cancels with 1/2 inside power
+		    pow(erf(gp->sigma/sqrt(2)),3) ,
+		    50);
+
 	  
 }
 
