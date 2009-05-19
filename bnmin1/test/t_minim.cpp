@@ -13,6 +13,7 @@
 
 #include "minimmodel.hxx"
 #include "quadmodel.hpp"
+#include "gaussmodel.hpp"
 #include "lmmin.hxx"
 #include "monitor.hxx"
 #include "minimio.hxx"
@@ -171,7 +172,29 @@ BOOST_AUTO_TEST_CASE( QuadMetro_Seq )
 
 }
 
+BOOST_AUTO_TEST_CASE(GaussObs_Metro)
+{
+  using namespace Minim;
+  
+  GaussObs go(3);
+  go.p[0]=10; 
+  go.p[1]=0;
+  go.p[2]=0;
+  std::vector<double> sigmas(3,0.1);
+  
+  MetropolisMCMC metro(go,sigmas);  
 
+  boost::shared_ptr< std::list<Minim::MCPoint>  >
+    res( metro.sample(10000)) ;
+
+  for (size_t i = 0; i < sigmas.size(); ++i)
+  {
+    BOOST_CHECK(fabs(res->back().p[i]) < 3);
+  }  
+  
+
+
+}
 BOOST_AUTO_TEST_CASE( Params_ByName )
 {
   using namespace Minim;
