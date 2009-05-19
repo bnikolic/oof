@@ -10,6 +10,7 @@
 #include "priors.hxx"
 #include "minim.hxx"
 #include "prior_sampler.hxx"
+#include "bnmin_main.hxx"
 
 namespace Minim {
 
@@ -26,6 +27,11 @@ namespace Minim {
     llPoint(ml,
 	    start,
 	    ss);
+    
+    if (ss.size() < 2)
+    {
+      throw BaseErr("Number of points in the starting set is less than two");
+    }
   }
 
   NestedS::~NestedS(void)

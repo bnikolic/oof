@@ -407,19 +407,19 @@ BOOST_AUTO_TEST_CASE(t_NestedSampling_Gauss)
   std::list<Minim::MCPoint> startset;
   Minim::MCPoint p; 
 
-  p.p=boost::assign::list_of(-1)(0)(0);
+  p.p=boost::assign::list_of(-0.9)(0)(0);
   startset.push_back(p);
 
-  p.p=boost::assign::list_of(1)(0)(0);
+  p.p=boost::assign::list_of(1.001)(0)(0);
   startset.push_back(p);
 
-  p.p=boost::assign::list_of(0)(-1)(0);
+  p.p=boost::assign::list_of(0)(-1.002)(0);
   startset.push_back(p);
 
-  p.p=boost::assign::list_of(0)(1)(0);
+  p.p=boost::assign::list_of(0)(1.003)(0);
   startset.push_back(p);
 
-  p.p=boost::assign::list_of(0)(0)(1);
+  p.p=boost::assign::list_of(0)(0)(1.004);
   startset.push_back(p);
 
   std::vector<double> sigmas(3,0.1);
@@ -428,7 +428,7 @@ BOOST_AUTO_TEST_CASE(t_NestedSampling_Gauss)
 	    startset,
 	    sigmas);
   
-  const double res=s.sample(10);
+  const double res=s.sample(15);
 
   BOOST_CHECK_CLOSE(res,0.0, 10);
 	  
