@@ -20,7 +20,7 @@ namespace Minim {
 		   const std::vector<double> & sigmas,
 		   unsigned seed):
     Zseq(1,0.0),
-    Xseq(1,0.0),
+    Xseq(1,1.0),
     ml(ml),
     md(ml),
     ps(new CPriorSampler(ml, sigmas, seed)),
