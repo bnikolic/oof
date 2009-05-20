@@ -10,7 +10,8 @@
 #define _BNMIN_PARAMCTR_HXX__
 
 #include <string>
-#include <stdexcept>
+
+#include "bnmin_main.hxx"
 
 namespace Minim {
 
@@ -80,17 +81,17 @@ namespace Minim {
   typedef ParamCtr<double>  DParamCtr;
 
   class ParamError:
-    public std::runtime_error
+    public BaseErr
   {
   public:
     /// Use only if could not establish the parameter
     ParamError(const std::string &msg):
-      std::runtime_error("Parameter not identified: " +msg)
+      BaseErr("Parameter not identified: " +msg)
     {}
 
     ParamError(const DParamCtr&p,
 	       const std::string &msg):
-      std::runtime_error(p.name+msg)
+      BaseErr(p.name+msg)
     {}
     
     virtual ~ParamError() throw()
