@@ -22,6 +22,7 @@ namespace Minim {
   // Forward declarations
   class PriorNLikelihood;
   class CPriorSampler;
+  class MCMonitorBase;
 
   /** \brief Nested Sampler
       
@@ -56,6 +57,8 @@ namespace Minim {
 
     
   public:
+    
+    MCMonitorBase *mon;
 
     // -------------- Construction/Destruction ---------------------
 

@@ -23,13 +23,14 @@ namespace Minim {
     Xseq(1,0.0),
     ml(ml),
     md(ml),
-    ps(new CPriorSampler(ml, sigmas, seed))
+    ps(new CPriorSampler(ml, sigmas, seed)),
+    mon(NULL)
   {
     llPoint(ml,
 	    start,
 	    ss);
 
-    ps->mon= new SOutMCMon();
+    //ps->mon= new SOutMCMon();
     
     if (ss.size() < 2)
     {
@@ -64,13 +65,14 @@ namespace Minim {
       md.put(worst->p);
       const double newl = ps->advance(-worst->ll,
 				      100);
-
       MCPoint np;
       np.p.resize(md.NParam());
       md.get(np.p);
       np.ll=-newl;
       ss.erase(worst);
       ss.insert(np);
+      if(mon)
+	mon->accept(np);
       
     }
     return Zseq[Zseq.size()-1];

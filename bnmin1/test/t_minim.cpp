@@ -418,26 +418,32 @@ BOOST_AUTO_TEST_CASE(t_NestedSampling_Gauss)
   boost::mt19937 rng;
   boost::uniform_01<boost::mt19937> zeroone(rng);
 
+  const double sscale=1.0;
   for (int i=-1; i <=1 ; i+=2)
     for (int j=-1; j <=1 ; j+=2)
       for (int k=-1; k <=1 ; k+=2)
       {
-	p.p=boost::assign::list_of(i+zeroone()*1e-3)(j+zeroone()*1e-3)(k+zeroone()*1e-3);
+	p.p=boost::assign::list_of(sscale*i+zeroone()*1e-3)
+	                          (sscale*j+zeroone()*1e-3)
+	                          (sscale*k+zeroone()*1e-3);
 	startset.push_back(p);
       }
 
-  std::vector<double> sigmas(3,0.1);
+  std::vector<double> sigmas(3,0.2);
 
   NestedS s(obs,
 	    startset,
 	    sigmas);
   
-  const double res=s.sample(100);
+  s.mon=new SOutMCMon();
+  
+  const double res=s.sample(50);
 
   BOOST_CHECK_CLOSE(res, 
 		    // Note pre-factor 8 cancels with 1/2 inside power
 		    pow(erf(gp->sigma/sqrt(2)),3) ,
 		    50);
+  delete s.mon;
 
 	  
 }
