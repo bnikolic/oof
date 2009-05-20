@@ -13,7 +13,7 @@
 namespace Minim
 {
   
-  CPriorSampler::CPriorSampler(IndependentPriors &ml,
+  CPriorSampler::CPriorSampler(PriorNLikelihood &ml,
 			       const std::vector<double> &sigmas,
 			       unsigned seed):
     prop(new MetroPropose(sigmas, seed)),

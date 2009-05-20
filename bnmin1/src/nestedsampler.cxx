@@ -14,7 +14,7 @@
 
 namespace Minim {
 
-  NestedS::NestedS(IndependentPriors & ml,
+  NestedS::NestedS(PriorNLikelihood & ml,
 		   std::list<MCPoint> start,
 		   const std::vector<double> & sigmas,
 		   unsigned seed):
@@ -73,7 +73,7 @@ namespace Minim {
   }
   
 
-  void llPoint(IndependentPriors & ml,
+  void llPoint(PriorNLikelihood & ml,
 	       const std::list<MCPoint> &lp,
 	       std::set<MCPoint> &res)
   {

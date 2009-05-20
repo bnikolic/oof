@@ -16,6 +16,10 @@ namespace Minim {
   {
   }
 
+  PriorNLikelihood::~PriorNLikelihood()
+  {
+  }
+
   void  PriorNLikelihood::AddParams (std::vector< Minim::DParamCtr > &pars)
   {
     _mod->AddParams(pars);

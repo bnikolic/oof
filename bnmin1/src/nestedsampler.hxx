@@ -20,7 +20,7 @@
 namespace Minim {
 
   // Forward declarations
-  class IndependentPriors;
+  class PriorNLikelihood;
   class CPriorSampler;
 
   /** \brief Nested Sampler
@@ -46,7 +46,7 @@ namespace Minim {
     
     /** \brief The model defining the likelihood function
      */
-    IndependentPriors &ml;
+    PriorNLikelihood &ml;
 
     ModelDesc md;
 
@@ -61,7 +61,7 @@ namespace Minim {
 
     /**
        \param ml The definition of the likelihood and priors to
-       explored. Note that IndependentPriors is required here
+       explored. Note that PriorNLikelihood is required here
        information about priors separately from likelihood is requied
        for nested sampling.
 
@@ -76,7 +76,7 @@ namespace Minim {
        \param seed Seed for the random number generator
 
     */
-    NestedS(IndependentPriors & ml,
+    NestedS(PriorNLikelihood & ml,
 	    std::list<MCPoint> start,
 	    const std::vector<double> & sigmas,
 	    unsigned seed=43);
@@ -102,7 +102,7 @@ namespace Minim {
       \note pure likelihood is calcuted, disregarding prior
       information.
    */
-  void llPoint(IndependentPriors & ml,
+  void llPoint(PriorNLikelihood &ml,
 	       const std::list<MCPoint> &lp,
 	       std::set<MCPoint> &res);
 

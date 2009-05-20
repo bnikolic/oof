@@ -17,7 +17,7 @@
 namespace Minim
 {
   // Forward declarations
-  class IndependentPriors;
+  class PriorNLikelihood;
   class MetroPropose;
 
   /** \brief Constrained prior sampler
@@ -33,7 +33,7 @@ namespace Minim
 
     ModelDesc md;
     
-    IndependentPriors &ml;
+    PriorNLikelihood &ml;
 
   public:
 
@@ -43,7 +43,7 @@ namespace Minim
        \note We need separately the prior and the likelihood hence
        inheritance from indepenedentPriors
      */
-    CPriorSampler(IndependentPriors &ml,
+    CPriorSampler(PriorNLikelihood &ml,
 		  const std::vector<double> &sigmas,
 		  unsigned seed=0);
 
