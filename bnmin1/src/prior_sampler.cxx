@@ -9,6 +9,8 @@
 #include "priors.hxx"
 #include "metro_propose.hxx"
 #include "bnmin_main.hxx"
+#include "mcpoint.hxx"
+#include "mcmonitor.hxx"
 
 namespace Minim
 {
@@ -18,7 +20,8 @@ namespace Minim
 			       unsigned seed):
     prop(new MetroPropose(sigmas, seed)),
     md(ml),
-    ml(ml)
+    ml(ml),
+    mon(NULL)
   {
   }
 
@@ -48,6 +51,13 @@ namespace Minim
       md.put(propose);
 
       const double propllikel= -ml.llprob();
+      
+      if (mon)
+      {
+	MCPoint p(propose);
+	p.ll=propllikel;
+	mon->propose(p);
+      }
 
       if (propllikel > L)
       {
@@ -61,6 +71,14 @@ namespace Minim
 	  cpoint=propose;
 	  clprior=proplprior;      
 	  cllikel=propllikel;
+
+	  if (mon)
+	  {
+	    MCPoint p(cpoint);
+	    p.ll=cllikel;
+	    mon->accept(p);
+	  }
+
 	}
       }
     }

@@ -23,6 +23,8 @@
 #include "nestedsampler.hxx"
 #include "prior_sampler.hxx"
 
+#include "mcmonitor.hxx"
+
 
 
 BOOST_AUTO_TEST_CASE( MetroPropose_raccept )
@@ -175,4 +177,12 @@ BOOST_AUTO_TEST_CASE(prior_sampler_constr)
   std::vector<double> sigs(3, 0.1);
   Minim::CPriorSampler a(pr, sigs);
 		
+}
+
+BOOST_AUTO_TEST_CASE(SOutMCMon_tprint)
+{
+  Minim::SOutMCMon t;
+  Minim::MCPoint p;
+  p.p.push_back(10);
+  t.accept(p);
 }

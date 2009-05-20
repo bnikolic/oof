@@ -27,6 +27,7 @@
 #include "robustline.hxx"
 #include "twoerrline_ml.hxx"
 #include "nestedsampler.hxx"
+#include "mcmonitor.hxx"
 
 
 BOOST_AUTO_TEST_CASE( Initialisation )

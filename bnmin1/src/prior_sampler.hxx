@@ -19,6 +19,7 @@ namespace Minim
   // Forward declarations
   class PriorNLikelihood;
   class MetroPropose;
+  class MCMonitorBase;
 
   /** \brief Constrained prior sampler
       
@@ -36,6 +37,9 @@ namespace Minim
     PriorNLikelihood &ml;
 
   public:
+    
+    // -------------- Public data  --------------------------------
+    MCMonitorBase * mon;
 
     // -------------- Construction/Destruction ---------------------
 

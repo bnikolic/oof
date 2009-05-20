@@ -11,6 +11,7 @@
 #include "minim.hxx"
 #include "prior_sampler.hxx"
 #include "bnmin_main.hxx"
+#include "mcmonitor.hxx"
 
 namespace Minim {
 
@@ -27,6 +28,8 @@ namespace Minim {
     llPoint(ml,
 	    start,
 	    ss);
+
+    ps->mon= new SOutMCMon();
     
     if (ss.size() < 2)
     {
@@ -36,6 +39,7 @@ namespace Minim {
 
   NestedS::~NestedS(void)
   {
+    delete ps->mon;
   }
 
   size_t NestedS::N(void)

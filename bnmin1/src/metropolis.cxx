@@ -66,8 +66,7 @@ namespace Minim {
       if (ldiff > 0 or 
 	  prop->raccept() < exp(ldiff) )
       {
-	MCPoint mcp;
-	mcp.p=propose;
+	MCPoint mcp(propose);
 	mcp.ll=proplogl;
 	if (f)
 	  f(mcp.fval);

@@ -23,6 +23,19 @@ namespace Minim {
     /// A vector to store derived quantities at sample of the
     /// distribution
     std::vector<double> fval;
+
+    /// Default constructor allowed, fill in the data later
+    MCPoint(void)
+    {
+    }
+
+    /** \Construct with supplied position vector
+     */
+    MCPoint(const std::vector<double> &p):
+      p(p)
+    {
+    }
+    
   };
 
   /** \brief Define ordering of MCPoints on basis of their likelihood
