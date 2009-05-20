@@ -15,6 +15,67 @@
 #include <boost/scoped_ptr.hpp>
 
 namespace Minim {
+
+  /** \brief Represents combined priors and likelihood in a single
+      object
+      
+      
+   */
+  class PriorNLikelihood:
+    public MLikelihood
+  {
+    /// Keeps the encapsulated likelihoood model
+    boost::scoped_ptr<MLikelihood> _mod;
+    
+  public:
+
+    /// --------------- Public data -----------------------
+    
+    /** \brief Value representing very low likelihood 
+	
+	I.e., this is the value used for the negative log-likelihood
+	when priors have "hard" constraints
+     */
+    static const double lkl_h=1e9;
+
+    // ---------- Construction / Destruction --------------
+
+    /** Construct with reference to an existing model
+
+       \note This class takes ownership of the supplied pointer
+    */
+    PriorNLikelihood(MLikelihood * mod);    
+    
+    virtual ~PriorNLikelihood();
+
+    // ---------- Public interface  --------------------------
+    
+    /** \brief Likelihood (without prior multiplied in)
+	
+     */
+    double llprob(void) const
+    {
+      return _mod->lLikely();
+    }
+
+    /** \brief Prior probability at current point
+     */
+    virtual double pprob(void) const
+    {
+      return 0;
+    }
+
+    // Inherited from MLikelihood
+    double lLikely(void) const
+    {
+      return llprob()+pprob();
+    }
+
+    // ------------   Inherited from Model   ----------------
+    void AddParams (std::vector<Minim::DParamCtr> &pars);
+
+
+  };
   
   /** \brief Independent priors on each parameter
       
@@ -23,10 +84,9 @@ namespace Minim {
 
    */
   class IndependentPriors:
-    public MLikelihood 
+    public PriorNLikelihood
   {
 
-    boost::scoped_ptr<MLikelihood> _mod;
     std::vector< Minim::DParamCtr > _mpars;
     
     struct fprior_t
@@ -44,14 +104,10 @@ namespace Minim {
 
   public:
 
-    /// --------------- Public data -----------------------
-    static const double lkl_h=1e9;
-
     // ---------- Construction / Destruction --------------
 
     /** Construct with reference to an existing model
 
-       \note This class takes ownership of the supplied pointer
     */
     IndependentPriors(MLikelihood * mod);
 
@@ -75,30 +131,6 @@ namespace Minim {
     priorlist_t::const_iterator pend(void) const
     {
       return priorlist.end();
-    }
-
-    /** \brief Likelihood (without prior multiplied in)
-
-     */
-    double llprob(void) const
-    {
-      return _mod->lLikely();
-    }
-
-    /** \brief Prior probability at current point
-     */
-    virtual double pprob(void) const
-    {
-      return 0;
-    }
-
-    // ------------   Inherited from Model   ----------------
-    void AddParams (std::vector<Minim::DParamCtr> &pars);
-
-    // Inherited from MLikelihood
-    double lLikely(void) const
-    {
-      return llprob()+pprob();
     }
 
   };

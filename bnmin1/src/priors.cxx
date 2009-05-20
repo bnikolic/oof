@@ -11,17 +11,26 @@
 
 namespace Minim {
 
-  IndependentPriors::IndependentPriors(MLikelihood * mod):
+  PriorNLikelihood::PriorNLikelihood(MLikelihood * mod):
     _mod(mod)
   {
-    _mod->AddParams(_mpars);
+  }
+
+  void  PriorNLikelihood::AddParams (std::vector< Minim::DParamCtr > &pars)
+  {
+    _mod->AddParams(pars);
+  }
+
+  IndependentPriors::IndependentPriors(MLikelihood * mod):
+    PriorNLikelihood(mod)    
+  {
+    AddParams(_mpars);
   }
 
   IndependentPriors::~IndependentPriors(void)
   {
   }
-  
-  
+
   void IndependentPriors::AddPrior( const std::string & pname,
 					double low,
 					double high)
@@ -35,11 +44,6 @@ namespace Minim {
     pr.pmin=low;
     pr.pmax=high;
     priorlist.push_back(pr);
-  }
-
-  void  IndependentPriors::AddParams ( std::vector< Minim::DParamCtr > &pars )
-  {
-    _mod->AddParams(pars);
   }
 
   double IndependentFlatPriors::pprob(void) const
