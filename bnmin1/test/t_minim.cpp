@@ -415,21 +415,10 @@ BOOST_AUTO_TEST_CASE(t_NestedSampling_Gauss)
   obs.AddPrior("p2", -1.01,1.01);
   
   std::list<Minim::MCPoint> startset;
-  Minim::MCPoint p; 
 
-  boost::mt19937 rng;
-  boost::uniform_01<boost::mt19937> zeroone(rng);
-
-  const double sscale=1.5;
-  for (int i=-1; i <=1 ; i+=2)
-    for (int j=-1; j <=1 ; j+=2)
-      for (int k=-1; k <=1 ; k+=2)
-      {
-	p.p=boost::assign::list_of(sscale*i+zeroone()*1e-3)
-	                          (sscale*j+zeroone()*1e-3)
-	                          (sscale*k+zeroone()*1e-3);
-	startset.push_back(p);
-      }
+  startSetDirect(obs,
+		 20,
+		 startset);
 
   std::vector<double> sigmas(3,0.1);
 
@@ -439,12 +428,12 @@ BOOST_AUTO_TEST_CASE(t_NestedSampling_Gauss)
   
   s.mon=new SOutMCMon();
   
-  const double res=s.sample(80);
+  const double res=s.sample(150);
 
   BOOST_CHECK_CLOSE(res, 
 		    // Note pre-factor 8 cancels with 1/2 inside power
 		    pow(erf(gp->sigma/sqrt(2)),3) ,
-		    50);
+		    40);
   delete s.mon;
 
 	  
