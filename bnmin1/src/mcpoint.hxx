@@ -36,6 +36,13 @@ namespace Minim {
     {
     }
     
+    /** \brief The parameter vector has n values
+     */
+    MCPoint(size_t np):
+      p(np)
+    {
+    }
+    
   };
 
   /** \brief Define ordering of MCPoints on basis of their likelihood

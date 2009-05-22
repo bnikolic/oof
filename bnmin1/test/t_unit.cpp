@@ -5,6 +5,7 @@
 #include <limits>
 #include <set>
 
+#include <boost/foreach.hpp>
 #include <boost/test/unit_test.hpp>
 #include <boost/test/auto_unit_test.hpp>
 #include <boost/test/floating_point_comparison.hpp>
@@ -186,3 +187,25 @@ BOOST_AUTO_TEST_CASE(SOutMCMon_tprint)
   p.p.push_back(10);
   t.accept(p);
 }
+
+BOOST_AUTO_TEST_CASE(t_startSetDirect)
+{
+  std::vector<double> dummy;
+  Minim::IndependentFlatPriors pr(new QuadObs(dummy,
+					      dummy));
+  pr.AddPrior("c", 0,1);
+  
+  std::list<Minim::MCPoint> s;
+
+  startSetDirect(pr,
+		 100,
+		 s);
+
+  BOOST_FOREACH(const Minim::MCPoint &p, s)
+  {
+    BOOST_CHECK(p.p[0] > 0 &&
+		p.p[0] < 1 );
+  }
+		
+}
+

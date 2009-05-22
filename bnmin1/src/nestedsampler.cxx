@@ -6,6 +6,10 @@
 
 #include <cmath>
 
+#include <boost/random.hpp>
+#include <boost/random/mersenne_twister.hpp>
+#include <boost/random/uniform_real.hpp>
+
 #include "nestedsampler.hxx"
 #include "priors.hxx"
 #include "minim.hxx"
@@ -93,6 +97,30 @@ namespace Minim {
       p.ll=ml.llprob();
       res.insert(p);
     }
+  }
+
+  void startSetDirect(const IndependentFlatPriors &prior,
+		      size_t n,
+		      std::list<MCPoint> &res,
+		      unsigned seed)
+  {
+    boost::mt19937 rng(seed);
+    boost::uniform_01<boost::mt19937> zo(rng);
+
+    Minim::MCPoint p(prior.npriors()); 
+    for(size_t i=0; i<n; ++i)
+    {
+      size_t j=0;
+      for (IndependentFlatPriors::priorlist_t::const_iterator dimp(prior.pbegin());
+	   dimp != prior.pend();
+	   ++dimp)
+      {
+	p.p[j]=dimp->pmin+ (dimp->pmax - dimp->pmin)* zo();
+	++j;
+      }
+      res.push_back(p);
+    }
+
   }
 
 }

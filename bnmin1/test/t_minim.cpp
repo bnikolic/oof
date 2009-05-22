@@ -400,6 +400,8 @@ BOOST_AUTO_TEST_CASE(t_LineTwoErr_LavMarq)
   
 }
 
+
+
 BOOST_AUTO_TEST_CASE(t_NestedSampling_Gauss)
 {  
   using namespace Minim;
@@ -418,7 +420,7 @@ BOOST_AUTO_TEST_CASE(t_NestedSampling_Gauss)
   boost::mt19937 rng;
   boost::uniform_01<boost::mt19937> zeroone(rng);
 
-  const double sscale=1.0;
+  const double sscale=1.5;
   for (int i=-1; i <=1 ; i+=2)
     for (int j=-1; j <=1 ; j+=2)
       for (int k=-1; k <=1 ; k+=2)
@@ -429,7 +431,7 @@ BOOST_AUTO_TEST_CASE(t_NestedSampling_Gauss)
 	startset.push_back(p);
       }
 
-  std::vector<double> sigmas(3,0.2);
+  std::vector<double> sigmas(3,0.1);
 
   NestedS s(obs,
 	    startset,
@@ -437,7 +439,7 @@ BOOST_AUTO_TEST_CASE(t_NestedSampling_Gauss)
   
   s.mon=new SOutMCMon();
   
-  const double res=s.sample(50);
+  const double res=s.sample(80);
 
   BOOST_CHECK_CLOSE(res, 
 		    // Note pre-factor 8 cancels with 1/2 inside power

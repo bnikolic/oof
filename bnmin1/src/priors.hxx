@@ -133,6 +133,12 @@ namespace Minim {
       return priorlist.end();
     }
 
+    /// Number of priors
+    size_t npriors(void) const
+    {
+      return priorlist.size();
+    }
+
   };
 
   class IndependentFlatPriors:

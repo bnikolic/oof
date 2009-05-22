@@ -23,6 +23,7 @@ namespace Minim {
   class PriorNLikelihood;
   class CPriorSampler;
   class MCMonitorBase;
+  class IndependentFlatPriors;
 
   /** \brief Nested Sampler
       
@@ -108,6 +109,18 @@ namespace Minim {
   void llPoint(PriorNLikelihood &ml,
 	       const std::list<MCPoint> &lp,
 	       std::set<MCPoint> &res);
+
+  /** 
+      \brief Create the starting set by directly sampling the prior
+      distribution
+      
+      This requieres the prior distribution to be made from
+      independent flat priors.
+   */
+  void startSetDirect(const IndependentFlatPriors &prior,
+		      size_t n,
+		      std::list<MCPoint> &res,
+		      unsigned seed=43);
 
 
 }
