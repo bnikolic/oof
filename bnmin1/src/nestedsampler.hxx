@@ -81,7 +81,7 @@ namespace Minim {
 
     */
     NestedS(PriorNLikelihood & ml,
-	    std::list<MCPoint> start,
+	    const std::list<MCPoint> & start,
 	    const std::vector<double> & sigmas,
 	    unsigned seed=43);
 
@@ -121,6 +121,18 @@ namespace Minim {
 		      size_t n,
 		      std::list<MCPoint> &res,
 		      unsigned seed=43);
+
+  /** Error 
+   */
+  class NestedSmallStart:
+    public BaseErr
+  {
+    
+  public:
+    
+    NestedSmallStart(const std::list<MCPoint> &ss);     
+
+  };
 
 
 }

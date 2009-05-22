@@ -13,7 +13,7 @@
 #include "../src/priors.hxx"
 #include "../src/twoerrline.hxx"
 
-
+#include "../src/nestedsampler.hxx"
 
 %}
 
@@ -21,6 +21,7 @@
 %include "std_vector.i"
 %include "std_list.i"
 
+%include "../src/bnmin_main.hxx"
 %include "../src/paramctr.hxx"
 
 namespace Minim {
@@ -33,7 +34,7 @@ namespace std {
 	   %template(ListDV) list<Minim::MCPoint>; 
 }
 
-%include "../src/bnmin_main.hxx"
+
 %include "../src/minimmodel.hxx"
 %include "../src/monitor.hxx"
 %include "../src/minim.hxx"
@@ -44,6 +45,12 @@ namespace std {
 %include "../src/metropolis.hxx"
 %include "../src/priors.hxx"
 %include "../src/twoerrline.hxx"
+
+%catches(Minim::BaseErr) Minim::NestedS::NestedS(PriorNLikelihood &,
+			        	 	 const std::list<MCPoint> &,
+					         const std::vector<double> &,
+			                         unsigned seed=43);		    
+%include "../src/nestedsampler.hxx"
 
 %extend Minim::LineFit {
 	
@@ -62,6 +69,5 @@ namespace std {
 	return self->cv[1];
 	}
 }
-
 
 

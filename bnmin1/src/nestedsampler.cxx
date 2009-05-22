@@ -20,7 +20,7 @@
 namespace Minim {
 
   NestedS::NestedS(PriorNLikelihood & ml,
-		   std::list<MCPoint> start,
+		   const std::list<MCPoint> & start,
 		   const std::vector<double> & sigmas,
 		   unsigned seed):
     Zseq(1,0.0),
@@ -38,7 +38,7 @@ namespace Minim {
     
     if (ss.size() < 2)
     {
-      throw BaseErr("Number of points in the starting set is less than two");
+      throw NestedSmallStart(start);
     }
   }
 
@@ -121,6 +121,11 @@ namespace Minim {
       res.push_back(p);
     }
 
+  }
+
+  NestedSmallStart::NestedSmallStart(const std::list<MCPoint> &ss):
+    BaseErr("Number of points in the starting set is less than two")
+  {
   }
 
 }
