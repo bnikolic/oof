@@ -5,6 +5,9 @@
    Most trivial directly representing gaussian likelihood
 */
 
+#ifndef _BNMIN1_TEST_GAUSSMODEL_HPP__
+#define _BNMIN1_TEST_GAUSSMODEL_HPP__
+
 #include <boost/numeric/ublas/vector.hpp>
 #include <boost/format.hpp>
 
@@ -36,7 +39,7 @@ public:
   
   double lLikely(void) const
   {
-    return 0.5*std::log(2*M_PI*pow(sigma,2))+ u::inner_prod(p,p)/(2*pow(sigma,2));
+    return p.size()* 0.5*std::log(2*M_PI*pow(sigma,2))+ u::inner_prod(p,p)/(2*pow(sigma,2));
   }
 
   void AddParams(std::vector< Minim::DParamCtr > &pars)
@@ -55,3 +58,4 @@ public:
   
 };
 
+#endif

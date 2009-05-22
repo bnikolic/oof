@@ -29,6 +29,8 @@
 #include "nestedsampler.hxx"
 #include "mcmonitor.hxx"
 
+#include "nestedgauss.hpp"
+
 
 BOOST_AUTO_TEST_CASE( Initialisation )
 {
@@ -404,39 +406,15 @@ BOOST_AUTO_TEST_CASE(t_LineTwoErr_LavMarq)
 
 BOOST_AUTO_TEST_CASE(t_NestedSampling_Gauss)
 {  
-  using namespace Minim;
-  GaussObs *gp = new GaussObs(3);
-  gp->sigma=1.0;
-  IndependentFlatPriors obs(gp);
+  const double l_sigma=1.0;
 
-
-  obs.AddPrior("p0", -1.01,1.01);
-  obs.AddPrior("p1", -1.01,1.01);
-  obs.AddPrior("p2", -1.01,1.01);
-  
-  std::list<Minim::MCPoint> startset;
-
-  startSetDirect(obs,
-		 20,
-		 startset);
-
-  std::vector<double> sigmas(3,0.1);
-
-  NestedS s(obs,
-	    startset,
-	    sigmas);
-  
-  s.mon=new SOutMCMon();
-  
-  const double res=s.sample(150);
+  const double res=getEvidence(l_sigma,
+			       false);
 
   BOOST_CHECK_CLOSE(res, 
 		    // Note pre-factor 8 cancels with 1/2 inside power
-		    pow(erf(gp->sigma/sqrt(2)),3) ,
-		    40);
-  delete s.mon;
-
-	  
+		    1.0/8* pow(erf(1.0/l_sigma/sqrt(2)),3) ,
+		    10);
 }
 
 BOOST_AUTO_TEST_CASE(t_NestedSampling)

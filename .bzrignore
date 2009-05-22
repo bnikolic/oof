@@ -195,3 +195,4 @@ CVS
 ./bnlib/test/kvolume
 ./bnlib/test/Makefile
 *.tar.bz2
+./bnmin1/test/nestedgauss
