@@ -21,6 +21,7 @@
 #include "twoerrline_ml.hxx"
 
 #include "mcpoint.hxx"
+#include "nestederr.hxx"
 #include "nestedsampler.hxx"
 #include "prior_sampler.hxx"
 
@@ -206,6 +207,21 @@ BOOST_AUTO_TEST_CASE(t_startSetDirect)
     BOOST_CHECK(p.p[0] > 0 &&
 		p.p[0] < 1 );
   }
+		
+}
+
+BOOST_AUTO_TEST_CASE(t_NestedS_err)
+{
+  std::vector<double> dummy;
+  Minim::IndependentFlatPriors pr(new QuadObs(dummy,
+					      dummy));
+  std::list<Minim::MCPoint> s;
+
+  std::vector<double> sigmas(3);
+
+  BOOST_CHECK_THROW(Minim::NestedS ns(pr, s, sigmas),
+		    Minim::NestedSmallStart);
+
 		
 }
 

@@ -13,6 +13,7 @@
 #include "../src/priors.hxx"
 #include "../src/twoerrline.hxx"
 
+#include "../src/nestederr.hxx"
 #include "../src/nestedsampler.hxx"
 
 %}
@@ -45,8 +46,9 @@ namespace std {
 %include "../src/metropolis.hxx"
 %include "../src/priors.hxx"
 %include "../src/twoerrline.hxx"
+%include "../src/nestederr.hxx"
 
-%catches(Minim::BaseErr) Minim::NestedS::NestedS(PriorNLikelihood &,
+%catches(Minim::NestedSmallStart) Minim::NestedS::NestedS(PriorNLikelihood &,
 			        	 	 const std::list<MCPoint> &,
 					         const std::vector<double> &,
 			                         unsigned seed=43);		    

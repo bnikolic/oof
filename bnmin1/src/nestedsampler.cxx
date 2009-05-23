@@ -14,7 +14,7 @@
 #include "priors.hxx"
 #include "minim.hxx"
 #include "prior_sampler.hxx"
-#include "bnmin_main.hxx"
+#include "nestederr.hxx"
 #include "mcmonitor.hxx"
 
 namespace Minim {
@@ -22,7 +22,7 @@ namespace Minim {
   NestedS::NestedS(PriorNLikelihood & ml,
 		   const std::list<MCPoint> & start,
 		   const std::vector<double> & sigmas,
-		   unsigned seed):
+		   unsigned seed) throw (NestedSmallStart):
     Zseq(1,0.0),
     Xseq(1,1.0),
     ml(ml),
@@ -121,11 +121,6 @@ namespace Minim {
       res.push_back(p);
     }
 
-  }
-
-  NestedSmallStart::NestedSmallStart(const std::list<MCPoint> &ss):
-    BaseErr("Number of points in the starting set is less than two")
-  {
   }
 
 }
