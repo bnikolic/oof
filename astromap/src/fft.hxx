@@ -54,10 +54,12 @@ namespace AstroMap {
 
     /// Do the complex 2D fourier transform on the maps representing
     /// amplitude and phase, puting the result in the same maps.
-    void fftamphi(Map &Amp, Map &Phi);
+    void fftamphi(Map &Amp, Map &Phi,
+		  bool check=true);
 
     void fftamphi(const Map &Amp, const Map &Phi,
-		  Map &resAmp, Map &resPhi);
+		  Map &resAmp, Map &resPhi,
+		  bool check=true);
 
     /// Do the complex 2d fourier transform on a Amp, Phase pair and
     /// return the power. \calgraph

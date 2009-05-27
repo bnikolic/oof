@@ -35,6 +35,20 @@ namespace AstroMap {
     return res;
   }
 
+  Map * Extract(const Map &m,
+		const MRRect &reg)
+  {
+    Map *mres=new Map(reg.hx-reg.lx,
+		      reg.hy-reg.ly);
+    for (size_t i=reg.lx; i<reg.hx; ++i)
+      for (size_t j=reg.ly; j<reg.hy; ++j)
+      {
+	mres->get(i-reg.lx, j-reg.ly) = m.get(i,j);
+      }
+    
+    return mres;
+  }
+
 }
 
 

@@ -93,7 +93,8 @@ namespace AstroMap {
     
     
     void AmpPhi(const Map &Amp, const Map &Phi,
-		Map & resAmp, Map & resPhi ) 
+		Map & resAmp, Map & resPhi,
+		bool check=true ) 
     {
 
       Transform (Amp, Phi);
@@ -101,7 +102,15 @@ namespace AstroMap {
       unsigned  nx=Amp.nx;    
       unsigned  ny=Amp.ny;
 
-      int mul = ( docenter == FFTFact::center ? -1 : 1 ) ;
+      int mul;
+      if (check)
+      {
+	mul = ( docenter == FFTFact::center ? -1 : 1 ) ;
+      }
+      else
+      {
+	mul = 1.0;
+      }
       
       for (unsigned i =0 ; i < nx ; i++ ) 
 	{
@@ -123,8 +132,11 @@ namespace AstroMap {
       
     }
     
-    void AmpPhi(Map &Amp, Map &Phi) {
-      AmpPhi(Amp, Phi, Amp, Phi);
+    void AmpPhi(Map &Amp, Map &Phi,
+		bool check)
+    {
+      AmpPhi(Amp, Phi, Amp, Phi,
+	     check);
     }
     
     /// As AmpPhi, but result stored in map ResPower.
@@ -162,15 +174,20 @@ namespace AstroMap {
     delete ip;
   }
 
-  void FFTFact::fftamphi(Map &Amp, Map &Phi) {
-    ip->AmpPhi(Amp, Phi);
+  void FFTFact::fftamphi(Map &Amp, Map &Phi,
+			 bool check) 
+  {
+    ip->AmpPhi(Amp, Phi,
+	       check);
   }
 
   void FFTFact::fftamphi(const Map &Amp, const Map &Phi,
-			 Map &resAmp, Map &resPhi)
+			 Map &resAmp, Map &resPhi,
+			 bool check)
   {
     ip->AmpPhi(Amp, Phi,
-	       resAmp, resPhi);
+	       resAmp, resPhi,
+	       check);
   }
 
   void FFTFact::FFTAmpPh_Power( const Map  &Amp, const Map &Ph , Map &ResPower) {

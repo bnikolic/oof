@@ -38,6 +38,9 @@ namespace AstroMap {
   double Sum(const Map &m,
 	     const MRRect &reg);
 
+  Map * Extract(const Map &m,
+		const MRRect &reg);
+
 
 }
 

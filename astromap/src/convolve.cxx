@@ -52,6 +52,7 @@ namespace AstroMap {
     ForwardFF.fftamphi( m1amp, m1phase);
     m1amp /= ( m1amp.nx * m1amp.ny);
     
+    m1amp *=   cos(m1phase);
     return new Map(m1amp);
 
 
