@@ -12,6 +12,8 @@
 #include "../src/fresneltrans.hxx"
 #include "../src/mapstructure.hxx"
 
+#include "../src/mapregions.hxx"
+
 #include "../src/coordsys/coordsys.hxx"
 #include "../src/coordsys/lincordsys.hxx"
 #include "../src/coordsys/csops.hxx"
@@ -73,6 +75,8 @@ namespace std {
 %include "../src/convolve.hxx"
 %include "../src/fresneltrans.hxx"
 %include "../src/mapstructure.hxx"
+
+%include "../src/mapregions.hxx"
 
 %include "../src/coordsys/coordsys.hxx"
 %include "../src/coordsys/lincordsys.hxx"
