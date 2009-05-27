@@ -6,6 +6,10 @@ Version 1.4
 
 Enhancements:
 
+* Preliminary support for map regions
+
+* Corrections to the convolution function
+
 * Preliminary support for reading coordinate systems with CR*
   variables
 
