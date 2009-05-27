@@ -92,7 +92,7 @@ namespace Minim {
 
     /** \brief Number of points in the current set
      */
-    size_t N(void);
+    size_t N(void) const;
 
     /** \brief Take j samples and return evidence estimate
      */

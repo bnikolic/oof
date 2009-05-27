@@ -47,7 +47,7 @@ namespace Minim {
     delete ps->mon;
   }
 
-  size_t NestedS::N(void)
+  size_t NestedS::N(void) const
   {
     return ss.size();
   }
