@@ -69,6 +69,14 @@ namespace Minim {
       md.put(worst->p);
       const double newl = ps->advance(-worst->ll,
 				      100);
+
+      const bool better = newl > -worst->ll;
+      
+      if (not better)
+      {
+	throw BaseErr("Could not obtain a better point");
+      }
+
       MCPoint np;
       np.p.resize(md.NParam());
       md.get(np.p);

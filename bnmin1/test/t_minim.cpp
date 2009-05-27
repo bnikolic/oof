@@ -409,6 +409,7 @@ BOOST_AUTO_TEST_CASE(t_NestedSampling_Gauss)
   const double l_sigma=1.0;
 
   const double res=getEvidence(l_sigma,
+			       150,
 			       false);
 
   BOOST_CHECK_CLOSE(res, 

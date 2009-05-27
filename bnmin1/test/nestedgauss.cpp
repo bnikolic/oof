@@ -21,7 +21,10 @@ int main(int ac, char* av[])
     ("monitor", "Monitor the progression of the sampling")
     ("l_sigma", 
      value<double>()->default_value(1.0),
-     "The width of the likelihood function");
+     "The width of the likelihood function")
+    ("nsample", 
+     value<size_t>()->default_value(150),
+     "Number of nested sampels to make");
 
   variables_map vm;        
   store(parse_command_line(ac, av, desc), vm);
@@ -38,8 +41,10 @@ int main(int ac, char* av[])
   else
   {
     const double l_sigma=vm["l_sigma"].as<double>();
+    const size_t nsample=vm["nsample"].as<size_t>();
     std::cout<<"Evidence: "
 	     <<getEvidence(l_sigma,
+			   nsample,
 			   vm.count("monitor"))
 	     <<" (expected: "
 	     <<1.0/8* pow(erf(1.0/l_sigma/sqrt(2)),3)

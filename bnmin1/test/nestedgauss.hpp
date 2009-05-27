@@ -14,6 +14,7 @@
 #include "priors.hxx"
 
 double getEvidence(double l_sigma,
+		   size_t nsample,
 		   bool monitor)
 {
 
@@ -44,7 +45,7 @@ double getEvidence(double l_sigma,
     s.mon=new SOutMCMon();
   }
   
-  const double res=s.sample(150);
+  const double res=s.sample(nsample);
 
   delete s.mon;
 

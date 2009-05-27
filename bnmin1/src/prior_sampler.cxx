@@ -84,9 +84,7 @@ namespace Minim
     }
     // Store current point in the model
     md.put(cpoint);
-    
-    if (not (cllikel > L))
-      throw BaseErr("Could not obtain a better point");
+
     return cllikel;
     
   }
