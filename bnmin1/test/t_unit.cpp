@@ -225,3 +225,12 @@ BOOST_AUTO_TEST_CASE(t_NestedS_err)
 		
 }
 
+BOOST_AUTO_TEST_CASE(t_WPPoint_construct)
+{
+  std::vector<double> dummy;
+  Minim::WPPoint pp(dummy, 2.0);
+
+  BOOST_CHECK_EQUAL(pp.w,2.0);
+		
+}
+

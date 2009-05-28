@@ -54,6 +54,26 @@ namespace Minim {
     return a.ll < b.ll;
   }
 
+  /** \brief Weighted posterior point
+
+      As produced by non markov chain posterior exploration
+   */
+  struct WPPoint:
+    public MCPoint
+  {
+    /** \brief Weight factor
+     */
+    double w;
+    
+    WPPoint(const std::vector<double> &p,
+	    double w):
+      MCPoint(p),
+      w(w)
+    {
+    }
+    
+  };
+
 
 
 }
