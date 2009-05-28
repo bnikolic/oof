@@ -49,7 +49,9 @@ namespace AstroMap {
 			FFTFact::center);
 
 
-    ForwardFF.fftamphi( m1amp, m1phase);
+    ForwardFF.fftamphi( m1amp, m1phase,
+			false);
+xo
     m1amp /= ( m1amp.nx * m1amp.ny);
     
     m1amp *=   cos(m1phase);
