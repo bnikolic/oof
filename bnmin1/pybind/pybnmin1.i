@@ -33,6 +33,7 @@ namespace std {
 	   %template(DoubleVector) vector<double>; 
 
 	   %template(ListDV) list<Minim::MCPoint>; 
+	   %template(ListWP) list<Minim::WPPoint>; 
 }
 
 

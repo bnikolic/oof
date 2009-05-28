@@ -231,6 +231,10 @@ BOOST_AUTO_TEST_CASE(t_WPPoint_construct)
   Minim::WPPoint pp(dummy, 2.0);
 
   BOOST_CHECK_EQUAL(pp.w,2.0);
+
+  Minim::WPPoint pp2(pp, 3.0);
+
+  BOOST_CHECK_EQUAL(pp2.w,3.0);
 		
 }
 

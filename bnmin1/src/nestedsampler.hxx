@@ -51,12 +51,20 @@ namespace Minim {
      */
     PriorNLikelihood &ml;
 
+    /** Local model description structure to retrieve and set the
+	parameters
+     */
     ModelDesc md;
 
     /** \brief The constrained prior sampler to replace points
      */
     boost::scoped_ptr<CPriorSampler> ps;
 
+    /** \brief Points describing the posterior
+	
+	List of points which passed through the live set
+    */
+    std::list<WPPoint> post;
     
   public:
     
@@ -97,6 +105,10 @@ namespace Minim {
     /** \brief Take j samples and return evidence estimate
      */
     double sample(size_t j);
+
+    /** \brief Return the points describing the posterior
+     */
+    const std::list<WPPoint> & g_post(void) const;
     
   };
 

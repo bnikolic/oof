@@ -65,9 +65,23 @@ namespace Minim {
      */
     double w;
     
+    WPPoint(void):
+      w(0.0)
+    {
+    }
+
     WPPoint(const std::vector<double> &p,
 	    double w):
       MCPoint(p),
+      w(w)
+    {
+    }
+
+    /** \brief Construct from MCPoint and a supplied weight
+     */
+    WPPoint(const MCPoint &mp,
+	    double w):
+      MCPoint(mp),
       w(w)
     {
     }

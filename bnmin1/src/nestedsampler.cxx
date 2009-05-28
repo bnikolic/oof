@@ -64,6 +64,8 @@ namespace Minim {
 
       Zseq.push_back(Zseq[Zseq.size()-1] + Llow* w);
       Xseq.push_back(X);
+      
+      post.push_back(WPPoint(*worst, w));
 
       // Now just need to replace the Llow object
       md.put(worst->p);
@@ -89,6 +91,13 @@ namespace Minim {
     }
     return Zseq[Zseq.size()-1];
   }
+
+  
+  const std::list<WPPoint> & NestedS::g_post(void) const
+  {
+    return post;
+  }
+  
   
 
   void llPoint(PriorNLikelihood & ml,
