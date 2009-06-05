@@ -28,6 +28,12 @@ namespace AstroMap {
     /*! Default constructor: unit transformation */
     LinCS(void);
 
+    /** \brief Initialise with just the linear scales in the two
+	direction
+     */
+    LinCS(double xs,
+	  double ys);
+
     virtual ~LinCS();
 
     /* ------- Member functions  -------------------*/

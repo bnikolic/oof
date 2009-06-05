@@ -25,6 +25,18 @@ namespace AstroMap {
     TM[5] =0;
   }
 
+  LinCS::LinCS(double xs,
+	       double ys):
+    TM(6)
+  {
+    TM[0] =xs;
+    TM[1] =0;
+    TM[2] =0;
+    TM[3] =0;
+    TM[4] =ys;
+    TM[5] =0;
+  }
+
   LinCS::~LinCS()
   {
 
