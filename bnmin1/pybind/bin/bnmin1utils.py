@@ -18,9 +18,13 @@ def sChainToArray(c):
 
     This works around bugs introduced by multiple modules and swig.
     """
-    res=numpy.zeros( (len(c), len(c[0].p) ))
-    for i in range(len(c)):
-        res[i]=c[i].p
+    n=len(c)
+    res=numpy.zeros((n, len(c[0].p)))
+    li=c.iterator()
+    for i in range(n):
+        if i is not 0:
+            li.incr()
+        res[i]=li.value().p
     return res
 
 def ChainToLkl(c):
