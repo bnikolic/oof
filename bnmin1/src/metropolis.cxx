@@ -7,6 +7,7 @@
 #include <list>
 #include <memory>
 #include <cmath>
+#include <boost/format.hpp>
 
 #include "metropolis.hxx"
 #include "metro_propose.hxx"
@@ -36,7 +37,10 @@ namespace Minim {
   MetropolisMCMC::sample(size_t npropose)
   {
     if (prop->nPars() != NParam() )
-      throw Error("Number of sigmas not consistent with number of pars set to fit");
+    {
+      throw Error((boost::format("Number of sigmas not consistent with number of pars\
+ set to fit: expected %i, got %i") %  NParam() % prop->nPars()).str());
+    }
 
     std::auto_ptr< std::list<MCPoint> > res
       (new std::list<MCPoint> ) ;
