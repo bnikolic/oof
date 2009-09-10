@@ -6,10 +6,24 @@
 
 */
 
+#include <iostream>
+#include <boost/format.hpp>
+
 #include "nestedgauss.hpp"
 
 #include <boost/program_options.hpp>
 
+void printLkl(const std::list<Minim::WPPoint> &lp,
+	      std::ostream &os)
+{
+  for(std::list<Minim::WPPoint>::const_iterator i=lp.begin();
+      i != lp.end();
+      ++i)
+  {
+    os<<(boost::format("[%g,%g,%g]") % i->p[0] % i->p[1] % i->p[2])
+      <<std::endl;
+  }
+}
 
 int main(int ac, char* av[])
 {   
