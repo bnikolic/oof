@@ -20,7 +20,7 @@ void printLkl(const std::list<Minim::WPPoint> &lp,
       i != lp.end();
       ++i)
   {
-    os<<(boost::format("[%g,%g,%g]") % i->p[0] % i->p[1] % i->p[2])
+    os<<(boost::format("[%g,%g,%g] : post=%g") % i->p[0] % i->p[1] % i->p[2] % (i->w* exp(-i->ll)))
       <<std::endl;
   }
 }
@@ -56,14 +56,19 @@ int main(int ac, char* av[])
   {
     const double l_sigma=vm["l_sigma"].as<double>();
     const size_t nsample=vm["nsample"].as<size_t>();
+    
+    pdesc d=mkDesc(l_sigma,
+		   vm.count("monitor"));
+
     std::cout<<"Evidence: "
-	     <<getEvidence(l_sigma,
-			   nsample,
-			   vm.count("monitor"))
+	     <<d.s->sample(nsample)
 	     <<" (expected: "
 	     <<1.0/8* pow(erf(1.0/l_sigma/sqrt(2)),3)
 	     <<")"
 	     <<std::endl;
+
+    printLkl(d.s->g_post(),
+	     std::cout);
   }
   
   return 0;
