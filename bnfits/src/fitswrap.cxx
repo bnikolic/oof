@@ -1,7 +1,7 @@
 /**
    \file fitswrap.cxx
    
-   Bojan Nikolic <bojan@bnikolic.co.uk> , <b.nikolic@mrao.cam.ac.uk>
+   Bojan Nikolic <bojan@bnikolic.co.uk>, <b.nikolic@mrao.cam.ac.uk>
 */
 
 #include "fitswrap.hxx"
@@ -12,9 +12,11 @@
 #include "fitserr.hxx"
 #include "fitsops.hxx"
 
-namespace BNFits {
+namespace BNFits 
+{
 
-  FitsF::FitsF( const char * fname, openmode mode  )
+  FitsF::FitsF(const char *fname,
+	       openmode mode)
     throw(BNFits::FIOExc)
   {
     int status = 0;
@@ -57,14 +59,14 @@ namespace BNFits {
     return file;
   }
 
-  void FitsF::HDUseek( unsigned dataextno ) 
+  void FitsF::HDUseek(unsigned dataextno) 
   {
     int status = 0;
     if (fits_movabs_hdu(file, dataextno, &hdutype, &status) )
       throw ( NoSuchHdr(FName(*this), dataextno, status));
   }
 
-  bool FitsF::TableP (  unsigned extno)
+  bool FitsF::TableP (unsigned extno)
   {
     HDUseek( extno);        
 
@@ -72,7 +74,7 @@ namespace BNFits {
     
   }
 
-  void FitsF::TableChk (unsigned dataextno) 
+  void FitsF::TableChk(unsigned dataextno) 
   {
 
     if ( not TableP(dataextno) )
@@ -82,7 +84,7 @@ namespace BNFits {
 
   }
 
-  void FitsF::TableChk () 
+  void FitsF::TableChk() 
   {
 
     if ( not (  hdutype == ASCII_TBL || hdutype == BINARY_TBL  ) )
@@ -92,7 +94,8 @@ namespace BNFits {
 
   }
 
-  int FitsF::ColNo (unsigned extno, char * colname )
+  int FitsF::ColNo (unsigned extno, 
+		    char *colname)
     throw(BNFits::FIOExc)
   {
     TableChk(extno);
@@ -125,7 +128,8 @@ namespace BNFits {
 
   }
 
-  void FitsF::MkImage ( std::vector<long> axes , int bitpix )
+  void FitsF::MkImage(std::vector<long> axes,
+		      int bitpix)
   {
     int status= 0;
     int naxis = axes.size();
@@ -138,7 +142,8 @@ namespace BNFits {
 
   }
 
-  void FitsF::CreateTbl(size_t nrows, char * extname)
+  void FitsF::CreateTbl(size_t nrows,
+			char *extname)
     throw(BNFits::FIOExc)
   {
     int status = 0;

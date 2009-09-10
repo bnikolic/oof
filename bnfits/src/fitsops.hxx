@@ -20,22 +20,23 @@ namespace BNFits {
   class FitsF;
 
   /*! Returns the name of the file associated with this FITS object */
-  std::string  FName (FitsF & file);
+  std::string  FName (FitsF &file);
 
   /*! Returns the number of rows in this table extension */
-  unsigned long NRows (FitsF & file, unsigned extno);
+  unsigned long NRows (FitsF &file, unsigned extno);
 
-  /*! Returns number of rows in the current extnesion */
-  unsigned long NRows (FitsF & file);
+  /*! Returns number of rows in the current extension */
+  unsigned long NRows (FitsF &file);
 
   /*! Return the number of dimensions */
-  unsigned NAxis(FitsF & file);
+  unsigned NAxis(FitsF &file);
 
   /*! Return the dimension of the image */
-  std::vector<long> ImgDims(FitsF & file);
+  std::vector<long> ImgDims(FitsF &file);
 
   /*! As above but avoid silly copy */
-  void ImgDims(FitsF & file, std::vector<long> & res);
+  void ImgDims(FitsF &file, 
+	       std::vector<long> &res);
 
   /*! Copy a column from file f1 to file f2 */
   void CopyCol( FitsF &f1,
@@ -72,11 +73,11 @@ namespace BNFits {
 		    size_t outfirstrow ) throw(BNFits::FIOExc) ;
 
   /*! Delete specified row numbers */
-  void DeleteRows( FitsF &f1,
-		   std::valarray<long> &rowlist ) throw(BNFits::FIOExc);
+  void DeleteRows(FitsF &f1,
+		  std::valarray<long> &rowlist) throw(BNFits::FIOExc);
 
   void DeleteRows( FitsF &f1,
-		   std::vector<long> &rowlist ) throw(BNFits::FIOExc);
+		   std::vector<long> &rowlist) throw(BNFits::FIOExc);
 
 
   
