@@ -33,6 +33,12 @@ namespace Minim {
     return sigmas.size();
   }
 
+  void MetroPropose::scaleSigma(double c)
+  {
+    for(size_t i=0; i<sigmas.size(); ++i)
+      sigmas[i] *= c;
+  }
+
   MetroProposeSeq::MetroProposeSeq(const std::vector<double> & sigmas,
 				   unsigned seed):
     MetroPropose(sigmas, seed),

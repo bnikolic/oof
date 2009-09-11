@@ -16,6 +16,8 @@ namespace Minim
 {
   
   CPriorSampler::CPriorSampler(PriorNLikelihood &ml):
+    md(ml),
+    ml(ml),
     mon(NULL)
   {
   }
@@ -28,9 +30,7 @@ namespace Minim
 		     const std::vector<double> &sigmas,
 		     unsigned seed):
     CPriorSampler(ml),
-    prop(new MetroPropose(sigmas, seed)),
-    md(ml),
-    ml(ml)
+    prop(new MetroPropose(sigmas, seed))
   {
 
   }
@@ -99,6 +99,27 @@ namespace Minim
     return cllikel;
     
   }
+
+
+  CSPAdaptive::CSPAdaptive(PriorNLikelihood &ml,
+			   const std::vector<double> &initSigmas,
+			   unsigned seed):
+    CPriorSampler(ml),
+    prop(new MetroPropose(initSigmas, 
+			  seed))    
+  {
+  }
+
+  CSPAdaptive::~CSPAdaptive()
+  {
+  }
+
+  double CSPAdaptive::advance(double L,
+			      size_t maxprop)
+  {
+
+  }
+  
 
 }
 

@@ -30,6 +30,12 @@ namespace Minim
   class CPriorSampler
   {
 
+  protected:
+
+    ModelDesc md;
+    
+    PriorNLikelihood &ml;
+
   public:
     
     // -------------- Public data  --------------------------------
@@ -71,17 +77,12 @@ namespace Minim
 
     boost::scoped_ptr<MetroPropose> prop;
 
-    ModelDesc md;
-    
-    PriorNLikelihood &ml;
-
   public:
     
     // -------------- Construction/Destruction ---------------------
 
     /**
-       \note We need separately the prior and the likelihood hence
-       inheritance from indepenedentPriors
+
      */
     CSPMetro(PriorNLikelihood &ml,
 	     const std::vector<double> &sigmas,
@@ -93,7 +94,36 @@ namespace Minim
 
     double advance(double L,
 		   size_t maxprop);
-    
+
+  };
+
+  /** \brief Adapaptive constrained sampler
+   */
+  class CSPAdaptive:
+    public CPriorSampler
+  {
+
+    boost::scoped_ptr<MetroPropose> prop;
+
+  public:
+
+    // -------------- Construction/Destruction ---------------------
+
+    /**
+       \param initSigmas are the initial variances to use in proposals
+
+       \param seed the seed for the random number generator
+     */
+    CSPAdaptive(PriorNLikelihood &ml,
+		const std::vector<double> &initSigmas,
+		unsigned seed=0);
+
+    ~CSPAdaptive();
+
+    // -------------- Public Interface -----------------------------
+
+    double advance(double L,
+		   size_t maxprop);
 
   };
 

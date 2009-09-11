@@ -16,17 +16,21 @@
 
 namespace Minim {
 
-  /** \brief Helper class which handles the random number parts of the
-      Metropolis algorithm.
+  /** \brief A helper class which handles the random number parts of
+      the Metropolis algorithm
 
-      The two of this class functions are to generate the proposal
-      points (via displace()) and to generate uniform random numbers
-      for accepting less likely points.
+      The two objectives of this class functions are to generate the
+      proposal points [via the function displace()] and to generate
+      uniform random numbers for accepting less likely points
+
+      It encapsulates a random number generator 
    */
   class MetroPropose {
 
   protected:
-    const std::vector<double> sigmas;
+    
+    /// Standard distributions of the proposal points
+    std::vector<double> sigmas;
 
     // Stuff for random numbers
     typedef boost::mt19937  base_generator_type;
@@ -47,8 +51,8 @@ namespace Minim {
     // ---------- Construction / Destruction --------------
 
     /**
-       \param sigmas Standard error to be used for each of the
-       parameters that is being varied in the model
+       \param sigmas The standard distribution to be used for each of
+       the parameters that is being varied in the model
      */
     MetroPropose(const std::vector<double> & sigmas,
 		 unsigned seed=0);
@@ -57,18 +61,29 @@ namespace Minim {
 
     // ---------- Public interface --------------------------
 
-    /// Generate a proposal point by displacing the supplied point.
-    virtual void displace( std::vector<double> &x);
+    /**
+       Generate a proposad point by displacing the point x
+    */
+    virtual void displace(std::vector<double> &x);
 
-    /// Return the number of parameters for which we can propose
+    /**
+       \returns number of parameters to propose for
+    */
     size_t nPars(void);
 
-    /// Generate a uniform number between zero and one for acceptance
-    /// probability
+    /**
+      Generate a uniform number between zero and one for acceptance
+      probability
+    */
     double raccept(void)
     {
       return uni();
     }
+
+    /** \brief Scale the variance of the of the proposal distributions
+     */
+    void scaleSigma(double c);
+  
   };
 
   /** \brief Proposes each parameter in turn
