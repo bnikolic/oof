@@ -11,10 +11,11 @@ namespace Minim {
   MarkovChain::MarkovChain(const v_t &ic,
 			   fx_t fLkl,
 			   fx_t fPr,
+			   fa_t fAccept,
 			   size_t n):
     fLkl(fLkl),
     fPr(fPr),
-    fAccept(metropolis),
+    fAccept(fAccept),
     ngen(igen,
 	 norm_dist),
     u01gen(igen),

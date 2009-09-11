@@ -94,6 +94,7 @@ namespace Minim {
     MarkovChain(const v_t &ic,
 		fx_t fLkl,
 		fx_t fPr,
+		fa_t fAccept,
 		size_t n);
 
     // ---------- Public interface --------------------------
@@ -112,6 +113,12 @@ namespace Minim {
     const std::vector<double> &gcx(void) const
     {
       return c.x;
+    }
+
+    /// Return the current likelihood
+    double gcl(void) const
+    {
+      return c.l;
     }
     
 

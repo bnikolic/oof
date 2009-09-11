@@ -4,6 +4,8 @@
 
 */
 
+#include <boost/bind.hpp>
+
 #include "prior_sampler.hxx"
 
 #include "priors.hxx"
@@ -11,6 +13,7 @@
 #include "bnmin_main.hxx"
 #include "mcpoint.hxx"
 #include "mcmonitor.hxx"
+#include "markovchain.hxx"
 
 namespace Minim
 {
@@ -100,14 +103,44 @@ namespace Minim
     
   }
 
+  double likelihood(ModelDesc &md,
+		    PriorNLikelihood &ml,
+		    const std::vector<double> &x)
+  {
+    md.put(x);
+    return ml.llprob();
+  }
+
+  double prior(ModelDesc &md,
+	       PriorNLikelihood &ml,
+	       const std::vector<double> &x)
+  {
+    md.put(x);
+    return ml.pprob();
+  }
 
   CSPAdaptive::CSPAdaptive(PriorNLikelihood &ml,
-			   const std::vector<double> &initSigmas,
-			   unsigned seed):
+			   const std::vector<double> &initSigmas):
     CPriorSampler(ml),
-    prop(new MetroPropose(initSigmas, 
-			  seed))    
+    sigmas(initSigmas)
   {
+    MarkovChain::fx_t flkl=boost::bind(likelihood, 
+				       boost::ref(md),
+				       boost::ref(ml), 
+				       _1);
+
+    MarkovChain::fx_t fprior=boost::bind(prior, 
+					 boost::ref(md),
+					 boost::ref(ml), 
+					 _1);
+    std::vector<double> ic(sigmas.size());
+    md.get(ic);
+
+    c.reset(new MarkovChain(ic,
+			    flkl,
+			    fprior,
+			    constrPrior,
+			    initSigmas.size()));
   }
 
   CSPAdaptive::~CSPAdaptive()
@@ -117,7 +150,17 @@ namespace Minim
   double CSPAdaptive::advance(double L,
 			      size_t maxprop)
   {
+    std::vector<double> ic(c->n);
+    md.get(ic);
+    
+    c->reset(ic);
 
+    for(size_t i=0; i<maxprop; ++i)
+    {
+      normProp(*c,
+	       sigmas);
+    }
+    return c->gcl();
   }
   
 

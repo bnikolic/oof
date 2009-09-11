@@ -27,7 +27,8 @@ namespace Minim {
     Xseq(1,1.0),
     ml(ml),
     md(ml),
-    ps(new CSPMetro(ml, sigmas, seed)),
+    //ps(new CSPMetro(ml, sigmas, seed)),
+    ps(new CSPAdaptive(ml, sigmas)),
     mon(NULL)
   {
     llPoint(ml,

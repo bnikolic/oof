@@ -20,6 +20,7 @@ namespace Minim
   class PriorNLikelihood;
   class MetroPropose;
   class MCMonitorBase;
+  class MarkovChain;
 
   /** \brief Constrained prior sampler
       
@@ -103,7 +104,8 @@ namespace Minim
     public CPriorSampler
   {
 
-    boost::scoped_ptr<MetroPropose> prop;
+    boost::scoped_ptr<MarkovChain> c;
+    std::vector<double> sigmas;
 
   public:
 
@@ -115,8 +117,7 @@ namespace Minim
        \param seed the seed for the random number generator
      */
     CSPAdaptive(PriorNLikelihood &ml,
-		const std::vector<double> &initSigmas,
-		unsigned seed=0);
+		const std::vector<double> &initSigmas);
 
     ~CSPAdaptive();
 
