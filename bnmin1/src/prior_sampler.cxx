@@ -160,7 +160,10 @@ namespace Minim
       normProp(*c,
 	       sigmas);
     }
-    return c->gcl();
+    md.put(c->gcx());
+
+    // Note the convention is to return the negative value
+    return -c->gcl();
   }
   
 
