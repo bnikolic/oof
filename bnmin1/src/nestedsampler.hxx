@@ -130,7 +130,7 @@ namespace Minim {
       This requieres the prior distribution to be made from
       independent flat priors.
    */
-  void startSetDirect(const IndependentFlatPriors &prior,
+  void startSetDirect(IndependentFlatPriors &prior,
 		      size_t n,
 		      std::list<MCPoint> &res,
 		      unsigned seed=43);

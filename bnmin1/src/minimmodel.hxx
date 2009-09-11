@@ -103,6 +103,10 @@ namespace Minim {
   };
 
   
+  /** \brief Compute the total number of parameters the model
+   */
+  size_t nPars(Model &m);
+  
 
 }
 

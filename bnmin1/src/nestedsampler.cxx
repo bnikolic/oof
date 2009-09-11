@@ -76,7 +76,8 @@ namespace Minim {
       
       if (not better)
       {
-	throw BaseErr("Could not obtain a better point");
+	// Can't find a better point so terminate early
+	break;
       }
 
       MCPoint np;
@@ -116,15 +117,23 @@ namespace Minim {
     }
   }
 
-  void startSetDirect(const IndependentFlatPriors &prior,
+  void startSetDirect(IndependentFlatPriors &prior,
 		      size_t n,
 		      std::list<MCPoint> &res,
 		      unsigned seed)
   {
+    const size_t nprior=prior.npriors();
+    const size_t nfitpars=nPars(prior);
+    
+    if (nprior != nfitpars)
+    {
+      throw BaseErr("To directly generate starting set need priors for all parameters");
+    }
+
     boost::mt19937 rng(seed);
     boost::uniform_01<boost::mt19937> zo(rng);
 
-    Minim::MCPoint p(prior.npriors()); 
+    Minim::MCPoint p(nprior); 
     for(size_t i=0; i<n; ++i)
     {
       size_t j=0;

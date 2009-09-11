@@ -54,4 +54,11 @@ namespace Minim {
     return 0.5*ss;
   }
 
+  size_t nPars(Model &m)
+  {
+    std::vector<Minim::DParamCtr> pars;
+    m.AddParams(pars);
+    return pars.size();
+  }
+
 }
