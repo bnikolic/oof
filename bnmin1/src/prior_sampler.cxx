@@ -15,12 +15,7 @@
 namespace Minim
 {
   
-  CPriorSampler::CPriorSampler(PriorNLikelihood &ml,
-			       const std::vector<double> &sigmas,
-			       unsigned seed):
-    prop(new MetroPropose(sigmas, seed)),
-    md(ml),
-    ml(ml),
+  CPriorSampler::CPriorSampler(PriorNLikelihood &ml):
     mon(NULL)
   {
   }
@@ -28,9 +23,25 @@ namespace Minim
   CPriorSampler::~CPriorSampler()
   {
   }
+  
+  CSPMetro::CSPMetro(PriorNLikelihood &ml,
+		     const std::vector<double> &sigmas,
+		     unsigned seed):
+    CPriorSampler(ml),
+    prop(new MetroPropose(sigmas, seed)),
+    md(ml),
+    ml(ml)
+  {
 
-  double CPriorSampler::advance(double L,
-				size_t maxprop)
+  }
+
+  CSPMetro::~CSPMetro()
+  {
+
+  }
+
+  double CSPMetro::advance(double L,
+			   size_t maxprop)
   {
     const size_t npars=prop->nPars();
 

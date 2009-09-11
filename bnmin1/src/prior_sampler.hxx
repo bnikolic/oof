@@ -30,12 +30,6 @@ namespace Minim
   class CPriorSampler
   {
 
-    boost::scoped_ptr<MetroPropose> prop;
-
-    ModelDesc md;
-    
-    PriorNLikelihood &ml;
-
   public:
     
     // -------------- Public data  --------------------------------
@@ -47,17 +41,56 @@ namespace Minim
        \note We need separately the prior and the likelihood hence
        inheritance from indepenedentPriors
      */
-    CPriorSampler(PriorNLikelihood &ml,
-		  const std::vector<double> &sigmas,
-		  unsigned seed=0);
+    CPriorSampler(PriorNLikelihood &ml);
 
-    ~CPriorSampler();
+    virtual ~CPriorSampler();
 
     // -------------- Public Interface -----------------------------
 
-    /**
-       \return the likelihood of the new current point
+    /** \brief Advance the model to the now sample point
+	
+	\param L The minimum likelihood of the new point
+
+	\param maxprop Take no more than specified number of proposals
+       
+	\return the likelihood of the new current point
      */
+    virtual double advance(double L,
+			   size_t maxprop) = 0;
+    
+
+  };
+
+  /** \brief Constrained prior sample based on simple metropolis
+      proposals
+
+   */
+  class CSPMetro:
+    public CPriorSampler
+  {
+
+    boost::scoped_ptr<MetroPropose> prop;
+
+    ModelDesc md;
+    
+    PriorNLikelihood &ml;
+
+  public:
+    
+    // -------------- Construction/Destruction ---------------------
+
+    /**
+       \note We need separately the prior and the likelihood hence
+       inheritance from indepenedentPriors
+     */
+    CSPMetro(PriorNLikelihood &ml,
+	     const std::vector<double> &sigmas,
+	     unsigned seed=0);
+
+    ~CSPMetro();
+
+    // -------------- Public Interface -----------------------------
+
     double advance(double L,
 		   size_t maxprop);
     

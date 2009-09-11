@@ -177,7 +177,7 @@ BOOST_AUTO_TEST_CASE(prior_sampler_constr)
   Minim::IndependentFlatPriors pr(new QuadObs(dummy,
 					      dummy));
   std::vector<double> sigs(3, 0.1);
-  Minim::CPriorSampler a(pr, sigs);
+  Minim::CSPMetro a(pr, sigs);
 		
 }
 
