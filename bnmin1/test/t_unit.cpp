@@ -27,6 +27,7 @@
 
 #include "mcmonitor.hxx"
 
+#include "markovchain.hxx"
 
 
 BOOST_AUTO_TEST_CASE( MetroPropose_raccept )
@@ -195,6 +196,8 @@ BOOST_AUTO_TEST_CASE(t_startSetDirect)
   Minim::IndependentFlatPriors pr(new QuadObs(dummy,
 					      dummy));
   pr.AddPrior("c", 0,1);
+  pr.AddPrior("a", 0,1);
+  pr.AddPrior("b", 0,1);
   
   std::list<Minim::MCPoint> s;
 
@@ -236,5 +239,19 @@ BOOST_AUTO_TEST_CASE(t_WPPoint_construct)
 
   BOOST_CHECK_EQUAL(pp2.w,3.0);
 		
+}
+
+BOOST_AUTO_TEST_CASE(metropolis_accept)
+{
+  using namespace Minim;
+  MCPoint2 c,p;
+  c.l=10;
+  p.l=9;
+  
+  BOOST_CHECK_EQUAL(metropolis(c,p),1.0);
+
+  p.l=1000;
+  BOOST_CHECK_EQUAL(metropolis(c,p),0.0);
+
 }
 
