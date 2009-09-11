@@ -8,7 +8,8 @@
 
 namespace Minim {
 
-  MarkovChain::MarkovChain(fx_t fLkl,
+  MarkovChain::MarkovChain(const v_t &ic,
+			   fx_t fLkl,
 			   fx_t fPr,
 			   size_t n):
     fLkl(fLkl),
@@ -19,6 +20,9 @@ namespace Minim {
     u01gen(igen),
     n(n)
   {
+    c.x=ic;
+    c.l=fLkl(ic);
+    c.p=fPr(ic);
   }
 
   void MarkovChain::propose(const std::vector<double> &x)
@@ -42,15 +46,24 @@ namespace Minim {
     }
   }
 
-  void normProp(const MarkovChain &c,
-		const std::vector<double> &sigma,
-		std::vector<double> &res)
+  void MarkovChain::reset(const v_t &x)
   {
-    res=c.gcx();
-    for(size_t i=0; i<res.size(); ++i)
+    c.x=x;
+    c.l=fLkl(x);
+    c.p=fPr(x);    
+  }
+
+
+  void normProp(MarkovChain &c,
+		const std::vector<double> &sigma)
+  {
+    const std::vector<double> & cx=c.gcx();
+    std::vector<double> px(cx.size());
+    for(size_t i=0; i<cx.size(); ++i)
     {
-      res[i]+= sigma[i]*c.ngen();
+      px[i]= cx[i]+ sigma[i]*c.ngen();
     }
+    c.propose(px);
   }
 
   double metropolis(const MCPoint2 &c, 
@@ -60,6 +73,24 @@ namespace Minim {
       return 1;
     else
       return exp(c.l-p.l);
+  }
+
+  double constrPrior(const MCPoint2 &c, 
+		     const MCPoint2 &p)
+  {
+    if(p.l >= c.l)
+      return 0;
+    else
+    {
+      if (p.p<c.p)
+      {
+	return 1;
+      }
+      else
+      {
+	return exp(c.p-p.p);
+      }
+    }
   }
 
 

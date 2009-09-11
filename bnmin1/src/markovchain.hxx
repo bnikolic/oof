@@ -34,10 +34,14 @@ namespace Minim {
 
   public:
 
+    /// Type of the interger random number generator
     typedef boost::mt19937  irg_t;
+
+    /// Vector type
+    typedef std::vector<double>  v_t;
     
     /// A function of a point in the chain
-    typedef boost::function< double (const std::vector<double> &x) >  fx_t;
+    typedef boost::function< double (const v_t &x) >  fx_t;
 
     /// A function to return the acceptance probability
     typedef boost::function< double (const MCPoint2 &c, const MCPoint2 &p) >  fa_t;
@@ -87,7 +91,8 @@ namespace Minim {
 
     // ---------- Construction / Destruction --------------
     
-    MarkovChain(fx_t fLkl,
+    MarkovChain(const v_t &ic,
+		fx_t fLkl,
 		fx_t fPr,
 		size_t n);
 
@@ -95,7 +100,11 @@ namespace Minim {
 
     /**  Propose x as the next point in chain
      */
-    void propose(const std::vector<double> &x);
+    void propose(const v_t &x);
+
+    /** Reset the chain, discard existing data and set x as the
+	starting point*/
+    void reset(const v_t &x);
 
     //          ------------ Access type functions ---------------
 
@@ -108,15 +117,19 @@ namespace Minim {
 
   };
 
-  void normProp(const MarkovChain &c,
-		const std::vector<double> &sigma,
-		std::vector<double> &res);
+  void normProp(MarkovChain &c,
+		const std::vector<double> &sigma);
 
 
   /** \brief The standard metropolis acceptance function
    */
   double metropolis(const MCPoint2 &c, 
 		    const MCPoint2 &p);
+
+  /** \brief The nested sampling acceptance function
+   */
+  double constrPrior(const MCPoint2 &c, 
+		     const MCPoint2 &p);
 
     
 
