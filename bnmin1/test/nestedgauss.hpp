@@ -20,7 +20,8 @@ struct pdesc {
 };
 
 pdesc mkDesc(double l_sigma,
-	    bool monitor)
+	     bool monitor,
+	     double sigma=0.1)
 {
   using namespace Minim;
   GaussObs *gp = new GaussObs(3);
@@ -39,7 +40,8 @@ pdesc mkDesc(double l_sigma,
 		 20,
 		 startset);
 
-  std::vector<double> sigmas(3,0.1);
+  std::vector<double> sigmas(3,
+			     sigma);
 
   res.s=boost::shared_ptr<NestedS>(new NestedS(*res.obs,
 					       startset,

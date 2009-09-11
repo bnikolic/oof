@@ -33,12 +33,17 @@ int main(int ac, char* av[])
   desc.add_options()
     ("help", "Produce this help message")
     ("monitor", "Monitor the progression of the sampling")
+    ("postr", "Print the posterior distribution")
     ("l_sigma", 
      value<double>()->default_value(1.0),
      "The width of the likelihood function")
+    ("sigma", 
+     value<double>()->default_value(0.1),
+     "Sigma for use in the nested sample generation")
     ("nsample", 
      value<size_t>()->default_value(150),
      "Number of nested sampels to make");
+
 
   variables_map vm;        
   store(parse_command_line(ac, av, desc), vm);
@@ -55,10 +60,13 @@ int main(int ac, char* av[])
   else
   {
     const double l_sigma=vm["l_sigma"].as<double>();
+    const double sigma=vm["sigma"].as<double>();
     const size_t nsample=vm["nsample"].as<size_t>();
     
     pdesc d=mkDesc(l_sigma,
-		   vm.count("monitor"));
+		   vm.count("monitor"),
+		   sigma
+		   );
 
     std::cout<<"Evidence: "
 	     <<d.s->sample(nsample)
@@ -67,8 +75,11 @@ int main(int ac, char* av[])
 	     <<")"
 	     <<std::endl;
 
-    printLkl(d.s->g_post(),
-	     std::cout);
+    if(vm.count("postr"))
+    {
+      printLkl(d.s->g_post(),
+	       std::cout);
+    }
   }
   
   return 0;

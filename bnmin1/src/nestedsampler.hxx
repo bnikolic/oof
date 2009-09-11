@@ -74,13 +74,13 @@ namespace Minim {
 
     /**
        \param ml The definition of the likelihood and priors to
-       explored. Note that PriorNLikelihood is required here
+       explored. Note that PriorNLikelihood is required here as
        information about priors separately from likelihood is requied
        for nested sampling.
 
        \param start The starting set of points. The likelihod
-       functions will be re-calculated so they need not be supplied in
-       the MCPoint structure
+       functions will be re-calculated so it does not need be supplied
+       in the MCPoint structure
        
        \param sigmas The step sizes used in the generation of nested
        samples. These should be derived similarly similarly to step
