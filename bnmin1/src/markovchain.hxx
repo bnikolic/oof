@@ -97,6 +97,8 @@ namespace Minim {
 	starting point*/
     void reset(const v_t &x);
 
+    virtual void propose(const v_t &x) =0;
+
 
     //          ------------ Access type functions ---------------
 
@@ -182,7 +184,7 @@ namespace Minim {
 
   };
 
-  void normProp(MarkovChain &c,
+  void normProp(ChainBase &c,
 		const std::vector<double> &sigma);
 
 

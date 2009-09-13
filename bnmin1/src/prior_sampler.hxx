@@ -21,6 +21,7 @@ namespace Minim
   class MetroPropose;
   class MCMonitorBase;
   class MarkovChain;
+  class InitPntChain;
 
   /** \brief Constrained prior sampler
       
@@ -104,7 +105,7 @@ namespace Minim
     public CPriorSampler
   {
 
-    boost::scoped_ptr<MarkovChain> c;
+    boost::scoped_ptr<InitPntChain> c;
     std::vector<double> sigmas;
 
   public:

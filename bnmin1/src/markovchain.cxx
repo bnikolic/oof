@@ -99,7 +99,7 @@ namespace Minim {
     f=c;
   }
 
-  void normProp(MarkovChain &c,
+  void normProp(ChainBase &c,
 		const std::vector<double> &sigma)
   {
     const std::vector<double> & cx=c.gcx();

@@ -136,10 +136,10 @@ namespace Minim
     std::vector<double> ic(sigmas.size());
     md.get(ic);
 
-    c.reset(new MarkovChain(ic,
-			    flkl,
-			    fprior,
-			    constrPrior));
+    c.reset(new InitPntChain(ic,
+			     flkl,
+			     fprior,
+			     constrPriorP));
   }
 
   CSPAdaptive::~CSPAdaptive()
