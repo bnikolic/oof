@@ -29,6 +29,9 @@ namespace Minim {
     double p;
   };
 
+  /** \brief Base class for chains-type exploration algorithms
+      
+   */
   class ChainBase
   {
 
@@ -120,6 +123,10 @@ namespace Minim {
 
   };
 
+  /** \brief Markov chain class
+      
+      Proposals depend only on the last point in the chain      
+   */
   class MarkovChain:
     public ChainBase
   {
@@ -149,6 +156,10 @@ namespace Minim {
 
   };
 
+  /** Minimum information for constrained prior exploration
+      
+      Proposal depend on the first and the last points in the chain
+   */
   class InitPntChain:
     public ChainBase
   {
@@ -187,7 +198,7 @@ namespace Minim {
 
   };
 
-  void normProp(ChainBase &c,
+  bool normProp(ChainBase &c,
 		const std::vector<double> &sigma);
 
 

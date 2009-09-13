@@ -105,7 +105,7 @@ namespace Minim {
     f=c;
   }
 
-  void normProp(ChainBase &c,
+  bool normProp(ChainBase &c,
 		const std::vector<double> &sigma)
   {
     const std::vector<double> & cx=c.gcx();
@@ -114,7 +114,7 @@ namespace Minim {
     {
       px[i]= cx[i]+ sigma[i]*c.ngen();
     }
-    c.propose(px);
+    return c.propose(px);
   }
 
   double metropolis(const MCPoint2 &c, 

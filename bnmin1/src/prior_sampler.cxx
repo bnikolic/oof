@@ -149,15 +149,26 @@ namespace Minim
   double CSPAdaptive::advance(double L,
 			      size_t maxprop)
   {
+    const size_t qrtr=maxprop/4;
+    const double sf=0.95;    
+
     std::vector<double> ic(c->n);
     md.get(ic);
     
     c->reset(ic);
 
+    bool accepted=false;
     for(size_t i=0; i<maxprop; ++i)
     {
-      normProp(*c,
-	       sigmas);
+      bool a=normProp(*c,
+		      sigmas);
+      accepted=accepted or a;
+
+      if (accepted==false and i>qrtr)
+      {
+	for (size_t j=0; j<sigmas.size(); ++j)
+	  sigmas[j]*=sf;
+      }
     }
     md.put(c->gcx());
 
