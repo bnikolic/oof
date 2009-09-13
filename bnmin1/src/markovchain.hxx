@@ -144,6 +144,44 @@ namespace Minim {
 
   };
 
+  class InitPntChain:
+    public ChainBase
+  {
+  public:
+
+    /** \brief Function type to return the acceptance probability
+	
+	\param f is the first point in the chain
+     */
+    typedef boost::function< double (const MCPoint2 &f, const MCPoint2 &c, const MCPoint2 &p) >  fa_t;
+
+  private:
+
+    /// First point in the chain
+    MCPoint2 f;
+
+    /// The acceptance function
+    fa_t fAccept;
+
+  public:
+
+    // ---------- Construction / Destruction --------------
+    
+    InitPntChain(const v_t &ic,
+		 fx_t fLkl,
+		 fx_t fPr,
+		 fa_t fAccept);
+
+    // ---------- Public interface --------------------------
+
+    /**  Propose x as the next point in chain
+     */
+    void propose(const v_t &x);
+
+    void reset(const v_t &x);
+
+  };
+
   void normProp(MarkovChain &c,
 		const std::vector<double> &sigma);
 
@@ -157,6 +195,11 @@ namespace Minim {
    */
   double constrPrior(const MCPoint2 &c, 
 		     const MCPoint2 &p);
+
+
+  double constrPriorP(const MCPoint2 &f,
+		      const MCPoint2 &c, 
+		      const MCPoint2 &p);
 
     
 

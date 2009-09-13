@@ -60,6 +60,45 @@ namespace Minim {
     }
   }
 
+  InitPntChain::InitPntChain(const v_t &ic,
+			     fx_t fLkl,
+			     fx_t fPr,
+			     fa_t fAccept):
+    ChainBase(ic,
+	      fLkl,
+	      fPr),
+    fAccept(fAccept)
+  {
+    f=c;
+  }
+
+  void InitPntChain::propose(const v_t &x)
+  {
+    p.x=x;
+    p.l=fLkl(x);
+    p.p=fPr(x);
+
+    const double aprob=fAccept(f,c,p);
+    
+    if (aprob>=1.0)
+    {
+      c=p;
+    }
+    else
+    {
+      if(u01gen() < aprob)
+      {
+	c=p;
+      }
+    }
+  }
+
+  void InitPntChain::reset(const v_t &x)
+  {
+    ChainBase::reset(x);
+    f=c;
+  }
+
   void normProp(MarkovChain &c,
 		const std::vector<double> &sigma)
   {
@@ -98,6 +137,25 @@ namespace Minim {
       }
     }
   }
+
+  double constrPriorP(const MCPoint2 &f,
+		      const MCPoint2 &c, 
+		      const MCPoint2 &p)
+  {
+    if(p.l >= f.l)
+      return 0;
+    else
+    {
+      if (p.p<c.p)
+      {
+	return 1;
+      }
+      else
+      {
+	return exp(c.p-p.p);
+      }
+    }
+  }    
 
 
 }
