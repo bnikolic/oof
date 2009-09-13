@@ -8,18 +8,22 @@
 
 namespace Minim {
 
-  MarkovChain::MarkovChain(const v_t &ic,
-			   fx_t fLkl,
-			   fx_t fPr,
-			   fa_t fAccept,
-			   size_t n):
-    fLkl(fLkl),
-    fPr(fPr),
-    fAccept(fAccept),
+  ChainBase::ChainBase(size_t n):
     ngen(igen,
 	 norm_dist),
     u01gen(igen),
     n(n)
+  {
+  }
+
+  MarkovChain::MarkovChain(const v_t &ic,
+			   fx_t fLkl,
+			   fx_t fPr,
+			   fa_t fAccept):
+    ChainBase(ic.size()),
+    fLkl(fLkl),
+    fPr(fPr),
+    fAccept(fAccept)
   {
     c.x=ic;
     c.l=fLkl(ic);

@@ -139,8 +139,7 @@ namespace Minim
     c.reset(new MarkovChain(ic,
 			    flkl,
 			    fprior,
-			    constrPrior,
-			    initSigmas.size()));
+			    constrPrior));
   }
 
   CSPAdaptive::~CSPAdaptive()

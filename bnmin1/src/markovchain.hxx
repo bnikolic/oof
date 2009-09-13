@@ -29,7 +29,7 @@ namespace Minim {
     double p;
   };
 
-  class MarkovChain
+  class ChainBase
   {
 
   public:
@@ -40,12 +40,6 @@ namespace Minim {
     /// Vector type
     typedef std::vector<double>  v_t;
     
-    /// A function of a point in the chain
-    typedef boost::function< double (const v_t &x) >  fx_t;
-
-    /// A function to return the acceptance probability
-    typedef boost::function< double (const MCPoint2 &c, const MCPoint2 &p) >  fa_t;
-
   private:
     
     /// The integer random number generator
@@ -53,14 +47,7 @@ namespace Minim {
     
     boost::normal_distribution<> norm_dist;
 
-    /// The likelihood function
-    fx_t fLkl;    
-
-    /// The prior function
-    fx_t fPr;    
-
-    /// The acceptance function
-    fa_t fAccept;
+  protected:
 
     /// The current position of the chain
     MCPoint2 c;
@@ -91,21 +78,10 @@ namespace Minim {
 
     // ---------- Construction / Destruction --------------
     
-    MarkovChain(const v_t &ic,
-		fx_t fLkl,
-		fx_t fPr,
-		fa_t fAccept,
-		size_t n);
+    ChainBase(size_t n);
 
     // ---------- Public interface --------------------------
 
-    /**  Propose x as the next point in chain
-     */
-    void propose(const v_t &x);
-
-    /** Reset the chain, discard existing data and set x as the
-	starting point*/
-    void reset(const v_t &x);
 
     //          ------------ Access type functions ---------------
 
@@ -120,7 +96,51 @@ namespace Minim {
     {
       return c.l;
     }
+
+  };
+
+  class MarkovChain:
+    public ChainBase
+  {
+
+  public:
+
+    /// A function of a point in the chain
+    typedef boost::function< double (const v_t &x) >  fx_t;
+
+    /// A function to return the acceptance probability
+    typedef boost::function< double (const MCPoint2 &c, const MCPoint2 &p) >  fa_t;
+
+  private:
     
+
+    /// The likelihood function
+    fx_t fLkl;    
+
+    /// The prior function
+    fx_t fPr;    
+
+    /// The acceptance function
+    fa_t fAccept;
+
+  public:
+
+    // ---------- Construction / Destruction --------------
+    
+    MarkovChain(const v_t &ic,
+		fx_t fLkl,
+		fx_t fPr,
+		fa_t fAccept);
+
+    // ---------- Public interface --------------------------
+
+    /**  Propose x as the next point in chain
+     */
+    void propose(const v_t &x);
+
+    /** Reset the chain, discard existing data and set x as the
+	starting point*/
+    void reset(const v_t &x);
 
   };
 
