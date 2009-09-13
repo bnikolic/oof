@@ -39,7 +39,7 @@ namespace Minim {
   {
   }
 
-  void MarkovChain::propose(const std::vector<double> &x)
+  bool MarkovChain::propose(const std::vector<double> &x)
   {
     p.x=x;
     p.l=fLkl(x);
@@ -50,14 +50,17 @@ namespace Minim {
     if (aprob>=1.0)
     {
       c=p;
+      return true;
     }
     else
     {
       if(u01gen() < aprob)
       {
 	c=p;
+	return true;
       }
     }
+    return false;
   }
 
   InitPntChain::InitPntChain(const v_t &ic,
@@ -72,7 +75,7 @@ namespace Minim {
     f=c;
   }
 
-  void InitPntChain::propose(const v_t &x)
+  bool InitPntChain::propose(const v_t &x)
   {
     p.x=x;
     p.l=fLkl(x);
@@ -83,14 +86,17 @@ namespace Minim {
     if (aprob>=1.0)
     {
       c=p;
+      return true;
     }
     else
     {
       if(u01gen() < aprob)
       {
 	c=p;
+	return true;
       }
     }
+    return false;
   }
 
   void InitPntChain::reset(const v_t &x)

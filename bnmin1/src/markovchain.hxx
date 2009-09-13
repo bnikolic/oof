@@ -97,7 +97,11 @@ namespace Minim {
 	starting point*/
     void reset(const v_t &x);
 
-    virtual void propose(const v_t &x) =0;
+    /** \brief Propose x as the next point in chain
+	
+	\returns true if the point has been accepted
+     */
+    virtual bool propose(const v_t &x) =0;
 
 
     //          ------------ Access type functions ---------------
@@ -140,9 +144,8 @@ namespace Minim {
 
     // ---------- Public interface --------------------------
 
-    /**  Propose x as the next point in chain
-     */
-    void propose(const v_t &x);
+
+    bool propose(const v_t &x);
 
   };
 
@@ -178,7 +181,7 @@ namespace Minim {
 
     /**  Propose x as the next point in chain
      */
-    void propose(const v_t &x);
+    bool propose(const v_t &x);
 
     void reset(const v_t &x);
 
