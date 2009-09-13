@@ -8,26 +8,35 @@
 
 namespace Minim {
 
-  ChainBase::ChainBase(size_t n):
+  ChainBase::ChainBase(const v_t &ic,
+		       fx_t fLkl,
+		       fx_t fPr):
+    fLkl(fLkl),
+    fPr(fPr),
     ngen(igen,
 	 norm_dist),
     u01gen(igen),
-    n(n)
+    n(ic.size())
   {
+    reset(ic);
+  }
+
+  void ChainBase::reset(const v_t &x)
+  {
+    c.x=x;
+    c.l=fLkl(x);
+    c.p=fPr(x);    
   }
 
   MarkovChain::MarkovChain(const v_t &ic,
 			   fx_t fLkl,
 			   fx_t fPr,
 			   fa_t fAccept):
-    ChainBase(ic.size()),
-    fLkl(fLkl),
-    fPr(fPr),
+    ChainBase(ic,
+	      fLkl,
+	      fPr),
     fAccept(fAccept)
   {
-    c.x=ic;
-    c.l=fLkl(ic);
-    c.p=fPr(ic);
   }
 
   void MarkovChain::propose(const std::vector<double> &x)
@@ -50,14 +59,6 @@ namespace Minim {
       }
     }
   }
-
-  void MarkovChain::reset(const v_t &x)
-  {
-    c.x=x;
-    c.l=fLkl(x);
-    c.p=fPr(x);    
-  }
-
 
   void normProp(MarkovChain &c,
 		const std::vector<double> &sigma)

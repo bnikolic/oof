@@ -39,7 +39,10 @@ namespace Minim {
 
     /// Vector type
     typedef std::vector<double>  v_t;
-    
+
+    /// A function of a point in the chain
+    typedef boost::function< double (const v_t &x) >  fx_t;
+
   private:
     
     /// The integer random number generator
@@ -48,6 +51,12 @@ namespace Minim {
     boost::normal_distribution<> norm_dist;
 
   protected:
+
+    /// The likelihood function
+    fx_t fLkl;    
+
+    /// The prior function
+    fx_t fPr;    
 
     /// The current position of the chain
     MCPoint2 c;
@@ -78,9 +87,15 @@ namespace Minim {
 
     // ---------- Construction / Destruction --------------
     
-    ChainBase(size_t n);
+    ChainBase(const v_t &ic,
+	      fx_t fLkl,
+	      fx_t fPr);
 
     // ---------- Public interface --------------------------
+
+    /** Reset the chain, discard existing data and set x as the
+	starting point*/
+    void reset(const v_t &x);
 
 
     //          ------------ Access type functions ---------------
@@ -102,23 +117,12 @@ namespace Minim {
   class MarkovChain:
     public ChainBase
   {
-
   public:
-
-    /// A function of a point in the chain
-    typedef boost::function< double (const v_t &x) >  fx_t;
 
     /// A function to return the acceptance probability
     typedef boost::function< double (const MCPoint2 &c, const MCPoint2 &p) >  fa_t;
 
   private:
-    
-
-    /// The likelihood function
-    fx_t fLkl;    
-
-    /// The prior function
-    fx_t fPr;    
 
     /// The acceptance function
     fa_t fAccept;
@@ -137,10 +141,6 @@ namespace Minim {
     /**  Propose x as the next point in chain
      */
     void propose(const v_t &x);
-
-    /** Reset the chain, discard existing data and set x as the
-	starting point*/
-    void reset(const v_t &x);
 
   };
 
