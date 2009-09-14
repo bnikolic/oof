@@ -65,6 +65,8 @@ namespace Minim {
 	List of points which passed through the live set
     */
     std::list<WPPoint> post;
+
+    std::vector<double> sigmas;
     
   public:
     
@@ -94,9 +96,22 @@ namespace Minim {
 	    const std::vector<double> & sigmas,
 	    unsigned seed=43) throw (NestedSmallStart);
 
+    /**
+       A constructor without a starting set, which allows for the
+       to-fit parameters to be adjusted before initialisation
+     */
+    NestedS(PriorNLikelihood & ml,
+	    const std::vector<double> & sigmas,
+	    unsigned seed=43) ;
+
+
     ~NestedS();
 
     // -------------- Public Interface -----------------------------
+
+    /** 
+     */
+    void reset(const std::list<MCPoint> &start);
 
     /** \brief Number of points in the current set
      */

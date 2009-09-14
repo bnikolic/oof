@@ -76,6 +76,10 @@ namespace Minim {
      */
     void put(const std::vector<double>  & x)
     {
+      if (x.size() != NParam())
+      {
+	throw BaseErr("Inconsistent parameter error in put");
+      }
       copytopars(&x[0]);
     }
 

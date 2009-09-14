@@ -11,6 +11,8 @@
 #include <boost/random/mersenne_twister.hpp>
 #include <boost/random/uniform_real.hpp>
 
+#include <boost/assign/list_of.hpp>
+
 #include "nestedsampler.hxx"
 #include "priors.hxx"
 #include "minim.hxx"
@@ -30,6 +32,7 @@ namespace Minim {
     md(ml),
     //ps(new CSPMetro(ml, sigmas, seed)),
     ps(new CSPAdaptive(ml, sigmas)),
+    sigmas(sigmas),
     mon(NULL)
   {
     llPoint(ml,
@@ -44,9 +47,31 @@ namespace Minim {
     }
   }
 
+  NestedS::NestedS(PriorNLikelihood & ml,
+		   const std::vector<double> & sigmas,
+		   unsigned seed):
+    Zseq(1,0.0),
+    Xseq(1,1.0),
+    ml(ml),
+    md(ml),
+    sigmas(sigmas),
+    mon(NULL)
+  {
+  }
+
   NestedS::~NestedS(void)
   {
     delete ps->mon;
+  }
+
+  void NestedS::reset(const std::list<MCPoint> &start)
+  {
+    ps.reset(new CSPAdaptive(ml, sigmas));
+    Zseq=boost::assign::list_of(0.0);
+    Xseq=boost::assign::list_of(1.0);
+    llPoint(ml,
+	    start,
+	    ss);
   }
 
   size_t NestedS::N(void) const
@@ -164,6 +189,7 @@ namespace Minim {
       for(size_t j=0; j<i->p.size(); ++j)
 	std::cout<<i->p[j]
 		 <<",";
+      std::cout<<i->ll<<",";
       std::cout<<std::endl;
     }
   }
