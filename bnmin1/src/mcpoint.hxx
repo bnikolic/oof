@@ -25,23 +25,20 @@ namespace Minim {
     std::vector<double> fval;
 
     /// Default constructor allowed, fill in the data later
-    MCPoint(void)
-    {
-    }
+    MCPoint(void);
 
     /** \Construct with supplied position vector
      */
-    MCPoint(const std::vector<double> &p):
-      p(p)
-    {
-    }
-    
+    MCPoint(const std::vector<double> &p);
+
     /** \brief The parameter vector has n values
      */
-    MCPoint(size_t np):
-      p(np)
-    {
-    }
+    MCPoint(size_t np);
+
+    MCPoint(const MCPoint &other);
+
+    MCPoint & operator=(const MCPoint &other);
+    
     
   };
 
