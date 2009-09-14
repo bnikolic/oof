@@ -21,6 +21,7 @@
 %include "std_string.i"
 %include "std_vector.i"
 %include "std_list.i"
+%include "std_set.i"
 
 %include "../src/bnmin_main.hxx"
 %include "../src/paramctr.hxx"
@@ -34,6 +35,8 @@ namespace std {
 
 	   %template(ListDV) list<Minim::MCPoint>; 
 	   %template(ListWP) list<Minim::WPPoint>; 
+
+	   %template(SetMC) set<Minim::MCPoint>; 
 }
 
 

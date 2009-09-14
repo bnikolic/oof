@@ -109,6 +109,10 @@ namespace Minim {
     /** \brief Return the points describing the posterior
      */
     const std::list<WPPoint> & g_post(void) const;
+
+    /** \brief Return the live point set
+     */
+    const std::set<MCPoint> & g_ss(void) const;
     
   };
 
@@ -134,6 +138,11 @@ namespace Minim {
 		      size_t n,
 		      std::list<MCPoint> &res,
 		      unsigned seed=43);
+
+  /**
+     \brief Print the starting set to the stdout
+  */
+  void printSS(const std::set<MCPoint> &ss);
 
 
 }

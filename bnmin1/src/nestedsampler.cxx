@@ -5,6 +5,7 @@
 */
 
 #include <cmath>
+#include <iostream>
 
 #include <boost/random.hpp>
 #include <boost/random/mersenne_twister.hpp>
@@ -100,7 +101,10 @@ namespace Minim {
     return post;
   }
   
-  
+  const std::set<MCPoint> & NestedS::g_ss(void) const
+  {
+    return ss;
+  }
 
   void llPoint(PriorNLikelihood & ml,
 	       const std::list<MCPoint> &lp,
@@ -111,7 +115,7 @@ namespace Minim {
 	i != lp.end();
 	++i)
     {
-      MCPoint p=*i;
+      MCPoint p(i->p);
       m.put(p.p);
       p.ll=ml.llprob();
       res.insert(p);
@@ -148,6 +152,20 @@ namespace Minim {
       res.push_back(p);
     }
 
+  }
+
+  void printSS(const std::set<MCPoint> &ss)
+  {
+    for(std::set<MCPoint>::const_iterator i(ss.begin());
+	i != ss.end();
+	++i)
+    {
+      std::cout<<"p:";
+      for(size_t j=0; j<i->p.size(); ++j)
+	std::cout<<i->p[j]
+		 <<",";
+      std::cout<<std::endl;
+    }
   }
 
 }
