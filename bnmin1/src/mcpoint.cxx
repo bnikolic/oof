@@ -4,6 +4,8 @@
 
 */
 
+#include <cmath>
+
 #include "mcpoint.hxx"
 
 namespace Minim {
@@ -42,6 +44,22 @@ namespace Minim {
     ll=other.ll;
     fval=other.fval;
     return *this;
+  }
+
+  void moment1(const std::list<WPPoint> &l,
+	       std::vector<double> &res)
+  {
+    const size_t n=l.begin()->p.size();
+    res=std::vector<double>(n, 0.0);
+    for(std::list<WPPoint>::const_iterator i=l.begin();
+	i!= l.end();
+	++i)
+    {
+      for (size_t j=0; j<n; ++j)
+      {
+	  res[j]+= (i->p[j] * i->w * exp(- i->ll));
+      }
+    }
   }
 
 

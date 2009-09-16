@@ -9,6 +9,7 @@
 #define _BNMIN1_MCPOINT_HXX__
 
 #include <vector>
+#include <list>
 
 namespace Minim {
 
@@ -84,6 +85,11 @@ namespace Minim {
     }
     
   };
+
+  /** \brief Calculate the first moment of each parameter
+   */
+  void moment1(const std::list<WPPoint> &l,
+	       std::vector<double> &res);
 
 
 
