@@ -18,8 +18,9 @@
 namespace Minim
 {
   
-  CPriorSampler::CPriorSampler(PriorNLikelihood &ml):
-    md(ml),
+  CPriorSampler::CPriorSampler(PriorNLikelihood &ml,
+			       ModelDesc &md):
+    md(md),
     ml(ml),
     mon(NULL)
   {
@@ -30,9 +31,10 @@ namespace Minim
   }
   
   CSPMetro::CSPMetro(PriorNLikelihood &ml,
+		     ModelDesc &md,
 		     const std::vector<double> &sigmas,
 		     unsigned seed):
-    CPriorSampler(ml),
+    CPriorSampler(ml,md),
     prop(new MetroPropose(sigmas, seed))
   {
 
@@ -120,8 +122,9 @@ namespace Minim
   }
 
   CSPAdaptive::CSPAdaptive(PriorNLikelihood &ml,
+			   ModelDesc &md,
 			   const std::vector<double> &initSigmas):
-    CPriorSampler(ml),
+    CPriorSampler(ml,md),
     sigmas(initSigmas)
   {
     MarkovChain::fx_t flkl=boost::bind(likelihood, 

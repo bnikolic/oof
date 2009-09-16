@@ -26,12 +26,13 @@ namespace Minim {
 		   const std::list<MCPoint> & start,
 		   const std::vector<double> & sigmas,
 		   unsigned seed) throw (NestedSmallStart):
+    ModelDesc(ml),
     Zseq(1,0.0),
     Xseq(1,1.0),
     ml(ml),
     md(ml),
     //ps(new CSPMetro(ml, sigmas, seed)),
-    ps(new CSPAdaptive(ml, sigmas)),
+    ps(new CSPAdaptive(ml, *this, sigmas)),
     sigmas(sigmas),
     mon(NULL)
   {
@@ -50,6 +51,7 @@ namespace Minim {
   NestedS::NestedS(PriorNLikelihood & ml,
 		   const std::vector<double> & sigmas,
 		   unsigned seed):
+    ModelDesc(ml),
     Zseq(1,0.0),
     Xseq(1,1.0),
     ml(ml),
@@ -66,7 +68,8 @@ namespace Minim {
 
   void NestedS::reset(const std::list<MCPoint> &start)
   {
-    ps.reset(new CSPAdaptive(ml, sigmas));
+    ps.reset(new CSPAdaptive(ml, *this,
+			     sigmas));
     Zseq=boost::assign::list_of(0.0);
     Xseq=boost::assign::list_of(1.0);
     llPoint(ml,

@@ -34,7 +34,7 @@ namespace Minim
 
   protected:
 
-    ModelDesc md;
+    ModelDesc &md;
     
     PriorNLikelihood &ml;
 
@@ -49,7 +49,8 @@ namespace Minim
        \note We need separately the prior and the likelihood hence
        inheritance from indepenedentPriors
      */
-    CPriorSampler(PriorNLikelihood &ml);
+    CPriorSampler(PriorNLikelihood &ml,
+		  ModelDesc &md);
 
     virtual ~CPriorSampler();
 
@@ -87,6 +88,7 @@ namespace Minim
 
      */
     CSPMetro(PriorNLikelihood &ml,
+	     ModelDesc &md,
 	     const std::vector<double> &sigmas,
 	     unsigned seed=0);
 
@@ -118,6 +120,7 @@ namespace Minim
        \param seed the seed for the random number generator
      */
     CSPAdaptive(PriorNLikelihood &ml,
+		ModelDesc &md,
 		const std::vector<double> &initSigmas);
 
     ~CSPAdaptive();

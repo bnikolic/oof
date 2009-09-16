@@ -31,7 +31,8 @@ namespace Minim {
       See for example Skilling (2006, Proc. Valencia/ISBA)
 
    */
-  class NestedS
+  class NestedS:
+    public ModelDesc
   {
     /** \brief Sample set
 	
