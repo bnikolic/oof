@@ -4,6 +4,8 @@
 
 */
 
+#include <boost/format.hpp>
+
 #include "bnmin_main.hxx"
 #include "../config.h"
 
@@ -18,6 +20,18 @@ namespace Minim {
     std::runtime_error(s)
   {
   }
+
+  NParsErr::NParsErr(const std::string &fname,
+		     size_t expected,
+		     size_t received):
+    BaseErr( (boost::format("In function %s expected %i but received %i pars ") 
+	      % fname
+	      % expected
+	      % received).str())
+  {
+  }
+    
+
 
 
 }

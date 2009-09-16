@@ -156,12 +156,6 @@ namespace Minim {
 		      unsigned seed)
   {
     const size_t nprior=prior.npriors();
-    const size_t nfitpars=nPars(prior);
-    
-    if (nprior != nfitpars)
-    {
-      throw BaseErr("To directly generate starting set need priors for all parameters");
-    }
 
     boost::mt19937 rng(seed);
     boost::uniform_01<boost::mt19937> zo(rng);

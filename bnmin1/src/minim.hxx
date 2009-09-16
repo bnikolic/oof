@@ -78,7 +78,7 @@ namespace Minim {
     {
       if (x.size() != NParam())
       {
-	throw BaseErr("Inconsistent parameter error in put");
+	throw NParsErr("ModelDesc::Put", NParam(), x.size());
       }
       copytopars(&x[0]);
     }

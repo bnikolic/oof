@@ -28,6 +28,17 @@ namespace Minim {
 
   };
 
+  class NParsErr:
+    public BaseErr
+  {
+  public:
+    NParsErr(const std::string &fname,
+	     size_t expected,
+	     size_t received);
+    
+
+  };
+
 
 }
 #endif
