@@ -9,10 +9,12 @@
 #define _BNMIN1_PRIOR_SAMPLER_HXX__
 
 #include <vector>
+#include <set>
 
 #include <boost/scoped_ptr.hpp>
 
 #include "minim.hxx"
+#include "mcpoint.hxx"
 
 namespace Minim
 {
@@ -102,6 +104,9 @@ namespace Minim
   };
 
   /** \brief Adapaptive constrained sampler
+
+      This sampler progressively reduces sigmas when it finds it can't
+      make any steps. Can paint itself into a corner relatively easily.
    */
   class CSPAdaptive:
     public CPriorSampler
@@ -124,6 +129,37 @@ namespace Minim
 		const std::vector<double> &initSigmas);
 
     ~CSPAdaptive();
+
+    // -------------- Public Interface -----------------------------
+
+    double advance(double L,
+		   size_t maxprop);
+
+  };
+
+  /**
+     Base the steps on the live set
+   */
+  class CSRMSSS:
+    public CPriorSampler
+  {
+
+    boost::scoped_ptr<InitPntChain> c;
+    const std::set<MCPoint> &ss;
+
+
+  public:
+
+    // -------------- Construction/Destruction ---------------------
+
+    /**
+
+     */
+    CSRMSSS(PriorNLikelihood &ml,
+	    ModelDesc &md,
+	    const std::set<MCPoint> &ss);
+
+    ~CSRMSSS();
 
     // -------------- Public Interface -----------------------------
 

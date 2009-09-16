@@ -10,6 +10,7 @@
 
 #include <vector>
 #include <list>
+#include <set>
 
 namespace Minim {
 
@@ -90,6 +91,33 @@ namespace Minim {
    */
   void moment1(const std::list<WPPoint> &l,
 	       std::vector<double> &res);
+
+  void moment1(const std::list<WPPoint> &l,
+	       double Z,
+	       std::vector<double> &res);
+
+  /** \brief Calculate the second moment of each parameter
+   */
+  void moment2(const std::list<WPPoint> &l,
+	       const std::vector<double> &m1,
+	       std::vector<double> &res);
+
+  void moment2(const std::list<WPPoint> &l,
+	       const std::vector<double> &m1,
+	       double Z,
+	       std::vector<double> &res);
+
+
+  void moment1(const std::set<MCPoint> &s,
+	       std::vector<double> &res);
+
+  void moment2(const std::set<MCPoint> &s,
+	       const std::vector<double> &m1,
+	       std::vector<double> &res);
+
+  void StdDev(const std::set<MCPoint> &s,
+	      std::vector<double> &res);
+  
 
 
 

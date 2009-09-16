@@ -154,6 +154,10 @@ namespace Minim
   {
     const size_t qrtr=maxprop/4;
     const double sf=0.95;    
+    const double xf=1.0;
+
+    for (size_t j=0; j<sigmas.size(); ++j)
+	  sigmas[j]*=xf;
 
     std::vector<double> ic(c->n);
     md.get(ic);
@@ -172,6 +176,57 @@ namespace Minim
 	for (size_t j=0; j<sigmas.size(); ++j)
 	  sigmas[j]*=sf;
       }
+    }
+    md.put(c->gcx());
+
+    // Note the convention is to return the negative value
+    return -c->gcl();
+  }
+
+
+
+  CSRMSSS::CSRMSSS(PriorNLikelihood &ml,
+		   ModelDesc &md,
+		   const std::set<MCPoint> &ss):
+    CPriorSampler(ml,md),
+    ss(ss)
+  {
+    MarkovChain::fx_t flkl=boost::bind(likelihood, 
+				       boost::ref(md),
+				       boost::ref(ml), 
+				       _1);
+
+    MarkovChain::fx_t fprior=boost::bind(prior, 
+					 boost::ref(md),
+					 boost::ref(ml), 
+					 _1);
+    std::vector<double> ic(ss.begin()->p.size());
+    md.get(ic);
+
+    c.reset(new InitPntChain(ic,
+			     flkl,
+			     fprior,
+			     constrPriorP));
+  }
+
+  CSRMSSS::~CSRMSSS()
+  {
+  }
+
+  double CSRMSSS::advance(double L,
+			  size_t maxprop)
+  {
+    std::vector<double> ic(c->n);
+    md.get(ic);
+    c->reset(ic);
+
+    std::vector<double> sigmas;
+    StdDev(ss, sigmas);
+
+    for(size_t i=0; i<maxprop; ++i)
+    {
+      normProp(*c,
+	       sigmas);
     }
     md.put(c->gcx());
 
