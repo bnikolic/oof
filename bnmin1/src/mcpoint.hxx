@@ -115,10 +115,27 @@ namespace Minim {
 	       const std::vector<double> &m1,
 	       std::vector<double> &res);
 
+  /** \brief Outer moment 2, i.e., covariances
+   */
+  void omoment2(const std::set<MCPoint> &s,
+		const std::vector<double> &m1,
+		std::vector<double> &res);
+
+  /**  Covariances, leaving the m1 to be calculated internally
+   */
+  void omoment2(const std::set<MCPoint> &s,
+		std::vector<double> &res);
+
+  /** Standard eviation of each coordiante separately
+   */
   void StdDev(const std::set<MCPoint> &s,
 	      std::vector<double> &res);
   
 
+  /** Compute the principal directions from the covariance matrix
+   */
+  void principalCV(const std::vector<double> &cv,
+		   std::vector<double> &res);
 
 
 }

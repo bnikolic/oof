@@ -191,11 +191,19 @@ namespace Minim
     CPriorSampler(ml,md),
     ss(ss)
   {
+  }
+
+  CSRMSSS::~CSRMSSS()
+  {
+  }
+
+  void CSRMSSS::initChain(void)
+  {
     MarkovChain::fx_t flkl=boost::bind(likelihood, 
 				       boost::ref(md),
 				       boost::ref(ml), 
 				       _1);
-
+    
     MarkovChain::fx_t fprior=boost::bind(prior, 
 					 boost::ref(md),
 					 boost::ref(ml), 
@@ -207,26 +215,38 @@ namespace Minim
 			     flkl,
 			     fprior,
 			     constrPriorP));
-  }
 
-  CSRMSSS::~CSRMSSS()
-  {
+    nprop=0;
   }
 
   double CSRMSSS::advance(double L,
 			  size_t maxprop)
   {
-    std::vector<double> ic(c->n);
+    const double sf=0.2;
+
+    if (not c) 
+      initChain();
+
+    const size_t n=c->n;
+
+
+    std::vector<double> ic(n);
     md.get(ic);
     c->reset(ic);
 
     std::vector<double> sigmas;
     StdDev(ss, sigmas);
 
+    for(size_t j=0; j<sigmas.size(); ++j)
+      sigmas[j]*= sf;
+
     for(size_t i=0; i<maxprop; ++i)
     {
+      const size_t k= nprop%n;
       normProp(*c,
-	       sigmas);
+	       k,
+	       sigmas[k]);
+      ++nprop;
     }
     md.put(c->gcx());
 

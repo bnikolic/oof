@@ -147,6 +147,10 @@ namespace Minim
     boost::scoped_ptr<InitPntChain> c;
     const std::set<MCPoint> &ss;
 
+    void initChain(void);
+
+    size_t nprop;
+
 
   public:
 

@@ -117,6 +117,16 @@ namespace Minim {
     return c.propose(px);
   }
 
+  bool normProp(ChainBase &c,
+		size_t i,
+		double s)
+  {
+    const std::vector<double> &cx=c.gcx();
+    std::vector<double> px(cx);
+    px[i]+= s*c.ngen();
+    return c.propose(px);
+  }
+
   double metropolis(const MCPoint2 &c, 
 		    const MCPoint2 &p)
   {

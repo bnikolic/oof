@@ -6,7 +6,11 @@
 
 #include <cmath>
 
+#include <gsl/gsl_math.h>
+#include <gsl/gsl_eigen.h>
+
 #include "mcpoint.hxx"
+#include "bnmin_main.hxx"
 
 namespace Minim {
   
@@ -109,6 +113,10 @@ namespace Minim {
 	i!= s.end();
 	++i)
     {
+      if(i->p.size() != n)
+      {
+	throw NParsErr("moment1", n, i->p.size());
+      }
       for (size_t j=0; j<n; ++j)
       {
 	res[j]+= (i->p[j]);
@@ -147,6 +155,42 @@ namespace Minim {
     }
   }
 
+  void omoment2(const std::set<MCPoint> &s,
+		const std::vector<double> &m1,
+		std::vector<double> &res)
+  {
+    const size_t n=m1.size();
+    res=std::vector<double>(n*n, 0.0);
+
+    size_t N=0;
+    for(std::set<MCPoint>::const_iterator i=s.begin();
+	i!= s.end();
+	++i)
+    {
+      for (size_t j=0; j<n; ++j)
+      {
+	for(size_t k=0; k<n; ++k)
+	{
+	  res[j*n+k] += (i->p[j]-m1[j])*(i->p[k]-m1[k]);
+	}
+      }
+      ++N;
+    }
+    
+    for(size_t j=0; j<res.size(); ++j)
+    {
+      res[j]/=N;
+    }
+
+  }
+  void omoment2(const std::set<MCPoint> &s,
+		std::vector<double> &res)
+  {
+    std::vector<double> m1;
+    moment1(s, m1);
+    omoment2(s, m1, res);
+  }
+
   void StdDev(const std::set<MCPoint> &s,
 	      std::vector<double> &res)
   {
@@ -160,6 +204,43 @@ namespace Minim {
     }
   }
 
+  void principalCV(const std::vector<double> &cv,
+		   std::vector<double> &res)
+  {
+    const size_t n=sqrt(cv.size());
+    gsl_matrix_view m
+      = gsl_matrix_view_array (const_cast<double*>(&cv[0]), n, n);
+
+    gsl_vector *eval = gsl_vector_alloc (n);
+    gsl_matrix *evec = gsl_matrix_alloc (n, n);
+
+    gsl_eigen_symmv_workspace * w =
+      gsl_eigen_symmv_alloc (n);
+
+    gsl_eigen_symmv (&m.matrix,
+		     eval,
+		     evec,
+		     w);
+
+    gsl_eigen_symmv_free (w);
+    
+    gsl_eigen_symmv_sort (eval, 
+			  evec,
+			  GSL_EIGEN_SORT_ABS_ASC);
+
+    res.resize(n*n);
+    for(size_t j=0; j<n; ++j)
+    {
+      for(size_t i=0; i<n; ++i)
+      {
+	res[j*n+i]= gsl_vector_get (eval, j) * 
+	  gsl_matrix_get(evec, i,j);
+      }
+    }
+    
+    gsl_vector_free (eval);
+    gsl_matrix_free (evec);
+  }
 
 }
 

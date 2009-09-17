@@ -201,6 +201,10 @@ namespace Minim {
   bool normProp(ChainBase &c,
 		const std::vector<double> &sigma);
 
+  bool normProp(ChainBase &c,
+		size_t i,
+		double s);
+
 
   /** \brief The standard metropolis acceptance function
    */

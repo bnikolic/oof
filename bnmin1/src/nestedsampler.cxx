@@ -32,7 +32,8 @@ namespace Minim {
     ml(ml),
     md(ml),
     //ps(new CSPMetro(ml, sigmas, seed)),
-    ps(new CSPAdaptive(ml, *this, sigmas)),
+    //ps(new CSPAdaptive(ml, *this, sigmas)),
+    ps(new CSRMSSS(ml, *this, g_ss())),
     sigmas(sigmas),
     mon(NULL)
   {
@@ -68,8 +69,8 @@ namespace Minim {
 
   void NestedS::reset(const std::list<MCPoint> &start)
   {
-    ps.reset(new CSPAdaptive(ml, *this,
-			     sigmas));
+    ps.reset(new CSRMSSS(ml, *this, 
+			 g_ss()));
     Zseq=boost::assign::list_of(0.0);
     Xseq=boost::assign::list_of(1.0);
     llPoint(ml,
@@ -92,16 +93,11 @@ namespace Minim {
       const double X=exp(-((double)Xseq.size())/N());
       const double w=Xseq[Xseq.size()-1]-X;
 
-      Zseq.push_back(Zseq[Zseq.size()-1] + Llow* w);
-      Xseq.push_back(X);
-      
-      post.push_back(WPPoint(*worst, w));
-
-      // Now just need to replace the Llow object
+      // Look for the next sample
       md.put(worst->p);
       const double newl = ps->advance(-worst->ll,
 				      100);
-
+      // Is the new sample actually inside the contours of last?
       const bool better = newl > -worst->ll;
       
       if (not better)
@@ -110,6 +106,12 @@ namespace Minim {
 	break;
       }
 
+      // Save the point about to be bumped off
+      Zseq.push_back(Zseq[Zseq.size()-1] + Llow* w);
+      Xseq.push_back(X);
+      post.push_back(WPPoint(*worst, w));
+
+      // Create new point
       MCPoint np;
       np.p.resize(md.NParam());
       md.get(np.p);
