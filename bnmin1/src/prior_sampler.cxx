@@ -222,7 +222,7 @@ namespace Minim
   double CSRMSSS::advance(double L,
 			  size_t maxprop)
   {
-    const double sf=0.3;
+    const double sf=0.1;
 
     if (not c) 
       initChain();
@@ -247,7 +247,8 @@ namespace Minim
       std::vector<double> sigmas(n,0);
       sigmas[nprop%n]=eigvals[nprop%n];
       eigenProp(*c,
-		sigmas,
+		//sigmas,
+		eigvals,
 		eigvects);
       ++nprop;
     }
