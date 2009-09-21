@@ -205,7 +205,8 @@ namespace Minim {
   }
 
   void principalCV(const std::vector<double> &cv,
-		   std::vector<double> &res)
+		   std::vector<double> &eigvals,
+		   std::vector<double> &eigvects)
   {
     const size_t n=sqrt(cv.size());
     gsl_matrix_view m
@@ -228,13 +229,14 @@ namespace Minim {
 			  evec,
 			  GSL_EIGEN_SORT_ABS_ASC);
 
-    res.resize(n*n);
+    eigvals.resize(n);
+    eigvects.resize(n*n);
     for(size_t j=0; j<n; ++j)
     {
+      eigvals[j]=gsl_vector_get (eval, j);
       for(size_t i=0; i<n; ++i)
       {
-	res[j*n+i]= gsl_vector_get (eval, j) * 
-	  gsl_matrix_get(evec, i,j);
+	eigvects[j*n+i]= gsl_matrix_get(evec, i,j);
       }
     }
     

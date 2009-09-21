@@ -132,10 +132,16 @@ namespace Minim {
 	      std::vector<double> &res);
   
 
-  /** Compute the principal directions from the covariance matrix
+  /** \brief Compute the principal directions from the covariance
+      matrix
+
+      \param eigvals The eigen values
+      \param eigvects The eigen vectors
+      
    */
   void principalCV(const std::vector<double> &cv,
-		   std::vector<double> &res);
+		   std::vector<double> &eigvals,
+		   std::vector<double> &eigvects);
 
 
 }
