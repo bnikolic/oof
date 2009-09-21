@@ -201,9 +201,18 @@ namespace Minim {
   bool normProp(ChainBase &c,
 		const std::vector<double> &sigma);
 
+  /** Propose in dimension i only
+   */
   bool normProp(ChainBase &c,
 		size_t i,
 		double s);
+
+  /** Propose based on a combination of eigenvectors
+   */
+  bool eigenProp(ChainBase &c,
+		 const std::vector<double> &eigvals,
+		 const std::vector<double> &eigvects
+		 );
 
 
   /** \brief The standard metropolis acceptance function
