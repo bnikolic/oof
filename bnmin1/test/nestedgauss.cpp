@@ -42,7 +42,10 @@ int main(int ac, char* av[])
      "Sigma for use in the nested sample generation")
     ("nsample", 
      value<size_t>()->default_value(150),
-     "Number of nested sampels to make");
+     "Number of nested sampels to make")
+    ("ndim", 
+     value<size_t>()->default_value(3),
+     "Number of dimensions in the problem");
 
 
   variables_map vm;        
@@ -62,16 +65,18 @@ int main(int ac, char* av[])
     const double l_sigma=vm["l_sigma"].as<double>();
     const double sigma=vm["sigma"].as<double>();
     const size_t nsample=vm["nsample"].as<size_t>();
+    const size_t ndim=vm["ndim"].as<size_t>();
     
     pdesc d=mkDesc(l_sigma,
 		   vm.count("monitor"),
-		   sigma
+		   sigma,
+		   ndim
 		   );
 
     std::cout<<"Evidence: "
 	     <<d.s->sample(nsample)
 	     <<" (expected: "
-	     <<1.0/8* pow(erf(1.0/l_sigma/sqrt(2)),3)
+	     <<pow(1.0/2.0, ndim)* pow(erf(1.0/l_sigma/sqrt(2)),ndim)
 	     <<")"
 	     <<std::endl;
 

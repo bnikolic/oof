@@ -21,18 +21,21 @@ struct pdesc {
 
 pdesc mkDesc(double l_sigma,
 	     bool monitor,
-	     double sigma=0.1)
+	     double sigma=0.1,
+	     size_t ndim=3)
 {
   using namespace Minim;
-  GaussObs *gp = new GaussObs(3);
+  GaussObs *gp = new GaussObs(ndim);
   gp->sigma=l_sigma;
 
   pdesc res;
   res.obs=boost::shared_ptr<IndependentFlatPriors>(new  IndependentFlatPriors(gp));
 
-  res.obs->AddPrior("p0", -1.01,1.01);
-  res.obs->AddPrior("p1", -1.01,1.01);
-  res.obs->AddPrior("p2", -1.01,1.01);
+  for (size_t i=0; i<ndim; ++i)
+  {
+    res.obs->AddPrior((boost::format("p%i") % i).str(), -1.01,1.01);
+  }
+
   
   std::list<Minim::MCPoint> startset;
 
@@ -40,7 +43,7 @@ pdesc mkDesc(double l_sigma,
 		 20,
 		 startset);
 
-  std::vector<double> sigmas(3,
+  std::vector<double> sigmas(ndim,
 			     sigma);
 
   res.s=boost::shared_ptr<NestedS>(new NestedS(*res.obs,
