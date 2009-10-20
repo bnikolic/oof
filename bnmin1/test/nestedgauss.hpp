@@ -8,7 +8,7 @@
 */
 
 #include "minimmodel.hxx"
-#include "gaussmodel.hpp"
+#include "apps/gaussmodel.hpp"
 #include "nestedsampler.hxx"
 #include "mcmonitor.hxx"
 #include "priors.hxx"

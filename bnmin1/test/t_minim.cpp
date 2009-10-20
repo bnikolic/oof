@@ -17,7 +17,7 @@
 
 #include "minimmodel.hxx"
 #include "quadmodel.hpp"
-#include "gaussmodel.hpp"
+#include "apps/gaussmodel.hpp"
 #include "lmmin.hxx"
 #include "monitor.hxx"
 #include "minimio.hxx"
