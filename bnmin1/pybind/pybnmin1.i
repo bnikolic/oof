@@ -15,6 +15,7 @@
 
 #include "../src/nestederr.hxx"
 #include "../src/nestedsampler.hxx"
+#include "../src/apps/gaussmodel.hxx"
 
 %}
 
@@ -57,6 +58,10 @@ namespace std {
 					         const std::vector<double> &,
 			                         unsigned seed=43);		    
 %include "../src/nestedsampler.hxx"
+
+namespace boost { namespace numeric{ namespace ublas {}}};
+
+%include "../src/apps/gaussmodel.hxx"
 
 %extend Minim::LineFit {
 	

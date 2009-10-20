@@ -20,7 +20,7 @@ libbnmin1_la_SOURCES = minimmodel.hxx minimmodel.cxx paramctr.hxx	\
 			prior_sampler.cxx prior_sampler.hxx		\
 			mcmonitor.cxx mcmonitor.hxx nestederr.cxx	\
 			nestederr.hxx markovchain.cxx markovchain.hxx   \
-			apps/gaussmodel.cpp
+			apps/gaussmodel.cxx
 
 libbnmin1_la_LIBADD = f77/libminpda.la  $(GSL_LIBS)
 
