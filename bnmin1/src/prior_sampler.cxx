@@ -14,6 +14,7 @@
 #include "mcpoint.hxx"
 #include "mcmonitor.hxx"
 #include "markovchain.hxx"
+#include "nestedsampler.hxx"
 
 namespace Minim
 {
@@ -190,6 +191,13 @@ namespace Minim
 		   const std::set<MCPoint> &ss):
     CPriorSampler(ml,md),
     ss(ss)
+  {
+  }
+
+  CSRMSSS::CSRMSSS(PriorNLikelihood &ml,
+		   NestedS &s):
+    CPriorSampler(ml,s),
+    ss(s.g_ss())
   {
   }
 

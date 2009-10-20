@@ -24,6 +24,7 @@ namespace Minim
   class MCMonitorBase;
   class MarkovChain;
   class InitPntChain;
+  class NestedS;
 
   /** \brief Constrained prior sampler
       
@@ -162,6 +163,10 @@ namespace Minim
     CSRMSSS(PriorNLikelihood &ml,
 	    ModelDesc &md,
 	    const std::set<MCPoint> &ss);
+
+    CSRMSSS(PriorNLikelihood &ml,
+	    NestedS &s);
+
 
     ~CSRMSSS();
 

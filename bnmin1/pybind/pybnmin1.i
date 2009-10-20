@@ -15,6 +15,7 @@
 
 #include "../src/nestederr.hxx"
 #include "../src/nestedsampler.hxx"
+#include "../src/prior_sampler.hxx"
 #include "../src/apps/gaussmodel.hxx"
 
 %}
@@ -58,6 +59,8 @@ namespace std {
 					         const std::vector<double> &,
 			                         unsigned seed=43);		    
 %include "../src/nestedsampler.hxx"
+
+%include "../src/prior_sampler.hxx"
 
 namespace boost { namespace numeric{ namespace ublas {}}};
 
