@@ -2,9 +2,21 @@
 BNMin1 Release Notes  
 ======================
 
-In development (to be V1.7)
-===========================
+Version 1.7
+===========
 
+Bug-fixes:
+
+* Correct building of the test programs from tar-balls
+
+Improvements:
+
+* Better prior sampling in the prototype nested sampling routines
+
+New features:
+
+* Start a new "apps" subdirectory with illustrative & useful examples
+  of problems to solve. 
 
 
 Version 1.6
