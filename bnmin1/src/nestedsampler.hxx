@@ -70,8 +70,15 @@ namespace Minim {
     std::vector<double> sigmas;
     
   public:
+
+    // -------------- Public data ---------------------------------
     
+    /// Interface to monitor the progress made by the nested sampler
     MCMonitorBase *mon;
+
+    /// Number of samples to make when sampling the prior under
+    /// the likelihood constraint 
+    size_t n_psample;
 
     // -------------- Construction/Destruction ---------------------
 

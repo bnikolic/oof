@@ -1,6 +1,6 @@
 AC_INIT(BNMIN1, 
-	1.7,
-	"Bojan Nikolic"   <bojan@bnikolic.co.uk>)
+	1.8,
+	bojan@bnikolic.co.uk)
 
 AC_CONFIG_AUX_DIR(config)
 

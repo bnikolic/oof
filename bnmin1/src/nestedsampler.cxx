@@ -35,7 +35,8 @@ namespace Minim {
     //ps(new CSPAdaptive(ml, *this, sigmas)),
     ps(new CSRMSSS(ml, *this, g_ss())),
     sigmas(sigmas),
-    mon(NULL)
+    mon(NULL),
+    n_psample(100)
   {
     llPoint(ml,
 	    start,
@@ -58,7 +59,8 @@ namespace Minim {
     ml(ml),
     md(ml),
     sigmas(sigmas),
-    mon(NULL)
+    mon(NULL),
+    n_psample(100)
   {
   }
 
@@ -96,7 +98,7 @@ namespace Minim {
       // Look for the next sample
       md.put(worst->p);
       const double newl = ps->advance(-worst->ll,
-				      100);
+				      n_psample);
       // Is the new sample actually inside the contours of last?
       const bool better = newl > -worst->ll;
       
