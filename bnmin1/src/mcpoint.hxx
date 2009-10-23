@@ -144,6 +144,27 @@ namespace Minim {
 		   std::vector<double> &eigvects);
 
 
+  /** \brief Compute the histogram of the posterior from weighted
+      sample points
+
+      \param low The low boundary of the region to be binned in each
+      dimension
+      
+      \param high The high boundary of the region to be binned 
+
+      \param nbins Number of bins in each direction
+
+      \param res Results are stored here
+      
+   */
+  void postHist(const std::list<WPPoint> &l,
+		double Z,
+		const std::vector<double> &low,
+		const std::vector<double> &high,
+		size_t nbins,
+		std::vector<double> &res);
+
+
 }
 
 #endif

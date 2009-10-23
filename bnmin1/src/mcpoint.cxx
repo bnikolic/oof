@@ -5,6 +5,7 @@
 */
 
 #include <cmath>
+#include <algorithm>
 
 #include <gsl/gsl_math.h>
 #include <gsl/gsl_eigen.h>
@@ -242,6 +243,50 @@ namespace Minim {
     
     gsl_vector_free (eval);
     gsl_matrix_free (evec);
+  }
+
+  void postHist(const std::list<WPPoint> &l,
+		double Z,
+		const std::vector<double> &low,
+		const std::vector<double> &high,
+		size_t nbins,
+		std::vector<double> &res)
+  {
+    const size_t ndim=low.size();
+
+    res.resize(pow(nbins,ndim));
+    std::fill(res.begin(), res.end(), 0.0);
+    
+
+    std::vector<double> deltas(ndim);
+    for(size_t i=0; i<ndim; ++i)
+    {
+      deltas[i]=(high[i]-low[i])/nbins;
+    }
+
+    for(std::list<WPPoint>::const_iterator i=l.begin();
+	i!= l.end();
+	++i)
+    {
+      bool inside=true;
+      size_t k=0;
+      for (size_t j=0; j<ndim; ++j)
+      {
+	int dimi = int((i->p[j]-low[j])/deltas[j]);
+	if (dimi >= 0 and dimi < (int)nbins)
+	{
+	  k+= dimi * pow(nbins, ndim-j-1);
+	}
+	else
+	{
+	  inside=false;
+	}
+      }
+      if (inside)
+      {
+	res[k]+= i->w * exp(- i->ll);
+      }
+    }
   }
 
 }
