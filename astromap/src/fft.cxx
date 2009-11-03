@@ -41,13 +41,14 @@ namespace AstroMap {
     /// Scratch space for the transform. Leave as naked pointer, since
     /// we need to allocate the space using specialised functions to
     /// ensure proper alignement 
-    fftw_complex *fftScratch;
+    fftw_complex *fin;
+    fftw_complex *fout;
 
     /// Are we centering?
     FFTFact::cntr docenter;
 
     /// Maximum number of threads to use
-    static const size_t threads=4;
+    static const size_t threads=2;
     
   public:
     
@@ -57,22 +58,24 @@ namespace AstroMap {
 	       FFTFact::cntr docenter=FFTFact::center
 	       ):
       direction(dir == FFTFact::forward ? FFTW_FORWARD : FFTW_BACKWARD ),
-      fftScratch(reinterpret_cast<fftw_complex*>(fftw_malloc( sizeof(fftw_complex)* nx * ny  ))),
+      fin(reinterpret_cast<fftw_complex*>(fftw_malloc( sizeof(fftw_complex)* nx * ny  ))),
+      fout(reinterpret_cast<fftw_complex*>(fftw_malloc( sizeof(fftw_complex)* nx * ny  ))),
       docenter(docenter)
     {
       ENFORCE(_astromap_fftw_threads_init);
       fftw_plan_with_nthreads(threads);
       plan=ENFORCE( fftw_plan_dft_2d(nx,
 				     ny, 
-				     fftScratch,
-				     fftScratch,
+				     fin,
+				     fout,
 				     direction,
-				     FFTW_ESTIMATE));
+				     FFTW_MEASURE));
     }
 
     ~iFFTFact() 
     {
-      fftw_free(fftScratch);
+      fftw_free(fin);
+      fftw_free(fout);
       fftw_destroy_plan( plan);
     }
 
@@ -92,13 +95,13 @@ namespace AstroMap {
 		  {
 		    if (i+j & 1) 
 		      {
-			fftScratch[i*nx + j][0]= Amp[i*nx + j] * cos( Phi[i*nx + j] ) * mul;
-			fftScratch[i*nx + j][1]= Amp[i*nx + j] * sin( Phi[i*nx + j] ) * mul;
+			fin[i*nx + j][0]= Amp[i*nx + j] * cos( Phi[i*nx + j] ) * mul;
+			fin[i*nx + j][1]= Amp[i*nx + j] * sin( Phi[i*nx + j] ) * mul;
 		      } 
 		    else 
 		      {
-			fftScratch[i*nx + j][0]= Amp[i*nx + j] * cos(Phi[i*nx + j] );
-			fftScratch[i*nx + j][1]= Amp[i*nx + j] * sin(Phi[i*nx + j] );
+			fin[i*nx + j][0]= Amp[i*nx + j] * cos(Phi[i*nx + j] );
+			fin[i*nx + j][1]= Amp[i*nx + j] * sin(Phi[i*nx + j] );
 		      }
 		  }
 	      }
@@ -132,15 +135,15 @@ namespace AstroMap {
 	{
 	  for (unsigned j=0 ; j < ny ; j++ ) 
 	    {
-	      resAmp[i*nx + j] = sqrt ( pow(fftScratch[i*nx + j][0],2) + pow(fftScratch[i*nx + j][1] , 2) ) ;
+	      resAmp[i*nx + j] = sqrt ( pow(fout[i*nx + j][0],2) + pow(fout[i*nx + j][1] , 2) ) ;
 	      
 	      if (i+j & 1) 
 	      {	      
-		resPhi[i*nx + j] = atan2( fftScratch[i*nx + j][1] *mul, fftScratch[i*nx + j][0]*mul ) ;
+		resPhi[i*nx + j] = atan2( fout[i*nx + j][1] *mul, fout[i*nx + j][0]*mul ) ;
 	      }
 	      else
 	      {
-		resPhi[i*nx + j] = atan2( fftScratch[i*nx + j][1], fftScratch[i*nx + j][0] ) ;
+		resPhi[i*nx + j] = atan2( fout[i*nx + j][1], fout[i*nx + j][0] ) ;
 	      }
 	  
 	}
@@ -166,8 +169,8 @@ namespace AstroMap {
 	{
 	  for (unsigned  j=0 ; j < ny ; j++ ) 
 	    {
-	      ResPower[i*nx + j] =  pow(fftScratch[i*nx + j][0],2) + 
-		pow(fftScratch[i*nx + j][1] ,2)   ;
+	      ResPower[i*nx + j] =  pow(fout[i*nx + j][0],2) + 
+		pow(fout[i*nx + j][1] ,2)   ;
 	}
       }
     }
