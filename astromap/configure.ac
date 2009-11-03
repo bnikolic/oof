@@ -1,6 +1,6 @@
 AC_INIT(ASTROMAP, 
         1.4, 
-	"Bojan Nikolic" <bojan@bnikolic.co.uk> )  
+	bojan@bnikolic.co.uk)  
 
 AC_CONFIG_AUX_DIR(config)
 
@@ -19,9 +19,9 @@ AC_PROG_CXX
 PKG_CHECK_MODULES([BN], [bnlib >= 1.1 bnfits >= 1.2 bnmin1 >= 1.2])
 
 
-AC_CHECK_HEADER( fftw.h,
-		 [echo "found fftw version 2" ],
-		 [AC_MSG_ERROR([Requires FFTW version 2] ) ] )
+AC_CHECK_HEADER(fftw3.h,
+              [echo "found fftw version 3" ],
+		 [AC_MSG_ERROR([Requires FFTW version 3] ) ] )
 
 AC_LANG_PUSH(C++)
 

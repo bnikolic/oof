@@ -24,7 +24,7 @@ libastromap_la_SOURCES= astromap.cxx astromap.hxx \
 libastromap_la_CFLAGS = -Wall   ${BN_CFLAGS}
 libastromap_la_CPPFLAGS = -Wall ${BN_CFLAGS}
 
-libastromap_la_LIBADD = -lfftw ${BN_LIBS} \
+libastromap_la_LIBADD = -lfftw3_threads -lfftw3 ${BN_LIBS} \
 			coordsys/libcoordsys.la \
 			dataser/libdataser.la
 

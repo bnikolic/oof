@@ -9,15 +9,21 @@
    An interface to the FFT libraries.
 */
 
-#include "fft.hxx"
-
 #include <vector>
 
-#include <fftw.h>
+#include "fft.hxx"
+
+
+#include <fftw3.h>
 
 #include <bndebug.hxx>
 
 #include "astromap.hxx"
+
+// This variable is initialised at the time of loading of the shared
+// library and contains the return code of fftw_init_threads(). This
+// functions sets FFTW up for multi-threaded operation
+static int _astromap_fftw_threads_init=fftw_init_threads();
 
 namespace AstroMap {
 
@@ -27,16 +33,21 @@ namespace AstroMap {
   class iFFTFact {
     
     /*! Holds the direction of transform in fftw units */
-    fftw_direction direction;
+    int direction;
 
     /// This holds the "plan" for the transform
-    fftwnd_plan plan;
+    fftw_plan plan;
 
-    /// Scratch space for the transform
-    std::vector<fftw_complex>  fftScratch;
+    /// Scratch space for the transform. Leave as naked pointer, since
+    /// we need to allocate the space using specialised functions to
+    /// ensure proper alignement 
+    fftw_complex *fftScratch;
 
     /// Are we centering?
     FFTFact::cntr docenter;
+
+    /// Maximum number of threads to use
+    static const size_t threads=4;
     
   public:
     
@@ -46,18 +57,23 @@ namespace AstroMap {
 	       FFTFact::cntr docenter=FFTFact::center
 	       ):
       direction(dir == FFTFact::forward ? FFTW_FORWARD : FFTW_BACKWARD ),
-      plan  ( ENFORCE(fftw2d_create_plan(nx,
-					 ny, 
-					 direction,
-					 FFTW_ESTIMATE | FFTW_IN_PLACE) )),
-      fftScratch( nx * ny  ),
+      fftScratch(reinterpret_cast<fftw_complex*>(fftw_malloc( sizeof(fftw_complex)* nx * ny  ))),
       docenter(docenter)
     {
+      ENFORCE(_astromap_fftw_threads_init);
+      fftw_plan_with_nthreads(threads);
+      plan=ENFORCE( fftw_plan_dft_2d(nx,
+				     ny, 
+				     fftScratch,
+				     fftScratch,
+				     direction,
+				     FFTW_ESTIMATE));
     }
 
     ~iFFTFact() 
     {
-      fftwnd_destroy_plan( plan);
+      fftw_free(fftScratch);
+      fftw_destroy_plan( plan);
     }
 
     // now the functions that do the work
@@ -76,18 +92,18 @@ namespace AstroMap {
 		  {
 		    if (i+j & 1) 
 		      {
-			fftScratch[i*nx + j].re= Amp[i*nx + j] * cos( Phi[i*nx + j] ) * mul;
-			fftScratch[i*nx + j].im= Amp[i*nx + j] * sin( Phi[i*nx + j] ) * mul;
+			fftScratch[i*nx + j][0]= Amp[i*nx + j] * cos( Phi[i*nx + j] ) * mul;
+			fftScratch[i*nx + j][1]= Amp[i*nx + j] * sin( Phi[i*nx + j] ) * mul;
 		      } 
 		    else 
 		      {
-			fftScratch[i*nx + j].re= Amp[i*nx + j] * cos(Phi[i*nx + j] );
-			fftScratch[i*nx + j].im= Amp[i*nx + j] * sin(Phi[i*nx + j] );
+			fftScratch[i*nx + j][0]= Amp[i*nx + j] * cos(Phi[i*nx + j] );
+			fftScratch[i*nx + j][1]= Amp[i*nx + j] * sin(Phi[i*nx + j] );
 		      }
 		  }
 	      }
   
-	    fftwnd_one( plan , &fftScratch[0], NULL);
+	    fftw_execute(plan);
 	    // Thats it... result should be in fftScratch
     }
     
@@ -116,15 +132,15 @@ namespace AstroMap {
 	{
 	  for (unsigned j=0 ; j < ny ; j++ ) 
 	    {
-	      resAmp[i*nx + j] = sqrt ( pow(fftScratch[i*nx + j].re,2) + pow(fftScratch[i*nx + j].im , 2) ) ;
+	      resAmp[i*nx + j] = sqrt ( pow(fftScratch[i*nx + j][0],2) + pow(fftScratch[i*nx + j][1] , 2) ) ;
 	      
 	      if (i+j & 1) 
 	      {	      
-		resPhi[i*nx + j] = atan2( fftScratch[i*nx + j].im *mul, fftScratch[i*nx + j].re*mul ) ;
+		resPhi[i*nx + j] = atan2( fftScratch[i*nx + j][1] *mul, fftScratch[i*nx + j][0]*mul ) ;
 	      }
 	      else
 	      {
-		resPhi[i*nx + j] = atan2( fftScratch[i*nx + j].im, fftScratch[i*nx + j].re ) ;
+		resPhi[i*nx + j] = atan2( fftScratch[i*nx + j][1], fftScratch[i*nx + j][0] ) ;
 	      }
 	  
 	}
@@ -150,8 +166,8 @@ namespace AstroMap {
 	{
 	  for (unsigned  j=0 ; j < ny ; j++ ) 
 	    {
-	      ResPower[i*nx + j] =  pow(fftScratch[i*nx + j].re,2) + 
-		pow(fftScratch[i*nx + j].im ,2)   ;
+	      ResPower[i*nx + j] =  pow(fftScratch[i*nx + j][0],2) + 
+		pow(fftScratch[i*nx + j][1] ,2)   ;
 	}
       }
     }

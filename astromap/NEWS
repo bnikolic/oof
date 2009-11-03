@@ -6,6 +6,9 @@ Version 1.4
 
 Enhancements:
 
+* FFT is now implemented using FFTW3 , which should provide
+  significant performance gain
+
 * Preliminary support for map regions
 
 * Corrections to the convolution function
