@@ -3,6 +3,8 @@
 #
 # Reduce data from april 11th 2005
 
+import setup
+
 import oofreduce
 
 import red2005
