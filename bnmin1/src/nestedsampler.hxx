@@ -52,11 +52,6 @@ namespace Minim {
      */
     PriorNLikelihood &ml;
 
-    /** Local model description structure to retrieve and set the
-	parameters
-     */
-    ModelDesc md;
-
     /** \brief The constrained prior sampler to replace points
      */
     boost::scoped_ptr<CPriorSampler> ps;

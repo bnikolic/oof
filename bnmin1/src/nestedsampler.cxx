@@ -30,7 +30,6 @@ namespace Minim {
     Zseq(1,0.0),
     Xseq(1,1.0),
     ml(ml),
-    md(ml),
     //ps(new CSPMetro(ml, sigmas, seed)),
     //ps(new CSPAdaptive(ml, *this, sigmas)),
     ps(new CSRMSSS(ml, *this, g_ss())),
@@ -57,7 +56,6 @@ namespace Minim {
     Zseq(1,0.0),
     Xseq(1,1.0),
     ml(ml),
-    md(ml),
     ps(NULL),
     sigmas(sigmas),
     mon(NULL),
@@ -111,7 +109,7 @@ namespace Minim {
       const double w=Xseq[Xseq.size()-1]-X;
 
       // Look for the next sample
-      md.put(worst->p);
+      put(worst->p);
       const double newl = ps->advance(-worst->ll,
 				      n_psample);
       // Is the new sample actually inside the contours of last?
@@ -130,8 +128,8 @@ namespace Minim {
 
       // Create new point
       MCPoint np;
-      np.p.resize(md.NParam());
-      md.get(np.p);
+      np.p.resize(NParam());
+      get(np.p);
       np.ll=-newl;
       ss.erase(worst);
       ss.insert(np);
