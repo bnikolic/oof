@@ -58,6 +58,7 @@ namespace Minim {
     Xseq(1,1.0),
     ml(ml),
     md(ml),
+    ps(NULL),
     sigmas(sigmas),
     mon(NULL),
     n_psample(100)
@@ -66,12 +67,25 @@ namespace Minim {
 
   NestedS::~NestedS(void)
   {
-    delete ps->mon;
+    if(ps)
+    {
+      delete ps->mon;
+    }
   }
 
   void NestedS::reset(const std::list<MCPoint> &start)
   {
-    ps.reset(new CSRMSSS(ml, *this, 
+    if (start.size() < 2)
+    {
+      throw NestedSmallStart(start);
+    }
+    if (start.begin()->p.size() != NParam())
+    {
+      throw BaseErr("Dimension of start set points is not the same as number of parameters to fit");
+    }
+
+    ps.reset(new CSRMSSS(ml, 
+			 *this, 
 			 g_ss()));
     Zseq=boost::assign::list_of(0.0);
     Xseq=boost::assign::list_of(1.0);
