@@ -140,11 +140,32 @@ namespace Minim {
   };
 
   /** 
-      Calculate the log-likelihood at the supplied points and insert
-      into supplied set
+      \brief Calculate the log-likelihood at the supplied points and
+      insert the points into the supplied set
 
-      \note pure likelihood is calcuted, disregarding prior
-      information.
+      Example of usage is evaluting the points in a starting set
+      before sorting them in likelihood for the nested sampler.
+
+      \param md Model description which allows control of the
+      ml. Allows information regarding which parameters are fitted for
+      or not to be passed
+      
+      \param  lp The supplied points
+      
+      \param res The output set of points with likelihoods
+
+      \note The pure likelihood is calcuted, and priors are no
+      included in this calculation
+   */
+  void llPoint(PriorNLikelihood &ml,
+	       ModelDesc &md,
+	       const std::list<MCPoint> &lp,
+	       std::set<MCPoint> &res);
+
+  /** 
+      Operates like the four-parameter version but assumes all
+      parameters are fitted-for
+
    */
   void llPoint(PriorNLikelihood &ml,
 	       const std::list<MCPoint> &lp,

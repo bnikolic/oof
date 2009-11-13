@@ -90,6 +90,7 @@ namespace Minim {
     Zseq=boost::assign::list_of(0.0);
     Xseq=boost::assign::list_of(1.0);
     llPoint(ml,
+	    *this,
 	    start,
 	    ss);
   }
@@ -153,19 +154,30 @@ namespace Minim {
   }
 
   void llPoint(PriorNLikelihood & ml,
+	       ModelDesc &md,
 	       const std::list<MCPoint> &lp,
 	       std::set<MCPoint> &res)
   {
-    ModelDesc m(ml);
     for(std::list<MCPoint>::const_iterator i(lp.begin());
 	i != lp.end();
 	++i)
     {
       MCPoint p(i->p);
-      m.put(p.p);
+      md.put(p.p);
       p.ll=ml.llprob();
       res.insert(p);
     }
+  }
+
+  void llPoint(PriorNLikelihood & ml,
+	       const std::list<MCPoint> &lp,
+	       std::set<MCPoint> &res)
+  {
+    ModelDesc m(ml);
+    llPoint(ml,
+	    m,
+	    lp,
+	    res);
   }
 
   void startSetDirect(IndependentFlatPriors &prior,
