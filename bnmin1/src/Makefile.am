@@ -27,6 +27,9 @@ libbnmin1_la_LIBADD = f77/libminpda.la  $(GSL_LIBS)
 libbnmin1_la_CFLAGS = -Wall $(GSL_CFLAGS)
 libbnmin1_la_CPPFLAGS = -Wall $(GSL_CFLAGS)
 
-include_HEADERS = lmmin.hxx minim.hxx minimmodel.hxx paramctr.hxx pda.hxx monitor.hxx \
-			minimio.hxx lmminutils.hxx bnmin_main.hxx priors.hxx metropolis.hxx \
-			gradientmodel.hxx gradientminim.hxx robustline.hxx
+include_HEADERS = lmmin.hxx minim.hxx minimmodel.hxx paramctr.hxx	\
+			pda.hxx monitor.hxx minimio.hxx lmminutils.hxx	\
+			bnmin_main.hxx priors.hxx metropolis.hxx	\
+			gradientmodel.hxx gradientminim.hxx		\
+			robustline.hxx nestedsampler.hxx mcpoint.hxx	\
+			nestederr.hxx

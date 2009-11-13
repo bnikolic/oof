@@ -108,6 +108,7 @@ namespace Minim {
 
     /** Construct with reference to an existing model
 
+       \note This class takes ownership of the supplied pointer
     */
     IndependentPriors(MLikelihood * mod);
 
@@ -151,6 +152,8 @@ namespace Minim {
 
     /** 
 	Construct with reference to an existing model
+
+	\note This class takes ownership of the supplied pointer
     */
     IndependentFlatPriors(MLikelihood * mod);
 
