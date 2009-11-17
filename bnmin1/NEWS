@@ -5,6 +5,12 @@ BNMin1 Release Notes
 In development (to be: Version 1.8)
 ===================================
 
+Bug-fixes:
+
+* Another bug-fix for handling of fixed (i.e., non-minimised)
+  parameters when using nested sampling
+
+
 Version 1.7
 ===========
 
