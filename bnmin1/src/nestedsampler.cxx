@@ -121,10 +121,17 @@ namespace Minim {
       //put(worst->p);
       const double newl = ps->advance(worst->ll,
 				      n_psample);
+
+      // Create new point
+      MCPoint np;
+      np.p.resize(NParam());
+      get(np.p);
+      np.ll=-newl;
+
       // Is the new sample actually inside the contours of last?
-      const bool better = newl > -worst->ll;
-      
-      if (not better)
+      const bool better = -newl  < worst->ll;
+
+      if (not better )
       {
 	// Can't find a better point so terminate early
 	break;
@@ -135,13 +142,17 @@ namespace Minim {
       Xseq.push_back(X);
       post.push_back(WPPoint(*worst, w));
 
-      // Create new point
-      MCPoint np;
-      np.p.resize(NParam());
-      get(np.p);
-      np.ll=-newl;
+      // Erase old point
       ss.erase(worst);
-      ss.insert(np);
+      
+      std::pair<std::set<MCPoint>::iterator, bool> r=ss.insert(np);
+      if (not r.second)
+      {
+	std::cerr<<"Could not insert new element!" << newl
+		 <<std::endl;
+
+      }
+
       if(mon)
 	mon->accept(np);
       
