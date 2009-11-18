@@ -96,6 +96,11 @@ namespace Minim {
 	    ss);
   }
 
+  void NestedS::InitalS(NestedInitial *ins)
+  {
+    initials.reset(ins);
+  }
+
   size_t NestedS::N(void) const
   {
     return ss.size();

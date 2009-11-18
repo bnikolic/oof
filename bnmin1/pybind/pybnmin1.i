@@ -16,6 +16,7 @@
 #include "../src/nestederr.hxx"
 #include "../src/nestedsampler.hxx"
 #include "../src/prior_sampler.hxx"
+#include "../src/nestedinitial.hxx"
 #include "../src/apps/gaussmodel.hxx"
 
 %}
@@ -61,6 +62,7 @@ namespace std {
 %include "../src/nestedsampler.hxx"
 
 %include "../src/prior_sampler.hxx"
+%include "../src/nestedinitial.hxx"
 
 namespace boost { namespace numeric{ namespace ublas {}}};
 

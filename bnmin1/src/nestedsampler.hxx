@@ -124,6 +124,11 @@ namespace Minim {
      */
     void reset(const std::list<MCPoint> &start);
 
+    /** Set the initial point selection strategy. 
+	Note this object will take ownership
+    */
+    void InitalS(NestedInitial *ins);
+
     /** \brief Number of points in the current set
      */
     size_t N(void) const;
