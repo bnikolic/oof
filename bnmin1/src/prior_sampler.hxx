@@ -24,6 +24,7 @@ namespace Minim
   class MCMonitorBase;
   class MarkovChain;
   class InitPntChain;
+  class ILklChain;
   class NestedS;
 
   /** \brief Constrained prior sampler
@@ -145,7 +146,7 @@ namespace Minim
     public CPriorSampler
   {
 
-    boost::scoped_ptr<InitPntChain> c;
+    boost::scoped_ptr<ILklChain> c;
     const std::set<MCPoint> &ss;
 
     void initChain(void);

@@ -105,6 +105,49 @@ namespace Minim {
     f=c;
   }
 
+  ILklChain::ILklChain(const v_t &ic,
+		       fx_t fLkl,
+		       fx_t fPr,
+		       fa_t fAccept):
+    ChainBase(ic,
+	      fLkl,
+	      fPr),
+    fAccept(fAccept)
+  {
+    L=c.l;
+  }
+
+  bool ILklChain::propose(const v_t &x)
+  {
+    p.x=x;
+    p.l=fLkl(x);
+    p.p=fPr(x);
+
+    const double aprob=fAccept(L,c,p);
+    
+    if (aprob>=1.0)
+    {
+      c=p;
+      return true;
+    }
+    else
+    {
+      if(u01gen() < aprob)
+      {
+	c=p;
+	return true;
+      }
+    }
+    return false;
+  }
+
+  void ILklChain::reset(const v_t &x,
+			double Ls)
+  {
+    ChainBase::reset(x);
+    L=Ls;
+  }
+
   bool normProp(ChainBase &c,
 		const std::vector<double> &sigma)
   {
@@ -192,6 +235,25 @@ namespace Minim {
       }
     }
   }    
+
+  double constrPriorL(double L,
+		      const MCPoint2 &c, 
+		      const MCPoint2 &p)
+  {
+    if(p.l >= L)
+      return 0;
+    else
+    {
+      if (p.p<c.p)
+      {
+	return 1;
+      }
+      else
+      {
+	return exp(c.p-p.p);
+      }
+    }
+  }
 
 
 }

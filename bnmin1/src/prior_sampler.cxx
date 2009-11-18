@@ -219,10 +219,10 @@ namespace Minim
     std::vector<double> ic(ss.begin()->p.size());
     md.get(ic);
 
-    c.reset(new InitPntChain(ic,
-			     flkl,
-			     fprior,
-			     constrPriorP));
+    c.reset(new ILklChain(ic,
+			  flkl,
+			  fprior,
+			  constrPriorL));
 
     nprop=0;
   }
@@ -240,7 +240,8 @@ namespace Minim
 
     std::vector<double> ic(n);
     md.get(ic);
-    c->reset(ic);
+    c->reset(ic,
+	     L);
 
     std::vector<double> cv, eigvals, eigvects;
     omoment2(ss, cv);

@@ -198,6 +198,48 @@ namespace Minim {
 
   };
 
+  /** A chain which depends on current point and a likelihood value
+      defined at the reset stage
+   */
+  class ILklChain:
+    public ChainBase
+  {
+  public:
+
+    /** \brief Function type to return the acceptance probability
+	
+	\param L is the likelihood supplied to reset
+     */
+    typedef boost::function< double (double L, const MCPoint2 &c, const MCPoint2 &p) >  fa_t;
+
+  private:
+
+    /// The initial likelihood
+    double L;
+
+    /// The acceptance function
+    fa_t fAccept;
+
+  public:
+
+    // ---------- Construction / Destruction --------------
+    
+    ILklChain(const v_t &ic,
+	      fx_t fLkl,
+	      fx_t fPr,
+	      fa_t fAccept);
+
+    // ---------- Public interface --------------------------
+
+    /**  Propose x as the next point in chain
+     */
+    bool propose(const v_t &x);
+
+    void reset(const v_t &x,
+	       double L);
+
+  };
+
   bool normProp(ChainBase &c,
 		const std::vector<double> &sigma);
 
@@ -227,6 +269,13 @@ namespace Minim {
 
 
   double constrPriorP(const MCPoint2 &f,
+		      const MCPoint2 &c, 
+		      const MCPoint2 &p);
+
+  /**  Accept proportionally to prior mass but only if likelihood is
+       greater than L
+   */
+  double constrPriorL(double L,
 		      const MCPoint2 &c, 
 		      const MCPoint2 &p);
 

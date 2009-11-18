@@ -19,6 +19,7 @@
 #include "prior_sampler.hxx"
 #include "nestederr.hxx"
 #include "mcmonitor.hxx"
+#include "nestedinitial.hxx"
 
 namespace Minim {
 
@@ -34,6 +35,7 @@ namespace Minim {
     //ps(new CSPAdaptive(ml, *this, sigmas)),
     ps(new CSRMSSS(ml, *this, g_ss())),
     sigmas(sigmas),
+    initials(new InitialWorst()),
     mon(NULL),
     n_psample(100)
   {
@@ -58,6 +60,7 @@ namespace Minim {
     ml(ml),
     ps(NULL),
     sigmas(sigmas),
+    initials(new InitialWorst()),
     mon(NULL),
     n_psample(100)
   {
@@ -110,7 +113,7 @@ namespace Minim {
 
       // Look for the next sample
       put(worst->p);
-      const double newl = ps->advance(-worst->ll,
+      const double newl = ps->advance(worst->ll,
 				      n_psample);
       // Is the new sample actually inside the contours of last?
       const bool better = newl > -worst->ll;

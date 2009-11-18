@@ -25,6 +25,8 @@ namespace Minim {
   class CPriorSampler;
   class MCMonitorBase;
   class IndependentFlatPriors;
+  class NestedInitial;
+
 
   /** \brief Nested Sampler
       
@@ -63,6 +65,9 @@ namespace Minim {
     std::list<WPPoint> post;
 
     std::vector<double> sigmas;
+
+    /// The strategy for picking the inital point
+    boost::scoped_ptr<NestedInitial> initials;
     
   public:
 
@@ -74,6 +79,9 @@ namespace Minim {
     /// Number of samples to make when sampling the prior under
     /// the likelihood constraint 
     size_t n_psample;
+
+
+    
 
     // -------------- Construction/Destruction ---------------------
 
