@@ -118,6 +118,7 @@ namespace Minim {
 
       // Look for the next sample
       put((*initials)(*this).p);
+      //put(worst->p);
       const double newl = ps->advance(worst->ll,
 				      n_psample);
       // Is the new sample actually inside the contours of last?
