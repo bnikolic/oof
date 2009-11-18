@@ -117,7 +117,7 @@ namespace Minim {
       const double w=Xseq[Xseq.size()-1]-X;
 
       // Look for the next sample
-      put(worst->p);
+      put((*initials)(*this).p);
       const double newl = ps->advance(worst->ll,
 				      n_psample);
       // Is the new sample actually inside the contours of last?
