@@ -8,6 +8,9 @@
 #ifndef _BNMIN1_NESTEDINITIAL_HXX__
 #define _BNMIN1_NESTEDINITIAL_HXX__
 
+#include <boost/random/uniform_int.hpp>
+#include <boost/random/mersenne_twister.hpp>
+
 namespace Minim {
 
   class MCPoint;
@@ -25,10 +28,30 @@ namespace Minim {
 
   };
 
+  /** Start the prior sampling from the worst point in the live set
+   */
   class InitialWorst:
     public NestedInitial
   {
   public:
+
+    const MCPoint & operator()(const NestedS &ns);
+  };
+
+  /** Start the prior sampling from a random point in the live set
+   */
+  class InitialRandom:
+    public NestedInitial
+  {
+    boost::mt19937 eng;
+    boost::uniform_int<size_t> gen;
+			   
+  public:
+
+    /**
+       \param n_ss number of elements in the live set
+     */
+    InitialRandom(size_t n_ss);
 
     const MCPoint & operator()(const NestedS &ns);
   };
