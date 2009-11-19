@@ -164,6 +164,22 @@ namespace Minim {
 		size_t nbins,
 		std::vector<double> &res);
 
+  /** Calculate the marginalised probability histogram
+
+      \param pi Parameter index to marginaise to
+
+      \param high The high boundary of region to historgram, i.e., the
+      *top* of the highest bin 
+      
+   */
+  void marginHist(const std::list<WPPoint> &l,
+		  size_t pi,
+		  double Z,
+		  double low,
+		  double high,
+		  size_t nbins,
+		  std::vector<double> &res);
+
 
 }
 

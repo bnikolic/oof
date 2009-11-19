@@ -289,5 +289,31 @@ namespace Minim {
     }
   }
 
+  void marginHist(const std::list<WPPoint> &l,
+		  size_t pi,
+		  double Z,
+		  double low,
+		  double high,
+		  size_t nbins,
+		  std::vector<double> &res)
+  {
+    res.resize(nbins);
+    std::fill(res.begin(), res.end(), 
+	      0.0);
+
+    const double d=(high-low)/nbins;
+    for(std::list<WPPoint>::const_iterator i=l.begin();
+	i!= l.end();
+	++i)
+    {
+      int k=int((i->p[pi]-low)/d);
+      if (k > 0 and k < (int)nbins)
+      {
+	res[k]+= i->w * exp(- i->ll);
+      }
+    }
+  }
+  
+
 }
 
