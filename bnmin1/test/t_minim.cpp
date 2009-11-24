@@ -442,11 +442,8 @@ BOOST_AUTO_TEST_CASE(t_NestedSampling)
   p.p=boost::assign::list_of(-3)(2)(10);
   startset.push_back(p);
   
-  std::vector<double> sigmas(3,0.1);
-
   NestedS s(obs,
-	    startset,
-	    sigmas);
+	    startset);
   
   const double res=s.sample(30);
 

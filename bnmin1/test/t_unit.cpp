@@ -222,9 +222,7 @@ BOOST_AUTO_TEST_CASE(t_NestedS_err)
 					      dummy));
   std::list<Minim::MCPoint> s;
 
-  std::vector<double> sigmas(3);
-
-  BOOST_CHECK_THROW(Minim::NestedS ns(pr, s, sigmas),
+  BOOST_CHECK_THROW(Minim::NestedS ns(pr, s),
 		    Minim::NestedSmallStart);
 
 		

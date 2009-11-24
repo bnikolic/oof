@@ -43,12 +43,8 @@ pdesc mkDesc(double l_sigma,
 		 20,
 		 startset);
 
-  std::vector<double> sigmas(ndim,
-			     sigma);
-
   res.s=boost::shared_ptr<NestedS>(new NestedS(*res.obs,
-					       startset,
-					       sigmas));
+					       startset));
 
   if (monitor)
   {
