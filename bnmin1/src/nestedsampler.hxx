@@ -36,7 +36,7 @@ namespace Minim {
   class NestedS:
     public ModelDesc
   {
-    /** \brief Sample set
+    /** \brief Sample (or "live")set
 	
 	This is the current set of points
      */
@@ -50,7 +50,7 @@ namespace Minim {
      */
     std::vector<double> Xseq;
     
-    /** \brief The model defining the likelihood function
+    /** \brief The model defining the likelihood function and priors
      */
     PriorNLikelihood &ml;
 
@@ -60,7 +60,8 @@ namespace Minim {
 
     /** \brief Points describing the posterior
 	
-	List of points which passed through the live set
+	List of points which passed through the live set, with weights
+	and likelihoods
     */
     std::list<WPPoint> post;
 
@@ -79,15 +80,13 @@ namespace Minim {
     size_t n_psample;
 
 
-    
-
     // -------------- Construction/Destruction ---------------------
 
     /**
-       \param ml The definition of the likelihood and priors to
-       explored. Note that PriorNLikelihood is required here as
-       information about priors separately from likelihood is requied
-       for nested sampling.
+       \param ml The definition of the likelihood and priors to be
+       explored. Note that object of type PriorNLikelihood is required
+       here as information about priors separately from the likelihood
+       is required for nested sampling.
 
        \param start The starting set of points. The likelihod
        functions will be re-calculated so it does not need be supplied
@@ -112,12 +111,13 @@ namespace Minim {
 
     // -------------- Public Interface -----------------------------
 
-    /** 
+    /** Restart the sampler with the supplied starting set. Must be
+	used if a constructor without a starting set is used.
      */
     void reset(const std::list<MCPoint> &start);
 
-    /** Set the initial point selection strategy. 
-	Note this object will take ownership
+    /** Set the initial point selection strategy.  Note this object
+	will take ownership of the supplied object
     */
     void InitalS(NestedInitial *ins);
 

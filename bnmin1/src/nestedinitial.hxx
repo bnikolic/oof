@@ -4,6 +4,9 @@
 
    \file nestedinitial.hxx
 
+   Strategies for picking the initial point to start from when doing
+   constrained prior sampling
+
 */
 #ifndef _BNMIN1_NESTEDINITIAL_HXX__
 #define _BNMIN1_NESTEDINITIAL_HXX__
@@ -24,6 +27,11 @@ namespace Minim {
 
   public:
     
+    /** \brief Return a point to start from 
+	
+	\note The returned reference *must* point to an object owned
+	by "ns" to ensure the reference doesn't dangle
+     */
     virtual const MCPoint & operator()(const NestedS &ns) =0;
 
   };
