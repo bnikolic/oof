@@ -74,8 +74,9 @@ BOOST_AUTO_TEST_CASE( QuadT1 )
   BOOST_CHECK_EQUAL( qo->qm.a,
 		     1);
 
-  BOOST_CHECK_EQUAL( qo->qm.b,
-		     2);
+  BOOST_CHECK_CLOSE( qo->qm.b,
+		     2.0,
+		     1e-10);
 
   BOOST_CHECK_EQUAL( qo->qm.c,
 		     3);
