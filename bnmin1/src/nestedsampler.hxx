@@ -64,8 +64,6 @@ namespace Minim {
     */
     std::list<WPPoint> post;
 
-    std::vector<double> sigmas;
-
     /// The strategy for picking the inital point
     boost::scoped_ptr<NestedInitial> initials;
     
@@ -95,16 +93,11 @@ namespace Minim {
        functions will be re-calculated so it does not need be supplied
        in the MCPoint structure
        
-       \param sigmas The step sizes used in the generation of nested
-       samples. These should be derived similarly similarly to step
-       sizes for Metropolis
-       
        \param seed Seed for the random number generator
 
     */
     NestedS(PriorNLikelihood & ml,
 	    const std::list<MCPoint> & start,
-	    const std::vector<double> & sigmas,
 	    unsigned seed=43) throw (NestedSmallStart);
 
     /**
@@ -112,7 +105,6 @@ namespace Minim {
        to-fit parameters to be adjusted before initialisation
      */
     NestedS(PriorNLikelihood & ml,
-	    const std::vector<double> & sigmas,
 	    unsigned seed=43) ;
 
 
