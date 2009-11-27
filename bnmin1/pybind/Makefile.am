@@ -12,4 +12,4 @@ _pybnmin1_la_LDFLAGS = -module
 _pybnmin1_la_LIBADD  = ../src/libbnmin1.la
 _pybnmin1_la_SOURCES = pybnmin1.i
 nodist__pybnmin1_la_SOURCES = pybnmin1.cxx 
-_pybnmin1_la_CPPFLAGS = @PYTHON_INCLUDES@
+_pybnmin1_la_CPPFLAGS = @PYTHON_CPPFLAGS@
