@@ -18,6 +18,11 @@ Bug-fixes:
 * Another bug-fix for handling of fixed (i.e., non-minimised)
   parameters when using nested sampling
 
+Build:
+
+* New check version of SWIG to work around old installations. Requires
+  version 1.3.31 at least
+
 
 Version 1.7
 ===========
