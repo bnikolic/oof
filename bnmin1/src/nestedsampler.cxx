@@ -144,8 +144,12 @@ namespace Minim {
       std::pair<std::set<MCPoint>::iterator, bool> r=ss.insert(np);
       if (not r.second)
       {
-	std::cerr<<"Could not insert new element!" << newl
+	std::cerr<<"Could not insert new element! Lkl:" << newl
 		 <<std::endl;
+	for (size_t j=0; j<np.p.size(); ++j)
+	  std::cerr<<np.p[j]
+		   <<",";
+	std::cerr<<std::endl;
 
       }
 
