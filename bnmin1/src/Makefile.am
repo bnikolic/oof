@@ -26,7 +26,7 @@ libbnmin1_la_SOURCES = minimmodel.hxx minimmodel.cxx paramctr.hxx	\
 libbnmin1_la_LIBADD = f77/libminpda.la  $(GSL_LIBS)
 
 libbnmin1_la_CFLAGS = -Wall $(GSL_CFLAGS)
-libbnmin1_la_CPPFLAGS = -Wall $(GSL_CFLAGS)
+libbnmin1_la_CPPFLAGS = -Wall $(GSL_CFLAGS) ${BOOST_CPPFLAGS}
 
 include_HEADERS = lmmin.hxx minim.hxx minimmodel.hxx paramctr.hxx	\
 			pda.hxx monitor.hxx minimio.hxx lmminutils.hxx	\
