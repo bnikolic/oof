@@ -2,8 +2,8 @@
 BNMin1 Release Notes  
 ======================
 
-In development (to be: Version 1.8)
-===================================
+Version 1.8
+===========
 
 Improvements:
 
@@ -12,8 +12,6 @@ Improvements:
 
 * Functions to calculate histogrammed probability distributions (1-d
   and n-d) from nested sampling distributions (src/mcpoint.hxx)
-
-
 
 Bug-fixes:
 
