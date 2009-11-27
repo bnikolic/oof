@@ -26,6 +26,8 @@ namespace Minim {
   class NestedInitial {
 
   public:
+
+    virtual ~NestedInitial();
     
     /** \brief Return a point to start from 
 	

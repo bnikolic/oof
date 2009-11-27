@@ -21,6 +21,10 @@ namespace Minim {
     reset(ic);
   }
 
+  ChainBase::~ChainBase()
+  {
+  }
+
   void ChainBase::reset(const v_t &x)
   {
     c.x=x;

@@ -94,6 +94,8 @@ namespace Minim {
 	      fx_t fLkl,
 	      fx_t fPr);
 
+    virtual ~ChainBase();
+
     // ---------- Public interface --------------------------
 
     /** Reset the chain, discard existing data and set x as the

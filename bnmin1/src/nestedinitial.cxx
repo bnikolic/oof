@@ -15,6 +15,10 @@
 
 namespace Minim {
 
+  NestedInitial::~NestedInitial()
+  {
+  }
+
   const MCPoint & InitialWorst::operator()(const NestedS &ns)
   {
     std::set<MCPoint>::iterator worst (-- ns.g_ss().end());
