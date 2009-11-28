@@ -129,7 +129,14 @@ namespace Minim {
 
       if (not better )
       {
-	// Can't find a better point so terminate early
+	// Can't find a better point so terminate early.
+
+	// Note that this test is not definitive, since some
+	// strategies will start from a point which not the worst
+	// point and hence will return a "better" point event though
+	// they haven not actually advanced their chain at all. See
+	// below.
+
 	break;
       }
 
@@ -144,13 +151,13 @@ namespace Minim {
       std::pair<std::set<MCPoint>::iterator, bool> r=ss.insert(np);
       if (not r.second)
       {
-	std::cerr<<"Could not insert new element! Lkl:" << newl
-		 <<std::endl;
-	for (size_t j=0; j<np.p.size(); ++j)
-	  std::cerr<<np.p[j]
-		   <<",";
-	std::cerr<<std::endl;
+	// Could not insert a point because it has identical
+	// likelihood to an existing point. Can not contiue as we have
+	// fewer points in the live set now.
 
+	// Note that this is often due to the chain not avancing in
+	// the constained sampler.
+	break;
       }
 
       if(mon)
