@@ -1,5 +1,5 @@
 AC_INIT(BNMIN1, 
-	1.8,
+	1.9,
 	bojan@bnikolic.co.uk)
 
 AC_CONFIG_AUX_DIR(config)
