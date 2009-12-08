@@ -5,6 +5,15 @@ BNMin1 Release Notes
 In development (to be 1.9)
 ==========================
 
+Build improvements:
+
+* Can disable the building of the python binding by calling configure
+  as:
+
+  ./configure --disable-pybind
+
+  This removes the dependency on SWIG
+
 Version 1.8
 ===========
 

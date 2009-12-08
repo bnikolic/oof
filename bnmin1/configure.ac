@@ -31,7 +31,17 @@ AX_BOOST_PROGRAM_OPTIONS()
 
 AC_LANG_POP(C++)
 
-AC_CONFIG_SUBDIRS([pybind])	
+AC_ARG_ENABLE(pybind,
+	      [AS_HELP_STRING([--disable-pybind],
+                              [Do not configure and build the python bindings])],
+              [dopybind=$enableval],
+	      [dopybind=--enable-pybinding])
+
+AM_CONDITIONAL([PYBIND_OPT], 
+	       [test "x$dopybind" != xno])
+
+AS_IF([test "x$dopybind" != xno],
+      AC_CONFIG_SUBDIRS([pybind]))
 
 
 AC_OUTPUT(Makefile 
