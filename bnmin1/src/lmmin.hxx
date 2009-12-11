@@ -1,11 +1,13 @@
 /**
-   \file lmmin.hxx
-
-   Bojan Nikolic <bojan@bnikolic.co.uk>
+   Bojan Nikolic <bojan@bnikolic.co.uk> 
    Initial version 2003
 
-   The Lavenburg-Marquant minimisation algorithm interface
+   This file is part of BNMin1 and is licensed under GNU General
+   Public License version 2.
 
+   \file lmmin.hxx
+
+   The Lavenburg-Marquant minimisation algorithm interface
 */
 #ifndef _BNMIN_LMMIN_HXX__
 #define _BNMIN_LMMIN_HXX__

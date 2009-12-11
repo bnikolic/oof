@@ -1,6 +1,11 @@
 /**
+   Bojan Nikolic <bojan@bnikolic.co.uk> 
+   Initial version 2009
+
+   This file is part of BNMin1 and is licensed under GNU General
+   Public License version 2
+
    \file nestedsampler.cxx
-   Bojan Nikolic <bojan@bnikolic.co.uk>, <b.nikolic@mrao.cam.ac.uk>
 
 */
 

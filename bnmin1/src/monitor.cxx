@@ -1,6 +1,12 @@
 /**
+   Bojan Nikolic <bojan@bnikolic.co.uk> 
+   Initial version 2003
+
+   This file is part of BNMin1 and is licensed under GNU General
+   Public License version 2
+
    \file monitor.cxx
-   Bojan Nikolic <bojan@bnikolic.co.uk>
+
 
 */
 

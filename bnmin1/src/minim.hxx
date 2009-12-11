@@ -1,6 +1,12 @@
 /**
+   Bojan Nikolic <bojan@bnikolic.co.uk> 
+   Initial version 2003
+
+   This file is part of BNMin1 and is licensed under GNU General
+   Public License version 2
+
    \file minim.hxx
-   Bojan Nikolic <bojan@bnikolic.co.uk>
+
 */
 #ifndef __BNMIN__ALGO__MINIM_HXX
 #define __BNMIN__ALGO__MINIM_HXX

@@ -1,9 +1,12 @@
 /**
+   Bojan Nikolic <bojan@bnikolic.co.uk> 
+   Initial version 2005
+
+   This file is part of BNMin1 and is licensed under GNU General
+   Public License version 2.
+
    \file lmminutils.cxx
 
-   Bojan Nikolic <bojan@bnikolic.co.uk>
-   Initial version 2003
-  
 */
 
 #include "lmminutils.hxx"

@@ -1,9 +1,12 @@
 /**
-   \file lmminutils.hxx
-   
-   Bojan Nikolic <bojan@bnikolic.co.uk>
+   Bojan Nikolic <bojan@bnikolic.co.uk> 
    Initial version 2005
 
+   This file is part of BNMin1 and is licensed under GNU General
+   Public License version 2.
+
+   \file lmminutils.hxx
+   
    Utility functions for the Lavenberg-Marquant minimisation algorithm.
 */
 #ifndef _BNMIN1_LMMINUTILS_HXX__

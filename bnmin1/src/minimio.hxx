@@ -1,7 +1,11 @@
 /**
-   \file minimio.hxx
+   Bojan Nikolic <bojan@bnikolic.co.uk> 
+   Initial version 2003
 
-   Bojan Nikolic <bojan@bnikolic.co.uk>
+   This file is part of BNMin1 and is licensed under GNU General
+   Public License version 2
+
+   \file minimio.hxx
 
    Routines four I/O of minimiser data
 */
