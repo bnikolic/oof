@@ -2,8 +2,12 @@
 BNMin1 Release Notes  
 ======================
 
-In development (to be 1.9)
-==========================
+Version 1.9
+===========
+
+Improvements:
+
+* Improvement to accuracy of the nested sampler
 
 Build improvements:
 
