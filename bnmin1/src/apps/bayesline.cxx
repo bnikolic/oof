@@ -36,8 +36,8 @@ namespace Minim {
     const size_t N=x.size();
     
     double res= N * log(2 * M_PI * Rx * sigmax * sigmay);
-    
-    res += -N*0.5 * log(2 *M_PI / A);
+
+    res += N*-0.5 * log(2 *M_PI / A);
     
     for (size_t i=0; i<N; ++i)
     {
