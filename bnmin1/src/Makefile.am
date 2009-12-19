@@ -26,6 +26,7 @@ libbnmin1_la_SOURCES = minimmodel.hxx minimmodel.cxx paramctr.hxx	\
 			mcmonitor.cxx mcmonitor.hxx nestederr.cxx	\
 			nestederr.hxx markovchain.cxx markovchain.hxx	\
 			apps/gaussmodel.cxx apps/gaussmodel.hxx		\
+			apps/bayesline.cxx  apps/bayesline.hxx          \
 			nestedinitial.cxx nestedinitial.hxx
 
 libbnmin1_la_LIBADD = f77/libminpda.la  $(GSL_LIBS)
