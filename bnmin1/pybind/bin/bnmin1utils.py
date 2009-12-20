@@ -81,19 +81,3 @@ def ParList(m):
         d.append( (p.name,p.getp()))
     return d
     
-    
-def applyFlatPrior(m, pr):
-    """
-    Apply priors to an observational data set + model to get a
-    complete hypothesis that can be analysed
-    
-    :param pr: Priors as a dictionary 
-
-    """
-    m.thisown=False
-    po=pybnmin1.IndependentFlatPriors(m)
-    mm=pybnmin1.ModelDesc(m)
-    for i in range(mm.NParam()):
-        pname=mm.getbynumb(i).name
-        po.AddPrior(pname, pr[pname][0], pr[pname][1])
-    return po

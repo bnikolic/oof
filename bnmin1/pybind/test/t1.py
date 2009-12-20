@@ -8,6 +8,7 @@ import numpy
 import localsetup
 import pybnmin1
 import bnmin1utils
+import bnmin1nested
 
 if 0:
     pars= [1,2,3]
@@ -47,10 +48,11 @@ if 0:
     xx=bnmin1utils.ChainToArray(res)
 
 if 1:
-    mm=bnmin1utils.applyFlatPrior(l, 
-                                  {"x0": (-1, 1),
-                                   "y0": (-1, 1),
-                                   "Rx": (-1, 2),
-                                   "Ry": (-1, 2)})
+    mm=bnmin1nested.applyFlatPrior(l, 
+                                   {"x0": (-1, 1),
+                                    "y0": (-1, 1),
+                                    "Rx": (-1, 2),
+                                    "Ry": (-1, 2)})
+    xx=bnmin1nested.doSample(mm, 10000)
 
 
