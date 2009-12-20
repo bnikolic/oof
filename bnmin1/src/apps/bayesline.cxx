@@ -27,15 +27,15 @@ namespace Minim {
 
   double LineLkl::lLikely(void) const
   {
-    const double a= Ry/Rx;
+    const double a= pow(10,Ry)/pow(10,Rx);
     const double b= y0- a*x0;
-    const double R= sqrt(Rx*Ry);
+    const double R= sqrt(pow(10,Rx)*pow(10,Ry));
 
     const double A=a/(R*R) + 1.0/(sigmax*sigmax) + a*a/(sigmay*sigmay);
 
     const size_t N=x.size();
     
-    double res= N * log(2 * M_PI * Rx * sigmax * sigmay);
+    double res= N * log(2 * M_PI * pow(10,Rx) * sigmax * sigmay);
 
     res += N*-0.5 * log(2 *M_PI / A);
     
@@ -64,11 +64,11 @@ namespace Minim {
     pars.push_back(ParamCtr<double>(&Rx, 
 				    "Rx", 
 				    true, 
-				    "Range in x-direction"));
+				    "Log10 range in x-direction"));
     pars.push_back(ParamCtr<double>(&Ry, 
 				    "Ry", 
 				    true, 
-				    "Range in y-direction"));
+				    "Log10 range in y-direction"));
 
   }
 

@@ -32,7 +32,10 @@ namespace Minim {
 
     // Model parameters
     double x0, y0;
-    double Rx, Ry;
+    /// Log10 range in the x-coordinate 
+    double Rx;
+    /// Log10 range in the y-coordinate
+    double Ry;
 
     
     // ------------------- Construction -----------------

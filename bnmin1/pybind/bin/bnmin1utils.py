@@ -1,6 +1,11 @@
 # Bojan Nikolic <bojan@bnikolic.co.uk>
+# Initial version 2009
 #
-# Uitlities for the minimisation/likelihood routines
+# This file is part of BNMin1 and is licensed as described in file
+# COPYING
+"""
+Uitlities for the minimisation/likelihood routines
+"""
 
 import numpy
 
@@ -77,3 +82,18 @@ def ParList(m):
     return d
     
     
+def applyFlatPrior(m, pr):
+    """
+    Apply priors to an observational data set + model to get a
+    complete hypothesis that can be analysed
+    
+    :param pr: Priors as a dictionary 
+
+    """
+    m.thisown=False
+    po=pybnmin1.IndependentFlatPriors(m)
+    mm=pybnmin1.ModelDesc(m)
+    for i in range(mm.NParam()):
+        pname=mm.getbynumb(i).name
+        po.AddPrior(pname, pr[pname][0], pr[pname][1])
+    return po

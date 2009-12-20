@@ -32,11 +32,25 @@ if 0:
     print res[-1]
 
 
+if 1:
+    xvals=numpy.random.normal(size=50)
+    yvals=xvals+numpy.random.normal(0,0.1, size=50)
+    l=pybnmin1.LineLkl(xvals, yvals, 1.0, 0.1)
+    l.x0=0
+    l.y0=0
+    l.Rx=0
+    l.Ry=0
 
-xvals=numpy.random.normal(size=50)
-yvals=xvals+numpy.random.normal(0,0.1, size=50)
-l=pybnmin1.LineLkl(xvals, yvals, 1.0, 0.1)
-l.x0=0
-l.y0=0
-l.Rx=1
-l.Ry=1
+if 0:
+    metro=pybnmin1.MetropolisMCMC(l,[0.1, 0.1, 0.1, 0.1]);
+    res= metro.sample(1000000)
+    xx=bnmin1utils.ChainToArray(res)
+
+if 1:
+    mm=bnmin1utils.applyFlatPrior(l, 
+                                  {"x0": (-1, 1),
+                                   "y0": (-1, 1),
+                                   "Rx": (-1, 2),
+                                   "Ry": (-1, 2)})
+
+
