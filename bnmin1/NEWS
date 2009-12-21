@@ -2,6 +2,16 @@
 BNMin1 Release Notes  
 ======================
 
+Version 1.10
+============
+
+New features:
+
+* Higher-level Python wrappings of the Nested Sampling routines in
+  pybind/bin/bnmin1nested.py
+
+* Baeysian line-fitting (apps/bayesline.hxx)
+
 Version 1.9
 ===========
 
