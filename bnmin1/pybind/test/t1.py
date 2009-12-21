@@ -34,9 +34,11 @@ if 0:
 
 
 if 1:
-    xvals=numpy.random.normal(size=50)
-    yvals=xvals+numpy.random.normal(0,0.1, size=50)
-    l=pybnmin1.LineLkl(xvals, yvals, 1.0, 0.1)
+    xvals=numpy.arange(-2, 2, 0.05)
+    yvals=xvals
+    xvals+=numpy.random.normal(0, 0.1, size=len(xvals))
+    yvals+=numpy.random.normal(0, 0.1, size=len(xvals))
+    l=pybnmin1.LineLkl(xvals, yvals, 0.1, 0.1)
     l.x0=0
     l.y0=0
     l.Rx=0
@@ -53,6 +55,6 @@ if 1:
                                     "y0": (-1, 1),
                                     "Rx": (-1, 2),
                                     "Ry": (-1, 2)})
-    xx=bnmin1nested.doSample(mm, 10000)
+    xx=bnmin1nested.doSample(mm, 100000)
 
 

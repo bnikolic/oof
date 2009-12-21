@@ -6,6 +6,7 @@
 """
 Higher level wrappers for the nested sampling routines
 """
+import math
 
 import numpy
 import pybnmin1

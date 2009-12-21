@@ -12,6 +12,7 @@
 #include <cmath>
 
 #include "bayesline.hxx"
+#include "../mcpoint.hxx"
 
 namespace Minim {
 
@@ -70,6 +71,32 @@ namespace Minim {
 				    true, 
 				    "Log10 range in y-direction"));
 
+  }
+
+  void margin(const std::list<WPPoint> &l,
+	      double Z,
+	      LineFit &res)
+  {
+    double a1=0;
+    double a2=0;
+    double b1=0;
+    double b2=0;
+    for(std::list<WPPoint>::const_iterator i=l.begin();
+	i!= l.end();
+	++i)
+    {
+      const double ww=i->w * exp(- i->ll);
+      const double a= pow(10,i->p[3])/pow(10,i->p[2]);
+      const double b= i->p[1]- a*i->p[0];      
+      a1+=a*ww ;
+      a2+=pow(a,2)* ww;
+      b1+=b*ww;
+      b2+=pow(b,2)*ww;
+    }
+    res.a=a1/Z;
+    res.b=b1/Z;
+    res.cv[0]=a2/Z-pow(res.a,2);
+    res.cv[3]=b2/Z-pow(res.b,2);
   }
 
 

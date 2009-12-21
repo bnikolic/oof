@@ -12,11 +12,18 @@
 #define _BNMIN1_APP_BAYESLINE_HXX__
 
 #include <vector>
+#include <list>
 
 #include "../src/minimmodel.hxx"
+#include "../src/twoerrline.hxx"
 
 namespace Minim {
 
+  // Forward declarations
+  class WPPoint;
+
+  /**
+   */
   class LineLkl :
     public Minim::MLikelihood
   {
@@ -52,6 +59,13 @@ namespace Minim {
 
 
   };
+
+  /** Compute the point estimates of slope and intercept and their
+      covariance from posterior distribution 
+  */
+  void  margin(const std::list<WPPoint> &l,
+	       double Z,
+	       LineFit &res);
     
 
 
