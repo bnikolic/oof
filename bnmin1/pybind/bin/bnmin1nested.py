@@ -75,5 +75,37 @@ def moments(mm):
     for i in range(mm.NParam()):
         res.append( (m1[i], m2[i]) )
     return res
+
+
+def jointHist(mm,
+              pranges,
+              nbins=50):
+    """
+    Compute the histogram of the joint posterior distribution
+    
+    :param pranges: A dictionary on parameter name, defining the box
+    over which to histogram the posterior
+
+    :returns: n-dimensional array containing the histogram
+
+    """
+    res=pybnmin1.DoubleVector()
+    l, h=[] , []
+    for i in range(mm.NParam()):
+        pname=mm.getbynumb(i).name
+        plow,phigh = pranges[pname]
+        l.append(plow)
+        h.append(phigh)
+        
+    pybnmin1.postHist(mm.g_post(),
+                      mm.Z(),
+                      l, 
+                      h,
+                      nbins,
+                      res)
+    res=numpy.array(res)
+    res.shape=[nbins]*len(pranges)
+    return res
+                      
         
 
