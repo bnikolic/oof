@@ -173,6 +173,10 @@ namespace Minim {
 
       \param pi Parameter index to marginaise to
 
+      \param Z Evidence value, used to normalize the histogram. If
+      this is set to one, the integral will be the evidence rather
+      than the marginalised probability given the hypothesis
+
       \param high The high boundary of region to historgram, i.e., the
       *top* of the highest bin 
       

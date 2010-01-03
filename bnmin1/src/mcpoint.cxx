@@ -316,6 +316,11 @@ namespace Minim {
 	res[k]+= i->w * exp(- i->ll);
       }
     }
+
+    for(size_t i=0; i<res.size(); ++i)
+    {
+      res[i]/=Z;
+    }
   }
   
 
