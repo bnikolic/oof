@@ -177,8 +177,8 @@ namespace Minim {
       this is set to one, the integral will be the evidence rather
       than the marginalised probability given the hypothesis
 
-      \param high The high boundary of region to historgram, i.e., the
-      *top* of the highest bin 
+      \param high The high boundary of region to histogram, i.e., the
+      *top* of the highest bin
       
    */
   void marginHist(const std::list<WPPoint> &l,

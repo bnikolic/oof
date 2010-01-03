@@ -130,6 +130,9 @@ namespace Minim {
      */
     size_t N(void) const;
 
+    /** \brief Return current evidence estimate */
+    double Z(void) const;
+
     /** \brief Take j samples and return evidence estimate
      */
     double sample(size_t j);

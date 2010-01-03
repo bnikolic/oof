@@ -172,6 +172,11 @@ namespace Minim {
     return Zseq[Zseq.size()-1];
   }
 
+  double NestedS::Z(void) const
+  {
+    return Zseq[Zseq.size()-1];
+  }
+
   
   const std::list<WPPoint> & NestedS::g_post(void) const
   {
