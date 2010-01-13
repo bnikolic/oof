@@ -19,6 +19,10 @@ Building:
   on this so they will not work!). Use the --disable-pda swithc to
   configure
 
+* Can disable configuration and building of the tests. Useful for
+  problematic boost installations since the test programs use compiled
+  boost libraries
+
 Version 1.9
 ===========
 

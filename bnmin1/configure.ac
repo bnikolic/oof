@@ -25,9 +25,21 @@ AM_PATH_GSL(1.9,
 
 AC_LANG_PUSH(C++)
 
+AC_ARG_ENABLE(buildtests,
+	      [AS_HELP_STRING([--disable-buildtests],
+                              [Do not configure and build the tests])],
+              [dobuildtests=$enableval],
+	      [dobuildtests=--enable-buildtests])
+
+AM_CONDITIONAL([BUILDTESTS_OPT], 
+	       [test "x$dobuildtests" != xno])
+
 AX_BOOST_BASE([1.34.0])
-AX_BOOST_UNIT_TEST_FRAMEWORK()
-AX_BOOST_PROGRAM_OPTIONS()
+
+if test "$dobuildtests" != "no" ; then
+   AX_BOOST_UNIT_TEST_FRAMEWORK()
+   AX_BOOST_PROGRAM_OPTIONS()
+fi
 
 AC_LANG_POP(C++)
 
