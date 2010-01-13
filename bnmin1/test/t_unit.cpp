@@ -12,6 +12,8 @@
 #include <boost/bind.hpp>
 #include <boost/assign/list_of.hpp>
 
+#include "../config.h"
+
 #include "metro_propose.hxx"
 #include "priors.hxx"
 #include "../src/pda.hxx"
@@ -96,11 +98,15 @@ BOOST_AUTO_TEST_CASE(FlatPrior_NoParam)
 BOOST_AUTO_TEST_CASE(PDA_D1MACH)
 {
   
+#ifndef BNMIN1_NO_PDA  
+
   int i=3;
   double x = pda_d1mach__(&i);
   // Curiously this is a factor of two smaller than expected...
   BOOST_CHECK_EQUAL(x*2,
 		    std::numeric_limits<double>::epsilon());
+
+#endif
 		    
 }
 

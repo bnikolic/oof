@@ -12,6 +12,13 @@ New features:
 
 * Baeysian line-fitting (apps/bayesline.hxx)
 
+Building:
+
+* Can disable compiling and use of the PDA algorithms -- useful for
+  systems without a functioning F77 (obviously, some algorithms rely
+  on this so they will not work!). Use the --disable-pda swithc to
+  configure
+
 Version 1.9
 ===========
 

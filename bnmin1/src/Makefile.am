@@ -4,7 +4,12 @@
 # This file is part of BNMin1 and is licensed under GNU General
 # Public License version 2.
 
-SUBDIRS = f77
+if PDA_OPT
+   MAYBE_DIRS = f77
+   MAYBE_LIBS = f77/libminpda.la
+endif 
+
+SUBDIRS = $(MAYBE_DIRS)
 
 lib_LTLIBRARIES = libbnmin1.la 
 
@@ -29,7 +34,7 @@ libbnmin1_la_SOURCES = minimmodel.hxx minimmodel.cxx paramctr.hxx	\
 			apps/bayesline.cxx  apps/bayesline.hxx          \
 			nestedinitial.cxx nestedinitial.hxx
 
-libbnmin1_la_LIBADD = f77/libminpda.la  $(GSL_LIBS)
+libbnmin1_la_LIBADD =   $(MAYBE_LIBS) $(GSL_LIBS)
 
 libbnmin1_la_CFLAGS = -Wall $(GSL_CFLAGS)
 libbnmin1_la_CPPFLAGS = -Wall $(GSL_CFLAGS) ${BOOST_CPPFLAGS}

@@ -8,6 +8,7 @@
 #define F77FUNC( name ) name ## __
 
 extern "C" {
+
 void F77FUNC(pda_lmdif) ( void (*fcn)(int *m, int *n , double *x, double *fvec, int * iflag),
 			  int *m,
 			  int *n,
@@ -32,4 +33,5 @@ void F77FUNC(pda_lmdif) ( void (*fcn)(int *m, int *n , double *x, double *fvec, 
 			  double *wa4);
 
   double F77FUNC(pda_d1mach) (int *i);
+
 }

@@ -40,9 +40,23 @@ AC_ARG_ENABLE(pybind,
 AM_CONDITIONAL([PYBIND_OPT], 
 	       [test "x$dopybind" != xno])
 
+AC_ARG_ENABLE(pda,
+	      [AS_HELP_STRING([--disable-pda],
+                              [Do not compile, link or use the PDA algorithms])],
+              [dopda=$enableval],
+	      [dopda=--enable-pda])
+
+AM_CONDITIONAL([PDA_OPT], 
+	       [test "x$dopda" != xno])
+
+if test "$dopda" = "no" ; then
+   AC_DEFINE([BNMIN1_NO_PDA],[1],
+             [Defined if we can not use the PDA algorithms])
+fi
+
+
 AS_IF([test "x$dopybind" != xno],
       AC_CONFIG_SUBDIRS([pybind]))
-
 
 AC_OUTPUT(Makefile 
           src/Makefile

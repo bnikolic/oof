@@ -9,9 +9,12 @@
 
 */
 
+#include "../config.h"
+
 #include "lmmin.hxx"
 
 #include "pda.hxx"
+
 
 
 namespace Minim {
@@ -89,7 +92,7 @@ namespace Minim {
     
     std::vector<double> wa1( n) , wa2( n), wa3( n) , wa4( m);
     
-    
+#ifndef BNMIN1_NO_PDA
     
     pda_lmdif__( LMMin_helper,
 		 &m,
@@ -109,6 +112,9 @@ namespace Minim {
 		 &qtf[0],
 		 &wa1[0],&wa2[0],&wa3[0],&wa4[0]
 		 );
+#else
+    throw "No PDA algorithms so don't know how to do Lavenberg-Marquarndt";
+#endif
     
     LMMin_lock  =0;
   }
