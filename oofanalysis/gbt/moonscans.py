@@ -1,7 +1,12 @@
-# Bojan Nikolic
-# $Id: moonscans.py,v 1.11 2006/02/21 16:03:14 bnikolic Exp $
+# Bojan Nikolic <b.nikolic@mrao.cam.ac.uk>, <bojan@bnikolic.co.uk>.
+# The initial versions of this file appeared in 2005 and was
+# signficantly extended in 2006. 
 #
-# Analaze moon scans
+# Updated in 2010
+"""
+Tools for analysis of scans across the Moon and similar data used to
+constrain error correlation scales on radio telescopes
+"""
 
 import math
 
@@ -9,6 +14,8 @@ import pyfits
 
 import numarray
 from matplotlib import pylab
+
+import localsetup
 
 import iofits4
 
@@ -32,7 +39,7 @@ def SaveScanFits(dx, fnu , fnameout):
 
     tabout= pyfits.new_table( coldefs )
 
-    fout=iofits4.PrepFitsOut(r"$Id: moonscans.py,v 1.11 2006/02/21 16:03:14 bnikolic Exp $")
+    fout=iofits4.PrepFitsOut(r"$Id$")
     fout.append(tabout)
     iofits4.Write( fout,
                    fnameout,
