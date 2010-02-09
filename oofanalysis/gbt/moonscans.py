@@ -13,6 +13,7 @@ import math
 import pyfits
 
 import numarray
+import numpy
 from matplotlib import pylab
 
 import localsetup
@@ -343,8 +344,7 @@ def mkALMAAperture(npix=512,
     :param errscale: Correlation length scale of errors in units of m
     """
     # Replace this with Cassegrain
-    tel=pyoof.PrimeFocusGeo()
-    tel.PrimRadius=6.0
+    tel=pyoof.MkALMA()
 
     mphase=pyoof.MkApMap(tel,
                          npix,
@@ -383,6 +383,19 @@ def mkMoonSim(mbeam,
                            mmoon)
 
     return res
+
+def mapCut(mbeam):
+    """Create a cut through the map
+    """
+    pxscale=mbeam.cs.x_pxtoworld(1,0)-mbeam.cs.x_pxtoworld(0,0)
+    ymid= int(mbeam.ny*0.5)
+    dx, fnu= [], []
+    for i in range(mbeam.nx):
+        dx.append((i-mbeam.nx*0.5)*pxscale)
+        fnu.append(mbeam.getv(i,ymid))
+    return numpy.array(dx), numpy.array(fnu)
+        
+    
 
 
 if 0:
