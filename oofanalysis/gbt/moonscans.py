@@ -200,8 +200,9 @@ def MkSquare (m, s):
             m.set(sx+i , sy+j, 1)
 
             
-def MkMoonScan( fbeam,
-                fnameout, Cm=0):
+def MkMoonScan(fbeam,
+               fnameout,
+               Cm=0):
 
     mbeam = pyplot.FitsMapLoad(fbeam, 1)
     mmoon = pyplot.Clone(mbeam)
@@ -332,3 +333,61 @@ def MkLargeScaleErrors():
            fitsout="moonscand/modelexp.fits")
     
     
+def mkALMAAperture(npix=512,
+                   phaserms=0.5,
+                   errscale=1):
+    """
+    Make an aperture plane amplitude-phase map appropriate for an ALMA
+    12m telescope
+
+    :param errscale: Correlation length scale of errors in units of m
+    """
+    # Replace this with Cassegrain
+    tel=pyoof.PrimeFocusGeo()
+    tel.PrimRadius=6.0
+
+    mphase=pyoof.MkApMap(tel,
+                         npix,
+                         2.0)    
+
+    # Size of one pixel (in x direction, but they will be the same
+    # size in both)
+    pxscale=mphase.cs.x_pxtoworld(1,0)-mphase.cs.x_pxtoworld(0,0)
+
+    pyplot.CorrGaussGauss(mphase, 
+                          1.0, 
+                          pxscale/errscale*npix)
+    mphase.mult(phaserms/pyplot.MapRMS(mphase))
+
+    mamp=pyoof.MkApMap(tel,
+                       npix,
+                       2.0)    
+
+    ilmod=pyoof.GaussAmpMod( tel, mamp)
+    ilmod.SetSigma(0.3)
+    ilmod.Calc(mamp)  
+
+    return mphase, mamp
+
+
+def mkMoonSim(mbeam,
+              Cm=0):
+    """
+    Make a simulation of a Moon observation
+    """
+    mmoon = pyplot.Clone(mbeam)
+    MkMoon(mmoon, 
+           Cm=Cm)
+
+    res=pyplot.FFTConvolve(mbeam,
+                           mmoon)
+
+    return res
+
+
+if 0:
+    farf= pyoof.FarF(mamp, 3.5e-3)
+    mphase, mamp = mkALMAAperture(phaserms=1.0)
+    mbeam=pyplot.Map(512,512)
+    farf.Power(mamp, mphase, mbeam)
+    implot.plotmap(mbeam, transf=1, colmap="heat")
