@@ -15,6 +15,7 @@
 
 #include "corrgaussnoise.hxx"
 #include "astromap.hxx"
+#include "fft.hxx"
 
 
 namespace AstroMap {
@@ -40,7 +41,20 @@ namespace AstroMap {
 					  std::pow(y-ymid,2)));
 	  nphi.get(x,y)= 2*M_PI*gen();
 	}
-	
+      }
+      
+      FFTFact ff(m.nx, 
+		 m.ny,
+		 FFTFact::forward,
+		 FFTFact::center);
+      ff.fftamphi(namp, nphi);
+      
+      for (size_t x=0;  x<m.nx; ++x)
+      {
+	for (size_t y= 0; y<m.ny; ++y) 
+	{
+	  m.get(x,y)= namp.get(x,y)*cos(nphi.get(x,y));
+	}
       }
       
       
