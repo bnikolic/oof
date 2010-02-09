@@ -33,6 +33,7 @@
 #include "../src/mapset.hxx"
 
 #include "../src/fitting_basic.hxx"
+#include "../src/corrgaussnoise.hxx"
 
 #include "plot.hxx"
 #include "phelpers.hxx"
@@ -183,6 +184,8 @@ namespace std {
 %include "paramctr.hxx"
 %include "minimmodel.hxx"
 %include "../src/fitting_basic.hxx"
+
+%include "../src/corrgaussnoise.hxx"
 
 void cpgldev(void);
 int cpgbeg(int unit, const char *file, int nxsub, int nysub);

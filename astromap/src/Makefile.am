@@ -18,7 +18,7 @@ libastromap_la_SOURCES= astromap.cxx astromap.hxx \
 			fresneltrans.cxx fresneltrans.hxx \
 			mapstructure.cxx mapstructure.hxx \
 			fitting_basic.cxx fitting_basic.hxx\
-			astromap_err.cxx astromap_err.hxx
+			astromap_err.cxx astromap_err.hxx corrgaussnoise.cxx corrgaussnoise.hxx
 
 
 libastromap_la_CFLAGS = -Wall   ${BN_CFLAGS}
@@ -42,5 +42,6 @@ include_HEADERS = 	astromap.hxx mapops.hxx \
 			fresneltrans.hxx\
 			mapstructure.hxx\
 			fitting_basic.hxx\
-			astromap_err.hxx
+			astromap_err.hxx\
+			corrgaussnoise.hxx
 
