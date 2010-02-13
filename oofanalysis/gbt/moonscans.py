@@ -369,6 +369,53 @@ def mkALMAAperture(npix=512,
 
     return mphase, mamp
 
+def supportWidthVertex(r):
+    """
+    Calculate the width of the support leg for Vertex
+    """
+    r=r*1e3
+    rblock=[375.0, 3897.0, 4197.0, 4497.0, 4797.0, 5097.0, 5397.0, 5697.0, 6000.0];
+    hblock=[40.0, 40.0, 46.1, 48.9, 58.7, 60.8, 66.5, 72.4, 78.3,];
+    k1=0
+    for k in range(len(rblock)-1):
+        if rblock[k]<r:
+            k1=k
+    delta=(hblock[k1+1]-hblock[k1])/(rblock[k1+1]-rblock[k1])
+    return (hblock[k1] + (r-rblock[k1])*delta)*1e-3
+
+def ALMABlock(m,
+              vblock=True,
+              blockf=supportWidthVertex):
+    """
+    Mask areas of the antenna blocked by the support structure etc.
+    
+    :param vblock: True for antennas with + typ support, False for
+    antennas with x type support
+    
+    :param blockf: Width of the support structure as function of
+    radius
+    """
+    
+    for i in range(m.nx):
+        for j in range(m.ny):
+            x=m.cs.x_pxtoworld(i,j)
+            y=m.cs.y_pxtoworld(i,j)
+            r=(x**2+y**2)**0.5
+            # Outside primary or inside secondary
+            if r>6.0 or r<0.75/2:
+                m.set(i,j,0)
+
+            if vblock:
+                rq=min(math.fabs(x), math.fabs(y))
+            else:
+                rq=min(math.fabs(x) + math.fabs(y),
+                       math.fabs(x) - math.fabs(y)) / 2.0**0.5
+            if rq < blockf(r):
+                m.set(i,j,0);
+            
+
+                
+
 
 def mkMoonSim(mbeam,
               Cm=0):
