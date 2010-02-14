@@ -9,6 +9,7 @@
 #include "robustline.hxx"
 
 #include <cmath>
+#include <iostream>
 
 namespace Minim {
 
@@ -19,6 +20,8 @@ namespace Minim {
     yobs(yobs),
     ysigma(xobs.size(),1.0)
   {
+    a=1;
+    b=0;
   }
 
   void RobustLineObsMod::residuals(std::vector<double> &res) const
