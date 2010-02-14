@@ -35,7 +35,7 @@ namespace Minim {
     res.resize(nobs);
     for(size_t i =0; i<nobs; ++i)
     {
-      res[i]=-xobs[i]/ysigma[i];
+      res[i]= (-1.0 * xobs[i]/ysigma[i]);
     }
   }
 
@@ -44,7 +44,7 @@ namespace Minim {
     res.resize(nobs);
     for(size_t i =0; i<nobs; ++i)
     {
-      res[i]=-1.0/ysigma[i];
+      res[i]= (-1.0/ysigma[i]) ;
     }
   }
 
@@ -56,14 +56,22 @@ namespace Minim {
     double tot=0;
     for(size_t i=0; i<nobs; ++i)
     {
-      tot+=fabs(res[i]);
+      if (fabs(res[i])  < ysigma[i])
+      {
+	tot += pow(res[i],2);
+      }
+      else
+      {
+	tot+=fabs(res[i]);
+      }
     }
     return tot;
   }
 
   void RobustLineObsMod::lGrd(std::vector< double > &out) const
   {
-    out=std::vector<double>(2,0);
+    out.resize(2);
+    out[0]=out[1]=0;
 
     std::vector<double> res;
     residuals(res);
@@ -72,13 +80,12 @@ namespace Minim {
     dres_da(da);
     dres_db(db);    
 
-    size_t nobs=xobs.size();
     for(size_t i=0; i<nobs; ++i)
     {
-      if(res[i]==0)
+      if(fabs(res[i]) < ysigma[i])
       {
-	out[0]+=0;
-	out[1]+=0;
+	out[0]+= -2 * res[i] * xobs[i]/ pow(ysigma[i],2);
+	out[1]+= -2 * res[i] / pow(ysigma[i],2);
       }
       else if(res[i]>0)
       {
