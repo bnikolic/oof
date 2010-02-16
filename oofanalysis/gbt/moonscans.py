@@ -336,14 +336,30 @@ def MkLargeScaleErrors():
     
 def mkALMAAperture(npix=512,
                    phaserms=0.5,
-                   errscale=1):
+                   errscale=1,
+                   ant="vertex",
+                   justPhase=False):
     """
     Make an aperture plane amplitude-phase map appropriate for an ALMA
     12m telescope
 
+    :note: phaserms and errscale can take lists of as parameters. In
+    this case it is assumed that there are multiple error distribution
+    present on the telescope. Example:
+    
+    >>> mphase = mkALMAAperture(phaserms=[1.0, 1.0], 
+                                errscale=[1.0, 0.1], 
+                                justPhase=True)
+    
+    Has two distributions, one with scale of 1m and the other with
+    scale of 10cm.
+
+    :param phaserms: Magnitude of errors, expressed as unweighted,
+    *wavefront* error in radian
+
     :param errscale: Correlation length scale of errors in units of m
+
     """
-    # Replace this with Cassegrain
     tel=pyoof.MkALMA()
 
     mphase=pyoof.MkApMap(tel,
@@ -354,11 +370,26 @@ def mkALMAAperture(npix=512,
     # size in both)
     pxscale=mphase.cs.x_pxtoworld(1,0)-mphase.cs.x_pxtoworld(0,0)
 
-    pyplot.CorrGaussGauss(mphase, 
-                          1.0, 
-                          pxscale/errscale*npix)
-    mphase.mult(phaserms/pyplot.MapRMS(mphase))
+    if type(phaserms) is not list:
+        phaserms=[phaserms]
+        errscale=[errscale]
+    else:
+        if len(phaserms) != len(errscale):
+            raise "The magnitude of errors and error scale lists must be of same length"
+        
+    mtemp=pyoof.MkApMap(tel,
+                        npix,
+                        2.0)    
+    for _rms, _scale in zip(phaserms, errscale):
+        pyplot.CorrGaussGauss(mtemp, 
+                              1.0, 
+                              pxscale/_scale*npix)
+        mtemp.mult(_rms/pyplot.MapRMS(mtemp))
+        mphase.add(mtemp)
 
+    if justPhase:
+        return mphase
+        
     mamp=pyoof.MkApMap(tel,
                        npix,
                        2.0)    
@@ -366,12 +397,15 @@ def mkALMAAperture(npix=512,
     ilmod=pyoof.GaussAmpMod( tel, mamp)
     ilmod.SetSigma(0.3)
     ilmod.Calc(mamp)  
+    ALMABlockDict[ant](mamp)
 
     return mphase, mamp
 
 def supportWidthVertex(r):
     """
     Calculate the width of the support leg for Vertex
+    
+    :param r: Radius from centre of dish in metres
     """
     r=r*1e3
     rblock=[375.0, 3897.0, 4197.0, 4497.0, 4797.0, 5097.0, 5397.0, 5697.0, 6000.0];
@@ -412,6 +446,14 @@ def ALMABlock(m,
                        math.fabs(x) - math.fabs(y)) / 2.0**0.5
             if rq < blockf(r):
                 m.set(i,j,0);
+
+ALMABlockDict= {"vertex":
+                    lambda m: ALMABlock(m, vblock=True,
+                                        blockf=supportWidthVertex)}
+
+
+                  
+                  
             
 
                 
@@ -421,6 +463,12 @@ def mkMoonSim(mbeam,
               Cm=0):
     """
     Make a simulation of a Moon observation
+
+    :param mbeam: Map of the telescope beam
+    
+    :param Cm: The softening parameter. See A. Greve et al, A&A 1998
+
+    :return: The simulated map
     """
     mmoon = pyplot.Clone(mbeam)
     MkMoon(mmoon, 
@@ -432,7 +480,8 @@ def mkMoonSim(mbeam,
     return res
 
 def mapCut(mbeam):
-    """Create a cut through the map
+    """
+    Create a cut through a map
     """
     pxscale=mbeam.cs.x_pxtoworld(1,0)-mbeam.cs.x_pxtoworld(0,0)
     ymid= int(mbeam.ny*0.5)
