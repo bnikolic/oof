@@ -2,8 +2,19 @@
 BNLib Release Notes  
 ======================
 
-To be Version 1.3.1
-===================
+Version 1.3.2
+=============
+
+Bug fixes
+
+* Fix building problem on newer libc which have getc defined as a
+  macro, clashing with kolmogorov iterator class member name. Fixed by
+  removing the python binding
+
+* Fix problem with non-standard gsl build location
+
+Version 1.3.1
+=============
 
 Building:
 
