@@ -14,4 +14,4 @@ _pybnlib_la_LDFLAGS = -module
 _pybnlib_la_LIBADD  = ../src/libbnlib.la
 _pybnlib_la_SOURCES = pybnlib.i
 nodist__pybnlib_la_SOURCES = pybnlib.cxx 
-_pybnlib_la_CPPFLAGS = @PYTHON_INCLUDES@
+_pybnlib_la_CPPFLAGS = @PYTHON_INCLUDES@ $(GSL_CFLAGS)
