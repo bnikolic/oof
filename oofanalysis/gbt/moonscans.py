@@ -389,11 +389,11 @@ def ALMABlock(m,
     """
     Mask areas of the antenna blocked by the support structure etc.
     
-    :param vblock: True for antennas with + typ support, False for
-    antennas with x type support
+    :param vblock: True for antennas with + type support, False for
+    antennas with X type support
     
-    :param blockf: Width of the support structure as function of
-    radius
+    :param blockf: Width of the support structure as a function of
+    radius from centre (note that this is passed in as a function)
     """
     
     for i in range(m.nx):
