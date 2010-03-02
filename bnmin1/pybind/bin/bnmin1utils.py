@@ -73,7 +73,11 @@ def ParDict(m):
     return d
 
 def ParList(m):
-    """Return parameters of the model as a dictionary"""
+    """Return parameters of the model as a list, ordered according to
+    the internal orderring of the model
+
+    Parameters should be in this order when using SetIC
+    """
     md=pybnmin1.ModelDesc(m)
     d=[]
     for i in range(md.NTotParam()):
