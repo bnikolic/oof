@@ -189,6 +189,24 @@ namespace Minim {
 		  size_t nbins,
 		  std::vector<double> &res);
 
+  /** Calculate the marginalisation of the posterior to two dimensions
+
+      \param Z Evidence value, used to normalize the histogram. If
+      this is set to one, the integral will be the evidence rather
+      than the marginalised probability given the hypothesis
+
+   */
+  void marginHist2D(const std::list<WPPoint> &l,
+		    double Z,
+		    size_t i,
+		    double ilow,
+		    double ihigh,
+		    size_t j,
+		    double jlow,
+		    double jhigh,
+		    size_t nbins,
+		    std::vector<double> &res);
+
 
 }
 

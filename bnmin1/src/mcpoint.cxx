@@ -322,7 +322,41 @@ namespace Minim {
       res[i]/=Z;
     }
   }
-  
 
+  void marginHist2D(const std::list<WPPoint> &l,
+		    double Z,
+		    size_t i,
+		    double ilow,
+		    double ihigh,
+		    size_t j,
+		    double jlow,
+		    double jhigh,
+		    size_t nbins,
+		    std::vector<double> &res)
+  {
+    // Two dimensions only
+    res.resize(pow(nbins,2));
+    std::fill(res.begin(), res.end(), 
+	      0.0);
+    const double idelta=(ihigh-ilow)/nbins;
+    const double jdelta=(jhigh-jlow)/nbins;
+    
+    for(std::list<WPPoint>::const_iterator p=l.begin();
+	p!= l.end();
+	++p)
+    {
+      
+      int dimi = int((p->p[i]-ilow)/idelta);
+      int dimj = int((p->p[j]-jlow)/jdelta);
+      
+      if (dimi >= 0 and   dimi<((int)nbins)  and   dimj >= 0 and  dimj < ((int)nbins))
+      {
+	const size_t k= dimi*nbins + dimj;
+	res[k]+= p->w * exp(- p->ll);
+      }
+      
+    }
+  }
 }
+
 
