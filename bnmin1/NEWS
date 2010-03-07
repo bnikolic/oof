@@ -7,6 +7,10 @@ In development (to be V1.11)
 
 New features:
 
+* Function to marginalise the nested sampler posterior to two
+  dimension, allowing easy visualisation of joint probabilities of two
+  parameters (marginHist2D)
+
 Improvements:
 
 Bug fixes:
