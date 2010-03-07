@@ -7,6 +7,7 @@ Input and output of the BNMin1 data structures to the HDF5 file format
 """
 
 from tables import *
+import numpy
 
 import pybnmin1
 import bnmin1utils
@@ -71,3 +72,25 @@ def readPost(table):
         res.push_back(x)
     return res
         
+def setModel(m,
+             table,
+             rowno,
+             excols=["w", "ll"]):
+    """
+    Set a model to the parameters in rowno of table
+    
+    :param excols: Columns to exclude from the setting procedure
+    because the take non-parameter data
+    """
+    pnames=[x for x in table.colnames if x not in excols]
+    for pname in pnames:
+        md.getbyname(pname).setp(table.col(pname)[rowno])
+
+def nestedPostW(table):
+    """
+    Compute the to total weighting for the posterior from the
+    likelihoods and weights
+    """
+    return numpy.exp(-table.col("ll"))*table.col("w")
+
+
