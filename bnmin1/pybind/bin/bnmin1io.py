@@ -154,13 +154,11 @@ def FGetPar( fnamein , parname):
 
     dat=pyfits.open(fnamein)[1].data
 
-    sres = dat.field("ParName").search(parname)
-    if len( sres[0] ) == 0:
+    sres = dat.field("ParName").find(parname).argmax()
+    if sres < 0:
         raise "Parameter %s not found" % parname
 
-    parindex = sres[0][0]
-
-    return dat.field("ParValue")[parindex]
+    return dat.field("ParValue")[sres]
 
 
 def FittedPars( m ):
