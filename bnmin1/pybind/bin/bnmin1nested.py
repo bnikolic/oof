@@ -67,12 +67,23 @@ def moments(mm):
     Return the moments for each of the parameters in the nested
     sampler
     """
+    return momentsRaw(mm.g_post(), mm.Z())
+
+def momentsRaw(post,
+               Z):
+    """
+    :param post: The list containing the posterior distribution
+    :param Z: The evidence value
+    """
     res=[]
     m1=pybnmin1.DoubleVector()
     m2=pybnmin1.DoubleVector()
-    pybnmin1.moment1(mm.g_post(), mm.Z(), m1)
-    pybnmin1.moment2(mm.g_post(), m1, mm.Z(), m2)
-    for i in range(mm.NParam()):
+    pybnmin1.moment1(post, 
+                     Z, m1)
+    pybnmin1.moment2(post, 
+                     m1, Z, 
+                     m2)
+    for i in range(len(post[0].p)):
         res.append( (m1[i], m2[i]) )
     return res
 

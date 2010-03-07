@@ -8,6 +8,7 @@ Input and output of the BNMin1 data structures to the HDF5 file format
 
 from tables import *
 
+import pybnmin1
 import bnmin1utils
 
 def mkNestedTableDef(mm):
@@ -16,12 +17,50 @@ def mkNestedTableDef(mm):
     the nested sampler
     """
     res={}
-    for i in range(mm.NParam()):
+    N=mm.NParam()
+    for i in range(N):
         pname=mm.getbynumb(i).getname()
         pcom=mm.getbynumb(i).getcomment()
         res[pname]=Float64Col(pos=i)
+    res["ll"]=Float64Col(pos=N)
+    res["w"]=Float64Col(pos=N+1)
     return res
     
-    
+def writePost(mm,
+              hdffile,
+              group):
+    """
+    Write the posterior distribution 
 
+    """
+    table=h5file.createTable(group, 
+                             'post', 
+                             mkNestedTableDef(mm), 
+                             "Nested Sampler posterior distribution")
+    r=table.row
+    post=mm.g_post()
+    N=mm.NParam()
+    for p in post:
+        for i in range(N):
+            r[mm.getbynumb(i).getname()]=p.p[i]
+        r["w"]=p.w
+        r["ll"]=p.ll
+        r.append()
+    table.attrs.Z=mm.Z()
 
+def readPost(table):
+    """
+    Read the posterior distribution from a table
+    """
+    res=pybnmin1.ListWP()
+    # Number of fitted parameters
+    N=len(table.coltypes)-2
+    for r in table:
+        x=pybnmin1.WPPoint()
+        for i in range(N):
+            x.p.push_back(r[i])
+        x.w=r["w"]
+        x.ll=r["ll"]
+        res.push_back(x)
+    return res
+        
