@@ -32,6 +32,12 @@ def writePost(mm,
     """
     Write the posterior distribution 
 
+    :param group: The posterior table will be created under this group
+    with name "post"
+
+    :returns: The created table object, to allow easy further
+    modifications to it
+
     """
     table=h5file.createTable(group, 
                              'post', 
@@ -47,6 +53,7 @@ def writePost(mm,
         r["ll"]=p.ll
         r.append()
     table.attrs.Z=mm.Z()
+    return table
 
 def readPost(table):
     """
