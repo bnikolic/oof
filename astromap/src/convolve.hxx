@@ -25,6 +25,10 @@ namespace AstroMap {
   Map * FFTConvolve( const Map &  m1,
 		     const Map &  m2);
 
+  void FFTConvolve( const Map &  m1,
+		    const Map &  m2,
+		    Map &mres);
+
 
 }
 

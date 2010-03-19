@@ -28,6 +28,7 @@
 #include "../src/farfield/farffunctions.hxx"
 #include "../src/farfield/farf.hxx"
 #include "../src/farfield/choppedff.hxx"
+#include "../src/farfield/planetff.hxx"
 
 #include "../src/maptoresidual.hxx"
 #include "../src/maptoresidual_ds.hxx"
@@ -66,6 +67,7 @@
 %include "../src/farfield/farffunctions.hxx"
 %include "../src/farfield/farf.hxx"
 %include "../src/farfield/choppedff.hxx"
+%include "../src/farfield/planetff.hxx"
 
 %include "../src/maptoresidual.hxx"
 %include "../src/maptoresidual_ds.hxx"

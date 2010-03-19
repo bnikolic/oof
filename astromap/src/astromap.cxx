@@ -107,7 +107,7 @@ namespace AstroMap {
 
   }
 
-  Map * Clone (Map &m)
+  Map *Clone(const Map &m)
   {
     return new Map( m.nx, m.ny, m.cs->Clone());
   }

@@ -15,14 +15,15 @@
 
 namespace AstroMap {
 
-  Map * FFTConvolve( const Map &  m1,
-		     const Map &  m2)
+  void FFTConvolve( const Map &  m1,
+		    const Map &  m2,
+		    Map &mres)
   {
     if (not (m1.nx == m2.nx &&
 	     m1.ny == m2.ny) )
       throw std::runtime_error( "Don't know how to convolve maps without identical dimensions");
 
-    Map m1amp ( m1);
+    mres=m1;
 
     Map m1phase (m1);
     m1phase *= 0;
@@ -37,10 +38,10 @@ namespace AstroMap {
 			FFTFact::backward,
 			FFTFact::dontcenter);
 
-    InverseFF.fftamphi( m1amp, m1phase);
+    InverseFF.fftamphi( mres, m1phase);
     InverseFF.fftamphi( m2amp, m2phase);
 
-    m1amp *= m2amp;
+    mres *= m2amp;
     m1phase += m2phase;
 
 
@@ -49,15 +50,22 @@ namespace AstroMap {
 			FFTFact::center);
 
 
-    ForwardFF.fftamphi( m1amp, m1phase,
-			false);
+    ForwardFF.fftamphi(mres, 
+		       m1phase,
+		       false);
 
-    m1amp /= ( m1amp.nx * m1amp.ny);
+    mres /= ( mres.nx * mres.ny);
     
-    m1amp *=   cos(m1phase);
-    return new Map(m1amp);
+    mres *=   cos(m1phase);
+  }
 
-
+  Map * FFTConvolve( const Map &  m1,
+		     const Map &  m2)
+  {
+    Map *res=new Map(m1);
+    FFTConvolve(m1, m2, 
+		*res);
+    return res;
   }
 
 

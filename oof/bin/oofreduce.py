@@ -59,6 +59,13 @@ def isGBTName(n):
     """Does this name correspond to the GBT?"""
     return n in ["GBT", "90GBT"]
 
+def obsObject(fnamein):
+    h=pyfits.open(fnamein)[0].header
+    if h.has_key("OBJECT"):
+        return h["OBJECT"]
+    else:
+        return None
+
 def GetRecvName(fnamein):
 
     "Return the name of the receiver in use"
@@ -169,6 +176,10 @@ def MkFF ( fnamein,
             ff = pyoof.FarF(apphase, wavel)            
         else:
             raise "Unknown receiver/GBT: " + recvname
+    elif obsObject(fnamein)=="Saturn":
+        ff=pyoof.PlanetFF(math.radians(16.0/3600),
+                          apphase,
+                          wavel)
     else:
         ff = pyoof.FarF(apphase, wavel)
 

@@ -90,7 +90,7 @@ namespace AstroMap {
    * that contents are not copied. Note: this will need to be updated
    * when more data structures are added to Map.
    */
-  Map * Clone (Map &m);
+  Map * Clone (const Map &m);
   
   
   /// Return the version of the AstroMap library
