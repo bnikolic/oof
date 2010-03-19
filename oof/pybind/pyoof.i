@@ -21,6 +21,7 @@
 #include "../src/aperture/amplimod.hxx"
 #include "../src/aperture/gaussampmod.hxx"
 #include "../src/aperture/tophatmodel.hxx"
+#include "../src/aperture/sqgaussmod.hxx"
 
 #include "../src/aperture/mkapertures.hxx"
 
@@ -58,6 +59,7 @@
 %include "../src/aperture/amplimod.hxx"
 %include "../src/aperture/gaussampmod.hxx"
 %include "../src/aperture/tophatmodel.hxx"
+%include "../src/aperture/sqgaussmod.hxx"
 
 %include "../src/aperture/mkapertures.hxx"
 
