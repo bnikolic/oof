@@ -43,6 +43,15 @@ namespace  OOF {
 			    unsigned nzern ,
 			    double oversample );
 
+  /** \brief Make the aperture model for ALMA 
+      
+  */
+  ApertureMod *mkALMAAp(TelGeometry *telgeo,
+			double wavel,
+			unsigned npix,
+			unsigned nzern,
+			double oversample);
+
 
   /** \brief Make the aperture model suitable for MUSTANG/GBT
       

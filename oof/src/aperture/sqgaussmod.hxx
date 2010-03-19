@@ -28,6 +28,9 @@ namespace OOF {
     public AmpliMod
   {
 
+    /** This defines the physical extent of the aperture */
+    boost::scoped_ptr<AstroMap::Map> ApMask;
+
     /// Square of the radius of the dish
     const double effrad2;
 

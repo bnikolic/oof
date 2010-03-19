@@ -224,6 +224,12 @@ def MkObsCompare(fnamein,
                                          nzern,
                                          oversample,
                                          nobs)
+    elif GetTelescope(fnamein)=="ALMA":
+        aperture=pyoof.mkALMAAp(tel,
+                                wavel,
+                                npix,
+                                nzern,
+                                oversample)
     else:
         aperture = pyoof.MkSimpleAp ( tel,
                                       wavel,
@@ -292,7 +298,7 @@ def FitStatTab(m):
     chisquaredfinal = m.ChiSquared()
 
     ftable=iofits4.FnParTable(locals(),
-                              r"$Id: oofreduce.py,v 1.16 2005/09/12 01:07:35 bnikolic Exp $")
+                              r"$Id$")
     return ftable
 
 def OffsetFname(fnamein):
@@ -473,7 +479,7 @@ def Red(obsfilename,
     """
 
     ptable=iofits4.FnParTable(locals(),
-                              r"$Id: oofreduce.py,v 1.16 2005/09/12 01:07:35 bnikolic Exp $")
+                              r"$Id$")
 
     dirout = oofcol.mkodir( prefdirout ,
                             oofcol.basename(obsfilename))
