@@ -425,8 +425,86 @@ def dsObsModel(obsfilename,
         res.append( [xo,x])
     return res
     
+
+def mkFlicker(fnamel,
+              fnameout,
+              delay=40
+              ):
+    """
+    Make a flicker GIF of files in fnamel
+    """
+    cmdline="convert -delay %i "
+    for fname in fnamel:
+        cmdline+= (fname+" ")
+    cmdline+=fnameout
+    sw, sr = os.popen2(cmdline)
     
-                  
+def makeHTML(dirin):
+    """
+    Make an HTML summary page  (from D. Barkats)
+    """
+    fldir=os.path.join(dirin, "flicker")
+    if not os.path.exists(fldir):
+        os.mkdir(fldir)
+    
+    for i in range(3):
+        mkFlicker([os.path.join(dirin, 
+                                "plots",
+                                "obsbeam-%i.png" % (i+1)),
+                   os.path.join(dirin, 
+                                "plots",
+                                "bestfitbeams-%i.png" % (i)),],
+                  os.path.join(fldir,
+                               "beam%i_flick.gif" % (i+1)))
+    
+    outfile=open(os.path.join(dirin,
+                              'flicker.html'),
+                 'w')
+    outfile.write('<html><head><title>Plots for %s</title></head><body> \n' %(dirin))
+    outfile.write('<center> \n')
+    outfile.write('<h2>Flicker Plots for %s </h2>\n ' %(dirin))
+    outfile.write('</center> \n \n ')
+    outfile.write('<a href="flicker/beam1_flick.gif"><img src=flicker/beam1_flick.gif width=25%></a> \n')
+    outfile.write('<a href="flicker/beam2_flick.gif"><img src=flicker/beam2_flick.gif width=25%></a> \n')
+    outfile.write('<a href="flicker/beam3_flick.gif"><img src=flicker/beam3_flick.gif width=25%></a> \n')
+    outfile.write('</body> \n ')
+    outfile.write(' </html>  \n ')
+    outfile.close()
+
+    outfile=open(os.path.join(dirin,
+                              'plots.html'),
+                 'w')
+    outfile.write('<html><head><title>Plots for %s</title></head><body> \n' %(dirin))
+    outfile.write('<center> \n')
+    outfile.write('<h2>Plots for %s </h2>\n ' %(dirin))
+    outfile.write('</center> \n \n ')
+    outfile.write('<p> \n <table border=1, cellpadding=5> \n')
+    outfile.write('<tr><td> Aperture amplitude </td><td> Aperture phase </td> </tr>\n' )
+
+    outfile.write("""
+<tr><td><a href="plots/aperture-amplitude.png"><img src="plots/aperture-amplitude.png" width=300></a></td>\n
+    <td><a href="plots/aperture-phase.png"><img src="plots/aperture-phase.png" width=300></a></td>
+</tr> \n
+                 """)
+
+    outfile.write(' </table>\n ')
+    outfile.write('<p> \n <table border=1, cellpadding=0> \n')
+    outfile.write('<tr><td> Observed beam 1 </td><td> Observed beam 2 </td> <td> Observed beam 3 </td> \n <td> best fit beams 1 </td> <td>  best fit beams 2 \
+</td>  <td>  best fit beams 3  </td>  <td> Perfect beams 1</td>  <td> Perfect beams 2 </td>  <td> Perfect beams 3  </td> </tr>\n' )
+    outfile.write('<tr><td><a href="plots/obsbeam-1.png"><img src="plots/obsbeam-1.png" width=150></a></td> \n <td><a href="plots/obsbeam-2.png"><img src="pl\
+ots/obsbeam-2.png" width=150></a></td> \n<td><a href="plots/obsbeam-3.png"><img src="plots/obsbeam-3.png" width=150></a></td><td><a href="plots/bestfitbeams\
+-0.png"><img src="plots/bestfitbeams-0.png" width=150></a></td> \n <td><a href="plots/bestfitbeams-1.png"><img src="plots/bestfitbeams-1.png" width=150></a>\
+</td> \n<td><a href="plots/bestfitbeams-2.png"><img src="plots/bestfitbeams-2.png" width=150></a></td> \n <td><a href="plots/perfectbeams-0.png"><img src="p\
+lots/perfectbeams-0.png" width=150></a></td> \n <td><a href="plots/perfectbeams-1.png"><img src="plots/perfectbeams-1.png" width=150></a></td> \n<td><a href\
+="plots/perfectbeams-2.png"><img src="plots/perfectbeams-2.png" width=150></a></td></tr> \n ')
+    outfile.write(' </table> <p>\n ')
+
+    outfile.write('<a href="flicker.html">Flicker plots between observed beams and best fit beams</a> \n')
+    outfile.write('</body> \n ')
+    outfile.write(' </html>  \n ')
+    outfile.close()
+    
+             
     
 
 
