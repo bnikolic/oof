@@ -1,6 +1,6 @@
 AC_INIT(OOF,
-	1.3,
-	"Bojan Nikolic" <bojan@bnikolic.co.uk> )
+	1.4b1,
+	bojan@bnikolic.co.uk)
 
 AC_CONFIG_AUX_DIR(config)
 AC_CONFIG_HEADERS(config.h)
