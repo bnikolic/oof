@@ -1,6 +1,14 @@
 AstroMap Release Notes
 ======================
 
+Version 1.5
+-----------
+
+Enhancements:
+
+* Convolution function now can store the result in a separate map (see
+  src/convolve.hxx)
+
 Version 1.4
 -----------
 
