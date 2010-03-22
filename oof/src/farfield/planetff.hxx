@@ -30,6 +30,8 @@ namespace OOF {
      */
     double radius;
 
+    const double wavel;
+
   public:
 
     // ---------- Constructors / destructors    -------------

@@ -11,6 +11,7 @@
 #include <convolve.hxx>
 
 #include "planetff.hxx"
+#include "farffunctions.hxx"
 
 namespace OOF {
 
@@ -19,7 +20,8 @@ namespace OOF {
 		     double wavel):
     FarF(apmapsample,
 	 wavel),
-    radius(radius)
+    radius(radius),
+    wavel(wavel)
   {
   }
 
@@ -45,15 +47,22 @@ namespace OOF {
 		       AstroMap::Map &res)
   {
     if (not planetm)
+    {
+      SetFarFCS(amp, wavel, res);
       planetm.reset(mkModel(res, radius));
+    }
+    
+
+    boost::scoped_ptr<AstroMap::Map> tmp(AstroMap::Clone(amp));
     
     FarF::Power(amp, 
 		phase, 
-		res);
+		*tmp);
 
-    FFTConvolve(res, 
+    FFTConvolve(*tmp, 
 		*planetm,
 		res);
+    SetFarFCS(amp, wavel, res);
 
   }
 
