@@ -137,7 +137,20 @@ ALMABlockDict= {"vertex":
 
 
                   
-                  
+def MkMoon(m,
+           Cm=0):
+    """
+    A rough function to generate a simulated Moon
+    """
+
+    # moon radius 15 arcmin
+    mradius=15 * math.pi / 180 / 60
+
+    moonfn  =  pybnlib.TaperedTopHatDD()
+    moonfn.radius  =  mradius
+    moonfn.Cm = Cm
+    pyplot.WorldSet( m , moonfn)
+
             
 
                 
