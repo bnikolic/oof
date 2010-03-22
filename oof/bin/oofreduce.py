@@ -66,6 +66,10 @@ def obsObject(fnamein):
     else:
         return None
 
+def obsObjectRadius(fnamein):
+    h=pyfits.open(fnamein)[0].header
+    return float(h["OBJRADIUS"])
+
 def GetRecvName(fnamein):
 
     "Return the name of the receiver in use"
@@ -177,7 +181,7 @@ def MkFF ( fnamein,
         else:
             raise "Unknown receiver/GBT: " + recvname
     elif obsObject(fnamein)=="Saturn":
-        ff=pyoof.PlanetFF(math.radians(16.0/3600),
+        ff=pyoof.PlanetFF(obsObjectRadius(fnamein),
                           apphase,
                           wavel)
     else:
