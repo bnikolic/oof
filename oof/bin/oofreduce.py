@@ -68,7 +68,7 @@ def obsObject(fnamein):
 
 def obsObjectRadius(fnamein):
     h=pyfits.open(fnamein)[0].header
-    return float(h["OBJRADIUS"])
+    return float(h["OBJRADS"])
 
 def GetRecvName(fnamein):
 
