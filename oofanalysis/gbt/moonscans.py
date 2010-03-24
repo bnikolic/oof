@@ -254,11 +254,15 @@ def getAmpMap(ant, npix):
     
 
 
-if 0:
+if 1:
     # Creates a pair of maps which represent the the aperture plane
     # phase and amplitude distributions
-    mphase, mamp = mkALMAAperture(phaserms=[0.4, 0.4], 
-                                  errscale=[1.0, 0.4])
+    mphase=mkALMAAperture(phaserms=[0.4, 0.4], 
+                          errscale=[1.0, 0.4],
+                          justPhase=True)
+    mamp=getAmpMap("vertex", 
+                   512)
+    
     # Plot the phase map
     implot.plotmap(mphase, transf=0, colmap="heat")
     # Plot the amplitude
