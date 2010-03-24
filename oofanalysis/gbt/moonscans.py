@@ -101,9 +101,26 @@ def supportWidthVertex(r):
     delta=(hblock[k1+1]-hblock[k1])/(rblock[k1+1]-rblock[k1])
     return (hblock[k1] + (r-rblock[k1])*delta)*1e-3
 
+def supportWidthMelco12(r):
+    """
+    Calculate the width of the support leg for the 12-m Melco antennas
+    
+    :param r: Radius from centre of dish in metres
+    """
+    r=r*1e3
+    rblock=[375.0, 620.0, 625.0, 1470.0, 6000.0]
+    hblock=[48.5, 48.5, 39.0, 39.0, 76.5]
+    k1=0
+    for k in range(len(rblock)-1):
+        if rblock[k]<r:
+            k1=k
+    delta=(hblock[k1+1]-hblock[k1])/(rblock[k1+1]-rblock[k1])
+    return (hblock[k1] + (r-rblock[k1])*delta)*1e-3
+
 def ALMABlock(m,
               vblock=True,
-              blockf=supportWidthVertex):
+              blockf=supportWidthVertex,
+              hole=None):
     """
     Mask areas of the antenna blocked by the support structure etc.
     
@@ -130,10 +147,25 @@ def ALMABlock(m,
                        math.fabs(x) - math.fabs(y)) / 2.0**0.5
             if rq < blockf(r):
                 m.set(i,j,0);
+            
+            if hole:
+                hx, hy, hr = hole
+                r=((x-hx)**2+(y-hy)**2)**0.5
+                if r<hr:
+                    m.set(i,j,0);
 
 ALMABlockDict= {"vertex":
                     lambda m: ALMABlock(m, vblock=True,
-                                        blockf=supportWidthVertex)}
+                                        blockf=supportWidthVertex,
+                                        hole=(-3.530, 0.290, 0.14)),
+                "melco12":
+                    lambda m: ALMABlock(m, 
+                                        vblock=True,
+                                        blockf=supportWidthMelco12,
+                                        hole=(-3.572951*math.sin(math.radians(85.5)),
+                                               3.572951*math.cos(math.radians(85.5)),
+                                               0.145)),
+                }
 
 
                   
@@ -191,7 +223,7 @@ def mapCut(mbeam):
     
 
 
-if 1:
+if 0:
     # Creates a pair of maps which represent the the aperture plane
     # phase and amplitude distributions
     mphase, mamp = mkALMAAperture(phaserms=[0.4, 0.4], 
