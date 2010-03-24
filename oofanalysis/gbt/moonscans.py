@@ -8,6 +8,7 @@ Tools for analysis of scans across the Moon and similar data used to
 constrain error correlation scales on radio telescopes
 """
 
+import os
 import math
 
 import numpy
@@ -219,7 +220,37 @@ def mapCut(mbeam):
         dx.append((i-mbeam.nx*0.5)*pxscale)
         fnu.append(mbeam.getv(i,ymid))
     return numpy.array(dx), numpy.array(fnu)
+
+def ampMapFName(ant, npix):
+    return "ampchache-%s-%i.fits" % (ant, npix)
+
+def saveAmpMaps(ant, npix):
+    """
+    Create and save the amplitude maps
+    """
+    p, a=mkALMAAperture(ant=ant,
+                        npix=npix)
+    # Exclamation mark ensures the files are overwritten
+    pyplot.FitsWrite(a, 
+                     "!"+ampMapFName(ant, npix))
+    return a
+
+def getAmpMap(ant, npix):
+    """
+    Get an amplitude map. 
+
+    If it exists already as a FITS file, use that. Otherwise create
+    and save for later reuse
+    """
+    fname=ampMapFName(ant, npix)
+    if os.access(fname, os.R_OK):
+        return pyplot.FitsMapLoad(fname,
+                                  1)
+    else:
+        return saveAmpMaps(ant, npix)
+
         
+    
     
 
 
