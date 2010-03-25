@@ -1,5 +1,5 @@
 AC_INIT(ASTROMAP, 
-        1.5b1, 
+        1.5b2, 
 	bojan@bnikolic.co.uk)  
 
 AC_CONFIG_AUX_DIR(config)
