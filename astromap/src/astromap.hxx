@@ -57,6 +57,8 @@ namespace AstroMap {
        dimensions. Otherwise an exception will be raised.
     */
     const Map & operator= (const Map & m);
+    
+    void operator=(double val);
 
     /* ----  Element access  ---------------- */
     

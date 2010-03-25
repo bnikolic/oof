@@ -26,12 +26,12 @@ namespace AstroMap {
     mres=m1;
 
     Map m1phase (m1);
-    m1phase *= 0;
+    m1phase=0;
 
     Map m2amp ( m2);
 
     Map m2phase (m2);
-    m2phase *= 0;
+    m2phase=0;
 
     
     FFTFact InverseFF ( m1.nx, m1.ny, 

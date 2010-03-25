@@ -155,6 +155,8 @@ def ALMABlock(m,
                 if r<hr:
                     m.set(i,j,0);
 
+# This dictionary defines the aperture blockage functions for each of
+# the telescopes
 ALMABlockDict= {"vertex":
                     lambda m: ALMABlock(m, vblock=True,
                                         blockf=supportWidthVertex,

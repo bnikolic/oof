@@ -64,6 +64,16 @@ namespace AstroMap {
     
   }
 
+  void Map::operator=(double val)
+  {
+    //    (*this)=val;
+    for (size_t i=0; i < nx; ++i)
+      for(size_t j=0; j<ny; ++j)
+      {
+	get(i,j)=val;
+      }
+  }
+
   double & Map::get(unsigned x , unsigned y )
   {
     return (*this)[y*nx+x];
