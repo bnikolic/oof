@@ -121,10 +121,10 @@ namespace AstroMap {
       unsigned  nx=Amp.nx;    
       unsigned  ny=Amp.ny;
 
-      int mul;
+      double mul;
       if (check)
       {
-	mul = ( docenter == FFTFact::center ? -1 : 1 ) ;
+	mul = ( docenter == FFTFact::center ? -1.0 : 1.0 ) ;
       }
       else
       {
