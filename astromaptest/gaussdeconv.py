@@ -6,6 +6,9 @@
 Example of how to deconvolve for a Gaussian beam 
 """
 
+import pickle
+import numpy
+
 import localsetup
 
 import pybnlib
@@ -67,11 +70,14 @@ def mkMockObs(npix,
     o=mkPlanet(npix, 
                pradius, 
                mapsize)
-    fm=pyplot.GaussConvMap(o, o)
+    scratch=pyplot.Map(npix, 
+                       npix) 
+    fm=pyplot.GaussConvMap(scratch, 
+                           o)
     bnmin1utils.SetIC(fm, 
                       params)
+    o.mult(0)
     fm.eval(o)
-    
     mnoise=pyplot.Map(npix, npix)
     pyplot.NormDist(mnoise, 
                     1.0*noise)
@@ -83,25 +89,47 @@ def fitObs(o,
            pradius,
            mapsize,
            ic=[1, 0,  0,  1.0, 0, 0],
-           fit=["amp", "sigma", "x0", "y0"]):
+           fit=["amp", "x0", "y0", "sigma", "diff", "rho" ]):
     """
     Fit the observations
     """
-    pm=mkPlanet(o.nx, 
+    npix=o.nx
+    pm=mkPlanet(npix, 
                 pradius, 
                 mapsize)
     fm=pyplot.GaussConvMap(o,
                            pm)
-    
+    mo=pyplot.Map(npix, 
+                  npix)    
     bnmin1utils.SetIC(fm,
                       ic)
+    fm.eval(mo)
+
     lmm=pybnmin1.LMMin(fm)
-    for p in ["x0", "y0"]:
+    for p in fit:
         lmm.getbyname(p).dofit=1
+    m1=pybnmin1.ChiSqMonitor()
+    m1.thisown=0
+    lmm.AddMon(m1)
     lmm.solve()
     chisq=lmm.ChiSquared()
-    return [lmm.getbyname(p).getp() for p in  fit] + [chisq]
+    m=pyplot.Map(npix, 
+                 npix)    
+    pyplot.MkRectCS(m, 
+                    mapsize*0.5,
+                    mapsize*0.5)
+    fm.eval(m)
+    return pm, mo, m, [lmm.getbyname(p).getp() for p in  fit] + [chisq]
 
     
-
+def npToMap(a,
+            mapsize):
+    m=pyplot.Map(*a.shape)
+    for i in range(a.shape[0]):
+        for j in range(a.shape[1]):
+            m.set(i, j, a[i,j])
+    pyplot.MkRectCS(m, 
+                    mapsize*0.5,
+                    mapsize*0.5)
+    return m
 
