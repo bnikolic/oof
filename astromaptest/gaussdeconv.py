@@ -3,7 +3,8 @@
 #
 # This file is part of the OOF package and is licensed under GPL v2
 """
-Example of how to deconvolve for a Gaussian beam 
+Example of how to deconvolve for a Gaussian beam, assuming underlying
+source is a planet represetned by a tapered disk
 """
 
 import pickle
@@ -63,16 +64,16 @@ def mkMockObs(npix,
               noise,
               params=[1, 0,  0,  1.0, 0, 0]):
     """
-    Create mock observation
+    Create a mock observation
 
-    :param parms: Parameters for the Gaussian
+    :param parms: Parameters for the Gaussian. The order is amplitude,
+    x0, y0, sigma, rho and diff
     """
     o=mkPlanet(npix, 
                pradius, 
                mapsize)
-    scratch=pyplot.Map(npix, 
-                       npix) 
-    fm=pyplot.GaussConvMap(scratch, 
+    # First parameter is not used since we never fit
+    fm=pyplot.GaussConvMap(o, 
                            o)
     bnmin1utils.SetIC(fm, 
                       params)
@@ -89,22 +90,35 @@ def fitObs(o,
            pradius,
            mapsize,
            ic=[1, 0,  0,  1.0, 0, 0],
-           fit=["amp", "x0", "y0", "sigma", "diff", "rho" ]):
+           fit=["amp", "x0", "y0", "sigma", "diff", "rho" ],
+           Cm=0):
     """
-    Fit the observations
+    Fit the observations.
+
+    :param pradius: Radius of the planet
+
+    :param mapsize: Angular size of the map
+    
+    :param ic: Initial condition from which to start the minimiser
+    
+    :param fit: List of parameters to fit for -- default is all
+    parameters
+
+    :returns: List of [best fitting model (*after convolution*), 
+    best fitting Gaussian parameters, final chi-sq]
+
+    Example:
+    >>> mm=npToMap(pickle.load(open("tmp_beam.sav")), 50)
+    >>> m, r, ch=fitObs(obsmap, 1.0, 50.0, ic=[0, 0, 0, 1.0, 0, 0])
+
     """
     npix=o.nx
     pm=mkPlanet(npix, 
                 pradius, 
-                mapsize)
+                mapsize,
+                Cm=Cm)
     fm=pyplot.GaussConvMap(o,
                            pm)
-    mo=pyplot.Map(npix, 
-                  npix)    
-    bnmin1utils.SetIC(fm,
-                      ic)
-    fm.eval(mo)
-
     lmm=pybnmin1.LMMin(fm)
     for p in fit:
         lmm.getbyname(p).dofit=1
@@ -113,17 +127,23 @@ def fitObs(o,
     lmm.AddMon(m1)
     lmm.solve()
     chisq=lmm.ChiSquared()
-    m=pyplot.Map(npix, 
-                 npix)    
-    pyplot.MkRectCS(m, 
+    bestmodel=pyplot.Map(npix, 
+                         npix)    
+    pyplot.MkRectCS(bestmodel, 
                     mapsize*0.5,
                     mapsize*0.5)
-    fm.eval(m)
-    return pm, mo, m, [lmm.getbyname(p).getp() for p in  fit] + [chisq]
+    fm.eval(bestmodel)
+    return bestmodel, [lmm.getbyname(p).getp() for p in  fit], chisq
 
     
 def npToMap(a,
             mapsize):
+    """
+    Conver a numpy array to a map. 
+    
+    :param mapsize: Angluar size of one of the dimensions of the map. 
+
+    """
     m=pyplot.Map(*a.shape)
     for i in range(a.shape[0]):
         for j in range(a.shape[1]):
