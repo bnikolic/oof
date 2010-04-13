@@ -4,10 +4,14 @@
   Initial version January 2008.
 */
 
+#include <boost/scoped_ptr.hpp>
+
+
 #include "fitting_basic.hxx"
 
 #include "binaryfn.hxx"
 #include "mapset.hxx"
+#include "convolve.hxx"
 
 namespace AstroMap {
   
@@ -64,6 +68,11 @@ namespace AstroMap {
     SetModel( & gm);
   }
 
+  void GaussMapModel::eval(Map &m) const
+  {
+    FittableMap::eval(m);
+  }
+
   void  GaussMapModel::AddParams ( std::vector< Minim::DParamCtr > &pars )
   {
     
@@ -102,10 +111,30 @@ namespace AstroMap {
 				      true     ,                       
 				      "rho "
 				      ));
+  }
 
+  GaussConvMap::GaussConvMap(const Map &obsmap,
+			     const Map &conv):
+    GaussMapModel(obsmap),
+    conv(conv)
+  {
+  }
     
 
+  void GaussConvMap::AddParams(std::vector<Minim::DParamCtr> &pars)
+  {
+    GaussMapModel::AddParams(pars);
+  }
 
+  void GaussConvMap::eval(Map &m) const
+  {
+    boost::scoped_ptr<AstroMap::Map> gmodel(AstroMap::Clone(m));
+
+    GaussMapModel::eval(*gmodel);    
+    
+    FFTConvolve(*gmodel, 
+		conv,
+		m);
   }
 
 }
