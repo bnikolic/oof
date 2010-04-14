@@ -119,6 +119,8 @@ def fitObs(o,
                 Cm=Cm)
     fm=pyplot.GaussConvMap(o,
                            pm)
+    bnmin1utils.SetIC(fm, 
+                      ic)
     lmm=pybnmin1.LMMin(fm)
     for p in fit:
         lmm.getbyname(p).dofit=1
