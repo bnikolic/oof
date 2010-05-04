@@ -433,7 +433,7 @@ def mkFlicker(fnamel,
     """
     Make a flicker GIF of files in fnamel
     """
-    cmdline="convert -delay %i "
+    cmdline="convert -delay %i " % delay
     for fname in fnamel:
         cmdline+= (fname+" ")
     cmdline+=fnameout
