@@ -343,7 +343,8 @@ def RedOrder(obsfilename,
              ptable=None,
              multiamp=False,
              nofit=[],
-             fittol=None):
+             fittol=None,
+             monitorPars=False):
     """Reduce OOF observation at single maximum order of Zernikes
     (c.f. function Red() which steps through a number of orders)
 
@@ -391,9 +392,10 @@ def RedOrder(obsfilename,
     m1.thisown = 0
     lmm.AddMon( m1)
 
-    m2=pybnmin1.ParsMonitor()
-    m2.thisown=0
-    lmm.AddMon(m2)
+    if monitorPars:
+        m2=pybnmin1.ParsMonitor()
+        m2.thisown=0
+        lmm.AddMon(m2)
 
     for pname in extrafit :
         lmm.getbyname(pname).dofit=1
