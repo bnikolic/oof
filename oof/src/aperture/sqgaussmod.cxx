@@ -19,6 +19,7 @@ namespace OOF {
 			 AstroMap::Map &msample):
     ApMask(ENFORCE(AstroMap::Clone(msample))),
     effrad2(std::pow(telgeo->DishEffRadius(),2)),
+    amp(1),
     sigma(0.55),
     x0(0),
     y0(0)
