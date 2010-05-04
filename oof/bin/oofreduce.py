@@ -391,6 +391,10 @@ def RedOrder(obsfilename,
     m1.thisown = 0
     lmm.AddMon( m1)
 
+    m2=pybnmin1.ParsMonitor()
+    m2.thisown=0
+    lmm.AddMon(m2)
+
     for pname in extrafit :
         lmm.getbyname(pname).dofit=1
     for pname in nofit:
