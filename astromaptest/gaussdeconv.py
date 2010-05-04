@@ -155,3 +155,13 @@ def npToMap(a,
                     mapsize*0.5)
     return m
 
+def mapToNP(m):
+    """
+    Conver a a map to numpy array
+    """
+    a=numpy.zeros((int(m.nx), int(m.ny)))
+    for i in range(a.shape[0]):
+        for j in range(a.shape[1]):
+            a[i,j]=m.getv(i, j)
+    return a
+
