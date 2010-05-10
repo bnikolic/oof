@@ -252,8 +252,29 @@ def getAmpMap(ant, npix):
         return saveAmpMaps(ant, npix)
 
         
+def plotTechFigs():
+
+    if 0:
+        m=getAmpMap("vertex", 512)
+        implot.plotmap(m, colmap="heat", bbox=[-6,6,-6,6], 
+                       fout="vertex-amp.png/PNG")
+        m=getAmpMap("melco12", 512)
+        implot.plotmap(m, colmap="heat", bbox=[-6,6,-6,6], 
+                       fout="melco12-amp.png/PNG")
     
-    
+    if 1:
+        mphase=mkALMAAperture(phaserms=[0.4, 0.4], 
+                              errscale=[1.0, 0.4],
+                              justPhase=True)
+        mamp=getAmpMap("vertex", 
+                       512)
+        farf= pyoof.FarF(mamp, 
+                         1.3e-3)
+        mbeam=pyplot.Map(512,512)
+        farf.Power(mamp, mphase, mbeam)
+        implot.plotmap(mbeam, transf=1, colmap="heat",
+                       fout="sample-beam.png/PNG")
+
 
 
 if 1:
