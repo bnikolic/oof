@@ -40,10 +40,10 @@ def writePost(mm,
     modifications to it
 
     """
-    table=h5file.createTable(group, 
-                             'post', 
-                             mkNestedTableDef(mm), 
-                             "Nested Sampler posterior distribution")
+    table=hdffile.createTable(group, 
+                              'post', 
+                              mkNestedTableDef(mm), 
+                              "Nested Sampler posterior distribution")
     r=table.row
     post=mm.g_post()
     N=mm.NParam()
