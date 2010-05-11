@@ -84,4 +84,15 @@ def ParList(m):
         p=md.getbynumb(i)
         d.append( (p.name,p.getp()))
     return d
+
+def postToArray(post):
+    """
+    Convert a posterior distribution of points to an array
+    """
+    r=[]
+    for i in range(len(post)):
+        x=post[i]
+        r.append(list(x.p))
+    return numpy.array(r)
+    
     
