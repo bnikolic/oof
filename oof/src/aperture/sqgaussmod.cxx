@@ -45,7 +45,7 @@ namespace OOF {
 			      wx, wy);
 	      const double r2=std::pow(wx-x0,2) + std::pow(wy-y0,2);
 	      const double g=std::exp(-r2/effrad2/std::pow(sigma,2));
-	      const double sqg=1.0-std::pow(1-g, 2.0);
+	      const double sqg=std::sqrt(1.0-std::pow(1-g, 2.0));
 	      m.get(px, py) = amp*sqg;
 	    }
 	    else
