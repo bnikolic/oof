@@ -4,6 +4,7 @@
 # Utilities for plotting OOF data
 
 import os
+import math
 
 import pyfits
 import numpy
@@ -18,11 +19,17 @@ import bnmin1io
 import oofreduce
 import oofcol
 
-def PlotDir(dirnamein, bbox=None, hardcopy=False, odir="plots",
-            fwhm=None , extent = None, npix= None,
+def PlotDir(dirnamein,
+            bbox=None,
+            hardcopy=False,
+            odir="plots",
+            fwhm=None, 
+            extent=None,
+            npix=None,
             ncont=None,
             decorate=True,
-            obsdir=None):
+            obsdir=None,
+            umicron=False):
 
     "Make all the relevant plots"
 
@@ -82,10 +89,11 @@ def PlotDir(dirnamein, bbox=None, hardcopy=False, odir="plots",
                          hardcopy=hardcopy,
                          decorate=decorate)
 
-    PlotAperture( os.path.join(dirnamein, "aperture-notilt.fits"),
-                  os.path.join(dirnamein, odir),
-                  oversample=oversample,
-                  hardcopy=hardcopy)
+    PlotAperture(os.path.join(dirnamein, "aperture-notilt.fits"),
+                 os.path.join(dirnamein, odir),
+                 oversample=oversample,
+                 hardcopy=hardcopy,
+                 umicron=umicron)
 
     if os.access( os.path.join(dirnamein, "offsetbeams.fits"),
                   os.F_OK):
@@ -106,7 +114,8 @@ def PlotDir(dirnamein, bbox=None, hardcopy=False, odir="plots",
                       os.path.join(dirnamein, odir),
                       oversample=oversample,
                       prefix="offsetaperture",
-                      hardcopy=hardcopy)
+                      hardcopy=hardcopy,
+                      umicron=umicron)
         
                          
 
@@ -204,11 +213,20 @@ def PlotAperture(apfname,
                  dirout,
                  prefix="aperture",
                  oversample=2.0,
-                 hardcopy=False):
+                 hardcopy=False,
+                 umicron=False):
+    """
+    Plot aperture phase and amplitude
 
-    "Plot aperture phase and amplitude"
+    :param umicron: If true, plot in units of micron of normal surface
+    error rather than radians of path.
 
+    """
     phasemap=pyplot.FitsMapLoad(apfname,2)
+    if umicron:
+        wvl=float(pyfits.open(apfname)[0].header["WAVE"])
+        phasemap.mult(1e6*wvl/4/math.pi)
+
     ampmap  =pyplot.FitsMapLoad(apfname,1)    
 
     bbox = implot.GetMapBBox(phasemap)
@@ -216,11 +234,17 @@ def PlotAperture(apfname,
 
     if hardcopy:
         end=".eps/PS"
-        contours=[-2,-1.5,-1,-0.5,0,0.5,1,1.5,2]
+        if umicron:
+            contours=[-20.0,-15.0,-10.0,-5.0,0.0,5.0,10.0, 15.0, 20.0]
+        else:
+            contours=[-2,-1.5,-1,-0.5,0,0.5,1,1.5,2]
         colmap=None
     else:
         end=".png/PNG"
-        contours=[-2,-1.5,-1,-0.5,0,0.5,1,1.5,2]
+        if umicron:
+            contours=[-20.0,-15.0,-10.0,-5.0,0.0,5.0,10.0, 15.0, 20.0]
+        else:
+            contours=[-2,-1.5,-1,-0.5,0,0.5,1,1.5,2]
         colmap="heat"
 
     implot.plotmap( phasemap,

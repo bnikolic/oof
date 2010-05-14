@@ -1,5 +1,5 @@
 AC_INIT(OOF,
-	1.4b4,
+	1.4b5,
 	bojan@bnikolic.co.uk)
 
 AC_CONFIG_AUX_DIR(config)
