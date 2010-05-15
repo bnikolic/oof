@@ -11,6 +11,7 @@
 */
 
 #include <boost/numeric/ublas/triangular.hpp>
+#include <boost/numeric/ublas/banded.hpp>
 #include <boost/numeric/ublas/lu.hpp>
 
 
@@ -51,7 +52,31 @@ namespace Minim {
   void Lift(const ublas::matrix<double> &A,
 	    ublas::matrix<double> &Ap)
   {
-    
+    Ap.resize(A.size1()+1,
+	      A.size2());
+    ublas::matrix_range<ublas::matrix<double> > 
+      sub(Ap, 
+	  ublas::range(0, A.size1()), 
+	  ublas::range(0, A.size2()));
+    sub.assign(A);
+    ublas::row(Ap, Ap.size1()-1)=ublas::scalar_vector<double>(A.size2(),1.0);
+
+  }
+
+  void KaLambda(const ublas::matrix<double> &Ap,
+		const ublas::vector<double> &p,
+		ublas::matrix<double> &Lambdap)
+  {
+    ublas::matrix<double> dp=ublas::zero_matrix<double>(p.size(), 
+							p.size());
+    for(size_t i=0; i<p.size(); ++i)
+    {
+      dp(i,i)=p(i);
+    }
+
+    dp=ublas::prod(dp, ublas::trans(Ap));
+    Lambdap=ublas::prod(Ap, 
+			dp);
   }
 
   
