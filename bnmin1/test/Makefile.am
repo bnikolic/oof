@@ -1,10 +1,11 @@
 # Bojan Nikolic <bojan@bnikolic.co.uk>
 
-bin_PROGRAMS= t_minim t_unit t_utils nestedgauss
+bin_PROGRAMS= t_minim t_unit t_utils nestedgauss t_sets
 
 t_minim_SOURCES = t_minim.cpp quadmodel.hpp
 t_unit_SOURCES = t_unit.cpp
 t_utils_SOURCES = t_utils.cpp
+t_sets_SOURCES = t_sets.cpp
 
 nestedgauss_SOURCES= nestedgauss.cpp nestedgauss.hpp 
 

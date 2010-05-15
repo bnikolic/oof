@@ -196,3 +196,4 @@ CVS
 ./bnlib/test/Makefile
 *.tar.bz2
 ./bnmin1/test/nestedgauss
+./bnmin1/test/t_sets
