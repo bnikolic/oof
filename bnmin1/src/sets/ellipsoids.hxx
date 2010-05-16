@@ -69,6 +69,26 @@ namespace Minim {
 		    ublas::vector<double> &c
 		    );
 
+
+  double KhachiyanAlgo(const ublas::matrix<double> &A,
+		       double eps,
+		       size_t maxiter,
+		       ublas::matrix<double> &Q,
+		       ublas::vector<double> &c);
+
+
+  struct KhachiyanEllipsoid
+  {
+    ublas::matrix<double> Q;
+    ublas::vector<double> c;
+  };
+
+  struct MCPoint;
+
+  
+  
+  
+
 }
 
 #endif

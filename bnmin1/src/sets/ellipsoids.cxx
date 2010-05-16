@@ -14,6 +14,8 @@
 #include <boost/numeric/ublas/banded.hpp>
 #include <boost/numeric/ublas/lu.hpp>
 
+#include <iostream>
+#include <boost/numeric/ublas/io.hpp>
 
 #include "ellipsoids.hxx"
 
@@ -79,7 +81,7 @@ namespace Minim {
 		ublas::matrix<double> &Lambdap)
   {
     
-    ublas::matrix<double> dp;
+    ublas::matrix<double> dp(p.size(), p.size());
     genDiag(p, dp);
 
     dp=ublas::prod(dp, ublas::trans(Ap));
@@ -93,8 +95,10 @@ namespace Minim {
     /// Dimensionality of the problem
     const size_t d=Ap.size1()-1;
 
-    ublas::matrix<double> Lp, ILp, M;
+    ublas::matrix<double> Lp;
+    ublas::matrix<double> M;
     KaLambda(Ap, p, Lp);
+    ublas::matrix<double> ILp(Lp.size1(), Lp.size2());
     InvertLP(Lp, ILp);
     M=ublas::prod(ILp, Ap);
     M=ublas::prod(ublas::trans(Ap), M);
@@ -126,7 +130,7 @@ namespace Minim {
 		    )
   {
     const size_t d=A.size1();
-    ublas::matrix<double> dp;
+    ublas::matrix<double> dp(p.size(), p.size());
     genDiag(p, dp);
 
     ublas::matrix<double> PN=ublas::prod(dp, ublas::trans(A));
@@ -135,12 +139,36 @@ namespace Minim {
     ublas::vector<double> M2=ublas::prod(A, p);
     ublas::matrix<double> M3=ublas::outer_prod(M2, M2);
 
-    ublas::matrix<double> invert;
+    ublas::matrix<double> invert(PN.size1(), PN.size2());
     InvertLP(PN- M3, invert);
     
     Q.assign( 1.0/d *invert);
         
     
+  }
+
+  double KhachiyanAlgo(const ublas::matrix<double> &A,
+		       double eps,
+		       size_t maxiter,
+		       ublas::matrix<double> &Q,
+		       ublas::vector<double> &c)
+  {
+    ublas::vector<double> p=ublas::scalar_vector<double>(A.size2(), 1.0)*(1.0/A.size2());
+
+    ublas::matrix<double> Ap;
+    Minim::Lift(A, Ap);
+
+    double ceps=eps*2;
+    for (size_t i=0;  i<maxiter && ceps>eps; ++i)
+    {
+      ceps=KhachiyanIter(Ap, p);
+    }
+
+    KaInvertDual(A, p, Q, c);
+      
+    return ceps;
+
+
   }
 
   

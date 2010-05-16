@@ -21,8 +21,11 @@ namespace ublas = boost::numeric::ublas;
 BOOST_AUTO_TEST_CASE(InvertIdentity)
 {
   ublas::identity_matrix<double> id(5);
+  ublas::matrix<double> idc=id;
+  idc(1,0)=1;
   ublas::matrix<double> res(5,5);
   Minim::InvertLP(id, res);
+  Minim::InvertLP(idc, res);
   std::cout<<res
 	   <<std::endl;
 }
@@ -52,6 +55,25 @@ BOOST_AUTO_TEST_CASE(KaLambda_basic)
   BOOST_CHECK_EQUAL(res(3,3), 2);
   BOOST_CHECK_EQUAL(res(3,0), 1);
   BOOST_CHECK_EQUAL(res(0,1), 0);
+}
+
+
+BOOST_AUTO_TEST_CASE(KhachiyanAlgo_reallybasic)
+{
+  ublas::matrix<double> A(2,6);
+  A(0,0)=1;  A(1,0)=0;
+  A(0,1)=-1; A(1,1)=0;
+  A(0,2)=0; A(1,2)=1;
+  A(0,3)=0; A(1,3)=-1;
+  A(0,4)=0; A(1,4)=0;
+  A(0,5)=0.5; A(1,5)=0;
+
+  ublas::matrix<double> Q(2,2);
+  ublas::vector<double> c(2);
+
+  Minim::KhachiyanAlgo(A, 0.01, 100, Q, c);
+
+  std::cout<<Q<<std::endl;
 }
 
 
