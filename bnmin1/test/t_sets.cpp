@@ -117,6 +117,23 @@ BOOST_AUTO_TEST_CASE(UnifromSphereSurface_dup)
 
   ublas::vector<double> res2(3);
 
+  Minim::UnifromSphereSurface(rng,
+			      res2);
+  BOOST_CHECK(res[0] != res2[0]);
+
+}
+
+BOOST_AUTO_TEST_CASE(UnifromSphereVolume_dup)
+{
+  boost::mt19937 rng;
+  ublas::vector<double> res(3);
+  Minim::UnifromSphereVolume(rng,
+			     res);
+  ublas::vector<double> res2(3);
+  Minim::UnifromSphereVolume(rng,
+			     res2);
+  std::cout<<res<<std::endl
+	   <<res2<<std::endl;
   BOOST_CHECK(res[0] != res2[0]);
 
 
