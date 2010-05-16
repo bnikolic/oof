@@ -63,11 +63,11 @@ namespace Minim {
       \param Q The ellipsiod matrix
       \param c The centre of the ellipse
    */
-  double KaInvertDual(const ublas::matrix<double> &A,
-		      const ublas::vector<double> &p,
-		      ublas::matrix<double> &Q,
-		      ublas::vector<double> &c
-		      );
+  void KaInvertDual(const ublas::matrix<double> &A,
+		    const ublas::vector<double> &p,
+		    ublas::matrix<double> &Q,
+		    ublas::vector<double> &c
+		    );
 
 }
 

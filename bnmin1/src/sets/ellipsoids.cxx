@@ -63,20 +63,84 @@ namespace Minim {
 
   }
 
+  void genDiag(const ublas::vector<double> &p,
+	       ublas::matrix<double> &res)
+  {
+    res.assign(ublas::zero_matrix<double>(p.size(), 
+					  p.size()));
+    for(size_t i=0; i<p.size(); ++i)
+    {
+      res(i,i)=p(i);
+    }    
+  }
+
   void KaLambda(const ublas::matrix<double> &Ap,
 		const ublas::vector<double> &p,
 		ublas::matrix<double> &Lambdap)
   {
-    ublas::matrix<double> dp=ublas::zero_matrix<double>(p.size(), 
-							p.size());
-    for(size_t i=0; i<p.size(); ++i)
-    {
-      dp(i,i)=p(i);
-    }
+    
+    ublas::matrix<double> dp;
+    genDiag(p, dp);
 
     dp=ublas::prod(dp, ublas::trans(Ap));
     Lambdap=ublas::prod(Ap, 
 			dp);
+  }
+
+  double KhachiyanIter(const ublas::matrix<double> &Ap,
+		       ublas::vector<double> &p)
+  {
+    /// Dimensionality of the problem
+    const size_t d=Ap.size1()-1;
+
+    ublas::matrix<double> Lp, ILp, M;
+    KaLambda(Ap, p, Lp);
+    InvertLP(Lp, ILp);
+    M=ublas::prod(ILp, Ap);
+    M=ublas::prod(ublas::trans(Ap), M);
+
+    double maxval=0;
+    size_t maxi=0;
+    for(size_t i=0; i<M.size1(); ++i)
+    {
+      if (M(i,i) > maxval)
+      {
+	maxval=M(i,i);
+	maxi=i;
+      }
+    }
+    const double step_size=(maxval -d - 1)/((d+1)*(maxval-1));
+    ublas::vector<double> newp=p*(1-step_size);
+    newp(maxi) += step_size;
+
+    const double err= ublas::norm_2(newp-p);
+    p=newp;
+    return err;
+    
+  }
+
+  void KaInvertDual(const ublas::matrix<double> &A,
+		    const ublas::vector<double> &p,
+		    ublas::matrix<double> &Q,
+		    ublas::vector<double> &c
+		    )
+  {
+    const size_t d=A.size1();
+    ublas::matrix<double> dp;
+    genDiag(p, dp);
+
+    ublas::matrix<double> PN=ublas::prod(dp, ublas::trans(A));
+    PN=ublas::prod(A, PN);
+
+    ublas::vector<double> M2=ublas::prod(A, p);
+    ublas::matrix<double> M3=ublas::outer_prod(M2, M2);
+
+    ublas::matrix<double> invert;
+    InvertLP(PN- M3, invert);
+    
+    Q.assign( 1.0/d *invert);
+        
+    
   }
 
   
