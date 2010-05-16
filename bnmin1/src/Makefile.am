@@ -31,9 +31,10 @@ libbnmin1_la_SOURCES = minimmodel.hxx minimmodel.cxx paramctr.hxx	\
 			mcmonitor.cxx mcmonitor.hxx nestederr.cxx	\
 			nestederr.hxx markovchain.cxx markovchain.hxx	\
 			apps/gaussmodel.cxx apps/gaussmodel.hxx		\
-			apps/bayesline.cxx  apps/bayesline.hxx          \
-			nestedinitial.cxx nestedinitial.hxx\
-			sets/ellipsoids.cxx sets/ellipsoids.hxx
+			apps/bayesline.cxx apps/bayesline.hxx		\
+			nestedinitial.cxx nestedinitial.hxx		\
+			sets/ellipsoids.cxx sets/ellipsoids.hxx		\
+			sets/spheres.cxx sets/spheres.hxx
 
 libbnmin1_la_LIBADD =   $(MAYBE_LIBS) $(GSL_LIBS)
 

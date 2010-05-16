@@ -19,6 +19,7 @@
 #include "../config.h"
 
 #include "sets/ellipsoids.hxx"
+#include "sets/spheres.hxx"
 
 namespace ublas = boost::numeric::ublas;
 
@@ -106,7 +107,20 @@ BOOST_AUTO_TEST_CASE(KhachiyanAlgo_rand)
 	   <<c<<std::endl;
 }
 
+BOOST_AUTO_TEST_CASE(UnifromSphereSurface_dup)
+{
+  boost::mt19937 rng;
+  ublas::vector<double> res(3);
 
+  Minim::UnifromSphereSurface(rng,
+			      res);
+
+  ublas::vector<double> res2(3);
+
+  BOOST_CHECK(res[0] != res2[0]);
+
+
+}
 
 
 
