@@ -86,11 +86,6 @@ namespace Minim {
   struct MCPoint;
 
 
-  //void SampleEllipsoid();
-  //SampleSphere
-  
-  
-
 }
 
 #endif

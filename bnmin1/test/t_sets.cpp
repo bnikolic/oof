@@ -20,6 +20,7 @@
 
 #include "sets/ellipsoids.hxx"
 #include "sets/spheres.hxx"
+#include "sets/ellipsoids_sample.hxx"
 
 namespace ublas = boost::numeric::ublas;
 
@@ -138,6 +139,26 @@ BOOST_AUTO_TEST_CASE(UnifromSphereVolume_dup)
 
 
 }
+
+BOOST_AUTO_TEST_CASE(EllipsoidSampler_basic)
+{
+  boost::mt19937 rng;
+  ublas::matrix<double> Q=ublas::identity_matrix<double>(3);
+  Q(0,0)=3;
+  ublas::vector<double> c=ublas::zero_vector<double>(3);
+
+  Minim::EllipsoidSampler es(Q, c, rng);
+
+  ublas::vector<double> r;
+  es(r);
+
+  std::cout<<r<<std::endl;
+  es(r);
+  std::cout<<r<<std::endl;
+
+}
+
+
 
 
 

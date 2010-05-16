@@ -34,7 +34,9 @@ libbnmin1_la_SOURCES = minimmodel.hxx minimmodel.cxx paramctr.hxx	\
 			apps/bayesline.cxx apps/bayesline.hxx		\
 			nestedinitial.cxx nestedinitial.hxx		\
 			sets/ellipsoids.cxx sets/ellipsoids.hxx		\
-			sets/spheres.cxx sets/spheres.hxx
+			sets/spheres.cxx sets/spheres.hxx		\
+			sets/ellipsoids_sample.cxx			\
+			sets/ellipsoids_sample.hxx sets/cholesky.hpp
 
 libbnmin1_la_LIBADD =   $(MAYBE_LIBS) $(GSL_LIBS)
 
