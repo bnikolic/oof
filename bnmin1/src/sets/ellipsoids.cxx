@@ -143,6 +143,7 @@ namespace Minim {
     InvertLP(PN- M3, invert);
     
     Q.assign( 1.0/d *invert);
+    c=ublas::prod(A, p);
         
     
   }

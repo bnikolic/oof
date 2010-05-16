@@ -9,6 +9,10 @@
 #include <boost/test/unit_test.hpp>
 #include <boost/test/auto_unit_test.hpp>
 #include <boost/test/floating_point_comparison.hpp>
+#include <boost/random.hpp>
+#include <boost/random/mersenne_twister.hpp>
+#include <boost/random/normal_distribution.hpp>
+#include <boost/random/uniform_real.hpp>
 
 #include <iostream>
 
@@ -74,6 +78,32 @@ BOOST_AUTO_TEST_CASE(KhachiyanAlgo_reallybasic)
   Minim::KhachiyanAlgo(A, 0.01, 100, Q, c);
 
   std::cout<<Q<<std::endl;
+}
+
+
+BOOST_AUTO_TEST_CASE(KhachiyanAlgo_rand)
+{
+  const size_t d=4;
+  const size_t N=200;
+  
+  boost::mt19937 rng;
+  boost::uniform_01<boost::mt19937> zeroone(rng);
+
+  ublas::matrix<double> A(d, N);
+  for (size_t i=0; i< N; i++)
+  {
+    for (size_t j=0; j<d; j++)
+    {
+      A(j,i)=zeroone();
+    }
+  }
+  ublas::matrix<double> Q(d,d);
+  ublas::vector<double> c(d);
+
+  Minim::KhachiyanAlgo(A, 0.1, 100, Q, c);
+
+  std::cout<<Q<<std::endl
+	   <<c<<std::endl;
 }
 
 
