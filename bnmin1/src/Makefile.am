@@ -48,4 +48,5 @@ include_HEADERS = lmmin.hxx minim.hxx minimmodel.hxx paramctr.hxx	\
 			bnmin_main.hxx priors.hxx metropolis.hxx	\
 			gradientmodel.hxx gradientminim.hxx		\
 			robustline.hxx nestedsampler.hxx mcpoint.hxx	\
-			nestederr.hxx nestedinitial.hxx linemodel.hxx
+			nestederr.hxx nestedinitial.hxx linemodel.hxx\
+			prior_sampler.hxx
