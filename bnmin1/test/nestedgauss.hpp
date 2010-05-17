@@ -12,6 +12,7 @@
 #include "nestedsampler.hxx"
 #include "mcmonitor.hxx"
 #include "priors.hxx"
+#include "prior_sampler.hxx"
 
 struct pdesc {
   boost::shared_ptr<Minim::IndependentFlatPriors> obs;
@@ -45,6 +46,13 @@ pdesc mkDesc(double l_sigma,
 
   res.s=boost::shared_ptr<NestedS>(new NestedS(*res.obs,
 					       startset));
+  //res.s=boost::shared_ptr<NestedS>(new NestedS(*res.obs));
+  EllipsoidCPSampler *cps=new EllipsoidCPSampler(*res.obs,
+						 *res.s);
+  res.s->reset(startset,
+  	       cps);
+  cps->reshape();
+
 
   if (monitor)
   {

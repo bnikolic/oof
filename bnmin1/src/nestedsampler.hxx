@@ -121,6 +121,14 @@ namespace Minim {
      */
     void reset(const std::list<MCPoint> &start);
 
+    /** 
+	\param *We take ownership of cps*
+     */
+    void reset(const std::list<MCPoint> &start,
+	       CPriorSampler *cps );
+
+    
+
     /** Set the initial point selection strategy.  Note this object
 	will take ownership of the supplied object
     */

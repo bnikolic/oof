@@ -97,6 +97,18 @@ namespace Minim {
 	    ss);
   }
 
+  void NestedS::reset(const std::list<MCPoint> &start,
+		      CPriorSampler *cps )
+  {
+    ps.reset(cps);
+    Zseq=boost::assign::list_of(0.0);
+    Xseq=boost::assign::list_of(1.0);
+    llPoint(ml,
+	    *this,
+	    start,
+	    ss);    
+  }
+
   void NestedS::InitalS(NestedInitial *ins)
   {
     initials.reset(ins);
