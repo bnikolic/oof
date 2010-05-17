@@ -278,7 +278,6 @@ namespace Minim
     reshape_maxp(10),
     reshape_missp(200)
   {
-    reshape();
   }
   
 
@@ -300,7 +299,7 @@ namespace Minim
   double EllipsoidCPSampler::advance(double L,
 				     size_t maxprop)
   {
-    if (missp > reshape_missp or accp > reshape_maxp)
+    if (missp > reshape_missp or accp > reshape_maxp or (not es))
       reshape();
 
     for (size_t pno=0; pno <= maxprop; ++pno)
@@ -311,7 +310,12 @@ namespace Minim
       const double propllikel= ml.llprob();
       if (propllikel < L)
       {
+	++accp;
 	return -propllikel;
+      }
+      else
+      {
+	++missp;
       }
     }
     return -L;    

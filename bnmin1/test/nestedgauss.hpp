@@ -44,15 +44,11 @@ pdesc mkDesc(double l_sigma,
 		 20,
 		 startset);
 
-  res.s=boost::shared_ptr<NestedS>(new NestedS(*res.obs,
-					       startset));
-  //res.s=boost::shared_ptr<NestedS>(new NestedS(*res.obs));
+  res.s=boost::shared_ptr<NestedS>(new NestedS(*res.obs));
   EllipsoidCPSampler *cps=new EllipsoidCPSampler(*res.obs,
 						 *res.s);
   res.s->reset(startset,
   	       cps);
-  cps->reshape();
-
 
   if (monitor)
   {
