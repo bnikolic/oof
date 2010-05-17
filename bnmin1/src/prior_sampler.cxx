@@ -302,11 +302,30 @@ namespace Minim
     if (missp > reshape_missp or accp > reshape_maxp or (not es))
       reshape();
 
+    const double cprior=ml.pprob();
+
     for (size_t pno=0; pno <= maxprop; ++pno)
     {
       std::vector<double> propose;
       (*es)(propose);
       md.put(propose);
+      
+      if (ml.pprob() > cprior)
+      {
+	//The ellipsoid (especially in the beginning) can have regions
+	//outside the box -- we can reject these immediatelly
+	
+	// Count these as rejected so we can reshape if necessary
+	++missp;
+
+	if (mon)
+	{
+	  MCPoint p(propose);
+	  p.ll=ml.pprob();
+	  mon->propose(p);
+	}      
+	continue;
+      }
       const double propllikel= ml.llprob();
       if (mon)
       {

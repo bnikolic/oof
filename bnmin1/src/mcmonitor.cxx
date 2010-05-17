@@ -51,6 +51,7 @@ namespace Minim
       os<<"Proposed: ";
       for (size_t i=0; i<p.p.size(); ++i)
 	os<<p.p[i]<<",";
+      os<<" ll:" <<p.ll;
       os<<std::endl;
     }
     ++ip;

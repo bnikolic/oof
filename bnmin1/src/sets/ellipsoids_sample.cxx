@@ -30,6 +30,7 @@ namespace Minim {
     UnifromSphereVolume(rng, s);    
 
     v=ublas::solve(Qu, s, ublas::lower_tag());
+    v=v+c;
     
   }
 
