@@ -15,6 +15,9 @@
 #include "mcmonitor.hxx"
 #include "markovchain.hxx"
 #include "nestedsampler.hxx"
+#include "sets/ellipsoids.hxx"
+#include "sets/ellipsoids_sample.hxx"
+
 
 namespace Minim
 {
@@ -266,8 +269,53 @@ namespace Minim
     // Note the convention is to return the negative value
     return -c->gcl();
   }
+
+  EllipsoidCPSampler::EllipsoidCPSampler(IndependentFlatPriors &ml,
+					 NestedS &s):
+    CPriorSampler(ml,s),
+    missp(0), accp(0),
+    ss(s.g_ss()),
+    reshape_maxp(10),
+    reshape_missp(200)
+  {
+    reshape();
+  }
   
 
+  EllipsoidCPSampler::~EllipsoidCPSampler()
+  {
+
+  }
+  
+
+  void EllipsoidCPSampler::reshape(void)
+  {
+    KhachiyanEllipsoid res;
+    KhachiyanAlgo(ss, 0.1, 50, res);
+    es.reset(new EllipsoidSampler(res.Q, res.c, rng));
+    missp=0;
+    accp=0;
+  }
+
+  double EllipsoidCPSampler::advance(double L,
+				     size_t maxprop)
+  {
+    if (missp > reshape_missp or accp > reshape_maxp)
+      reshape();
+
+    for (size_t pno=0; pno <= maxprop; ++pno)
+    {
+      std::vector<double> propose;
+      (*es)(propose);
+      md.put(propose);
+      const double propllikel= ml.llprob();
+      if (propllikel < L)
+      {
+	return -propllikel;
+      }
+    }
+    return -L;    
+  }
 }
 
 

@@ -33,6 +33,15 @@ namespace Minim {
     
   }
 
+  void EllipsoidSampler::operator() (std::vector<double> &v)
+  {
+    const size_t d=c.size();
+    v.resize(d);
+    ublas::vector<double> r(d);
+    this->operator()(r);
+    for(size_t i=0; i<d ; ++i)
+      v[i]=r[i];
+  }
 
 }
 

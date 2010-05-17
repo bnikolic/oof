@@ -18,6 +18,7 @@
 #include <boost/numeric/ublas/io.hpp>
 
 #include "ellipsoids.hxx"
+#include "../mcpoint.hxx"
 
 namespace Minim {
   
@@ -172,7 +173,34 @@ namespace Minim {
 
   }
 
-  
+  double KhachiyanAlgo(const std::set<MCPoint> &ss,
+		       double eps,
+		       size_t maxiter,
+		       KhachiyanEllipsoid &res)
+  {
+    const size_t d=ss.begin()->p.size();
+    ublas::matrix<double> A(d,
+			    ss.size());
+
+    size_t j=0;
+    for (std::set<MCPoint>::const_iterator i=ss.begin();
+	 i != ss.end();
+	 ++i)
+    {
+      for(size_t k=0; k <d ;++k)
+	A(k,j)=i->p[k];
+      ++j;
+    }
+    
+    ublas::matrix<double> Q(d,d);
+    ublas::vector<double> c(d);
+    
+    const double ceps=KhachiyanAlgo(A, eps, maxiter,
+				    Q, c);
+    res.Q=Q;
+    res.c=c;
+    return ceps;
+  }
 
 
 }

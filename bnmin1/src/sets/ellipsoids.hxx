@@ -12,7 +12,9 @@
 #ifndef _BNMIN1_SETS_ELIIPSOIDS_HXX__
 #define _BNMIN1_SETS_ELIIPSOIDS_HXX__
 
+#include <set>
 #include <boost/numeric/ublas/vector.hpp>
+#include <boost/numeric/ublas/matrix.hpp>
 
 namespace Minim {
 
@@ -84,6 +86,11 @@ namespace Minim {
   };
 
   struct MCPoint;
+
+  double KhachiyanAlgo(const std::set<MCPoint> &ss,
+		       double eps,
+		       size_t maxiter,
+		       KhachiyanEllipsoid &res);
 
 
 }

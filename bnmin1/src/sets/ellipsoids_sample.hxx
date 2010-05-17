@@ -12,6 +12,8 @@
 #ifndef _BNMIN1_SETS_ELIIPSOIDS_SAMPLING_HXX__
 #define _BNMIN1_SETS_ELIIPSOIDS_SAMPLING_HXX__
 
+#include <vector>
+
 #include <boost/numeric/ublas/vector.hpp>
 #include <boost/numeric/ublas/matrix.hpp>
 #include <boost/random/mersenne_twister.hpp>
@@ -47,6 +49,8 @@ namespace Minim {
 		     boost::mt19937 &rng);
 
     void operator() (ublas::vector<double> &v);
+
+    void operator() (std::vector<double> &v);
 
 
   };

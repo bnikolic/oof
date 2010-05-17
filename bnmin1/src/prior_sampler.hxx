@@ -12,20 +12,24 @@
 #include <set>
 
 #include <boost/scoped_ptr.hpp>
+#include <boost/random/mersenne_twister.hpp>
 
 #include "minim.hxx"
 #include "mcpoint.hxx"
+
 
 namespace Minim
 {
   // Forward declarations
   class PriorNLikelihood;
+  class IndependentFlatPriors;
   class MetroPropose;
   class MCMonitorBase;
   class MarkovChain;
   class InitPntChain;
   class ILklChain;
   class NestedS;
+  class EllipsoidSampler;
 
   /** \brief Constrained prior sampler
       
@@ -139,8 +143,8 @@ namespace Minim
 
   };
 
-  /**
-     Base the steps on the live set
+  /** Base the monte-carlo steps on the points in the live live set
+     
    */
   class CSRMSSS:
     public CPriorSampler
@@ -177,6 +181,68 @@ namespace Minim
 		   size_t maxprop);
 
   };
+
+
+  /** \brief Sample prior mass by constructing ellipsoid and uniformly
+      sampling within it
+
+      This class is specialised to *flat* priors as in this case it
+      can be optimised to simple rejection of points with poorer
+      likelihood than the required value. 
+
+      It can be generalised to non-flat priors by MCMC sampling of
+      prior mass and then rejection of points with poorer likelihood.
+
+   */
+  class EllipsoidCPSampler:
+    public CPriorSampler
+  {
+    /// Random number generator
+    boost::mt19937 rng;
+
+    /// Current covering ellipsoid of the live set
+    boost::scoped_ptr<EllipsoidSampler> es;
+
+    /// Number of points that missed since last reshape
+    size_t missp;
+
+    /// Number of accepted points since last reshape
+    size_t accp;
+
+    /// Reference to the current live point set
+    const std::set<MCPoint> &ss;
+
+  public:
+    
+    // -------------- Public data ----------------------------------
+    
+    /// Force recomputation of ellispoid after this many accepted
+    /// points
+    size_t reshape_maxp;
+
+    /// Recompute the ellipsoid if this many misses have been
+    /// accumulated
+    size_t reshape_missp;
+
+    // -------------- Construction/Destruction ---------------------
+    EllipsoidCPSampler(IndependentFlatPriors &ml,
+		       NestedS &s);
+
+    ~EllipsoidCPSampler();
+
+    // -------------- Public Interface -----------------------------
+
+    /** \brief Reshape the ellipsoid to best-fit the live set
+     */
+    void reshape(void);
+    
+    // -------------Inherited from CPriorSampler -------------------
+    double advance(double L,
+		   size_t maxprop);
+
+  };
+
+  
 
 }
 
