@@ -308,6 +308,12 @@ namespace Minim
       (*es)(propose);
       md.put(propose);
       const double propllikel= ml.llprob();
+      if (mon)
+      {
+	MCPoint p(propose);
+	p.ll=propllikel;
+	mon->propose(p);
+      }      
       if (propllikel < L)
       {
 	++accp;
