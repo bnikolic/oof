@@ -73,6 +73,22 @@ namespace Minim {
   {
   }
 
+  void IndependentFlatPriors::getBoxCntr(std::vector<double> &cent,
+					 std::vector<double> &range) const
+  {
+    const size_t N=npriors();
+    cent.resize(N);
+    range.resize(N);
+    size_t j=0;
+    for (priorlist_t::const_iterator i = pbegin();
+	 i != pend();
+	 ++i)
+    {
+      cent[j]=(i->pmax + i->pmin)*0.5;
+      range[j]=(i->pmax-i->pmin)*0.5;
+    }
+  }
+
   LogFlatPriors::LogFlatPriors(MLikelihood * mod):
     IndependentPriors(mod)
   {

@@ -161,6 +161,15 @@ namespace Minim {
 
     // ---------- Public interface  --------------------------
 
+    /** Retrieve the coordinates of the prior box defined by the
+	priors
+
+	\param cent are the centres of each param
+	\param range the range of each param
+     */
+    void getBoxCntr(std::vector<double> &cent,
+		    std::vector<double> &range) const;
+
     // Inherited
     double pprob(void) const;
   };
