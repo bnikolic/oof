@@ -274,10 +274,33 @@ def plotTechFigs():
         farf.Power(mamp, mphase, mbeam)
         implot.plotmap(mbeam, transf=1, colmap="heat",
                        fout="sample-beam.png/PNG")
+        
+        mb3=mkMoonSim(mbeam)
+        # Plot the beam as on log-scale
+        implot.plotmap(mb3, 
+                       transf=1, colmap="heat",
+                       fout="sample-moonconv.png/PNG")
+
+    if 0:
+        mphase=mkALMAAperture(phaserms=[1], 
+                              errscale=[0.25],
+                              justPhase=True)
+        implot.plotmap(mphase, 
+                       transf=0, 
+                       colmap="heat",
+                       fout="sample-phase.png/PNG")        
+
+        mphase=mkALMAAperture(phaserms=[1], 
+                              errscale=[1.0],
+                              justPhase=True)
+        implot.plotmap(mphase, 
+                       transf=0, 
+                       colmap="heat",
+                       fout="sample-phase-ls.png/PNG")        
 
 
 
-if 1:
+if 0:
     # Creates a pair of maps which represent the the aperture plane
     # phase and amplitude distributions
     mphase=mkALMAAperture(phaserms=[0.4, 0.4], 
