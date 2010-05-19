@@ -192,6 +192,10 @@ namespace Minim
 
       It can be generalised to non-flat priors by MCMC sampling of
       prior mass and then rejection of points with poorer likelihood.
+      
+      The current implementation of this class rescales the prior
+      volume to a unit cube before sampling. This ensures that the
+      ellipsoid volume minimisation works as intendended.
 
    */
   class EllipsoidCPSampler:
@@ -211,6 +215,16 @@ namespace Minim
 
     /// Reference to the current live point set
     const std::set<MCPoint> &ss;
+
+    /// The centre of each prior 
+    std::vector<double> pcent;
+
+    /// The half-range of each prior dimension
+    std::vector<double> prange;
+
+    /// Our own reference to the problem definition, which knows it is
+    /// actually of type IndependentFlatPriors
+    IndependentFlatPriors &ml;
 
   public:
     

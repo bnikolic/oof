@@ -275,6 +275,7 @@ namespace Minim
     CPriorSampler(ml,s),
     missp(0), accp(0),
     ss(s.g_ss()),
+    ml(ml),
     reshape_maxp(10),
     reshape_missp(200)
   {
@@ -289,8 +290,22 @@ namespace Minim
 
   void EllipsoidCPSampler::reshape(void)
   {
+    ml.getBoxCntr(pcent, prange);
+    std::set<MCPoint> scaled_s;
+    for(std::set<MCPoint>::const_iterator i=ss.begin();
+	i != ss.end();
+	++i)
+    {
+      MCPoint p(*i);
+      for(size_t j=0; j < (p).p.size(); ++j)
+      {
+	p.p[j]=(i->p[j]-pcent[j])/prange[j];
+      }
+      scaled_s.insert(p);	     
+    }
+
     KhachiyanEllipsoid res;
-    KhachiyanAlgo(ss, 0.1, 50, res);
+    KhachiyanAlgo(scaled_s, 0.1, 50, res);
     es.reset(new EllipsoidSampler(res.Q, res.c, rng));
     missp=0;
     accp=0;
@@ -308,6 +323,8 @@ namespace Minim
     {
       std::vector<double> propose;
       (*es)(propose);
+      for (size_t j=0; j<propose.size(); ++j)
+	propose[j]=propose[j]*prange[j]+pcent[j];
       md.put(propose);
       
       if (ml.pprob() > cprior)

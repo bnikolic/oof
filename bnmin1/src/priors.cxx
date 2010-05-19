@@ -86,6 +86,7 @@ namespace Minim {
     {
       cent[j]=(i->pmax + i->pmin)*0.5;
       range[j]=(i->pmax-i->pmin)*0.5;
+      ++j;
     }
   }
 
