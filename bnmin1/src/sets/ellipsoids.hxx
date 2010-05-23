@@ -72,6 +72,22 @@ namespace Minim {
 		    );
 
 
+  /** \param Compute minimum containing ellipsoid using the Khachiyan
+      algorithm
+      
+      \param A Input point set as columns of the matrix
+      
+      \param eps Tolerance of the estimated ellipsoid: it's volume
+      will be approx (1+eps) of the true smallest ellipsoid
+      
+      \param maxiter Maximum number of iterations to make before
+      stopping the algorithm
+      
+      \param Q The matrix describing the axes of the resulting
+      ellipsoid
+      
+      \param c The centre of the resulting ellipsoid
+   */
   double KhachiyanAlgo(const ublas::matrix<double> &A,
 		       double eps,
 		       size_t maxiter,
@@ -79,14 +95,22 @@ namespace Minim {
 		       ublas::vector<double> &c);
 
 
+  /** \brief Convenience class to store the results of minimum
+      covering ellipsoid calculation
+   */
   struct KhachiyanEllipsoid
   {
     ublas::matrix<double> Q;
     ublas::vector<double> c;
   };
 
+  // Forward declaration
   struct MCPoint;
 
+  /** \brief Convenience form of the function to calculate the minimum
+      convering ellipsoid -- see the documentation of the canonical
+      form
+   */
   double KhachiyanAlgo(const std::set<MCPoint> &ss,
 		       double eps,
 		       size_t maxiter,

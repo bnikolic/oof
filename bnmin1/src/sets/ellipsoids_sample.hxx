@@ -7,7 +7,7 @@
 
    \file ellipsoids_sample.hxx
 
-   Sampling from ellipsoids
+   Sampling from volumes defined by (hyper-)ellipsoids
 */
 #ifndef _BNMIN1_SETS_ELIIPSOIDS_SAMPLING_HXX__
 #define _BNMIN1_SETS_ELIIPSOIDS_SAMPLING_HXX__
@@ -26,12 +26,16 @@ namespace Minim {
    */
   class EllipsoidSampler
   {
+    /** The random number generator engine
+     */
     boost::mt19937 &rng;
 
     /** Cholesky factorisation of the axes definition vector
      */
     ublas::matrix<double> Qu;
 
+    /** Centre of the ellipsoid
+     */
     ublas::vector<double> c;
     
   public:
@@ -48,6 +52,8 @@ namespace Minim {
 		     ublas::vector<double> c,
 		     boost::mt19937 &rng);
 
+    /** \brief Generate a point within ellipsoid and store in v
+     */
     void operator() (ublas::vector<double> &v);
 
     void operator() (std::vector<double> &v);

@@ -21,6 +21,9 @@ namespace Minim {
 
   namespace ublas=boost::numeric::ublas;  
 
+  /** \brief Generate samples uniformly distributed on the surface of
+      a unit sphere
+   */
   template<class T>
   void UnifromSphereSurface(T &rng,
 			    ublas::vector<double> &v)
@@ -35,6 +38,9 @@ namespace Minim {
     
   }
 
+  /** \brief Generate samples uniformly distributed within a unit
+      sphere
+   */
   template<class T>
   void UnifromSphereVolume(T &rng,
 			   ublas::vector<double> &v)
@@ -46,6 +52,8 @@ namespace Minim {
     boost::uniform_01<T> uniform(rng);
     const double p=1.0/v.size();
     v=vsurface* std::pow(uniform(), p);
+    // Advance the original rng by hand
+    rng();
     
   }
 

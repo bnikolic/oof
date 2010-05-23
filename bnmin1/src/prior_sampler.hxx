@@ -195,7 +195,7 @@ namespace Minim
       
       The current implementation of this class rescales the prior
       volume to a unit cube before sampling. This ensures that the
-      ellipsoid volume minimisation works as intendended.
+      ellipsoid volume minimisation works as intended
 
    */
   class EllipsoidCPSampler:
@@ -234,11 +234,14 @@ namespace Minim
     /// points
     size_t reshape_maxp;
 
-    /// Recompute the ellipsoid if this many misses have been
-    /// accumulated
+    /// Force recomputation of the ellipsoid if this many misses have
+    /// been accumulated
     size_t reshape_missp;
 
     // -------------- Construction/Destruction ---------------------
+
+    /** This class is specialised to flat prior volumes
+     */
     EllipsoidCPSampler(IndependentFlatPriors &ml,
 		       NestedS &s);
 
