@@ -19,6 +19,7 @@
 
 #include "ellipsoids.hxx"
 #include "../mcpoint.hxx"
+#include "../bnmin_main.hxx"
 
 namespace Minim {
   
@@ -50,6 +51,11 @@ namespace Minim {
 		ublas::matrix<double> &LpInv)
   {
     bool res=InvertMatrix(Lambdap, LpInv);
+    if (not res)
+    {
+      throw MatrixErr("Could not invert matrix: ",
+		      Lambdap);
+    }
   }
 
   void Lift(const ublas::matrix<double> &A,

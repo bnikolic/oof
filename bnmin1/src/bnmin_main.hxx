@@ -16,6 +16,8 @@
 #include <string>
 #include <stdexcept>
 
+#include <boost/numeric/ublas/fwd.hpp>
+
 #ifndef __BNMIN_BNMIN_MAIN_HPP__
 #define __BNMIN_BNMIN_MAIN_HPP__
 namespace Minim {
@@ -42,6 +44,16 @@ namespace Minim {
 	     size_t received);
     
 
+  };
+
+  /** \brief Errors related to matrix operations
+   */
+  class MatrixErr:
+    public BaseErr
+  {
+  public:
+    MatrixErr(const std::string &s,
+	      const boost::numeric::ublas::matrix<double> &m);
   };
 
 

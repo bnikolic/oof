@@ -17,10 +17,12 @@
 #include <iostream>
 
 #include "../config.h"
+#include "../src/bnmin_main.hxx"
 
 #include "sets/ellipsoids.hxx"
 #include "sets/spheres.hxx"
 #include "sets/ellipsoids_sample.hxx"
+
 
 namespace ublas = boost::numeric::ublas;
 
@@ -34,6 +36,16 @@ BOOST_AUTO_TEST_CASE(InvertIdentity)
   Minim::InvertLP(idc, res);
   std::cout<<res
 	   <<std::endl;
+}
+
+BOOST_AUTO_TEST_CASE(InvertExcept)
+{
+  ublas::identity_matrix<double> id(5);
+  ublas::matrix<double> idc=id;
+  idc(4,4)=0;
+  ublas::matrix<double> res(5,5);
+  BOOST_CHECK_THROW(Minim::InvertLP(idc, res),
+		    Minim::MatrixErr);
 }
 
 BOOST_AUTO_TEST_CASE(KaLift)

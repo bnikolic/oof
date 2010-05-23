@@ -9,7 +9,11 @@
 
 */
 
+#include <sstream>
+
 #include <boost/format.hpp>
+#include <boost/numeric/ublas/matrix.hpp>
+#include <boost/numeric/ublas/io.hpp>
 
 #include "bnmin_main.hxx"
 #include "../config.h"
@@ -36,7 +40,20 @@ namespace Minim {
   {
   }
     
+  
+  std::string concat(const std::string &s,
+		     const boost::numeric::ublas::matrix<double> &m)
+  {
+    std::ostringstream o;
+    o<<s<<m;
+    return o.str();
+  }
 
+  MatrixErr::MatrixErr(const std::string &s,
+		       const boost::numeric::ublas::matrix<double> &m):
+    BaseErr(concat(s, m))
+  {
+  }
 
 
 }
