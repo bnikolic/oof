@@ -7,7 +7,11 @@
 
    \file ellipsoids.hxx
 
-   Computation and use of ellipsoids releated to sets of points
+   Computation and use of ellipsoids releated to sets of
+   points. References are to Todd and Yildirim, "On Khachiyan's
+   Algorithm for the Computation of Minimum Volume Enclosing
+   Ellipsoids", 2005
+
 */
 #ifndef _BNMIN1_SETS_ELIIPSOIDS_HXX__
 #define _BNMIN1_SETS_ELIIPSOIDS_HXX__
