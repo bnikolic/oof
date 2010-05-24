@@ -32,7 +32,7 @@ namespace Minim {
        c.f. Eq 9
    */
   void Lift(const ublas::matrix<double> &A,
-	    ublas::matrix<double> &Ap);
+            ublas::matrix<double> &Ap);
 
 
   /** Compute the result of operator Lambda
@@ -42,13 +42,13 @@ namespace Minim {
       \param Lambdap The result is stored here
    */
   void KaLambda(const ublas::matrix<double> &Ap,
-		const ublas::vector<double> &p,
-		ublas::matrix<double> &Lambdap);
+                const ublas::vector<double> &p,
+                ublas::matrix<double> &Lambdap);
 
   /** Calculate the inverse of a result of lambda operator
    */
   void InvertLP(const ublas::matrix<double> &Lambdap,
-		ublas::matrix<double> &LpInv);
+                ublas::matrix<double> &LpInv);
   
 
   /** Iterate the Khachiyan algorithm one step
@@ -61,7 +61,7 @@ namespace Minim {
       \returns Error estimate 
    */
   double KhachiyanIter(const ublas::matrix<double> &Ap,
-		       ublas::vector<double> &p);
+                       ublas::vector<double> &p);
 
 
   /** Invert from the dual problem back to real space
@@ -70,10 +70,10 @@ namespace Minim {
       \param c The centre of the ellipse
    */
   void KaInvertDual(const ublas::matrix<double> &A,
-		    const ublas::vector<double> &p,
-		    ublas::matrix<double> &Q,
-		    ublas::vector<double> &c
-		    );
+                    const ublas::vector<double> &p,
+                    ublas::matrix<double> &Q,
+                    ublas::vector<double> &c
+                    );
 
 
   /** \param Compute minimum containing ellipsoid using the Khachiyan
@@ -93,10 +93,10 @@ namespace Minim {
       \param c The centre of the resulting ellipsoid
    */
   double KhachiyanAlgo(const ublas::matrix<double> &A,
-		       double eps,
-		       size_t maxiter,
-		       ublas::matrix<double> &Q,
-		       ublas::vector<double> &c);
+                       double eps,
+                       size_t maxiter,
+                       ublas::matrix<double> &Q,
+                       ublas::vector<double> &c);
 
 
   /** \brief Convenience class to store the results of minimum
@@ -116,9 +116,9 @@ namespace Minim {
       form
    */
   double KhachiyanAlgo(const std::set<MCPoint> &ss,
-		       double eps,
-		       size_t maxiter,
-		       KhachiyanEllipsoid &res);
+                       double eps,
+                       size_t maxiter,
+                       KhachiyanEllipsoid &res);
 
 
 }

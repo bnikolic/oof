@@ -25,7 +25,7 @@ namespace Minim {
   
   template<class T>
   bool InvertMatrix(const ublas::matrix<T> &input,
-		    ublas::matrix<T> &inverse) 
+                    ublas::matrix<T> &inverse) 
   {
     using namespace boost::numeric::ublas;
     typedef permutation_matrix<std::size_t> pmatrix;
@@ -48,35 +48,35 @@ namespace Minim {
   }
 
   void InvertLP(const ublas::matrix<double> &Lambdap,
-		ublas::matrix<double> &LpInv)
+                ublas::matrix<double> &LpInv)
   {
     bool res=InvertMatrix(Lambdap, LpInv);
     if (not res)
     {
       throw MatrixErr("Could not invert matrix: ",
-		      Lambdap);
+                      Lambdap);
     }
   }
 
   void Lift(const ublas::matrix<double> &A,
-	    ublas::matrix<double> &Ap)
+            ublas::matrix<double> &Ap)
   {
     Ap.resize(A.size1()+1,
-	      A.size2());
+              A.size2());
     ublas::matrix_range<ublas::matrix<double> > 
       sub(Ap, 
-	  ublas::range(0, A.size1()), 
-	  ublas::range(0, A.size2()));
+          ublas::range(0, A.size1()), 
+          ublas::range(0, A.size2()));
     sub.assign(A);
     ublas::row(Ap, Ap.size1()-1)=ublas::scalar_vector<double>(A.size2(),1.0);
 
   }
 
   void genDiag(const ublas::vector<double> &p,
-	       ublas::matrix<double> &res)
+               ublas::matrix<double> &res)
   {
     res.assign(ublas::zero_matrix<double>(p.size(), 
-					  p.size()));
+                                          p.size()));
     for(size_t i=0; i<p.size(); ++i)
     {
       res(i,i)=p(i);
@@ -84,8 +84,8 @@ namespace Minim {
   }
 
   void KaLambda(const ublas::matrix<double> &Ap,
-		const ublas::vector<double> &p,
-		ublas::matrix<double> &Lambdap)
+                const ublas::vector<double> &p,
+                ublas::matrix<double> &Lambdap)
   {
     
     ublas::matrix<double> dp(p.size(), p.size());
@@ -93,11 +93,11 @@ namespace Minim {
 
     dp=ublas::prod(dp, ublas::trans(Ap));
     Lambdap=ublas::prod(Ap, 
-			dp);
+                        dp);
   }
 
   double KhachiyanIter(const ublas::matrix<double> &Ap,
-		       ublas::vector<double> &p)
+                       ublas::vector<double> &p)
   {
     /// Dimensionality of the problem
     const size_t d=Ap.size1()-1;
@@ -116,8 +116,8 @@ namespace Minim {
     {
       if (M(i,i) > maxval)
       {
-	maxval=M(i,i);
-	maxi=i;
+        maxval=M(i,i);
+        maxi=i;
       }
     }
     const double step_size=(maxval -d - 1)/((d+1)*(maxval-1));
@@ -131,10 +131,10 @@ namespace Minim {
   }
 
   void KaInvertDual(const ublas::matrix<double> &A,
-		    const ublas::vector<double> &p,
-		    ublas::matrix<double> &Q,
-		    ublas::vector<double> &c
-		    )
+                    const ublas::vector<double> &p,
+                    ublas::matrix<double> &Q,
+                    ublas::vector<double> &c
+                    )
   {
     const size_t d=A.size1();
     ublas::matrix<double> dp(p.size(), p.size());
@@ -156,10 +156,10 @@ namespace Minim {
   }
 
   double KhachiyanAlgo(const ublas::matrix<double> &A,
-		       double eps,
-		       size_t maxiter,
-		       ublas::matrix<double> &Q,
-		       ublas::vector<double> &c)
+                       double eps,
+                       size_t maxiter,
+                       ublas::matrix<double> &Q,
+                       ublas::vector<double> &c)
   {
     ublas::vector<double> p=ublas::scalar_vector<double>(A.size2(), 1.0)*(1.0/A.size2());
 
@@ -180,21 +180,21 @@ namespace Minim {
   }
 
   double KhachiyanAlgo(const std::set<MCPoint> &ss,
-		       double eps,
-		       size_t maxiter,
-		       KhachiyanEllipsoid &res)
+                       double eps,
+                       size_t maxiter,
+                       KhachiyanEllipsoid &res)
   {
     const size_t d=ss.begin()->p.size();
     ublas::matrix<double> A(d,
-			    ss.size());
+                            ss.size());
 
     size_t j=0;
     for (std::set<MCPoint>::const_iterator i=ss.begin();
-	 i != ss.end();
-	 ++i)
+         i != ss.end();
+         ++i)
     {
       for(size_t k=0; k <d ;++k)
-	A(k,j)=i->p[k];
+        A(k,j)=i->p[k];
       ++j;
     }
     
@@ -202,7 +202,7 @@ namespace Minim {
     ublas::vector<double> c(d);
     
     const double ceps=KhachiyanAlgo(A, eps, maxiter,
-				    Q, c);
+                                    Q, c);
     res.Q=Q;
     res.c=c;
     return ceps;
