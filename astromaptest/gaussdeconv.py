@@ -16,6 +16,7 @@ import pybnlib
 import pyplot
 import pybnmin1
 import bnmin1utils
+import pyoof
 
 
 def setPlanet(m,
@@ -135,6 +136,65 @@ def fitObs(o,
                     mapsize*0.5,
                     mapsize*0.5)
     fm.eval(bestmodel)
+    return bestmodel, [lmm.getbyname(p).getp() for p in  fit], chisq
+
+def fitTS(fnamein,
+          pradius,
+          npix,
+          mapsize,
+          ic=[1, 0,  0,  1.0, 0, 0],
+          fit=["amp", "x0", "y0", "sigma", "diff", "rho" ],
+          Cm=0):
+    """
+    Like fitObs, but fit the time series data
+
+    Note that the time series data has a defined angular scale and
+    values pradius, mapsize, x0, y0 and sigma should be on similar
+    scale
+
+    :param fnamein: The name of FITS file containing the time stream data
+    
+    :param npix: Number of pixels to use in the simulated map (e.g. ~128)
+
+    :param mapsize: Angular size of map
+
+    Example:
+
+    >>> fitTS("/home/bnikolic/temp/almaoof/uid___X02_X48248_X1_DV02_A136_Saturn_band6.fits", 
+              math.radians(8.0/3600.0), 
+              256, 
+              math.radians(500.0/3600.0), 
+              fit=["amp", "sigma"], 
+              ic=[1, 0,  0,  math.radians(30.0/3600)**2, 0, 0])
+
+    """
+    pm=mkPlanet(npix, 
+                pradius, 
+                mapsize,
+                Cm=Cm)
+    m=pyplot.GaussConvMap_(pm)
+    m.thisown=0
+    ds=pyplot.LoadFITSDS(fnamein, 2)
+    ds.thisown=0
+    c=pyoof.MapToResidualDS(ds, pm, 1.0, 2)
+    c.thisown=0
+    fm=pyoof.FFCompare(m, c, pm);
+    bnmin1utils.SetIC(fm, 
+                      ic)
+    lmm=pybnmin1.LMMin(fm)
+    for p in fit:
+        lmm.getbyname(p).dofit=1
+    m1=pybnmin1.ChiSqMonitor()
+    m1.thisown=0
+    lmm.AddMon(m1)
+    lmm.solve()
+    chisq=lmm.ChiSquared()
+    bestmodel=pyplot.Map(npix, 
+                         npix)    
+    pyplot.MkRectCS(bestmodel, 
+                    mapsize*0.5,
+                    mapsize*0.5)
+    m.eval(bestmodel)
     return bestmodel, [lmm.getbyname(p).getp() for p in  fit], chisq
 
     
