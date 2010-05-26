@@ -44,6 +44,8 @@ namespace AstroMap {
      */
     ModelMap(void);
 
+    virtual ~ModelMap();
+
     // -------------- Public interface ----------------------
     
     /** \brief Set a map according to the current model

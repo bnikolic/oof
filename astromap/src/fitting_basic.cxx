@@ -20,6 +20,10 @@ namespace AstroMap {
   {
   }
 
+  ModelMap::~ModelMap()
+  {
+  }
+
   ModelMapFn::ModelMapFn(void):
     model(NULL)
   {

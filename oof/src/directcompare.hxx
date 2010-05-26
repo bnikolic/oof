@@ -16,12 +16,15 @@
 #include <boost/scoped_ptr.hpp>
 
 #include <minimmodel.hxx>
+#include <astromap.hxx>
 
 namespace AstroMap {
-  class FittableMap;
+  class ModelMap;
 }
 
 namespace OOF {
+
+  class MapToResidual;
 
   /** \brief Compare directly a far-field model to observations
    */
@@ -29,12 +32,33 @@ namespace OOF {
     public Minim::Minimisable 
   {
 
-    boost::scoped
+    boost::scoped_ptr<AstroMap::ModelMap> m;
+    boost::scoped_ptr<MapToResidual> o;
+
+    mutable AstroMap::Map mtemp;
 
   public:
 
+    /**
+       \param m The model  (we takes ownership of m)
+
+       \param o The observed data (e take ownership of o)
+       
+       \param msample Sample map to figure out things like number of
+       pixels and the coordinate system
+     */
+    FFCompare(AstroMap::ModelMap *m,
+	      MapToResidual *o,
+	      const AstroMap::Map &msample);
+
+    virtual ~FFCompare();
+
     
-    FFCompare(AstroMap::FittableMap *m);
+    //------------- Inherited from Minim::Minimisable-------------
+
+    virtual unsigned nres(void) const  ; 
+    virtual void residuals(std::vector<double> &res) const;
+    virtual void AddParams(std::vector<Minim::DParamCtr> &pars);
 
   };
 

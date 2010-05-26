@@ -36,6 +36,7 @@
 #include "../src/obsdefocus.hxx"
 #include "../src/obscompare.hxx"
 #include "../src/obsfilefns.hxx"
+#include "../src/directcompare.hxx"
 
 
 %}
@@ -75,6 +76,7 @@
 %include "../src/obsdefocus.hxx"
 %include "../src/obscompare.hxx"
 %include "../src/obsfilefns.hxx"
+%include "../src/directcompare.hxx"
 
 
 %extend OOF::ObsCompare {
