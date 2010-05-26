@@ -22,21 +22,11 @@ namespace BNLib{
 
 namespace AstroMap {
 
-  /**
-     \brief Fit functions to a in a map
+  /** A model for a map 
    */
-  class FittableMap :
-    public Minim::Minimisable
+  class ModelMap:
+    public Minim::Model
   {
-    /**  \brief The model to be fitted for
-     */
-    BNLib::BinaryDD * model;
-    
-    const Map & map;
-
-    /// A scratch map to compute the model on
-    mutable Map mtemp;
-
   public:
 
     // ---------- Public data ------------
@@ -47,11 +37,71 @@ namespace AstroMap {
      */
     bool worldcs;
 
+    // -------------- Construction / Destruction ------------
+
+    /**
+       Default constructor to set the public data
+     */
+    ModelMap(void);
+
+    // -------------- Public interface ----------------------
+    
+    /** \brief Set a map according to the current model
+
+	This function defines the interface of a ModelMap
+     */
+    virtual void eval(Map &m) const =0;
+
+  };
+
+  /**
+     A map model based on a simple function of two variables
+   */
+  class ModelMapFn:
+    public ModelMap
+  {
+
+    //// The model to be fit
+    BNLib::BinaryDD * model;
+
+  public:
+
+    // -------------- Construction / Destruction ------------
+
+    ModelMapFn(void);
+
+    // -------------- Public interface ----------------------
+
+    /** \brief Set the model to fit for
+     */
+    void SetModel(BNLib::BinaryDD *mod);
+
+    // ------- Inhertied from ModelMap ----------------------
+    virtual void eval(Map &m) const;    
+    
+  };
+    
+
+  /** \brief Fitting of map models to an observed map
+   */
+  class FittableMap :
+    public ModelMapFn,
+    public Minim::Minimisable
+  {
+
+    /// Observed map
+    const Map & map;
+
+    /// A scratch map to compute the model on
+    mutable Map mtemp;
+
+  public:
+
     // ---------- Construction/Destruction -------------
 
     /**
 
-       \param map the map to fit for. 
+       \param map the map to be fitted to
        
        \note still need to add parameters after construction
      */
@@ -59,30 +109,25 @@ namespace AstroMap {
 
     // ---------- Public interface         -------------
 
-    /** \brief Set the model to fit for
-     */
-    void SetModel(BNLib::BinaryDD *mod);
 
     /** \brief return a copy of the scratch map
 	
      */
     Map *ScratchCopy(void);
 
-    /** \brief Set a map according to the current model
-     */
-    virtual void eval(Map &m) const;
-    
 
     // ---------- Inherited from Minimisable -----------
     virtual void residuals( std::vector< double > &res) const;
     virtual unsigned nres(void) const; 
   };
 
-  /**
-     \brief Fit a gaussian to a map.
+  /** \brief A gaussian model for a map
+
+      This class defines just the model, and not the actual comparison
+      to the observed data which is done in GaussMapModel
    */
-  class GaussMapModel:
-    public FittableMap 
+  class GaussMapModel_:
+    public ModelMapFn
   {
   public:
 
@@ -92,23 +137,35 @@ namespace AstroMap {
        The gaussian model. Publicly expose for easy introspection.
      */
     BNLib::GaussianDD gm;
-    
 
     // ------------ Construction/ destruction ----------
     
-    GaussMapModel(const Map  &map);
+    GaussMapModel_(void);
 
-    // ---------- Inherited  from FittableMap ---------------
+    // ---------- Inherited  from MapModel ---------------
     virtual void eval(Map &m) const;
-    // ---------- Inherited from Minimisable -----------
     virtual void AddParams(std::vector< Minim::DParamCtr > &pars);
   };
 
   /**
-     \brief Fit for a gaussain convolved with another map
+     \brief Fit a gaussian to a map.
    */
-  class GaussConvMap:
-    public GaussMapModel
+  class GaussMapModel:
+    public FittableMap,
+    public GaussMapModel_
+  {
+  public:
+
+    // ------------ Construction/ destruction ----------
+    
+    GaussMapModel(const Map  &map);
+  };
+
+  /**
+     \brief Model with Gaussian and convolution
+   */
+  class GaussConvMap_:
+    public GaussMapModel_
   {
     /// The map to convolve with 
     const Map conv;
@@ -121,13 +178,31 @@ namespace AstroMap {
        \param obsmap The observed map
        \param conv The map to convolve with
      */
+    GaussConvMap_(const Map &conv);
+
+    virtual void eval(Map &m) const;
+    virtual void AddParams(std::vector< Minim::DParamCtr > &pars);
+  };
+
+  /**
+     \brief Fit for a gaussain convolved with another map
+   */
+  class GaussConvMap:
+    public FittableMap,    
+    public GaussConvMap_
+  {
+    
+  public:
+
+    // ------------ Construction/ destruction ----------
+    
+    /**
+       \param obsmap The observed map
+       \param conv The map to convolve with
+     */
     GaussConvMap(const Map &obsmap,
 		 const Map &conv);
 
-    // ---------- Inherited  from FittableMap ---------------
-    virtual void eval(Map &m) const;
-    // ---------- Inherited from Minimisable -----------
-    virtual void AddParams(std::vector< Minim::DParamCtr > &pars);
   };
 
 }

@@ -15,21 +15,17 @@
 
 namespace AstroMap {
   
-  FittableMap::FittableMap(  const Map       & map):
-    model(NULL),
-    map(map),
-    mtemp(map),
+  ModelMap::ModelMap(void):
     worldcs(true)
   {
-
   }
 
-  void FittableMap::SetModel(BNLib::BinaryDD * mod)
+  ModelMapFn::ModelMapFn(void):
+    model(NULL)
   {
-    model=mod;
   }
 
-  void FittableMap::eval(Map &m) const
+  void ModelMapFn::eval(Map &m) const
   {
     if (worldcs) 
     {
@@ -41,7 +37,19 @@ namespace AstroMap {
     }
   }
 
-  void FittableMap::residuals( std::vector< double > & res )  const
+  void ModelMapFn::SetModel(BNLib::BinaryDD * mod)
+  {
+    model=mod;
+  }
+  
+  FittableMap::FittableMap(const Map &map):
+    map(map),
+    mtemp(map)
+  {
+
+  }
+
+  void FittableMap::residuals(std::vector<double> &res)  const
   {
     eval(mtemp);
 
@@ -62,31 +70,30 @@ namespace AstroMap {
     return new Map(mtemp);
   }
 
-  GaussMapModel::GaussMapModel( const AstroMap::Map & mm) :
-    FittableMap( mm )
+  GaussMapModel_::GaussMapModel_(void)
   {
-    SetModel( & gm);
+    SetModel(&gm);
   }
 
-  void GaussMapModel::eval(Map &m) const
+  void GaussMapModel_::eval(Map &m) const
   {
-    FittableMap::eval(m);
+    ModelMapFn::eval(m);
   }
 
-  void  GaussMapModel::AddParams ( std::vector< Minim::DParamCtr > &pars )
+  void GaussMapModel_::AddParams (std::vector<Minim::DParamCtr> &pars)
   {
     
-    pars.push_back(Minim::DParamCtr ( & gm.amp ,      
-				      "amp", 
-				      true     ,                       
-				      "Amplitude "
-				      ));
+    pars.push_back(Minim::DParamCtr (&gm.amp,      
+				     "amp", 
+				     true,                       
+				     "Amplitude"
+				     ));
 
-    pars.push_back(Minim::DParamCtr ( & gm.x0 ,      
-				      "x0", 
-				      true     ,                       
-				      "x position "
-				      ));
+    pars.push_back(Minim::DParamCtr (&gm.x0,      
+				     "x0", 
+				     true     ,                       
+				     "x position "
+				     ));
 
     pars.push_back(Minim::DParamCtr ( & gm.y0 ,      
 				      "y0", 
@@ -113,29 +120,42 @@ namespace AstroMap {
 				      ));
   }
 
-  GaussConvMap::GaussConvMap(const Map &obsmap,
-			     const Map &conv):
-    GaussMapModel(obsmap),
+  GaussMapModel::GaussMapModel(const AstroMap::Map &mm):
+    FittableMap(mm)
+  {
+  }
+
+  GaussConvMap_::GaussConvMap_(const Map &conv):
     conv(conv)
   {
   }
     
-
-  void GaussConvMap::AddParams(std::vector<Minim::DParamCtr> &pars)
+  void GaussConvMap_::AddParams(std::vector<Minim::DParamCtr> &pars)
   {
-    GaussMapModel::AddParams(pars);
+    GaussMapModel_::AddParams(pars);
   }
 
-  void GaussConvMap::eval(Map &m) const
+  void GaussConvMap_::eval(Map &m) const
   {
     boost::scoped_ptr<AstroMap::Map> gmodel(AstroMap::Clone(m));
 
-    GaussMapModel::eval(*gmodel);    
+    GaussMapModel_::eval(*gmodel);    
     
     FFTConvolve(*gmodel, 
 		conv,
 		m);
   }
+
+  GaussConvMap::GaussConvMap(const Map &obsmap,
+			     const Map &conv):
+    FittableMap(obsmap),
+    GaussConvMap_(conv)
+  {
+  }
+
+
+
+
 
 }
 
