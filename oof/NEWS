@@ -7,6 +7,9 @@ Version 1.4b3
 
 New Features:
 
+* Support for non-point sources for OOF analysis (see
+  src/farfield/planetff.hxx)
+
 * Amplitude model for the ALMA aperture illimnation (sqgaussmod.hxx)
 
 Version 1.3
