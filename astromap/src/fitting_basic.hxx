@@ -205,6 +205,8 @@ namespace AstroMap {
     GaussConvMap(const Map &obsmap,
 		 const Map &conv);
 
+    virtual void AddParams(std::vector< Minim::DParamCtr > &pars);
+    virtual void eval(Map &m) const;    
   };
 
 }

@@ -157,7 +157,15 @@ namespace AstroMap {
   {
   }
 
+  void GaussConvMap::AddParams(std::vector< Minim::DParamCtr > &pars)
+  {
+    GaussConvMap_::AddParams(pars);
+  }
 
+  void GaussConvMap::eval(Map &m) const
+  {
+    GaussConvMap_::eval(m);
+  }
 
 
 
