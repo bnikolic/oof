@@ -2,6 +2,23 @@
 BNMin1 Release Notes  
 ======================
 
+To be version 1.12
+==================
+
+New features:
+
+* Implementation of the Khachiyan's algorithm for computing the
+  minimum covering ellipsoid
+
+* Nested sampling based on minimum covering ellipsoids of the live set
+
+Improvements:
+
+* Pretty printing of parameters is working again
+
+Bug fixes:
+
+
 Version 1.11
 ============
 
