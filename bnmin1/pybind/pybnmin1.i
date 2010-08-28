@@ -1,4 +1,11 @@
 %module pybnmin1 
+
+ // This define is required to work around symbol name clashes when
+ // loading
+ // multiple modules -- see for example:
+ // http://sourceforge.net/tracker/?func=detail&atid=101645&aid=1863647&group_id=1645
+#define PySwigIterator bnmin1_PySwigIterator
+
 %{
 #include "../src/bnmin_main.hxx"
 #include "../src/paramctr.hxx"
@@ -21,6 +28,8 @@
 #include "../src/apps/bayesline.hxx"
 
 %}
+
+%feature("autodoc", "1");
 
 %include "std_string.i"
 %include "std_vector.i"
