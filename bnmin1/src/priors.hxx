@@ -36,7 +36,7 @@ namespace Minim {
 	I.e., this is the value used for the negative log-likelihood
 	when priors have "hard" constraints
      */
-    static const double lkl_h=1e9;
+    static const double lkl_h;
 
     // ---------- Construction / Destruction --------------
 

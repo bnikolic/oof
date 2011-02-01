@@ -10,6 +10,8 @@
 #include <cmath>
 
 namespace Minim {
+  
+  const double PriorNLikelihood::lkl_h=1e9;
 
   PriorNLikelihood::PriorNLikelihood(MLikelihood * mod):
     _mod(mod)
