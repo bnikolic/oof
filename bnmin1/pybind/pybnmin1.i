@@ -5,7 +5,7 @@
  // multiple modules -- see for example:
  // http://sourceforge.net/tracker/?func=detail&atid=101645&aid=1863647&group_id=1645
 #define PySwigIterator bnmin1_PySwigIterator
-
+#define SwigPyIterator bnmin1_SwigPyIterator
 %{
 #include "../src/bnmin_main.hxx"
 #include "../src/paramctr.hxx"
