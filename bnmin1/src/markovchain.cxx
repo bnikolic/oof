@@ -117,11 +117,13 @@ namespace Minim {
   ILklChain::ILklChain(const v_t &ic,
 		       fx_t fLkl,
 		       fx_t fPr,
-		       fa_t fAccept):
+		       fa_t fAccept,
+		       fa_p fPriorReject):
     ChainBase(ic,
 	      fLkl,
 	      fPr),
-    fAccept(fAccept)
+    fAccept(fAccept),
+    fPriorReject(fPriorReject)
   {
     L=c.l;
   }
@@ -129,8 +131,16 @@ namespace Minim {
   bool ILklChain::propose(const v_t &x)
   {
     p.x=x;
-    p.l=fLkl(x);
     p.p=fPr(x);
+
+    if (not fPriorReject(c, p))
+    {
+      // Some proposals can be rejected on basis of priors only
+      return false;
+    }
+    
+    p.l=fLkl(x);
+
 
     const double aprob=fAccept(L,c,p);
     

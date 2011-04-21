@@ -213,12 +213,29 @@ namespace Minim {
   {
   public:
 
+    /** \brief Function which rejects proposed point based on prior
+	probability only
+	
+	Function should return false to reject sample
+     */
+    typedef boost::function< bool (const MCPoint2 &c, 
+				   const MCPoint2 &p) >  fa_p;
+
     /** \brief Function type to return the acceptance probability
 	
 	\param L is the likelihood supplied to reset
      */
-    typedef boost::function< double (double L, const MCPoint2 &c, const MCPoint2 &p) >  fa_t;
-
+    typedef boost::function< double (double L, 
+				     const MCPoint2 &c, 
+				     const MCPoint2 &p) >  fa_t;
+  
+  struct alwaysTrue {
+    bool operator() (const MCPoint2 &c, 
+		     const MCPoint2 &p)
+    {
+      return true;
+    }
+  };
   private:
 
     /// The initial likelihood
@@ -227,6 +244,9 @@ namespace Minim {
     /// The acceptance function
     fa_t fAccept;
 
+    /// The Prior rejection function
+    fa_p fPriorReject;
+
   public:
 
     // ---------- Construction / Destruction --------------
@@ -234,7 +254,8 @@ namespace Minim {
     ILklChain(const v_t &ic,
 	      fx_t fLkl,
 	      fx_t fPr,
-	      fa_t fAccept);
+	      fa_t fAccept,
+	      fa_p fPriorReject=alwaysTrue());
 
     // ---------- Public interface --------------------------
 

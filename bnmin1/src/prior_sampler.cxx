@@ -218,6 +218,16 @@ namespace Minim
   {
   }
 
+  bool rejImposPrior(const MCPoint2 &c, 
+		     const MCPoint2 &p)
+  {
+    if (p.p-c.p > 800)
+      // exponential will evaluate to zero anyway in doble precision
+      return false;
+    else
+      return true;
+  }
+
   void CSRMSSS::initChain(void)
   {
     MarkovChain::fx_t flkl=boost::bind(likelihood, 
@@ -235,7 +245,8 @@ namespace Minim
     c.reset(new ILklChain(ic,
 			  flkl,
 			  fprior,
-			  constrPriorL));
+			  constrPriorL,
+			  rejImposPrior));
 
     nprop=0;
   }
