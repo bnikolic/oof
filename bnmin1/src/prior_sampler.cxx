@@ -70,6 +70,19 @@ namespace Minim
       prop->displace(propose);      
       md.put(propose);
 
+      const double proplprior= - ml.pprob();
+
+      // Difference in log-prior for the proposed and current points
+      const double ldiff =  proplprior - clprior;
+
+      if (ldiff <-800)
+      {
+	// There is no possibility of accepting this point anyway so
+	// no point in computing the likelihood or generating a random
+	// number. (Note exp(-800) ==0 in double precision)
+	continue;
+      }
+
       const double propllikel= -ml.llprob();
       
       if (mon)
@@ -81,9 +94,6 @@ namespace Minim
 
       if (propllikel > L)
       {
-	const double proplprior  = - ml.pprob();
-	
-	double    ldiff =  proplprior - clprior;
 
 	if (ldiff > 0 or 
 	    prop->raccept() < exp(ldiff) )
