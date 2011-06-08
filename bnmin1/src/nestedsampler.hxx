@@ -129,8 +129,11 @@ namespace Minim {
 
     
 
-    /** Set the initial point selection strategy.  Note this object
-	will take ownership of the supplied object
+    /** Set the strategy for the selection of the initial point from
+	where the search for the next sample is started (only relevant
+	for MCMC type prior space exploration algorithms)
+
+	Note this function will take ownership of the supplied object
     */
     void InitalS(NestedInitial *ins);
 
