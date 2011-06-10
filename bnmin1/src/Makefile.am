@@ -36,7 +36,8 @@ libbnmin1_la_SOURCES = minimmodel.hxx minimmodel.cxx paramctr.hxx	\
 			sets/ellipsoids.cxx sets/ellipsoids.hxx		\
 			sets/spheres.cxx sets/spheres.hxx		\
 			sets/ellipsoids_sample.cxx			\
-			sets/ellipsoids_sample.hxx sets/cholesky.hpp
+			sets/ellipsoids_sample.hxx sets/cholesky.hpp	\
+			apps/gen1dfit.cxx apps/gen1dfit.hxx
 
 libbnmin1_la_LIBADD =   $(MAYBE_LIBS) $(GSL_LIBS)
 

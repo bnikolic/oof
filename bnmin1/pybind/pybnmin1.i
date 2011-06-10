@@ -30,6 +30,7 @@
 #include "../src/nestedinitial.hxx"
 #include "../src/apps/gaussmodel.hxx"
 #include "../src/apps/bayesline.hxx"
+#include "../src/apps/gen1dfit.hxx"
 
 %}
 
@@ -83,6 +84,7 @@ namespace boost { namespace numeric{ namespace ublas {}}};
 
 %include "../src/apps/gaussmodel.hxx"
 %include "../src/apps/bayesline.hxx"
+%include "../src/apps/gen1dfit.hxx"
 
 %extend Minim::LineFit {
 	

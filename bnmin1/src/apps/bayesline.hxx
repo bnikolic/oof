@@ -60,6 +60,7 @@ namespace Minim {
 
   };
 
+
   /** Compute the point estimates of slope and intercept and their
       covariance from posterior distribution 
   */
