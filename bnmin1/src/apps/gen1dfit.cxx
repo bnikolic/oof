@@ -13,6 +13,10 @@
 #include "gen1dfit.hxx"
 
 namespace Minim {
+  
+  Gen1Model::~Gen1Model()
+  {
+  }
 
   double Gen1Line::f(double  x) const
   {
@@ -75,12 +79,12 @@ namespace Minim {
     }
   }
 
-  Line1Obs::Line1Obs(Gen1Model *m):
+  Gen1Obs::Gen1Obs(Gen1Model *m):
     m(m)
   {
   }
 
-  void Line1Obs::add(double x,
+  void Gen1Obs::add(double x,
 		     double y,
 		     double y_err)
   {
@@ -91,12 +95,12 @@ namespace Minim {
     o.push_back(d);
   }
 
-  void Line1Obs::AddParams(std::vector<Minim::DParamCtr> &pars)
+  void Gen1Obs::AddParams(std::vector<Minim::DParamCtr> &pars)
   {
     m->AddParams(pars);
   }
 
-  double Line1Obs::lLikely(void) const
+  double Gen1Obs::lLikely(void) const
   {
     const size_t n=o.size();
     double res=0;

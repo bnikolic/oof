@@ -23,6 +23,8 @@ namespace Minim {
 
   public:
     
+    virtual ~Gen1Model();
+    
     virtual double f(double  x) const = 0;
 
   };
@@ -82,7 +84,7 @@ namespace Minim {
 
   /**
    */
-  class Line1Obs:
+  class Gen1Obs:
     public Minim::MLikelihood
   {
     /// This is the model for the observations
@@ -93,7 +95,7 @@ namespace Minim {
 
   public:
     
-    Line1Obs(Gen1Model *m);
+    Gen1Obs(Gen1Model *m);
     
     /** Add a new observed point to the set
      */
