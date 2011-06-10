@@ -48,8 +48,20 @@ namespace Minim {
 
   public:
     
-    double a;
+    double l_a;
     double p;
+
+    virtual double f(double  x) const;
+    void AddParams(std::vector<Minim::DParamCtr> &pars);
+  };
+
+  class Gen1ConstScale:
+    public Gen1Model
+  {
+
+  public:
+    
+    double l_c;
 
     virtual double f(double  x) const;
     void AddParams(std::vector<Minim::DParamCtr> &pars);

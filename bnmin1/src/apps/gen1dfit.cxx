@@ -39,20 +39,34 @@ namespace Minim {
 
   double Gen1Plaw::f(double  x) const
   {
-    return std::pow(x/a,p);
+    return std::pow(10,l_a)*std::pow(x,p);
   }
   
   void Gen1Plaw::AddParams(std::vector<Minim::DParamCtr> &pars)
   {
-    pars.push_back(Minim::DParamCtr (&a,      
-				     "a", 
+    pars.push_back(Minim::DParamCtr (&l_a,      
+				     "l_a", 
 				     true     ,                       
-				     "Ordinate at which power law is normalised"
+				     "Log10 amplitude at unit ordinate"
 				      ));
     pars.push_back(Minim::DParamCtr (&p,      
 				     "p", 
 				     true     ,                       
 				     "Index of the power law"
+				      ));
+  }
+
+  double Gen1ConstScale::f(double  x) const
+  {
+    return std::pow(10,l_c);
+  }
+  
+  void Gen1ConstScale::AddParams(std::vector<Minim::DParamCtr> &pars)
+  {
+    pars.push_back(Minim::DParamCtr (&l_c,      
+				     "l_c", 
+				     true     ,                       
+				     "Log10 of the constant value"
 				      ));
   }
 
