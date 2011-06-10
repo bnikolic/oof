@@ -7,6 +7,9 @@
 #define PySwigIterator bnmin1_PySwigIterator
 #define SwigPyIterator bnmin1_SwigPyIterator
 %{
+
+#include <iostream>
+
 #include "../src/bnmin_main.hxx"
 #include "../src/paramctr.hxx"
 #include "../src/minimmodel.hxx"
@@ -16,6 +19,7 @@
 #include "../src/lmmin.hxx"
 #include "../src/lmminutils.hxx"
 #include "../src/mcpoint.hxx"
+#include "../src/mcmonitor.hxx"
 #include "../src/metropolis.hxx"
 #include "../src/priors.hxx"
 #include "../src/twoerrline.hxx"
@@ -60,6 +64,7 @@ namespace std {
 %include "../src/lmmin.hxx"
 %include "../src/lmminutils.hxx"
 %include "../src/mcpoint.hxx"
+%include "../src/mcmonitor.hxx"
 %include "../src/metropolis.hxx"
 %include "../src/priors.hxx"
 %include "../src/twoerrline.hxx"

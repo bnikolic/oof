@@ -59,6 +59,10 @@ namespace Minim
     /// Counter for the proposed points
     size_t ip;
 
+    /** Stream to output to 
+     */
+    std::ostream &os;
+
   public:
 
     // -------------- Public Data -----------------------------
@@ -70,10 +74,6 @@ namespace Minim
     /** Every np-th propsed point will be shown
      */
     size_t np;
-
-    /** Stream to output to 
-     */
-    std::ostream &os;
 
     // -------------- Construction/Destruction ---------------------
     

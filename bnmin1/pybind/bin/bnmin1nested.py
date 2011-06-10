@@ -39,7 +39,8 @@ def setRandomIStrat(mm,
     
 def doSample(po,
              ns,
-             n_ss=200):
+             n_ss=200,
+             ellipsoid=False):
     """
     Carry out nested sampling
     """
@@ -49,9 +50,21 @@ def doSample(po,
                             ss)
     mm=pybnmin1.NestedS(po,
                         33)
-    mm.reset(ss)
-    setRandomIStrat(mm,
-                    n_ss)
+    if ellipsoid:
+        cps=pybnmin1.EllipsoidCPSampler(po, mm)
+        cps.thisown=False
+        cps.reshape_maxp=50
+        mm.reset(ss, cps)
+        cps.reshape()
+        pp=pybnmin1.SOutMCMon();
+        pp.thisown=False
+        mm.mon=pp;
+        cps.mon=pp;
+    else:
+        mm.reset(ss)
+        setRandomIStrat(mm,
+                        n_ss)
+
     Z=mm.sample(ns)
     print "Evidence: ", Z
     ns_act=len(mm.g_post())
