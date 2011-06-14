@@ -326,7 +326,11 @@ namespace Minim
     }
 
     KhachiyanEllipsoid res;
-    KhachiyanAlgo(scaled_s, 0.01, 200, res);
+    double eps=KhachiyanAlgo(scaled_s, 0.01, 200, res);
+    if (eps > 0.01 )
+    {
+      std::cout<<"Warning: ellipsoid fitting did not reach target ("<<eps<<")";
+    }
     es.reset(new EllipsoidSampler(res.Q, res.c, rng));
     missp=0;
     accp=0;
