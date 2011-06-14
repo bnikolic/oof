@@ -326,7 +326,7 @@ namespace Minim
     }
 
     KhachiyanEllipsoid res;
-    KhachiyanAlgo(scaled_s, 0.1, 50, res);
+    KhachiyanAlgo(scaled_s, 0.01, 200, res);
     es.reset(new EllipsoidSampler(res.Q, res.c, rng));
     missp=0;
     accp=0;

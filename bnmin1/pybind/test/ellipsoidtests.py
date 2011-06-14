@@ -24,9 +24,9 @@ def randomSet(d, n):
     
                   
 #ss=mkSet([ [1,1], [-1, -1], [1,-1],[-1,1], [0,0], [0.1, 0.1]])        
-ss=randomSet(3, 100)
+ss=randomSet(3, 1000)
 res=pybnmin1.KhachiyanEllipsoid()
-pybnmin1.KhachiyanAlgo(ss, 0.1, 50, res)
+pybnmin1.KhachiyanAlgo(ss, 2., 50, res)
 rg=pybnmin1.mt19937()
 
 ns=pybnmin1.EllipsoidSampler(res.Q,
@@ -37,11 +37,13 @@ def plotns(ns):
     pylab.clf()
     xx=pybnmin1.DoubleVector(2)
     rx, ry = [] ,[] 
-    for i in range(1000):
+    for i in range(10000):
         ns(xx)
         rx.append(xx[0])
         ry.append(xx[1])
     pylab.scatter(rx, ry)
+    pylab.ylim(0.2,0.3)
+    pylab.xlim(0.2,0.3)
 
     
 
