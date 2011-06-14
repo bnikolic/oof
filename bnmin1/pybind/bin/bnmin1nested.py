@@ -55,8 +55,9 @@ def doSample(po,
         cps.thisown=False
         cps.reshape_maxp=50
         mm.reset(ss, cps)
+        mm.n_psample=300
         cps.reshape()
-        if 0:
+        if 1:
             pp=pybnmin1.SOutMCMon();
             pp.thisown=False
             mm.mon=pp;
