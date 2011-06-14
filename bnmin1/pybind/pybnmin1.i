@@ -32,6 +32,9 @@
 #include "../src/apps/bayesline.hxx"
 #include "../src/apps/gen1dfit.hxx"
 
+#include "../src/sets/ellipsoids.hxx"
+#include "../src/sets/ellipsoids_sample.hxx"
+
 %}
 
 %feature("autodoc", "1");
@@ -104,4 +107,14 @@ namespace boost { namespace numeric{ namespace ublas {}}};
 	}
 }
 
+%include "../src/sets/ellipsoids.hxx"
+%include "../src/sets/ellipsoids_sample.hxx"
+
+%extend Minim::KhachiyanEllipsoid {
+	
+  double g_Q(size_t i, size_t j) 
+  {
+    return self->Q(i,j);
+  }
+}
 

@@ -191,6 +191,10 @@ namespace Minim {
                        KhachiyanEllipsoid &res)
   {
     const size_t d=ss.begin()->p.size();
+    if (ss.size() < d)
+    {
+      throw std::runtime_error("Not enough points supplied for KhachiyanAlgo");
+    }
     ublas::matrix<double> A(d,
                             ss.size());
 
