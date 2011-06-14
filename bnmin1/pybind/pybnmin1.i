@@ -83,7 +83,14 @@ namespace std {
 %include "../src/prior_sampler.hxx"
 %include "../src/nestedinitial.hxx"
 
-namespace boost { namespace numeric{ namespace ublas {}}};
+namespace boost { namespace numeric{ namespace ublas {}}
+  
+  class mt19937 { 
+  public:
+    mt19937(void) ;
+  };
+
+};
 
 %include "../src/apps/gaussmodel.hxx"
 %include "../src/apps/bayesline.hxx"
@@ -109,6 +116,7 @@ namespace boost { namespace numeric{ namespace ublas {}}};
 
 %include "../src/sets/ellipsoids.hxx"
 %include "../src/sets/ellipsoids_sample.hxx"
+
 
 %extend Minim::KhachiyanEllipsoid {
 	
