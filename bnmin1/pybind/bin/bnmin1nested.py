@@ -56,10 +56,11 @@ def doSample(po,
         cps.reshape_maxp=50
         mm.reset(ss, cps)
         cps.reshape()
-        pp=pybnmin1.SOutMCMon();
-        pp.thisown=False
-        mm.mon=pp;
-        cps.mon=pp;
+        if 0:
+            pp=pybnmin1.SOutMCMon();
+            pp.thisown=False
+            mm.mon=pp;
+            cps.mon=pp;
     else:
         mm.reset(ss)
         setRandomIStrat(mm,

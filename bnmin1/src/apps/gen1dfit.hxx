@@ -5,6 +5,9 @@
 // COPYING
 /**
    \file gen1dfit.hxx
+
+   General 1-dimensional models to use for fitting to simple problems
+
 */
 #ifndef _BNMIN1_APP_GEN1DFIT_HXX__
 #define _BNMIN1_APP_GEN1DFIT_HXX__
@@ -17,6 +20,8 @@
 
 namespace Minim {
 
+  /** Base class for general 1-dimensinoal fitting
+   */
   class Gen1Model:
         public Minim::Model
   {
@@ -42,6 +47,8 @@ namespace Minim {
     void AddParams(std::vector<Minim::DParamCtr> &pars);
   };
 
+  /** \brief Power law with a the amplitude a scale parameter
+   */
   class Gen1Plaw:
     public Gen1Model
   {

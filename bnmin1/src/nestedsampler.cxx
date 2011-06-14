@@ -134,6 +134,15 @@ namespace Minim {
       //put(worst->p);
       const double newl = ps->advance(worst->ll,
 				      n_psample);
+      
+      if (newl > 700)
+      {
+	//Reached maximum likelihood, exponential function and double
+	//precision blow up after this!
+
+	throw std::runtime_error("Likelihood too high!");
+	//break;
+      }
 
       // Create new point
       MCPoint np;
