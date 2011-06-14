@@ -335,8 +335,16 @@ namespace Minim
   double EllipsoidCPSampler::advance(double L,
 				     size_t maxprop)
   {
-    if (missp > reshape_missp or accp > reshape_maxp or (not es))
-      reshape();
+    try {
+      if (missp > reshape_missp or accp > reshape_maxp or (not es))
+	reshape();
+    }
+    catch (const Minim::MatrixErr &e)
+    {
+      std::cout<<"Could not invert matrix (collapsed dimension?)"<<std::endl
+	       <<"Terminating the sampling"<<std::endl;
+      return -L;
+    }
 
     const double cprior=ml.pprob();
 

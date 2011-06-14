@@ -40,10 +40,16 @@ namespace Minim {
     
     // create identity matrix of "inverse"
     inverse.assign(ublas::identity_matrix<T>(A.size1()));
-    
-    // backsubstitute to get the inverse
-    lu_substitute(A, pm, inverse);
-    
+
+    try {
+      // backsubstitute to get the inverse
+      lu_substitute(A, pm, inverse);
+    }
+    catch (const boost::numeric::ublas::internal_logic &e)
+    {
+      // Failed to invert the matrix using LU
+      return false;
+    }
     return true;
   }
 
