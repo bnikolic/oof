@@ -10,6 +10,9 @@
 
 #include <cmath>
 #include <algorithm>
+#include <iostream>
+
+#include <boost/foreach.hpp>
 
 #include <gsl/gsl_math.h>
 #include <gsl/gsl_eigen.h>
@@ -53,6 +56,15 @@ namespace Minim {
     ll=other.ll;
     fval=other.fval;
     return *this;
+  }
+
+  std::ostream & operator<<(std::ostream &o, const MCPoint &p)
+  {
+    o<<"Likelihood: "<<p.ll
+     <<" at: ";
+    BOOST_FOREACH(double x, p.p)
+      o<<x<<",";
+    return o;
   }
 
   void moment1(const std::list<WPPoint> &l,

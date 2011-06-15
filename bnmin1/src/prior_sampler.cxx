@@ -355,7 +355,11 @@ namespace Minim
     for (size_t pno=0; pno <= maxprop; ++pno)
     {
       std::vector<double> propose;
-      (*es)(propose);
+      // The second parameter is the scaling to the ellipsoid. Making
+      // this slightly larger than 1 makes the ellipsoid slightly
+      // bigger than strictly neccesary and should make sure we are
+      // not missing any sharp edges of the distribution
+      (*es)(propose, 1.1);
       for (size_t j=0; j<propose.size(); ++j)
 	propose[j]=propose[j]*prange[j]+pcent[j];
       md.put(propose);

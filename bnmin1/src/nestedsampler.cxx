@@ -11,6 +11,7 @@
 
 #include <cmath>
 #include <iostream>
+#include <sstream>
 
 #include <boost/random.hpp>
 #include <boost/random/mersenne_twister.hpp>
@@ -134,21 +135,22 @@ namespace Minim {
       //put(worst->p);
       const double newl = ps->advance(worst->ll,
 				      n_psample);
-      
-      if (newl > 700)
-      {
-	//Reached maximum likelihood, exponential function and double
-	//precision blow up after this!
-
-	throw std::runtime_error("Likelihood too high!");
-	//break;
-      }
 
       // Create new point
       MCPoint np;
       np.p.resize(NParam());
       get(np.p);
       np.ll=-newl;
+
+      if (newl > 700)
+      {
+	//Reached maximum likelihood, exponential function and double
+	//precision blow up after this!
+	std::ostringstream msg;
+	msg<<"Likelihood too high! Likelihood is:" << newl<<" at: "<<np;
+	throw std::runtime_error(msg.str());
+	//break;
+      }
 
       // Is the new sample actually inside the contours of last?
       const bool better = -newl  < worst->ll;

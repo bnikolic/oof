@@ -16,6 +16,7 @@
 #include <vector>
 #include <list>
 #include <set>
+#include <iosfwd>
 
 namespace Minim {
 
@@ -57,6 +58,8 @@ namespace Minim {
   {
     return a.ll < b.ll;
   }
+
+  std::ostream & operator<<(std::ostream &o, const MCPoint &p);
 
   /** \brief Weighted posterior point
 

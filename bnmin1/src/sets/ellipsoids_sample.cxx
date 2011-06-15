@@ -23,23 +23,25 @@ namespace Minim {
     cholesky_decompose(Q, Qu);
   }
 
-  void EllipsoidSampler::operator()(ublas::vector<double> &v)
+  void EllipsoidSampler::operator()(ublas::vector<double> &v,
+				    double ss)
   {
     v.resize(c.size());
     ublas::vector<double> s(v.size());
     UnifromSphereVolume(rng, s);    
 
     v=ublas::solve(Qu, s, ublas::lower_tag());
-    v=v+c;
+    v=v*ss+c;
     
   }
 
-  void EllipsoidSampler::operator() (std::vector<double> &v)
+  void EllipsoidSampler::operator() (std::vector<double> &v,
+				     double s)
   {
     const size_t d=c.size();
     v.resize(d);
     ublas::vector<double> r(d);
-    this->operator()(r);
+    this->operator()(r, s);
     for(size_t i=0; i<d ; ++i)
       v[i]=r[i];
   }

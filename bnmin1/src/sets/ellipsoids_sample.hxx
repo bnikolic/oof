@@ -54,9 +54,11 @@ namespace Minim {
 
     /** \brief Generate a point within ellipsoid and store in v
      */
-    void operator() (ublas::vector<double> &v);
+    void operator() (ublas::vector<double> &v,
+		     double s=1.0);
 
-    void operator() (std::vector<double> &v);
+    void operator() (std::vector<double> &v,
+		     double s=1.0);
 
 
   };

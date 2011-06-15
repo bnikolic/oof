@@ -55,7 +55,7 @@ def doSample(po,
         cps.thisown=False
         cps.reshape_maxp=50
         mm.reset(ss, cps)
-        mm.n_psample=300
+        mm.n_psample=500
         cps.reshape()
         if 1:
             pp=pybnmin1.SOutMCMon();
@@ -134,4 +134,11 @@ def jointHist(mm,
     return res
                       
         
+def printMoments(mm):
+    x=moments(mm)
+    for i, (m1, m2) in enumerate(x):
+        pname=mm.getbynumb(i).name
+        print "%s : %g +/- %g "%  (pname, m1, m2**0.5)
+    
+
 
