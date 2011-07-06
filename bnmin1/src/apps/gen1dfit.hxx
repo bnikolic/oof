@@ -34,11 +34,43 @@ namespace Minim {
 
   };
 
+  class Gen1Const:
+    public Gen1Model
+  {
+
+  public:
+    
+    double c;
+
+    virtual double f(double  x) const;
+    void AddParams(std::vector<Minim::DParamCtr> &pars);
+  };
+
   class Gen1Line:
     public Gen1Model
   {
 
   public:
+    
+    double a;
+    double b;
+
+    virtual double f(double  x) const;
+    void AddParams(std::vector<Minim::DParamCtr> &pars);
+  };
+
+  /** 
+      A normalised line, such that the amplitude is defined so that
+      the area under the line between two fixed points is
+      constant. Therefore, "b" really represents the area under the
+      line.
+  */
+  class Gen1LineNorm:
+    public Gen1Model
+  {
+
+  public:
+    double a0; double a1;
     
     double a;
     double b;
@@ -80,6 +112,25 @@ namespace Minim {
 
     boost::ptr_vector<Gen1Model> vm;
 
+  public:
+
+    /**
+       Takes ownwership of the supplied object
+     */
+    void add(Gen1Model *m);
+    
+    virtual double f(double  x) const;
+    void AddParams(std::vector<Minim::DParamCtr> &pars);
+  };
+
+  /** Cobine models by exponentiation, addition, and then taking the
+      log -- useful for fitting in loglog space but still wanting
+      additive components
+   */
+  class Gen1CompExp:
+    public Gen1Model
+  {
+    boost::ptr_vector<Gen1Model> vm;
   public:
 
     /**

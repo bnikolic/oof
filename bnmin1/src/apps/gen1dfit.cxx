@@ -18,12 +18,46 @@ namespace Minim {
   {
   }
 
+  double Gen1Const::f(double  x) const
+  {
+    return c;
+  }
+  
+  void Gen1Const::AddParams(std::vector<Minim::DParamCtr> &pars)
+  {
+    pars.push_back(Minim::DParamCtr (&c,      
+				     "c", 
+				     true     ,                       
+				     "Constant"
+				      ));
+  }
+
   double Gen1Line::f(double  x) const
   {
     return a*x+b;
   }
   
   void Gen1Line::AddParams(std::vector<Minim::DParamCtr> &pars)
+  {
+    pars.push_back(Minim::DParamCtr (&a,      
+				     "a", 
+				     true     ,                       
+				     "Slope of the line"
+				      ));
+    pars.push_back(Minim::DParamCtr (&b,      
+				     "b", 
+				     true     ,                       
+				     "Constant"
+				      ));
+  }
+
+  double Gen1LineNorm::f(double  x) const
+  {
+    const double norm=0.5*(a*a0+a*a1)*(a1-a0);
+    return a*x-norm+b;
+  }
+  
+  void Gen1LineNorm::AddParams(std::vector<Minim::DParamCtr> &pars)
   {
     pars.push_back(Minim::DParamCtr (&a,      
 				     "a", 
@@ -84,6 +118,29 @@ namespace Minim {
   }
 
   void Gen1Comp::AddParams(std::vector<Minim::DParamCtr> &pars)
+  {
+    for(size_t i=0; i<vm.size(); ++i)
+    {
+      std::string pref(boost::str(boost::format("c%i") %i));
+      vm[i].AddParams(pars, 
+		      pref);
+    }
+  }
+
+  void Gen1CompExp::add(Gen1Model *m)
+  {
+    vm.push_back(m);
+  }
+  
+  double Gen1CompExp::f(double  x) const
+  {
+    double res=0;
+    BOOST_FOREACH(const Gen1Model &m, vm)
+      res+=std::pow(10,m.f(x));
+    return std::log10(res);
+  }
+
+  void Gen1CompExp::AddParams(std::vector<Minim::DParamCtr> &pars)
   {
     for(size_t i=0; i<vm.size(); ++i)
     {
