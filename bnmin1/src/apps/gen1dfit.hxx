@@ -59,6 +59,27 @@ namespace Minim {
     void AddParams(std::vector<Minim::DParamCtr> &pars);
   };
 
+  /** A broken line, where the position of the break is a free
+      parameter but the magnitude of the break is not
+   */
+  class Gen1LineBroken:
+    public Gen1Model
+  {
+
+  public:
+    
+    double a;
+    double b;
+
+    double breakx;
+    
+    // Fixed
+    double breakmag;
+    
+    virtual double f(double  x) const;
+    void AddParams(std::vector<Minim::DParamCtr> &pars);
+  };
+
   /** 
       A normalised line, such that the amplitude is defined so that
       the area under the line between two fixed points is

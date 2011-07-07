@@ -51,6 +51,38 @@ namespace Minim {
 				      ));
   }
 
+  double Gen1LineBroken::f(double  x) const
+  {
+    if (x<breakx)
+    {
+      return (a+breakx)*(x-breakx) + a*x +b;
+    }
+    else
+    {
+      return a*x+b;
+    }
+  }
+  
+  void Gen1LineBroken::AddParams(std::vector<Minim::DParamCtr> &pars)
+  {
+    pars.push_back(Minim::DParamCtr (&a,      
+				     "a", 
+				     true     ,                       
+				     "Slope of the line"
+				      ));
+    pars.push_back(Minim::DParamCtr (&b,      
+				     "b", 
+				     true     ,                       
+				     "Constant"
+				      ));
+
+    pars.push_back(Minim::DParamCtr (&breakx,      
+				     "breakx", 
+				     true     ,                       
+				     "Position of the break"
+				      ));
+  }
+
   double Gen1LineNorm::f(double  x) const
   {
     const double norm=0.5*(a*a0+a*a1)*(a1-a0);
