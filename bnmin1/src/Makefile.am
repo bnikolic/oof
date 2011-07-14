@@ -37,7 +37,8 @@ libbnmin1_la_SOURCES = minimmodel.hxx minimmodel.cxx paramctr.hxx	\
 			sets/spheres.cxx sets/spheres.hxx		\
 			sets/ellipsoids_sample.cxx			\
 			sets/ellipsoids_sample.hxx sets/cholesky.hpp	\
-			apps/gen1dfit.cxx apps/gen1dfit.hxx
+			apps/gen1dfit.cxx apps/gen1dfit.hxx		\
+			simplexminim.cxx simplexminim.hxx
 
 libbnmin1_la_LIBADD =   $(MAYBE_LIBS) $(GSL_LIBS)
 
@@ -50,4 +51,4 @@ include_HEADERS = lmmin.hxx minim.hxx minimmodel.hxx paramctr.hxx	\
 			gradientmodel.hxx gradientminim.hxx		\
 			robustline.hxx nestedsampler.hxx mcpoint.hxx	\
 			nestederr.hxx nestedinitial.hxx linemodel.hxx\
-			prior_sampler.hxx mcmonitor.hxx
+			prior_sampler.hxx mcmonitor.hxx simplexminim.hxx

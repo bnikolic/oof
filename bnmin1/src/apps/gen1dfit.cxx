@@ -55,7 +55,7 @@ namespace Minim {
   {
     if (x<breakx)
     {
-      return (a+breakx)*(x-breakx) + a*x +b;
+      return (a+breakmag)*(x-breakx) + a*breakx +b;
     }
     else
     {
