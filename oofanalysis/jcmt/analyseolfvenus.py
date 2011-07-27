@@ -3,7 +3,6 @@
 #
 # Analyse very old JCMT venus observations
 
-from setup import *
 
 import oofreduce
 

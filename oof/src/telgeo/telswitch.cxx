@@ -41,6 +41,18 @@ namespace OOF {
     return res.release();
   }
 
+  TelGeometry * MkJCMTSimple(void)
+  {
+    std::auto_ptr<CassegrainGeo> res ( new CassegrainGeo() );
+
+    res->PrimRadius = 7.5   ;
+    res->PrimF      = 5.4   ;
+    res->SecRadius  = 0.75/2;
+    res->CasF       = 180.0;
+    return res.release();    
+  }
+    
+
   TelGeometry * TelSwitch(const char * telname )
   {
     
@@ -63,6 +75,10 @@ namespace OOF {
     else if ( !strcmp (telname, "90GBT") )
     {
       return new TruncGBT(45);
+    }
+    else if ( !strcmp (telname, "JCMT") )
+    {
+      return MkJCMTSimple();
     }
     else
     {
