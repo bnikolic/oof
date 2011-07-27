@@ -130,7 +130,7 @@ def jointHist(mm,
                       nbins,
                       res)
     res=numpy.array(res)
-    res.shape=[nbins]*len(pranges)
+    res.shape=[nbins]*len(l)
     return res
                       
         
