@@ -24,14 +24,24 @@
     Minim::Minimisable *mm=static_cast<Minim::Minimisable*>(data);
     Minim::ModelDesc md(*mm);
     md.copytopars(x);
-    for(size_t i=0; i<md.NParam(); ++i)
-      std::cerr<<x[i]<<",";
-    std::cerr<<std::endl;
     std::vector<double> vres(mm->nres());
     mm->residuals(vres);
     for(size_t i=0; i<vres.size(); ++i)
       res[i]=vres[i];
   }
+
+extern "C" void * inmin_minimisable_copy (void *d)
+{
+  Minim::Minimisable *mm=static_cast<Minim::Minimisable*>(d);
+  return (void *)mm->clone();
+}
+
+extern "C" void  inmin_minimisable_del (void *d)
+{
+  Minim::Minimisable *mm=static_cast<Minim::Minimisable*>(d);
+  delete(mm);
+}
+
 
 
 
@@ -153,13 +163,15 @@ namespace Minim {
     in.N=NParam();
     in.M=NRes();
     in.f=inmin_fres_helper;
-    in.ftol=1e-4;
-    in.xtol=1e-4;
-    in.gtol=1e-4;
+    in.ftol=ftol;
+    in.xtol=xtol;
+    in.gtol=gtol;
     in.maxfev=10000;
     in.box=NULL;
 
-    in.parll.doparallel=0;
+    in.parll.doparallel=1;
+    in.parll.f_copy=inmin_minimisable_copy;
+    in.parll.f_del=inmin_minimisable_del;
 
     BOOST_ASSERT(in.M>=in.N);
 
