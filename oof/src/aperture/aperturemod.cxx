@@ -28,6 +28,15 @@ namespace OOF {
 
   }
 
+  ApertureMod::ApertureMod(const ApertureMod &other):
+    wavel(other.wavel),
+    phasemodel(other.phasemodel->clone()),
+    amplimodel(other.amplimodel->clone()),
+    mphase(AstroMap::Clone(*other.mphase)),
+    mamp(AstroMap::Clone(*other.mamp))
+  {
+  }
+
   ApertureMod::~ApertureMod()
   {
     if ( phasemodel )
@@ -38,8 +47,11 @@ namespace OOF {
 
     delete mphase;
     delete mamp;
+  }
 
-
+  ApertureMod * ApertureMod::clone(void)
+  {
+    return new ApertureMod(*this);
   }
 
   const AstroMap::Map * ApertureMod::getphase(void)

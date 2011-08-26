@@ -25,19 +25,31 @@ namespace OOF {
   GaussAmpMod::GaussAmpMod( TelGeometry * telgeo , 
 			    AstroMap::Map & msample ):
     ApMask( ENFORCE(AstroMap::Clone(msample) ) ),
-    BoolApMask( (*ApMask) != 0.0 ) , 
+    BoolApMask( new std::valarray<bool>( (*ApMask) != 0.0)) , 
     gfn( ENFORCE(new BNLib::GaussianDD() )),
     EffRadius( telgeo->DishEffRadius() )
   {
     telgeo->DishMask(*ApMask);
-    BoolApMask = (*ApMask != 0.0) ;
+    (*BoolApMask) = (*ApMask != 0.0) ;
   }
+
+  GaussAmpMod::GaussAmpMod(const GaussAmpMod &other):
+    ApMask(other.ApMask),
+    BoolApMask(other.BoolApMask),
+    gfn(ENFORCE(new BNLib::GaussianDD(*other.gfn))),
+    EffRadius(other.EffRadius)
+  {
+  }
+    
 
   GaussAmpMod::~GaussAmpMod()
   {
-    ENFORCE(ApMask);
-    delete ApMask;
     delete gfn;
+  }
+
+  GaussAmpMod *GaussAmpMod::clone(void)
+  {
+    return new GaussAmpMod(*this);
   }
 
   void GaussAmpMod::Calc( AstroMap::Map &m)   const
@@ -53,7 +65,7 @@ namespace OOF {
 
 
     // Ought to normalise the coordinate system here.
-    WorldSet( m , *gfn, BoolApMask );    
+    WorldSet( m , *gfn, *BoolApMask);    
 
 
     

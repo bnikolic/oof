@@ -9,7 +9,7 @@
 #define _OOF_ZERNMODEL_HXX__
 
 #include "phasemod.hxx"
-
+#include <boost/shared_ptr.hpp>
 
 
 // forwards
@@ -45,7 +45,7 @@ namespace OOF {
     unsigned maxzorder;
 
     /*!  Rasterised  zernike polys are stored here */
-    AstroMap::LCMaps * lcm;
+    boost::shared_ptr<AstroMap::LCMaps> lcm;
 
     /** Check that maximum Zernike order is reasonable give map size
      */
@@ -72,6 +72,10 @@ namespace OOF {
     RZernModel(unsigned n, 
 	       AstroMap::Map & msample,
 	       TelGeometry * telgeo);
+
+    RZernModel(const RZernModel &other);
+
+    virtual RZernModel *clone(void);
 
     virtual ~RZernModel();
 

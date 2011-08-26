@@ -39,6 +39,10 @@ namespace OOF {
      */
     TopHatAmpMod ( double R);
 
+    TopHatAmpMod (const TopHatAmpMod &other);
+
+    TopHatAmpMod *clone(void);
+
     // -------- Inherited from AmpliMod ----------
     
     virtual void Calc( AstroMap::Map &m) const  ;

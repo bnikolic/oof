@@ -20,7 +20,6 @@ namespace OOF {
 
   FarF::FarF( AstroMap::Map & apmapsample, double wavel  ):
     ff( MkFFFact( apmapsample ) ),
-    ffown(true),
     wavel( wavel )
   {
   }
@@ -28,9 +27,12 @@ namespace OOF {
   FarF::FarF ( const FarF & f_other ) :
     wavel(f_other.wavel)
   {
-    ffown = false;
     ff = f_other.ff;
+  }
 
+  FarF * FarF::clone(void)
+  {
+    return new FarF(*this);
   }
   
   const FarF & FarF::operator= (const FarF & f_other)
@@ -41,10 +43,6 @@ namespace OOF {
 
   FarF::~FarF(void)
   {
-    if ( ffown)
-    {
-      delete ff;
-    }
   }
 
 

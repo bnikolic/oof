@@ -26,9 +26,24 @@ namespace OOF {
   {
     telgeo->DishMask(*ApMask);
   }
+
+  SqGaussMod::SqGaussMod(const SqGaussMod &other):
+    ApMask(other.ApMask),
+    effrad2(other.effrad2),
+    amp(other.amp),
+    sigma(other.sigma),
+    x0(other.x0),
+    y0(other.y0)
+  {
+  }
   
   SqGaussMod::~SqGaussMod(void)
   {
+  }
+
+  SqGaussMod *SqGaussMod::clone(void)
+  {
+    return new SqGaussMod(*this);
   }
 
   void SqGaussMod::Calc(AstroMap::Map &m) const

@@ -20,6 +20,17 @@ namespace OOF {
   {
   }
 
+  TopHatAmpMod::TopHatAmpMod(const TopHatAmpMod &other):
+    R(other.R),
+    amp(other.amp)
+  {
+  }
+
+  TopHatAmpMod *TopHatAmpMod::clone(void)
+  {
+    return new TopHatAmpMod(*this);
+  }
+
   void TopHatAmpMod::Calc( AstroMap::Map &m) const  
   {
     BNLib::TopHatDD th;

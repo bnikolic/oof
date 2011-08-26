@@ -25,6 +25,8 @@ namespace OOF {
 
     public:
 
+      virtual AmpliMod *clone(void) =0;
+
       // ------ Member functions ----------------------------
 
       /**

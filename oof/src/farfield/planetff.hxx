@@ -40,6 +40,8 @@ namespace OOF {
 	     AstroMap::Map &apmapsample,
 	     double wavel);
 
+    PlanetFF(const PlanetFF &other);
+
     virtual ~PlanetFF();
 
     // ---------- Functions inherited from FarF  -------------

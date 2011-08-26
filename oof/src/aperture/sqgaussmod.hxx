@@ -8,7 +8,7 @@
 #ifndef __OOF_SQGAISSMOD_HXX__
 #define __OOF_SQGAISSMOD_HXX__
 
-#include <boost/scoped_ptr.hpp>
+#include <boost/shared_ptr.hpp>
 
 #include "amplimod.hxx"
 
@@ -29,7 +29,7 @@ namespace OOF {
   {
 
     /** This defines the physical extent of the aperture */
-    boost::scoped_ptr<AstroMap::Map> ApMask;
+    boost::shared_ptr<AstroMap::Map> ApMask;
 
     /// Square of the radius of the dish
     const double effrad2;
@@ -44,10 +44,13 @@ namespace OOF {
 
     SqGaussMod(TelGeometry *telgeo, 
 	       AstroMap::Map &msample);
-    
+
+    SqGaussMod(const SqGaussMod &other);
+
     virtual ~SqGaussMod(void);
 
-
+    SqGaussMod *clone(void);
+    
     // ----- Inherited from AmpliMod  ------------------------------
 
     virtual void Calc(AstroMap::Map &m) const;

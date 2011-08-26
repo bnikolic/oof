@@ -57,9 +57,6 @@ namespace OOF {
      */
     AstroMap::Map * mamp;
 
-    /// Should not be able to copy
-    ApertureMod( const ApertureMod & a): wavel(0) {};
-    
     /// Should not be able to assign
     const ApertureMod & operator= (const ApertureMod &a)
     {
@@ -78,8 +75,11 @@ namespace OOF {
 		 double wavel,
 		 AstroMap::Map &mapsample);
 
-
+    ApertureMod(const ApertureMod &other);
+    
     virtual ~ApertureMod();
+
+    virtual ApertureMod * clone(void);
 
     // ------ Member Functions  ----------------------------
 

@@ -38,6 +38,17 @@ namespace OOF {
     farf( customff)
   {
   }
+
+  ObsCompare::ObsCompare(const ObsCompare &other):
+    aperture(other.aperture->clone()),
+    phasescreens(other.phasescreens),
+    rescalculators(other.rescalculators),
+    ApScratch(AstroMap::Clone(*other.ApScratch)),
+    ApScratchDephase(AstroMap::Clone(*other.ApScratchDephase)),
+    SkyScratch(AstroMap::Clone(*other.ApScratch)),
+    farf(other.farf->clone())
+  {
+  }
 	
 
   ObsCompare::~ObsCompare(void)
@@ -49,11 +60,6 @@ namespace OOF {
     delete ApScratchDephase;
     delete SkyScratch;
 
-    for (size_t i =0 ; i < phasescreens.size() ; ++i )
-      {
-	delete phasescreens[i];
-	delete rescalculators[i];
-      }
     delete farf;
 
   }
@@ -61,8 +67,8 @@ namespace OOF {
   
   void ObsCompare::AddObs( MapToResidual * rc , ObsPhaseScreen * ps)
   {
-    rescalculators.push_back(rc);
-    phasescreens.push_back(ps);
+    rescalculators.push_back(boost::shared_ptr<MapToResidual>(rc));
+    phasescreens.push_back(boost::shared_ptr<ObsPhaseScreen>(ps));
   }
 
   unsigned ObsCompare::NObs(void)

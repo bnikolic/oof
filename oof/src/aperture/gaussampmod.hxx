@@ -17,6 +17,7 @@
 #ifndef __OOF_GAUSSAMPMOD_HXX__
 #define __OOF_GAUSSAMPMOD_HXX__
 
+#include <boost/shared_ptr.hpp>
 #include "amplimod.hxx"
 #include <valarray>
 
@@ -43,10 +44,10 @@ namespace OOF {
   class GaussAmpMod : public AmpliMod {
 
     /*! This defines the physical extent of the aperture */
-    AstroMap::Map * ApMask;
+    boost::shared_ptr<AstroMap::Map> ApMask;
     
     /*! This is similar to ApMask but is a bool valarray */
-    std::valarray<bool> BoolApMask;
+    boost::shared_ptr< std::valarray<bool> > BoolApMask;
 
     /*! Store here the actuall gaussian used */
     BNLib::GaussianDD * gfn;
@@ -59,9 +60,14 @@ namespace OOF {
     
     // ----- Constructor & Destructor   ------------
     
-    GaussAmpMod( TelGeometry * telgeo , AstroMap::Map & msample );
+    GaussAmpMod(TelGeometry *telgeo, 
+		AstroMap::Map &msample);
+
+    GaussAmpMod(const GaussAmpMod &other);
     
     virtual ~GaussAmpMod();
+    
+    virtual GaussAmpMod *clone(void);
 
     // ----- Add simplified access to the Gaussian parameers
     

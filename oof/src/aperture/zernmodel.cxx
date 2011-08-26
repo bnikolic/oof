@@ -75,17 +75,27 @@ namespace OOF {
     RastZerns (  n , msample, *mask);
 
   }
+
+  RZernModel::RZernModel(const RZernModel &other):
+    maxzorder(other.maxzorder),
+    lcm(other.lcm)
+  {
+  }
+
     
   RZernModel::~RZernModel()
   {
-    delete lcm;
+  }
+
+  RZernModel *RZernModel::clone(void)
+  {
+    return new RZernModel(*this);
   }
 
   void RZernModel::RastZerns (  unsigned maxorder , 
 				AstroMap::Map &msample,
 				AstroMap::Map & mask )
   {
-
     for (int  n =0 ; n <= (int)maxorder ; ++n )
       {
 	for(int l= -n; l<=n ; l += 2)
@@ -98,7 +108,6 @@ namespace OOF {
 
 	  }
       }
-
   }
 
   void RZernModel::Calc( AstroMap::Map &m)  const 

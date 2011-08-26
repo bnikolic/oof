@@ -25,6 +25,15 @@ namespace OOF {
   {
   }
 
+  PlanetFF::PlanetFF(const PlanetFF &other):
+    FarF(other),
+    planetm(AstroMap::Clone(*other.planetm.get())),
+    radius(other.radius),
+    wavel(other.wavel)
+  {
+  }
+    
+
   PlanetFF::~PlanetFF()
   {
   }

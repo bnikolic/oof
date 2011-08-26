@@ -52,6 +52,8 @@ namespace OOF {
 
     virtual ~ChoppedFF();
 
+    ChoppedFF *clone(void);
+
     // ---------- Functions inherited from FarF  -------------
 
     virtual void Power ( const AstroMap::Map & amp, 

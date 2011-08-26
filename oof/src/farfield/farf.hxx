@@ -8,6 +8,7 @@
 #define _OOF_FARF_HXX__
 
 #include <minimmodel.hxx>
+#include <boost/shared_ptr.hpp>
 
 // Forwards
 namespace AstroMap {
@@ -28,16 +29,13 @@ namespace OOF {
 
     /*! This will do the actuall far-field calculation
      */
-    AstroMap::FFTFact * ff;
+    boost::shared_ptr<AstroMap::FFTFact> ff;
     
-    /*! If this is true then this class will delete ff;
-     */
-    bool   ffown;
-
     /*! The wavelength of radiation ( allows correct setting of
      *  coordinate systems on the results maps */
     const double wavel;
 
+  protected:
     /** Non trivial copy constructor as we may own a pointer. If
 	f_other is destroyed then this object will be invalid.
     */
@@ -55,7 +53,9 @@ namespace OOF {
       not used. */
     FarF ( AstroMap::Map & apmapsample, double wavel );
 
-    ~FarF(void);
+    virtual ~FarF(void);
+
+    virtual FarF *clone(void);
 
     // ------------ Member functions -----------------------
 

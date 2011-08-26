@@ -9,6 +9,8 @@
 #ifndef __OOF_OBSCOMPARE_HXX__
 #define __OOF_OBSCOMPARE_HXX__
 
+#include <boost/shared_ptr.hpp>
+
 #include <minimmodel.hxx>
 
 #include <astromap_fwd.hxx>
@@ -36,11 +38,11 @@ namespace OOF {
 
     /*! Each observation can have its own phase screen, typically this
      *   is a defocus */
-    std::vector<ObsPhaseScreen *> phasescreens;
+    std::vector<boost::shared_ptr<ObsPhaseScreen> > phasescreens;
 
     /*! These classes contain the actuall observed data and they
      *  return the residuals  */
-    std::vector<MapToResidual *> rescalculators;
+    std::vector<boost::shared_ptr<MapToResidual> > rescalculators;
 
     /// A scratch map for calculating apertures
     AstroMap::Map *ApScratch;
@@ -71,6 +73,8 @@ namespace OOF {
     ObsCompare( ApertureMod * aperture,
 		AstroMap::Map &apsample,
 		FarF * customff);		
+
+    ObsCompare(const ObsCompare &other);		
 
     virtual ~ObsCompare(void) ;
 

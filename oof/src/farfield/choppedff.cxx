@@ -44,6 +44,11 @@ namespace OOF {
     delete (skyscratch);
   }
 
+  ChoppedFF *ChoppedFF::clone(void)
+  {
+    throw "Note implemented";
+  }
+
   void ChoppedFF::Power ( const AstroMap::Map & amp, 
 			  const AstroMap::Map & phase, 
 			  AstroMap::Map & res) 

@@ -28,6 +28,8 @@ namespace OOF {
     // ------ Constructor / Destructor ---------------
     virtual ~PhaseMod(void);
 
+    virtual PhaseMod *clone(void) =0;
+
     // ------ Member functions ----------------------------
 
     /** \brief Calculate the phase model
