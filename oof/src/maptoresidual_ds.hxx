@@ -36,6 +36,14 @@ namespace OOF {
     /*! This converts the supplied maps to a model data series */
     AstroMap::MapDSEval * mapinterp;
 
+    /** Constructor to support easier cloning. Ownership is taken of
+	all pointers supplied.
+     */
+    MapToResidualDS(AstroMap::DataSeries *obsds, 
+		    AstroMap::MapDSEval *mapinterp);
+
+
+
   public:
 
     /* ----- Constructors / Destructors  ----------------*/
@@ -52,6 +60,8 @@ namespace OOF {
 		      double fwhm_px, double extent_px);
 
     virtual ~MapToResidualDS() ;
+
+    MapToResidualDS * clone(void);
 
     /* ----- Member Functions ---------------------------*/
     

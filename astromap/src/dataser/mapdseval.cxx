@@ -207,6 +207,17 @@ namespace AstroMap {
 			     fwhm_px, extent_px );
   }
 
+  MapDSEval *MapDSEval::clone(void)
+  {
+    // The default copy ctor will simply copy the pointers
+    MapDSEval *res=new MapDSEval(*this);
+    // Now go through and allocate new objects to be owned by the new
+    // class
+    for(size_t i=0; i<res->lcs.size(); ++i)
+      res->lcs[i]=new MapPixLC(*res->lcs[i]);
+    return res;
+  }
+
   void MapDSEvalBase::Calc( Map const &m, std::valarray<double> & res)
   {
     for (unsigned i =0 ; i < lcs.size() ; ++i )

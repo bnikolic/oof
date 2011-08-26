@@ -23,11 +23,25 @@ namespace OOF {
   {
 
   }
+  MapToResidualDS::MapToResidualDS(AstroMap::DataSeries *obsds, 
+				   AstroMap::MapDSEval *mapinterp):
+    obsds(obsds),
+    modelds(obsds->size()),
+    mapinterp(mapinterp)
+  {
+  }
+    
 
   MapToResidualDS::~MapToResidualDS()
   {
     delete obsds;
     delete mapinterp;
+  }
+
+  MapToResidualDS * MapToResidualDS::clone(void)
+  {
+    return new MapToResidualDS(obsds->clone(),
+			       mapinterp->clone());
   }
 
   unsigned   MapToResidualDS::nres (void)  

@@ -22,6 +22,11 @@ namespace AstroMap {
 
   }
 
+  DataSeries* DataSeries::clone(void)
+  {
+    return new DataSeries(*this);
+  }
+
   void InvertDS ( DataSeries &ds)
   {
     for (size_t i =0 ; i < ds.size() ; ++i )

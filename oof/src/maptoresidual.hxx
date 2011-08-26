@@ -31,6 +31,9 @@ namespace OOF {
 
     virtual ~MapToResidual();
 
+    /// Clone function for multi-threading support
+    virtual MapToResidual* clone(void) =0;
+
     /* ----- Member Functions ---------------------------*/
 
     /*! Return the number of residuals that this class will return */

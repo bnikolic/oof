@@ -31,6 +31,8 @@ namespace AstroMap {
 
     DataSeries( void );
 
+    virtual DataSeries* clone(void);
+
 
   };
 

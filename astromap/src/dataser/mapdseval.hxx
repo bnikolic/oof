@@ -176,6 +176,8 @@ namespace AstroMap {
 	       Map const & msample,
 	       double fwhm_px, double extent_px);
 
+    
+    virtual MapDSEval *clone(void);
 
   };
   
