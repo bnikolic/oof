@@ -65,7 +65,9 @@ namespace Minim {
     m(xvals,
       yvals,
       sigmax,
-      sigmay)
+      sigmay),
+    xvals(xvals),
+    yvals(yvals)
   {
     m.a=1.0;
     m.b=1.0;
@@ -92,6 +94,12 @@ namespace Minim {
   void LineTwoErr_LavMarq::AddParams(std::vector< Minim::DParamCtr > &pars)
   {
     m.AddParams(pars);
+  }
+
+  LineTwoErr_LavMarq *LineTwoErr_LavMarq::clone(void)
+  {
+    return new LineTwoErr_LavMarq(xvals, yvals, 
+				  m.sigmax, m.sigmay);
   }
 
 

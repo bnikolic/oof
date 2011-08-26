@@ -7,6 +7,9 @@ To be version 1.12
 
 New features:
 
+* Classes deriving from "class Minimisable" must now define a clone
+  function. This is to support multi-threaded forthcoming optimisation
+
 * Implementation of the Khachiyan's algorithm for computing the
   minimum covering ellipsoid
 

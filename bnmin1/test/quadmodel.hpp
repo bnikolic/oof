@@ -106,6 +106,11 @@ public:
     qm.AddParams(pars);
   }
 
+  QuadObs * clone(void)
+  {
+    return new QuadObs(x, obs);
+  }
+
 
 };
 

@@ -96,6 +96,11 @@ namespace Minim {
     /// of residuals that will be evaluated
     virtual unsigned   nres (void) const  =0 ; 
 
+    /// A virtual constructor function, to enable multi-threaded
+    /// minimisation/optimisation. Abstract because other members of
+    /// these functions are abstract.
+    virtual Minimisable *clone(void) =0;
+
     // ---------- Inherited from  MLikelihood  --------------------------
 
     /** Minimisation routines will already assume a gaussian error

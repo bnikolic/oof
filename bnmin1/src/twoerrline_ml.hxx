@@ -68,6 +68,10 @@ namespace Minim {
     public Minimisable
   {
     LineTwoErrML m;
+
+    // Keep a copy of these to be able to copy-construct
+    std::vector<double> xvals;
+    std::vector<double> yvals;
   public:
     
     LineTwoErr_LavMarq(const std::vector<double> &xvals,
@@ -79,6 +83,7 @@ namespace Minim {
     void AddParams(std::vector< Minim::DParamCtr > &pars);    
     virtual void  residuals (std::vector<double> &res) const;    
     virtual unsigned nres (void) const;     
+    LineTwoErr_LavMarq *clone(void);    
 
   };
 
