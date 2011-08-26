@@ -25,6 +25,8 @@ namespace Minim {
     public Minimiser 
   {
 
+    Minimisable &mm;
+
   public:
 
     // ---------- Public data  -----------------------
@@ -82,6 +84,9 @@ namespace Minim {
 
     // ------------------ Inherited from Minimiser -------------
     virtual void solve(void);
+
+    /// Solve using multi threaded algorithms
+    void solve_mt(void);
 
   };
 

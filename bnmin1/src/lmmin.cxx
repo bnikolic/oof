@@ -12,6 +12,30 @@
 #include "../config.h"
 
 #include "lmmin.hxx"
+#include <boost/assert.hpp>
+#include <iostream>
+
+#include "/home/bnikolic/p/inmin-test/include/inmin_lm.h"
+
+  extern "C" void inmin_fres_helper (const double *x,
+				     double *res,
+				     void   *data)
+  {
+    Minim::Minimisable *mm=static_cast<Minim::Minimisable*>(data);
+    Minim::ModelDesc md(*mm);
+    md.copytopars(x);
+    for(size_t i=0; i<md.NParam(); ++i)
+      std::cerr<<x[i]<<",";
+    std::cerr<<std::endl;
+    std::vector<double> vres(mm->nres());
+    mm->residuals(vres);
+    for(size_t i=0; i<vres.size(); ++i)
+      res[i]=vres[i];
+  }
+
+
+
+
 
 #include "pda.hxx"
 
@@ -36,6 +60,7 @@ namespace Minim {
   
   LMMin::LMMin( Minimisable &pm ): 
     Minimiser(pm),
+    mm(pm),
     ftol(1e-3), 
     xtol(1e-3),
     gtol(1e-3),
@@ -117,6 +142,40 @@ namespace Minim {
 #endif
     
     LMMin_lock  =0;
+  }
+
+
+  void LMMin::solve_mt(void)
+  {
+    InitRes();
+
+    inmin_lm_in in;
+    in.N=NParam();
+    in.M=NRes();
+    in.f=inmin_fres_helper;
+    in.ftol=1e-4;
+    in.xtol=1e-4;
+    in.gtol=1e-4;
+    in.maxfev=10000;
+    in.box=NULL;
+
+    in.parll.doparallel=0;
+
+    BOOST_ASSERT(in.M>=in.N);
+
+    std::vector<double> res(in.N);
+    inmin_lm_out out;
+    out.x=&res[0];
+    out.covar=NULL;
+
+    std::vector<double>  pinit(in.N); 
+    copyfrompars(&pinit[0]);
+    
+    inmin_lm_run_levmar(&in,
+			&pinit[0],
+			&out,
+			(void *)&mm);
+    copytopars(&res[0]);
   }
   
   

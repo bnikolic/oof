@@ -40,7 +40,7 @@ libbnmin1_la_SOURCES = minimmodel.hxx minimmodel.cxx paramctr.hxx	\
 			apps/gen1dfit.cxx apps/gen1dfit.hxx		\
 			simplexminim.cxx simplexminim.hxx
 
-libbnmin1_la_LIBADD =   $(MAYBE_LIBS) $(GSL_LIBS)
+libbnmin1_la_LIBADD =   $(MAYBE_LIBS) $(GSL_LIBS) /home/bnikolic/p/inmin-test/lib/libinmin.la
 
 libbnmin1_la_CFLAGS = -Wall $(GSL_CFLAGS)
 libbnmin1_la_CPPFLAGS = -Wall $(GSL_CFLAGS) ${BOOST_CPPFLAGS}
