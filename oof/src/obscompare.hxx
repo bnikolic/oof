@@ -78,6 +78,8 @@ namespace OOF {
 
     virtual ~ObsCompare(void) ;
 
+    ObsCompare *clone(void);
+
     // ------- Member functions -----------------------
 
     /** Add an observation to the current set

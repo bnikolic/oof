@@ -64,6 +64,11 @@ namespace OOF {
 
   }
 
+  ObsCompare *ObsCompare::clone(void)
+  {
+    return new ObsCompare(*this);
+  }
+
   
   void ObsCompare::AddObs( MapToResidual * rc , ObsPhaseScreen * ps)
   {
