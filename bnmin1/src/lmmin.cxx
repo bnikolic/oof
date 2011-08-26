@@ -27,7 +27,9 @@
     std::vector<double> vres(mm->nres());
     mm->residuals(vres);
     for(size_t i=0; i<vres.size(); ++i)
+    {
       res[i]=vres[i];
+    }
   }
 
 extern "C" void * inmin_minimisable_copy (void *d)

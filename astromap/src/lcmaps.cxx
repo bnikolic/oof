@@ -9,6 +9,11 @@
 
 
 namespace AstroMap {
+
+  LCMaps *LCMaps::clone(void)
+  {
+    return new LCMaps(*this);
+  }
   
   void LCMaps::AddMap (const Map &m) 
   {

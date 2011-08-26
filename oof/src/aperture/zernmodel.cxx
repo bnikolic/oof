@@ -78,7 +78,7 @@ namespace OOF {
 
   RZernModel::RZernModel(const RZernModel &other):
     maxzorder(other.maxzorder),
-    lcm(other.lcm)
+    lcm(other.lcm->clone())
   {
   }
 

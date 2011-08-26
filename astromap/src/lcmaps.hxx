@@ -28,6 +28,8 @@ namespace AstroMap {
 
     /* Default constructors are OK */
 
+    LCMaps *clone(void);
+
 
     /*! Add a map the lc set */
     void AddMap (const Map &m) ;
