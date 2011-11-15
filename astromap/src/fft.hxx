@@ -47,6 +47,10 @@ namespace AstroMap {
 
     /// Constructor
     FFTFact(int nx, int ny,  direction dir , cntr docenter=center);
+
+    FFTFact(const FFTFact &other);
+
+    virtual FFTFact *clone(void);
     
     /// Destructor; can't use auto_ptr for ip because it points to a
     /// class which in some context is never defined.

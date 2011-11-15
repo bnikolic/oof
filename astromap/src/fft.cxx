@@ -187,6 +187,23 @@ namespace AstroMap {
   {
     
   }
+
+  FFTFact::FFTFact(const FFTFact &other):
+    ip ( new  iFFTFact(other.nx,
+		       other.ny,
+		       other.dir,
+		       other.docenter)),
+    nx(other.nx),
+    ny(other.ny),
+    dir(other.dir),
+    docenter(other.docenter)
+  {
+  }
+
+  FFTFact *FFTFact::clone(void)
+  {
+    return new FFTFact(*this);
+  }
   
   FFTFact::~FFTFact() 
   {

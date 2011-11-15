@@ -11,6 +11,7 @@
 
 #include "../config.h"
 
+#include <memory.h>
 #include "lmmin.hxx"
 #include <boost/assert.hpp>
 #include <iostream>
@@ -44,6 +45,12 @@ extern "C" void  inmin_minimisable_del (void *d)
   delete(mm);
 }
 
+void simple_stdout_trace(size_t level,
+			 const char *msg,
+			 void *state)
+{
+  std::cout<<level<<": "<<msg<<std::endl;
+}
 
 
 
@@ -162,6 +169,7 @@ namespace Minim {
     InitRes();
 
     inmin_lm_in in;
+    memset(&in, 0, sizeof(inmin_lm_in));
     in.N=NParam();
     in.M=NRes();
     in.f=inmin_fres_helper;
@@ -171,9 +179,12 @@ namespace Minim {
     in.maxfev=10000;
     in.box=NULL;
 
-    in.parll.doparallel=1;
+    in.parll.doparallel=0;
     in.parll.f_copy=inmin_minimisable_copy;
     in.parll.f_del=inmin_minimisable_del;
+
+    in.mon.trace_f=simple_stdout_trace;
+    in.mon.trace_l=9;
 
     BOOST_ASSERT(in.M>=in.N);
 
@@ -185,7 +196,7 @@ namespace Minim {
     std::vector<double>  pinit(in.N); 
     copyfrompars(&pinit[0]);
     
-    inmin_lm_run_levmar(&in,
+    inmin_lm_run_eigen(&in,
 			&pinit[0],
 			&out,
 			(void *)&mm);

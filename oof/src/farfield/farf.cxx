@@ -25,9 +25,10 @@ namespace OOF {
   }
 
   FarF::FarF ( const FarF & f_other ) :
+    ff(f_other.ff->clone()),
     wavel(f_other.wavel)
   {
-    ff = f_other.ff;
+
   }
 
   FarF * FarF::clone(void)
