@@ -37,6 +37,7 @@ def plotmap(mapp,
             valrange=None,
             contours=None,
             contcolour=None,
+            contourmap=None,
             aspect=1.0):
 
 
@@ -54,6 +55,8 @@ def plotmap(mapp,
            the data from the minimum to maximum value.
 
     aspect:    aspect  ratio of the plot
+
+    :param contourmap: If not False, this is 
 
     """
     mapp  = pyplot.Map(mapp)
@@ -103,6 +106,9 @@ def plotmap(mapp,
 
     if contcolour != None:
         pyplot.cpgsci(contcolour)
+
+    if contours != None and contourmap :
+            mapp=contourmap
 
     if contours != None:
         if abox is None:
