@@ -16,6 +16,8 @@
 #include <boost/assert.hpp>
 #include <iostream>
 
+#ifdef _INMIN_INTEGRATION__ // This is still experimental
+
 #include "/home/bnikolic/p/inmin-test/include/inmin_lm.h"
 
   extern "C" void inmin_fres_helper (const double *x,
@@ -52,7 +54,7 @@ void simple_stdout_trace(size_t level,
   std::cout<<level<<": "<<msg<<std::endl;
 }
 
-
+#endif
 
 
 
@@ -167,7 +169,7 @@ namespace Minim {
   void LMMin::solve_mt(void)
   {
     InitRes();
-
+#ifdef _INMIN_INTEGRATION__ // This is still experimental
     inmin_lm_in in;
     memset(&in, 0, sizeof(inmin_lm_in));
     in.N=NParam();
@@ -201,6 +203,7 @@ namespace Minim {
 			&out,
 			(void *)&mm);
     copytopars(&res[0]);
+#endif
   }
   
   
