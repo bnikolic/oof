@@ -18,7 +18,7 @@ namespace AstroMap {
                                Map const & msample,
                                double fwhm_px, 
                                double extent_px):
-    c_stride((extent_px+1)*(extent_px+1)),
+    c_stride((2*extent_px+1)*(2*extent_px+1)),
     ndp(ds.size()),
     nt(ndp * c_stride),
     iv(nt), cv(nt, 0.0)
