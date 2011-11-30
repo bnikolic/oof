@@ -84,14 +84,15 @@ namespace AstroMap {
     BNLib::GaussianDD gfn( fwhm_px / 2.35, px, py );
 
 
-    int xmin = cx - extent_px;
-    int xmax = cx + extent_px;
-    int ymin = cy - extent_px;
-    int ymax = cy + extent_px;
+    int xmin = px - extent_px;
+    int xmax = px + extent_px;
+    int ymin = py - extent_px;
+    int ymax = py + extent_px;
     
     if  (xmin < 0 or xmax >= (signed) msample.nx  or
          ymin < 0 or ymax >= (signed) msample.ny ) 
       throw "Can't use Reg degrid for points which are too close to edge of map";
+
 
     *iv=(ymin*msample.nx+xmin);
 

@@ -23,9 +23,11 @@ namespace OOF {
     modelds( obsds->size() ),
 #ifdef DSFLAT
     mapinterp( new AstroMap::MapDSEvalFlat( * obsds, msample, fwhm_px, extent_px ) )
-#elifdef DSREG
+#endif
+#ifdef DSREG
     mapinterp( new AstroMap::MapDSEvalReg( * obsds, msample, fwhm_px, extent_px ) )
-#else
+#endif
+#ifdef DSSTD
     mapinterp( new AstroMap::MapDSEval( * obsds, msample, fwhm_px, extent_px ) )
 #endif
   {
