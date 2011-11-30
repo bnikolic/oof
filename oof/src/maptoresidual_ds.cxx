@@ -12,7 +12,7 @@
 #include <mapdseval.hxx>
 #include <mapdseval_flat.hxx>
 
-#define DSFLAT 1
+#define DSREG 1
 
 namespace OOF {
 
@@ -23,6 +23,8 @@ namespace OOF {
     modelds( obsds->size() ),
 #ifdef DSFLAT
     mapinterp( new AstroMap::MapDSEvalFlat( * obsds, msample, fwhm_px, extent_px ) )
+#elifdef DSREG
+    mapinterp( new AstroMap::MapDSEvalReg( * obsds, msample, fwhm_px, extent_px ) )
 #else
     mapinterp( new AstroMap::MapDSEval( * obsds, msample, fwhm_px, extent_px ) )
 #endif
