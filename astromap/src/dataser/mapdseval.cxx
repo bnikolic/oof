@@ -23,7 +23,7 @@
 
 namespace AstroMap {
 
-  MapPixLC::MapPixLC( std::valarray<unsigned> const &index , 
+  MapPixLC::MapPixLC( std::valarray<size_t> const &index , 
 		      std::valarray<double > const &coeff ):
     index(index),
     coeff(coeff)
@@ -31,15 +31,6 @@ namespace AstroMap {
 
   }
 
-
-  double MapPixLC::operator() (Map const &m)
-  {
-    double res = 0;
-    for (unsigned i =0 ; i < index.size() ; ++i )
-      res += coeff[i] * m[ index[i] ];
-
-    return res;
-  }
 
   double MapPixLC::operator() (Map const &m, 
 			       signed int offset)
@@ -62,7 +53,7 @@ namespace AstroMap {
 
   void MapPixLC::print(void)
   {
-    for (unsigned i =0 ; i < index.size() ; ++i )
+    for (size_t i =0 ; i < index.size() ; ++i )
     {
       std::cout<<"index= " <<index[i]<<"; c=" <<coeff[i]<<std::endl;
     }
@@ -84,12 +75,12 @@ namespace AstroMap {
     // Exactract the pixels withing the supplied extnent
     PixListInt pxl = ExSquare( (int) px, (int) py, (int) extent_px, msample);
 
-    std::valarray<unsigned> index(pxl.size());
+    std::valarray<size_t> index(pxl.size());
     std::valarray<double>   coeff(pxl.size());
 
     double totcoeff = 0;
 
-    for (unsigned i =0 ; i < pxl.size() ; ++i ) 
+    for (size_t i =0 ; i < pxl.size() ; ++i ) 
       {
 	int currpx = pxl.px[i];
 	int currpy = pxl.py[i];	
@@ -114,10 +105,10 @@ namespace AstroMap {
 
     PixListInt pxl = ExSquare(  px,  py, ceil(radius), msample);
     
-    std::vector<unsigned> index;
+    std::vector<size_t> index;
     std::vector<double>   coeff;
 
-    for (unsigned i =0 ; i < pxl.size() ; ++i ) 
+    for (size_t i =0 ; i < pxl.size() ; ++i ) 
     {
 	int currpx = pxl.px[i];
 	int currpy = pxl.py[i];	
@@ -130,7 +121,7 @@ namespace AstroMap {
     }
 
     std::valarray<double> vcoeff( &coeff[0] , coeff.size() );
-    std::valarray<unsigned> vindex( &index[0] , index.size() );
+    std::valarray<size_t> vindex( &index[0] , index.size() );
     vcoeff /= vcoeff.sum() ;
     return new MapPixLC( vindex, vcoeff);
   }
@@ -155,7 +146,7 @@ namespace AstroMap {
     double yd = py - yl;
 
     std::valarray<double> vcoeff( 4);
-    std::valarray<unsigned> vindex( 4);
+    std::valarray<size_t> vindex( 4);
     
     vcoeff[0]= xd * yd;
     vindex[0]= (yh*msample.nx+ xh);
@@ -190,7 +181,7 @@ namespace AstroMap {
 
   MapDSEvalBase::~MapDSEvalBase()
   {
-    for (unsigned i =0 ; i < lcs.size() ; ++i )
+    for (size_t i =0 ; i < lcs.size() ; ++i )
       delete lcs[i];
   }
 
@@ -201,7 +192,7 @@ namespace AstroMap {
 
     lcs.resize(ds.size() );
 
-    for (unsigned i =0 ; i < ds.size() ; ++i )
+    for (size_t i =0 ; i < ds.size() ; ++i )
       lcs[i] = MkGaussCoffs( ds[i].dX, ds[i].dY, 
 			     msample,
 			     fwhm_px, extent_px );
@@ -220,7 +211,7 @@ namespace AstroMap {
 
   void MapDSEvalBase::Calc( Map const &m, std::valarray<double> & res)
   {
-    for (unsigned i =0 ; i < lcs.size() ; ++i )
+    for (size_t i =0 ; i < lcs.size() ; ++i )
       {
 	res[i] = (*lcs[i])(m);
       }
@@ -228,7 +219,7 @@ namespace AstroMap {
 
   void MapDSEvalBase::Calc( Map const &m, std::vector<double> & res)
   {
-    for (unsigned i =0 ; i < lcs.size() ; ++i )
+    for (size_t i =0 ; i < lcs.size() ; ++i )
       {
 	res[i] = (*lcs[i])(m);
       }
@@ -238,7 +229,7 @@ namespace AstroMap {
 			    DataSeries & res)
   {
 
-    for (unsigned i =0 ; i < lcs.size() ; ++i )
+    for (size_t i =0 ; i < lcs.size() ; ++i )
     {
       res[i].fnu = (*lcs[i])(m);
     }
@@ -255,7 +246,7 @@ namespace AstroMap {
     std::valarray<double> vcoeff(1);
     vcoeff[0] = 1.0;
     
-    std::valarray<unsigned> vindex(1);
+    std::valarray<size_t> vindex(1);
     vindex[0] = py * msample.nx + px;
 
     return new MapPixLC(vindex, vcoeff);
@@ -267,7 +258,7 @@ namespace AstroMap {
   {
     lcs.resize(ds.size());
 
-    for (unsigned i =0 ; i < ds.size() ; ++i )
+    for (size_t i =0 ; i < ds.size() ; ++i )
       lcs[i] = NearestPixelLC( ds[i].dX, ds[i].dY, 
 			       msample);
 

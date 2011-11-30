@@ -13,11 +13,11 @@
 
 #include <valarray>
 #include <vector>
+#include "astromap.hxx"
 
 namespace AstroMap {
 
   // Forwards;
-  class Map;
   class DataSeries;
 
   /*!
@@ -35,7 +35,7 @@ namespace AstroMap {
     // -------------- Public data ---------------------
 
     /// The indexes of pixels in this linear combination
-    const std::valarray<unsigned> index;
+    const std::valarray<size_t> index;
     /// The coefficient of each pixel in this combination
     const std::valarray<double>   coeff;
 
@@ -46,12 +46,23 @@ namespace AstroMap {
 
      \param coeff The coefficients to use for the weighthing
     */
-    MapPixLC( std::valarray<unsigned> const &index , 
+    MapPixLC( std::valarray<size_t> const &index , 
 	      std::valarray<double > const &coeff );
 
     /*! Calculate the linear combination on the supplied map and
-      return the value*/
-    double operator() (Map const &m);
+      return the value
+
+    This is a performance critical routine so inlining for maximum
+    efficiency
+    */
+    double operator() (Map const &m)
+    {
+      double res = 0;
+      const size_t len_index=index.size();
+      for (size_t i=0 ; i < len_index; ++i )
+        res += coeff[i] * m[ (unsigned)(index[i]) ];
+      return res;
+    }
 
     /**
        Calculate the linear combination, but ofset all of the indices
