@@ -148,18 +148,19 @@ namespace AstroMap {
                            std::valarray<double> & res)
   {
     size_t k=0;
-    for(size_t i=0; i<ndp; ++i)
+    for(size_t dpi=0; dpi<ndp; ++dpi)
     {
-      res[i]=0;
       double t=0;
-      const size_t si=iv[i];
+      const size_t si=iv[dpi];
       for(size_t j=0; j<rl; ++j)
-        for(size_t i=0; i<rl; ++i)
       {
-        t+=cv[k]*m[si+j*rl*i];
-        ++k;
+        for(size_t i=0; i<rl; ++i)
+        {
+          t+=cv[k]*m[si+j*i_stride+i];
+          ++k;
+        }
       }
-      res[i]=t;
+      res[dpi]=t;
     }
   }
 
