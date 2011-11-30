@@ -47,12 +47,12 @@ namespace AstroMap {
     const unsigned naxis = 2;
 
     // Pixel coordinate vector
-    std::valarray<double> pc(naxis);
+    double  pc[naxis];
     pc[0] = px;
     pc[1] = py;
     
     // World coordinate vector
-    std::valarray<double> wc(naxis);    
+    double wc[naxis];    
     
     for(unsigned  i=0 ; i< naxis ; ++i) 
       {
