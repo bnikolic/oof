@@ -34,13 +34,13 @@ namespace OOF {
     std::valarray<double> modelds;
 
     /*! This converts the supplied maps to a model data series */
-    AstroMap::MapDSEval * mapinterp;
+    AstroMap::MapDSEvalBase * mapinterp;
 
     /** Constructor to support easier cloning. Ownership is taken of
 	all pointers supplied.
      */
     MapToResidualDS(AstroMap::DataSeries *obsds, 
-		    AstroMap::MapDSEval *mapinterp);
+		    AstroMap::MapDSEvalBase *mapinterp);
 
 
 

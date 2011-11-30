@@ -179,7 +179,7 @@ namespace AstroMap {
 
   }
 
-  MapDSEvalBase::~MapDSEvalBase()
+  MapDSEvalB2::~MapDSEvalB2()
   {
     for (size_t i =0 ; i < lcs.size() ; ++i )
       delete lcs[i];
@@ -198,10 +198,10 @@ namespace AstroMap {
 			     fwhm_px, extent_px );
   }
 
-  MapDSEval *MapDSEval::clone(void)
+  MapDSEvalBase *MapDSEvalB2::clone(void)
   {
     // The default copy ctor will simply copy the pointers
-    MapDSEval *res=new MapDSEval(*this);
+    MapDSEvalB2 *res=new MapDSEvalB2(*this);
     // Now go through and allocate new objects to be owned by the new
     // class
     for(size_t i=0; i<res->lcs.size(); ++i)
@@ -209,7 +209,7 @@ namespace AstroMap {
     return res;
   }
 
-  void MapDSEvalBase::Calc( Map const &m, std::valarray<double> & res)
+  void MapDSEvalB2::Calc( Map const &m, std::valarray<double> & res)
   {
     for (size_t i =0 ; i < lcs.size() ; ++i )
       {
@@ -217,7 +217,7 @@ namespace AstroMap {
       }
   }
 
-  void MapDSEvalBase::Calc( Map const &m, std::vector<double> & res)
+  void MapDSEvalB2::Calc( Map const &m, std::vector<double> & res)
   {
     for (size_t i =0 ; i < lcs.size() ; ++i )
       {
@@ -225,7 +225,7 @@ namespace AstroMap {
       }
   }
 
-  void MapDSEvalBase::Calc( Map const &m, 
+  void MapDSEvalB2::Calc( Map const &m, 
 			    DataSeries & res)
   {
 

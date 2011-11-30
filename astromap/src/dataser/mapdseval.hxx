@@ -118,6 +118,7 @@ namespace AstroMap {
 			  size_t n,
 			  const Map &m);
 
+
   /**
      Allow easy storage of pre-computed linear-combination
      coefficients so that multiple interpolations from maps with same
@@ -126,13 +127,37 @@ namespace AstroMap {
   */
   class MapDSEvalBase {
 
+  public:
+
+    virtual ~MapDSEvalBase() {};
+
+    /*! 
+      Interpolate the supplied map m to the position in the
+      dataseries supplied in constructor and return the result in the
+      array res.
+    */
+    virtual void Calc( Map const &m, 
+                       std::valarray<double> & res) =0;
+
+    virtual MapDSEvalBase *clone(void) = 0;
+
+
+
+  };
+
+  /**
+  */
+  class MapDSEvalB2:
+             public MapDSEvalBase
+  {
+
   protected:
     
     std::valarray<MapPixLC *> lcs;    
 
   public:
 
-    virtual ~MapDSEvalBase();
+    virtual ~MapDSEvalB2();
 
     /*! 
       Interpolate the supplied map m to the position in the
@@ -155,6 +180,8 @@ namespace AstroMap {
     void Calc( Map const &m, 
 	       DataSeries & res);
 
+    MapDSEvalBase *clone(void);
+
   };
   
   /** 
@@ -164,7 +191,7 @@ namespace AstroMap {
     significantly saving time.
   */
   class MapDSEval:
-    public MapDSEvalBase
+    public MapDSEvalB2
   {
 
   public:
@@ -188,8 +215,6 @@ namespace AstroMap {
 	       double fwhm_px, double extent_px);
 
     
-    virtual MapDSEval *clone(void);
-
   };
   
   /**
@@ -198,7 +223,7 @@ namespace AstroMap {
      interpolation of any kind is done.
    */
   class MapDSNearest :
-    public MapDSEvalBase
+    public MapDSEvalB2
   {
 
   public:

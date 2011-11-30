@@ -17,7 +17,9 @@
 
 namespace AstroMap {
 
-  class MapDSEvalFlat {
+  class MapDSEvalFlat:
+      public MapDSEvalBase
+  {
 
     /** Stride in coefficients to get to next return value
      */
@@ -34,8 +36,12 @@ namespace AstroMap {
                   double fwhm_px, 
                   double extent_px);
 
+    ~MapDSEvalFlat();
+
     void Calc( Map const &m, 
 	       std::valarray<double> & res);
+
+    MapDSEvalBase *clone(void);
     
   };
 

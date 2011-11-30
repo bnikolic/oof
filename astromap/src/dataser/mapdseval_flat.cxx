@@ -37,6 +37,10 @@ namespace AstroMap {
     }
   }
 
+  MapDSEvalFlat::~MapDSEvalFlat()
+  {
+  }
+
   void MapDSEvalFlat::Calc( Map const &m, 
                             std::valarray<double> &res)
   {
@@ -50,6 +54,11 @@ namespace AstroMap {
       }
       res[i]=t;
     }
+  }
+
+  MapDSEvalBase *MapDSEvalFlat::clone(void)
+  {
+    return new MapDSEvalFlat(*this);
   }
 }
 

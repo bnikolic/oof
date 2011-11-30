@@ -10,7 +10,9 @@
 #include <astromap.hxx>
 #include <dataseries.hxx>
 #include <mapdseval.hxx>
+#include <mapdseval_flat.hxx>
 
+#define DSFLAT 1
 
 namespace OOF {
 
@@ -19,12 +21,16 @@ namespace OOF {
 				     double fwhm_px, double extent_px) :
     obsds(obsds) ,
     modelds( obsds->size() ),
+#ifdef DSFLAT
+    mapinterp( new AstroMap::MapDSEvalFlat( * obsds, msample, fwhm_px, extent_px ) )
+#else
     mapinterp( new AstroMap::MapDSEval( * obsds, msample, fwhm_px, extent_px ) )
+#endif
   {
 
   }
   MapToResidualDS::MapToResidualDS(AstroMap::DataSeries *obsds, 
-				   AstroMap::MapDSEval *mapinterp):
+				   AstroMap::MapDSEvalBase *mapinterp):
     obsds(obsds),
     modelds(obsds->size()),
     mapinterp(mapinterp)

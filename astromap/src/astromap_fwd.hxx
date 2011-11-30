@@ -13,6 +13,7 @@ namespace AstroMap {
   class DataSeries;
 
   class MapDSEval;
+  class MapDSEvalBase;
 
 }
 
