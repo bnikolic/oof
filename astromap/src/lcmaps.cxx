@@ -37,11 +37,16 @@ namespace AstroMap {
 		std::vector<Map> const & maps,
 		Map & res)
   {
-    // Zer the results map
+    // Zero the results map
     res *= 0;
-
+    size_t msize=res.size();
     for ( size_t i = 0 ; i < coeffs.size() ; ++i)
-      res += coeffs[i] *  maps[i];
+    {
+      const double cc=coeffs[i];
+      const Map &cm=maps[i];
+      for(size_t j=0; j<msize; ++j)
+        res[j] += cc *  cm[j];
+    }
   }
 
 }
