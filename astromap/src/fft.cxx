@@ -25,6 +25,33 @@
 // functions sets FFTW up for multi-threaded operation
 static int _astromap_fftw_threads_init=fftw_init_threads();
 
+
+// A simple function to prepare for transform
+void TransfPrep(const double *amp,
+                const double *phi,
+                const size_t nx,
+                const size_t ny,
+                double mul,
+                double *fin)
+{
+  for (size_t i=0; i<nx; i++) 
+  {
+    for (size_t j=0; j<ny; j++) 
+    {
+      if ( (i+j) & 1) 
+      {
+        fin[(i*nx + j)*2]= amp[i*nx + j] * cos( phi[i*nx + j] ) * mul;
+        fin[(i*nx + j)*2+1]= amp[i*nx + j] * sin( phi[i*nx + j] ) * mul;
+      } 
+      else 
+      {
+        fin[(i*nx + j)*2]= amp[i*nx + j] * cos(phi[i*nx + j] );
+        fin[(i*nx + j)*2+1]= amp[i*nx + j] * sin(phi[i*nx + j] );
+      }
+    }
+  }
+}
+
 namespace AstroMap {
 
   /* ------------------  Implementation class section -----------------------*/
@@ -85,26 +112,10 @@ namespace AstroMap {
     void Transform(const Map &Amp, const Map &Phi ) {
             int mul = ( docenter == FFTFact::center ? -1 : 1 ) ;
 
-	    int nx=Amp.nx;
-	    int ny=Amp.ny;
-
-  
-	    for (int i =0 ; i < nx ; i++ ) 
-	      {
-		for (int j=0 ; j < ny ; j++ ) 
-		  {
-		    if (i+j & 1) 
-		      {
-			fin[i*nx + j][0]= Amp[i*nx + j] * cos( Phi[i*nx + j] ) * mul;
-			fin[i*nx + j][1]= Amp[i*nx + j] * sin( Phi[i*nx + j] ) * mul;
-		      } 
-		    else 
-		      {
-			fin[i*nx + j][0]= Amp[i*nx + j] * cos(Phi[i*nx + j] );
-			fin[i*nx + j][1]= Amp[i*nx + j] * sin(Phi[i*nx + j] );
-		      }
-		  }
-	      }
+            TransfPrep(&Amp[0], &Phi[0],
+                       Amp.nx, Amp.ny,
+                       mul,
+                       &fin[0][0]);
   
 	    fftw_execute(plan);
 	    // Thats it... result should be in fftScratch
