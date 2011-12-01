@@ -14,7 +14,7 @@ AC_PROG_LIBTOOL
 
 AC_PROG_CC
 AC_PROG_CXX
-AX_OPENMP
+
 
 
 PKG_CHECK_MODULES([BN], [bnlib >= 1.1 bnfits >= 1.2 bnmin1 >= 1.2])
@@ -24,13 +24,15 @@ AC_CHECK_HEADER(fftw3.h,
               [echo "found fftw version 3" ],
 		 [AC_MSG_ERROR([Requires FFTW version 3] ) ] )
 
-AC_LANG_PUSH(C++)
+AC_LANG_PUSH([C++])
+
+AC_OPENMP()
 
 AC_CHECK_HEADERS( minimmodel.hxx , 
 		  [echo "Found minimisation library, will build fitting routines "]
 		  )
 
-AC_LANG_POP(C++)
+AC_LANG_POP([C++])
 
 AX_BOOST_BASE([1.34.0])
 AX_BOOST_UNIT_TEST_FRAMEWORK()

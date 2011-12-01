@@ -52,6 +52,34 @@ void TransfPrep(const double *amp,
   }
 }
 
+// A simple function to prepare for transform
+void TransfPrepMP(const double *amp,
+                  const double *phi,
+                  const size_t nx,
+                  const size_t ny,
+                  double mul,
+                  double *fin)
+{
+  #pragma omp parallel for 
+  for (size_t i=0; i<nx*ny; i++) 
+  {
+      fin[i*2]= amp[i] * cos( phi[i] );
+      fin[i*2+1]= amp[i] * sin( phi[i] );
+  }
+
+  for (size_t i=0; i<nx; i++) 
+  {
+    for (size_t j=0; j<ny; j++) 
+    {
+      if ( (i+j) & 1) 
+      {
+        fin[(i*nx + j)*2]= fin[(i*nx + j)*2]* mul;
+        fin[(i*nx + j)*2+1]= fin[(i*nx + j)*2+1]* mul;
+      } 
+    }
+  }
+}
+
 namespace AstroMap {
 
   /* ------------------  Implementation class section -----------------------*/
@@ -112,7 +140,8 @@ namespace AstroMap {
     void Transform(const Map &Amp, const Map &Phi ) {
             int mul = ( docenter == FFTFact::center ? -1 : 1 ) ;
 
-            TransfPrep(&Amp[0], &Phi[0],
+            //TransfPrep(&Amp[0], &Phi[0],
+            TransfPrepMP(&Amp[0], &Phi[0],
                        Amp.nx, Amp.ny,
                        mul,
                        &fin[0][0]);

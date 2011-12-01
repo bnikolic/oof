@@ -21,12 +21,15 @@ libastromap_la_SOURCES= astromap.cxx astromap.hxx \
 			astromap_err.cxx astromap_err.hxx corrgaussnoise.cxx corrgaussnoise.hxx
 
 
-libastromap_la_CFLAGS = -Wall   ${BN_CFLAGS}
+libastromap_la_CFLAGS = -Wall   ${BN_CFLAGS} ${OPENMP_CFLAGS}
+libastromap_la_CXXFLAGS = -Wall   ${BN_CFLAGS} ${OPENMP_CXXFLAGS}
 libastromap_la_CPPFLAGS = -Wall ${BN_CFLAGS}
 
 libastromap_la_LIBADD = -lfftw3_threads -lfftw3 ${BN_LIBS} \
 			coordsys/libcoordsys.la \
-			dataser/libdataser.la
+			dataser/libdataser.la 
+
+libastromap_la_LDFLAGS = ${OPENMP_CXXFLAGS} 
 
 include_HEADERS = 	astromap.hxx mapops.hxx \
 			mapset.hxx tmapset.hxx	 \
