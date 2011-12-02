@@ -199,3 +199,9 @@ CVS
 ./bnmin1/test/t_sets
 ./bnmin1/doc/tags.dox
 ./astromap/astromap.pc
+./bnmin1/CMakeCache.txt
+./bnmin1/CMakeFiles
+./bnmin1/cmake_install.cmake
+./bnmin1/install_manifest.txt
+./bnmin1/src/CMakeFiles
+./bnmin1/src/cmake_install.cmake
