@@ -1,31 +1,20 @@
 BNMin1 ReadMe File
 ==================
 
+BNMin1 is a minimisation libray. Please see
+http://www.mrao.cam.ac.uk/~bn204/oof/bnmin1.html for more information.
+
 Building
 --------
 
-The requirements are fully docummented in the configure.ac
-file. 
+There are two build systems shipped with BNMin1: AutoTools-based build
+system and a CMake-based system. It is strongly recommended to _only_
+use the AutoTools unless you have a very specefic reason to use CMake
+(such as embedding into a CMake based project).
 
-At MRAO I build with::
+For basic build use command:
 
-	PKG_CONFIG_PATH=${BNDEST}/lib/pkgconfig SWIG=/usr/bin/swig ./configure --prefix=${BNDEST} --with-boost=/home/bn204/d/p/boost_1_35_0bin
+  ./configure --prefix=<destination> 
+  make && make install
 
-
-Maintaner build
----------------
-
-autoreconf -i
-
-
-Old notes
----------
-
-Note on 64 bit systems extra linker flags may need to be passed to
-pick up correct libgsl:
-
-LDFLAGS="-L/usr/lib64/ -L/home/bn204/temp/oofbuild/s/lib/"
-
-On laptop build with something like
-
-./configure --prefix=${HOME}/p/bnmin1 
+See the web-pages for more information

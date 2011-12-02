@@ -16,13 +16,20 @@
 #include <boost/numeric/ublas/io.hpp>
 
 #include "bnmin_main.hxx"
+
+#ifndef CMAKE_BUILD
 #include "../config.h"
+#endif
 
 namespace Minim {
 
   const char * version(void)
   {
+    #ifndef CMAKE_BUILD
     return PACKAGE_VERSION;
+    #else
+    return "CMake build";
+    #endif
   }
 
   BaseErr::BaseErr(const std::string &s):

@@ -7,6 +7,10 @@ To be version 1.12
 
 New features:
 
+* An alternative build system based on CMake has been added. This is
+  mostly to faciliate inclusion in other CMake-based project and
+  should not be 
+
 * Classes deriving from "class Minimisable" must now define a clone
   function. This is to support multi-threaded forthcoming optimisation
 
