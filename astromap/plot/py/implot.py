@@ -167,7 +167,7 @@ def MkSynthesisContours( m , step=0.5,
     mmax=m.max_fin()
     
     contours =       [ mmax * step**i for i in range(nlevels)  ]
-    contours.extend( [ mmax * step**i for i in range(nlevels)  ])
+    contours.extend( [ -mmax * step**i for i in range(nlevels)  ])
 
     return contours
 
