@@ -16,10 +16,10 @@ libastromapplot_la_CPPFLAGS = -Wall -DCMAPDATADIR="$(datadir)" ${BN_CFLAGS} ${BO
 
 #libastromapplot_la_LIBADD = ~/s/lib/libcpgplot.so
 
-_pyplot_la_LDFLAGS = -module @X_LIBS@ -fopenmp
+_pyplot_la_LDFLAGS = -module @X_LIBS@ -fopenmp -L/home/bnikolic/d/p/pgplot-5.2.2/
 _pyplot_la_LIBADD  = ../src/libastromap.la \
-			libastromapplot.la \
-			-lpgplot -lcpgplot  -lX11 -lpng
+			libastromapplot.la \ 
+			-lcpgplot -lpgplot -lX11 -lpng
 
 
 _pyplot_la_SOURCES =  pyplot.i

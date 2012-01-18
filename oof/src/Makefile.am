@@ -14,8 +14,8 @@ liboof_la_SOURCES = obsphasescreen.cxx obsphasescreen.hxx \
 			directcompare.cxx directcompare.hxx
 
 liboof_la_CFLAGS = -Wall   ${BN_CFLAGS}
-liboof_la_CPPFLAGS = -Wall ${BN_CFLAGS}
+liboof_la_CPPFLAGS = -Wall ${BN_CFLAGS} ${BOOST_CPPFLAGS}
 
 liboof_la_LIBADD = ${BN_LIBS} telgeo/libtelgeo.la aperture/liboofaperture.la \
-			farfield/libooffarfield.la
+			farfield/libooffarfield.la -ldataser
 

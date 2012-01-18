@@ -8,6 +8,7 @@
 #define __OOF_MAPTORESIDUAL_HXX__
 
 #include <vector>
+#include <cstdlib>
 
 #include <astromap_fwd.hxx>
 

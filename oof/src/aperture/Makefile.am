@@ -12,7 +12,7 @@ liboofaperture_la_SOURCES = amplimod.cxx amplimod.hxx \
 				multi_apmod.cxx multi_apmod.hxx \
 				sqgaussmod.hxx sqgaussmod.cxx
 
-liboofaperture_la_CFLAGS = -Wall   ${BN_CFLAGS}
-liboofaperture_la_CPPFLAGS = -Wall ${BN_CFLAGS}
+liboofaperture_la_CFLAGS = -Wall   ${BN_CFLAGS} 
+liboofaperture_la_CPPFLAGS = -Wall ${BN_CFLAGS} ${BOOST_CPPFLAGS}
 
 
