@@ -12,6 +12,7 @@
 #include "astromap_fwd.hxx"
 
 #include <vector>
+#include <cstdlib>
 
 namespace AstroMap {
 

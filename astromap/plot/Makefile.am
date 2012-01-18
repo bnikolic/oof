@@ -12,7 +12,7 @@ nodist_bin_SCRIPTS =   pyplot.py
 libastromapplot_la_SOURCES=   plot.hxx plot.cxx \
 				phelpers.hxx phelpers.cxx
 
-libastromapplot_la_CPPFLAGS = -Wall -DCMAPDATADIR="$(datadir)" ${BN_CFLAGS}
+libastromapplot_la_CPPFLAGS = -Wall -DCMAPDATADIR="$(datadir)" ${BN_CFLAGS} ${BOOST_CPPFLAGS}
 
 #libastromapplot_la_LIBADD = ~/s/lib/libcpgplot.so
 
@@ -24,7 +24,7 @@ _pyplot_la_LIBADD  = ../src/libastromap.la \
 
 _pyplot_la_SOURCES =  pyplot.i
 nodist__pyplot_la_SOURCES = pyplot.cxx
-_pyplot_la_CPPFLAGS = @PYTHON_INCLUDES@ ${BN_CFLAGS}
+_pyplot_la_CPPFLAGS = @PYTHON_INCLUDES@ ${BN_CFLAGS} ${BOOST_CPPFLAGS}
 
 
 

@@ -23,7 +23,7 @@ libastromap_la_SOURCES= astromap.cxx astromap.hxx \
 
 libastromap_la_CFLAGS = -Wall   ${BN_CFLAGS} ${OPENMP_CFLAGS}
 libastromap_la_CXXFLAGS = -Wall   ${BN_CFLAGS} ${OPENMP_CXXFLAGS}
-libastromap_la_CPPFLAGS = -Wall ${BN_CFLAGS}
+libastromap_la_CPPFLAGS = -Wall ${BN_CFLAGS} ${BOOST_CPPFLAGS}
 
 libastromap_la_LIBADD = -lfftw3_threads -lfftw3 ${BN_LIBS} \
 			coordsys/libcoordsys.la \

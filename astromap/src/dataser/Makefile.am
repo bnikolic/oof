@@ -10,7 +10,7 @@ libdataser_la_SOURCES= dataseries.hxx dataseries.cxx datapoint.cxx	\
 
 
 libdataser_la_CFLAGS = -Wall   ${BN_CFLAGS}
-libdataser_la_CPPFLAGS = -Wall -I${top_builddir}/src ${BN_CFLAGS}
+libdataser_la_CPPFLAGS = -Wall -I${top_builddir}/src ${BN_CFLAGS} ${BOOST_CPPFLAGS}
 
 libdataser_la_LIBADD = 
 

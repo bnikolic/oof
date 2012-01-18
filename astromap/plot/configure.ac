@@ -16,6 +16,8 @@ AC_PROG_LIBTOOL
 AC_PROG_CC
 AC_PROG_CXX
 
+AX_BOOST_BASE([1.34.0])
+
 AC_CHECK_HEADERS( cpgplot.h , 
 		  [echo "Found pgplot"],
 		  [AC_MSG_ERROR("Error: No pgplot!!!!" ) ]    )
