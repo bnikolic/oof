@@ -12,6 +12,7 @@
 #ifndef _BNMIN1_APP_GEN1DFIT_HXX__
 #define _BNMIN1_APP_GEN1DFIT_HXX__
 
+#include <boost/utility.hpp>
 #include <boost/scoped_ptr.hpp>
 #include <boost/foreach.hpp>
 #include <boost/ptr_container/ptr_vector.hpp>
@@ -128,7 +129,7 @@ namespace Minim {
   };
 
   class Gen1Comp:
-    public Gen1Model
+    public Gen1Model, boost::noncopyable
   {
 
     boost::ptr_vector<Gen1Model> vm;
@@ -149,7 +150,7 @@ namespace Minim {
       additive components
    */
   class Gen1CompExp:
-    public Gen1Model
+    public Gen1Model, boost::noncopyable
   {
     boost::ptr_vector<Gen1Model> vm;
   public:

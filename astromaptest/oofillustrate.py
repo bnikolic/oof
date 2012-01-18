@@ -3,7 +3,7 @@
 #
 # Make illustrations for an OOF talk
 
-from setup import *
+from localsetup import *
 
 import pybnlib
 import pyplot

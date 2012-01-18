@@ -144,8 +144,8 @@ namespace Minim {
   double Gen1Comp::f(double  x) const
   {
     double res=0;
-    BOOST_FOREACH(const Gen1Model &m, vm)
-      res+=m.f(x);
+    for (size_t i=0; i<vm.size(); ++i)
+      res+=vm[i].f(x);
     return res;
   }
 
@@ -167,8 +167,8 @@ namespace Minim {
   double Gen1CompExp::f(double  x) const
   {
     double res=0;
-    BOOST_FOREACH(const Gen1Model &m, vm)
-      res+=std::pow(10,m.f(x));
+    for (size_t i=0; i<vm.size(); ++i)
+      res+=std::pow(10,vm[i].f(x));
     return std::log10(res);
   }
 
