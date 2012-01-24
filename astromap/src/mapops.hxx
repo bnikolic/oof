@@ -44,6 +44,14 @@ namespace AstroMap {
    */
   Map *  IntZoom( Map &m, unsigned scale);
 
+  /** Create a map that is a rectangular subset of the given map
+   */
+  Map * MapSubset(Map &m, 
+                  size_t xlow, size_t xhigh,
+                  size_t ylow, size_t yhigh);
+  
+    
+
   /** \brief Calculate the complex sum from amplitude and phase maps.
       
   \f[ \sum_j A_j e^{i \phi_j}

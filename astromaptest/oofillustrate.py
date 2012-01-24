@@ -78,12 +78,24 @@ def ZernPower(zn , dz):
 
     amm=pybnmin1.ModelDesc( apmod.downcast() )
     amm.getbyname("z%i" % zn).setp(1)
+    amm.getbyname("sigma" ).setp(100)
 
     for cdz in [ 0 , dz, -1* dz]:
         amm.getbyname("z4" ).setp(cdz)
 
+        apbox=[-1.1,1.1,-1.1,1.1]
+
         farf= pyoof.FarF ( apmod.getphase(),
                            1e-3)
+        implot.plotmap(apmod.getphase(), 
+                       colmap="heat",
+                       fout="plots/phase.png/PNG",
+                       bbox=apbox,
+                       transf=0)
+        implot.plotmap(apmod.getamp(), 
+                       colmap="heat",
+                       fout="plots/amplitude.png/PNG",
+                       bbox=apbox)
 
         farf.Power( apmod.getamp(), apmod.getphase(),  m)
         implot.plotmap( m, colmap="heat",

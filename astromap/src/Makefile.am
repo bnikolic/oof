@@ -29,7 +29,7 @@ libastromap_la_LIBADD = -lfftw3_threads -lfftw3 ${BN_LIBS} \
 			coordsys/libcoordsys.la \
 			dataser/libdataser.la 
 
-libastromap_la_LDFLAGS = ${OPENMP_CXXFLAGS} 
+libastromap_la_LDFLAGS = ${OPENMP_CXXFLAGS} -Wl,--no-allow-shlib-undefined
 
 include_HEADERS = 	astromap.hxx mapops.hxx \
 			mapset.hxx tmapset.hxx	 \

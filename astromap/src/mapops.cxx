@@ -79,6 +79,23 @@ namespace AstroMap {
 
   }
 
+  Map * MapSubset(Map &m, 
+                  size_t xlow, size_t xhigh,
+                  size_t ylow, size_t yhigh)
+  {
+    size_t xsize = xhigh-xlow;
+    size_t ysize = yhigh-ylow;
+    std::auto_ptr<Map> mres ( new Map(xsize, ysize) );
+    for(size_t i=0; i<xsize; ++i)
+      for(size_t j=0; j<ysize; ++j)
+        mres->get(i,j)=m.get(i+xlow, j+ylow);
+
+    // Should be shifted? Hence do not propage the CS for now
+    //    delete(mres->cs);
+    //mres->cs = m.cs->Clone();
+    return mres.release();
+  }
+
   std::complex<double> ComplexSum( const Map & amp,
 				   const Map & phase)
   {
