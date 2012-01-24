@@ -8,7 +8,7 @@ import math
 
 import pybnlib
 
-import numarray
+#import numarray
 
 def GenerateKolmogorov3D( Nx,Ny,Nz,
                           seed=None,
