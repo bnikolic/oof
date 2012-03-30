@@ -15,12 +15,16 @@ def GetMapBBox( mapp ):
              mapp.cs.y_pxtoworld(0,0),
              mapp.cs.y_pxtoworld(0,mapp.ny ) )
 
-def SetupBBox( mapp, bbox=None):
+def SetupBBox( mapp, bbox=None,
+               csscale=False):
 
     "Sets up the view which is actually plotted"
 
     if bbox == None: bbox= GetMapBBox( mapp)
-    pyplot.cpgswin( bbox[0], bbox[1], bbox[2], bbox[3])
+    if csscale:
+        pyplot.cpgswin( bbox[0]*240, bbox[1]*240, bbox[2]*240*15, bbox[3]*240*15)
+    else:
+        pyplot.cpgswin( bbox[0], bbox[1], bbox[2], bbox[3])
 
 
 def plotmap(mapp,
@@ -38,7 +42,9 @@ def plotmap(mapp,
             contours=None,
             contcolour=None,
             contourmap=None,
-            aspect=1.0):
+            aspect=1.0,
+            wedgelabel=" ",
+            csscale=False):
 
 
     "Plots a general map"
@@ -62,6 +68,15 @@ def plotmap(mapp,
     mapp  = pyplot.Map(mapp)
     mapp.cs= mapp.cs.Clone()
 
+    if csscale:
+        pyplot.ShrinkCS(mapp,  1.0/(240),  1.0/(240*15) )
+        if contourmap:
+            contourmap=pyplot.Map(contourmap)
+            pyplot.ShrinkCS(contourmap,  
+                            1.0/(240),  1.0/(240*15) )
+        
+        
+
     # Reinterpret as definitely pyplot type
     mapp=pyplot.Map(mapp)
 
@@ -69,11 +84,14 @@ def plotmap(mapp,
         pyplot.cpgbeg(0,fout,0,0)
         pyplot.cpgpap(width,aspect)
 
-    SetupBBox( mapp, bbox=bbox)        
+    SetupBBox(mapp, 
+              bbox=bbox,
+              csscale=csscale)        
 
 
     if plotbox:
-        pyplot.cpgtbox("DYFOBCNS",0,0,"DYFOBCNS",0,0)
+        pyplot.cpgtbox("ZYHBCINT",0,0,
+                       "ZDBCINT",0,0)
     else:
         pyplot.cpgtbox("BC",0,0,"BC",0,0)
 
@@ -89,10 +107,6 @@ def plotmap(mapp,
     if valrange[0] == None:valrange[0]= mapp.min()         
     if valrange[1] == None:valrange[1]= mapp.max() 
         
-    if plotwedge:
-        pyplot.cpgwedg("RI",1,2, valrange[0] , valrange[1], " ")
-        
-
     if abox is None:
         pyplot.Plot(mapp, valrange[0] , valrange[1])
     else:
@@ -118,6 +132,15 @@ def plotmap(mapp,
             pyplot.Contour(mapp,
                            ConvVect(contours),
                            *abox)
+
+    if plotwedge:
+        pyplot.cpgwedg("RI", 1, 3, 
+                       valrange[0] , 
+                       valrange[1], 
+                       wedgelabel)
+        
+
+
 
     finishplot(fout)
 

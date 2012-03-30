@@ -89,6 +89,22 @@ namespace AstroMap {
     
   }
 
+  void ShrinkCS(Map &m , double xf, double yf )
+  {
+
+    // For the time being assumed we have a linear coordinate system;
+    LinCS * lcs = dynamic_cast<LinCS *>( m.cs );
+    // This will cause an abort if dynamic cast failed
+    ENFORCE(lcs);
+
+    lcs->TM[0] /= xf;
+    lcs->TM[2] /= xf;
+
+    lcs->TM[4] /= yf;
+    lcs->TM[5] /= yf;
+    
+  }
+
   void ZeroOffsetCS(Map &m)
   {
     

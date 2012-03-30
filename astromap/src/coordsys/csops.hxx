@@ -29,6 +29,8 @@ namespace AstroMap {
    */
   void ShrinkCS(Map &m , double cf );
 
+  void ShrinkCS(Map &m , double xf, double yf );
+
   /**
      Keep the scales defined by the coordinate system but re-center it
      so that the middle pixel of the map has coordinates 0,0.
