@@ -97,12 +97,19 @@ def MkMapResDS(fnamein,
                skymapsample,
                fwhm=1.0,
                extent=2):
+    """
+    Make the object which converts a map into a data series of residuals
+    """
 
     ds=pyplot.LoadFITSDS(fnamein, extno+1)
 
     ds.thisown=0
 
-    mapds= pyoof.MapToResidualDS( ds, skymapsample, fwhm, extent)
+    mapds= pyoof.MapToResidualDS(ds,
+                                 skymapsample,
+                                 fwhm**2, # Note the C++ fn needs this to be squared
+                                          # See GaussianDD::operator()
+                                 extent)
 
     return mapds
 
