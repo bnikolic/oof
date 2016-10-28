@@ -29,7 +29,7 @@ AC_PATH_XTRA()
 
 AM_CHECK_PYTHON_HEADERS()
 
-PKG_CHECK_MODULES([BN], [bnlib >= 1.1 bnmin1 >= 1.2])
+PKG_CHECK_MODULES([BN], [bnlib >= 1.1 bnfits >= 1.2 bnmin1 >= 1.2])
 
 AC_PATH_PROGS([SWIG],[swig])
 AC_SUBST(SWIGFLAGS)
