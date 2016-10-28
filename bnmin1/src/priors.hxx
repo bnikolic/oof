@@ -88,6 +88,8 @@ namespace Minim {
   {
 
     std::vector< Minim::DParamCtr > _mpars;
+
+  public:
     
     struct fprior_t
     {
@@ -96,8 +98,7 @@ namespace Minim {
       double pmax;
     };
     
-  public:
-    typedef std::list<fprior_t> priorlist_t;
+    typedef std::list<IndependentPriors::fprior_t> priorlist_t;
 
   private:
     priorlist_t priorlist;
