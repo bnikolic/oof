@@ -6,7 +6,7 @@ SUBDIRS = colmaps py
 lib_LTLIBRARIES = libastromapplot.la  _pyplot.la
 
 BUILT_SOURCES = pyplot.py pyplot.cxx
-nodist_bin_SCRIPTS =   pyplot.py 
+nodist_bin_SCRIPTS =   pyplot.py
 
 
 libastromapplot_la_SOURCES=   plot.hxx plot.cxx \
@@ -18,15 +18,11 @@ libastromapplot_la_CPPFLAGS = -Wall -DCMAPDATADIR="$(datadir)" ${BN_CFLAGS} ${BO
 
 _pyplot_la_LDFLAGS = -module @X_LIBS@ -fopenmp -L/home/bnikolic/d/p/pgplot-5.2.2/
 _pyplot_la_LIBADD  = ../src/libastromap.la \
-			libastromapplot.la \ 
+			libastromapplot.la \
 			-lcpgplot -lpgplot -lX11 -lpng
 
 
 _pyplot_la_SOURCES =  pyplot.i
 nodist__pyplot_la_SOURCES = pyplot.cxx
-_pyplot_la_CPPFLAGS = @PYTHON_INCLUDES@ ${BN_CFLAGS} ${BOOST_CPPFLAGS}
-
-
-
-
+_pyplot_la_CPPFLAGS = @PYTHON_INCLUDES@ ${BN_CFLAGS} ${BOOST_CPPFLAGS} -I../src/
 
