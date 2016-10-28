@@ -1,5 +1,5 @@
 AC_INIT(OOF,
-	1.4b7,
+	1.4,
 	bojan@bnikolic.co.uk)
 
 AC_CONFIG_AUX_DIR(config)
@@ -23,9 +23,22 @@ PKG_CHECK_MODULES([BN], [bnlib >= 1.2 bnmin1 >= 1.2 astromap >= 1.2 bnfits >= 1.
 
 AC_LANG_POP(C++)
 
-AX_BOOST_BASE([1.34.0])
-AX_BOOST_UNIT_TEST_FRAMEWORK()
+AC_ARG_ENABLE(buildtests,
+	      [AS_HELP_STRING([--disable-buildtests],
+                              [Do not configure and build the tests])],
+              [dobuildtests=$enableval],
+	      [dobuildtests=--enable-buildtests])
 
+AM_CONDITIONAL([BUILDTESTS_OPT], 
+	       [test "x$dobuildtests" != xno])
+
+
+
+AX_BOOST_BASE([1.34.0])
+
+if test "$dobuildtests" != "no" ; then
+AX_BOOST_UNIT_TEST_FRAMEWORK()
+fi
 
 AC_OUTPUT(Makefile
 	  src/Makefile
