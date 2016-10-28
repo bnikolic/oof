@@ -8,6 +8,7 @@
 #include <cpgplot.h>
 #include <iostream>
 #include <fstream>
+#include <unistd.h>
 #include <linraster.hxx>
 
 
