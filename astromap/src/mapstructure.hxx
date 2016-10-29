@@ -9,6 +9,8 @@
 #ifndef _ASTROMAP_MAPSTRUCTURE_HXX__
 #define _ASTROMAP_MAPSTRUCTURE_HXX__
 
+#include <stddef.h>
+
 #include "astromap_fwd.hxx"
 
 #include <vector>
