@@ -1,0 +1,11 @@
+--- pgplot/sys_linux/f77_gcc.conf~	2001-02-17 00:41:01.000000000 +0000
++++ pgplot/sys_linux/f77_gcc.conf	2016-01-21 21:28:54.881090413 +0000
+@@ -41,7 +41,7 @@
+ # The FORTRAN compiler flags to use when compiling the pgplot library.
+ # (NB. makemake prepends -c to $FFLAGC where needed)
+  
+-   FFLAGC="-u"
++   FFLAGC=""
+ 
+ # Mandatory.
+ # The FORTRAN compiler flags to use when compiling fortran demo programs.
