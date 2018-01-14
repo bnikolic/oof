@@ -1,0 +1,11 @@
+--- pgplotp/drivers/pndriv.c.orig	1999-03-27 02:06:23.000000000 +0000
++++ pgplotp/drivers/pndriv.c	2018-01-14 21:16:07.405000000 +0000
+@@ -222,7 +222,7 @@
+ 	return;
+   }
+ 
+-  if (setjmp(png_ptr->jmpbuf)) { /* not really sure what I'm doing here... */
++  if (setjmp(png_jmpbuf(png_ptr))) { /* not really sure what I'm doing here... */
+ 	fprintf(stderr,"%s: error in libpng while writing file %s, plotting disabled\n", png_ident, filename);
+ 	png_destroy_write_struct(&png_ptr,&info_ptr);
+ 	dev->error = true;

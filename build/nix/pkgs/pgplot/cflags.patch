@@ -1,0 +1,28 @@
+--- pgplotp/makemake	1999-05-04 23:35:43.000000000 +0100
++++ pgplotp/makemake	2018-01-14 21:06:45.685000000 +0000
+@@ -622,7 +622,7 @@
+ # Fortran compiler and compilation flags
+ #
+ FCOMPL=$FCOMPL
+-FFLAGC=$FFLAGC
++FFLAGC=$FFLAGC $FFLAGS
+ FFLAGD=$FFLAGD
+ #
+ # C compiler and compilation flags
+@@ -633,7 +633,7 @@
+ TK_INCL=$TK_INCL
+ RV_INCL=$RV_INCL
+ CCOMPL=$CCOMPL
+-CFLAGC=$CFLAGC -I.
++CFLAGC=$CFLAGC -I. $CFLAGS
+ CFLAGD=$CFLAGD
+ MCOMPL=$MCOMPL
+ MFLAGC=$MFLAGC
+@@ -1025,7 +1025,6 @@
+ grivas.o : $(DRVDIR)/gadef.h
+ grtv00.o : $(DRVDIR)/imdef.h
+ pgxwin.o : $(DRVDIR)/pgxwin.h
+-pndriv.o : ./png.h ./pngconf.h ./zlib.h ./zconf.h
+ 
+ x2driv.o figdisp_comm.o: $(DRVDIR)/commands.h
+ 

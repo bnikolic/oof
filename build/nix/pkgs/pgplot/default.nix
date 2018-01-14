@@ -1,14 +1,14 @@
-{ fetchurl,  stdenv, x11, gfortran  }:
+{ fetchurl,  stdenv, x11, gfortran, libpng  }:
 
 stdenv.mkDerivation rec {
   version = "5.2";
   name = "pgplot${version}";
 
-  buildInputs = [ x11 gfortran];
+  buildInputs = [ x11 gfortran libpng];
 
-  patches = [ ./driverenable.patch  ];
+  patches = [ ./driverenable.patch ./cflags.patch ./setjmp.patch  ];
 
-  preBuild = "./makemake $PWD linux g77_gcc";
+  preBuild = "CFLAGS=-I${libpng}/include ./makemake $PWD linux g77_gcc";
 
   postInstall = ''
     mkdir -p $out/lib &&
