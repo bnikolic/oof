@@ -6,7 +6,7 @@
 import os
 
 import pyfits
-import numarray
+import numpy
 
 
 
@@ -16,15 +16,15 @@ def OOFColumns(nrows):
     
     coldefs = [
         pyfits.Column ( "DX",   "E",   "radians",
-                        array=numarray.zeros(nrows)   ),
+                        array=numpy.zeros(nrows)   ),
         pyfits.Column ( "DY",   "E",   "radians",
-                        array=numarray.zeros(nrows) ),
+                        array=numpy.zeros(nrows) ),
         pyfits.Column ( "FNu",   "E",   "Jy",
-                        array=numarray.zeros(nrows) ),
+                        array=numpy.zeros(nrows) ),
         pyfits.Column ( "UFNu",   "E",   "Jy",
-                        array=numarray.ones(nrows) ),
+                        array=numpy.ones(nrows) ),
         pyfits.Column ( "Time",   "E",   "d",
-                        array=numarray.zeros(nrows) )
+                        array=numpy.zeros(nrows) )
         ]
 
     nh = pyfits.new_table( coldefs )

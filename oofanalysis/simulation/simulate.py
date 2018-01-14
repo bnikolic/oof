@@ -7,7 +7,7 @@
 
 import os
 
-import numarray.random_array
+import numpy
 
 from setup import *
 
@@ -130,7 +130,7 @@ def RandomSurface( znmax , stddev=0.5,
     #Set taper to -12 db @edge
     amm.getbyname("sigma").setp(0.36)
 
-    v=numarray.random_array.normal(0,stddev, n-2)
+    v=numpy.random.normal(0,stddev, n-2)
     for i,x in enumerate(v) :
         print i
         amm.getbyname("z%i" % i).setp(x)
@@ -190,11 +190,11 @@ def CropFile(fnamein, s ):
     print fnameout
 
     def selfn(d):
-        m1 = numarray.logical_and( d.field("dX") > -s,
+        m1 = numpy.logical_and( d.field("dX") > -s,
                                    d.field("dX") < s)
-        m2 = numarray.logical_and( d.field("dY") > -s,
+        m2 = numpy.logical_and( d.field("dY") > -s,
                                    d.field("dY") < s)
-        return numarray.logical_and(m1,m2)
+        return numpy.logical_and(m1,m2)
 
     iofits4.TableSelect(fnamein,
                         fnameout,
@@ -209,9 +209,9 @@ def NoisifyFile(fnamein, fnameout,
 
     for i in range(1,len(fin)) :
         l=len(fin[i].data.field("fnu"))
-        nv=fin[i].data.field("fnu")+  numarray.random_array.normal(0,
-                                                                   nlevel,
-                                                                   l)
+        nv=fin[i].data.field("fnu")+  numpy.random.normal(0,
+                                                          nlevel,
+                                                          l)
         fin[i].data.field("fnu").setreal(nv)
 
     iofits4.Write( fin, fnameout , overwrite=1)

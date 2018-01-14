@@ -5,7 +5,7 @@
 
 import os
 
-import numarray
+import numpy
 import pyfits
 
 import pybnfits
@@ -15,10 +15,10 @@ def MaskToList(mask):
 
     "Turn a mask into a list of rows to delete"
 
-    mask = numarray.array( mask, numarray.Bool)
-    mask = numarray.logical_not(mask)
-    xr=numarray.arange( len(mask) )[mask]
-    xr=numarray.array(xr)
+    mask = numpy.array( mask, numpy.bool)
+    mask = numpy.logical_not(mask)
+    xr=numpy.arange( len(mask) )[mask]
+    xr=numpy.array(xr)
 
     res=pybnfits.LongVector(len(xr))
     for i,v in enumerate(xr):

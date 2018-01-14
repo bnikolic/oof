@@ -8,6 +8,7 @@ import re
 
 from itertools import izip
 
+import numpy
 import pyfits
 
 def PrepFitsOut (cvsid):
@@ -209,8 +210,8 @@ def RepTable ( tabin ,
 
     
     if rowmask ==None:
-        rowmask = numarray.ones(len(tabin.data),
-                                numarray.Bool)
+        rowmask = numpy.ones(len(tabin.data),
+                             numpy.bool)
 
     nrowsout=sum(rowmask)
 
@@ -235,7 +236,8 @@ def RepTable ( tabin ,
 def TableSelect( fnamein,
                  fnameout,
                  hduselfn= lambda hduno , hduname, hdu : True,
-                 rowselfn= lambda hdudata : numarray.ones(len(hdudata), numarray.Bool)
+                 rowselfn= lambda hdudata : numpy.ones(len(hdudata),
+                                                       numpy.bool)
                  ):
 
     "Selects hdus/and rows from a fits files and copies them over to new file"
