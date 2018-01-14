@@ -335,7 +335,7 @@ def IllustratePerfectApFFT():
                    bbox=[x * s for x in [-1,1,-1,1]] ,
                    fout="plots/perfect_farf_p.png/PNG",
                    colmap="heat",
-                   valrange=None, plotbox=False) 
+                   valrange=None, plotbox=False)
     
 
     

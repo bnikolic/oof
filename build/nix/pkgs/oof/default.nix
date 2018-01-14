@@ -1,5 +1,5 @@
 { stdenv, gcc, swig, fetchurl, gsl, boost, python27, autoconf,  automake, libtool,    pkgconfig, cfitsio,
-  bnlib, bnmin1, bnfits, astromap, fetchgit}:
+  bnlib, bnmin1, bnfits, astromap, fetchgit, python27Packages}:
 let
    srcs = import ../oofsrcs.nix { inherit fetchgit; };
 in   
@@ -9,6 +9,8 @@ stdenv.mkDerivation rec {
 
     buildInputs = [ swig gsl boost python27 autoconf automake libtool  pkgconfig cfitsio
     		   bnlib bnmin1 bnfits astromap];
+
+    propagatedBuildInputs = [ python27Packages.numpy ] ;
 
 #    src = fetchurl {
 #    	url = "http://www.mrao.cam.ac.uk/~bn204/soft/${name}-1.4.tar.bz2";
