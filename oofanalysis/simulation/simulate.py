@@ -330,12 +330,12 @@ def IllustratePerfectApFFT():
                    bbox=[x * s for x in [-1,1,-1,1]] ,
                    fout="plots/perfect_farf_a.png/PNG",
                    colmap="heat",
-                   valrange=None )
+                   valrange=None , plotbox=False)
     implot.plotmap(fp,
                    bbox=[x * s for x in [-1,1,-1,1]] ,
                    fout="plots/perfect_farf_p.png/PNG",
                    colmap="heat",
-                   valrange=None )    
+                   valrange=None, plotbox=False) 
     
 
     
