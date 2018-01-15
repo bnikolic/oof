@@ -25,6 +25,11 @@ namespace OOF {
   {
 
   public:
+
+    ParamGeo(void):
+      _R(1)
+    {};
+    
     /** 
 	\param R Radius of the aperture (aperture is assumed circular)
 
