@@ -12,15 +12,52 @@
 #include "zernikepoly.hxx"
 #include "../aperture/zernmodel.hxx"
 #include "minim.hxx"
+#include <mapset.hxx>
 
 namespace OOF {
 
   ParamGeo::ParamGeo(double R,
-		     const std::vector< Minim::DParamCtr > &zpars):
-    _R(R)
+		     const parset &zpars):
+    _R(R),
+    _zpars(zpars)
   {
   }
 
+  void ParamGeo::MkDefocus( double dz , AstroMap::Map & Phase) const
+  {
+  }
+
+  void ParamGeo::DishMask (AstroMap::Map &Dish) const
+  {
+    class DMaskFN  :  public BNLib::BinaryDD
+    {
+      double outerrad;
+      
+    public:
+      
+      DMaskFN ( double outerrad ):
+	outerrad(outerrad)
+      {
+      }
+
+      double operator() (double x , double y )
+      {
+	double r2  = sqrt( x*x + y*y ) ;
+
+	if (  r2  > outerrad )
+	  return 0;
+	else
+	  return 1.0;
+      }
+    
+    } ;
+    
+    DMaskFN fn ( _R );
+    WorldSet( Dish , fn );        
+  }
+
+
+  
   size_t ZernToInt(const std::string &zname)
   {
     boost::regex r("z(\\d+)");
@@ -29,21 +66,21 @@ namespace OOF {
     return boost::lexical_cast<size_t>(m[0]);
   }
 
-  size_t maxZOrder(const std::vector< Minim::DParamCtr > &zpars)
+  size_t maxZOrder(const parset &zpars)
   {
     size_t n=0;
-    for(std::vector< Minim::DParamCtr >::const_iterator i= zpars.begin();
+    for(parset::const_iterator i= zpars.begin();
 	i != zpars.end();
 	++i)
       {
 	int nn; int l;
-	BNLib::ZernNLFromI(ZernToInt(i->name), nn, l);
+	BNLib::ZernNLFromI(ZernToInt(i->first), nn, l);
 	if (nn> n) n=nn;
       }
     return n;
   }
 
-  void RasterizeZern(const std::vector< Minim::DParamCtr > &zpars,
+  void RasterizeZern(const parset &zpars,
 		     AstroMap::Map &m,
 		     double R)
   {
@@ -59,11 +96,11 @@ namespace OOF {
     
     Minim::ModelDesc md(zernm);
 
-    for(std::vector< Minim::DParamCtr >::const_iterator i= zpars.begin();
+    for(parset::const_iterator i= zpars.begin();
 	i != zpars.end();
 	++i)
       {
-	*(md[i->name]->p)=*(i->p);
+	*(md[i->first]->p)=i->second;
       }
 
     zernm.Calc(m);

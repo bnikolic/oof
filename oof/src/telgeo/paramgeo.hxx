@@ -13,6 +13,8 @@
 
 namespace OOF {
 
+  typedef std::vector<  std::pair< std::string, double>  > parset;
+
   /**
      \brief Geometry specified as a Zernike parametrisation
      
@@ -30,15 +32,16 @@ namespace OOF {
 	focal length
      */
     ParamGeo(double R,
-	     const std::vector< Minim::DParamCtr > &zpars);
+	     const parset  &zpars);
 
     /* ------------ Functions inherited from TelGeo -------------*/
     virtual void MkDefocus( double dz , AstroMap::Map & Phase) const  ;
     virtual void DishMask (AstroMap::Map &Dish) const ;
-    virtual double DishEffRadius(void) const ;
+    virtual double DishEffRadius(void) const {return _R;} ;
 
   private:
-    double _R;
+    const double _R;
+    const parset _zpars;
     
   };
 
@@ -47,12 +50,12 @@ namespace OOF {
 
   /** What is the maximum order needed to represent params
    */
-  size_t maxZOrder(const std::vector< Minim::DParamCtr > &zpars);
+  size_t maxZOrder(const parset &zpars);
 		   
 
   /** Rasterize and sum Zernikes 
    */
-  void RasterizeZern(const std::vector< Minim::DParamCtr > &zpars,
+  void RasterizeZern(const  parset &zpars,
 		     AstroMap::Map &m,
 		     double R);
 
