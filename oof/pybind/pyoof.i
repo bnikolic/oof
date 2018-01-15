@@ -47,6 +47,7 @@
 %import "astromap.hxx"
 %import "coordsys.hxx"
 
+%include stl.i
 
 %include "../src/oof_main.hxx"
 %include "../src/telgeo/telgeo.hxx"
@@ -80,6 +81,8 @@
 %include "../src/obsfilefns.hxx"
 %include "../src/directcompare.hxx"
 
+%template(ParPair) std::pair<std::string, double> ;
+%template(ParsetVect) std::vector<std::pair<std::string, double> >;
 
 %extend OOF::ObsCompare {
 	
