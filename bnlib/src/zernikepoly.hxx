@@ -62,6 +62,9 @@ namespace BNLib {
    * order n and angular order l*/
   size_t ZernIFromNL(int n, int l);
 
+  
+  void ZernNLFromI(size_t i, int &nOUT, int &lOUT);
+
 }
 
 #endif

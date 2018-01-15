@@ -41,6 +41,8 @@
 			 double *OUTgamma,
 			 double *OUTdelta};
 
+%apply int & OUTPUT { int &nOUT, int &lOUT };
+
 namespace std {
   //   %template(K3DParentV) vector<BNLib::Kolmog::K3DParent>; 
   //   %template(Displacement3DV) vector<BNLib::Displacement3D>;

@@ -87,6 +87,13 @@ namespace BNLib {
     return ( n*(n+1) + n+ l)/2 ; 
   }
 
+  void ZernNLFromI(size_t i, int &n, int &l)
+  {
+    for (n=0; ZernIFromNL(n, -n) <= i; ++n);
+    n--;
+    for (l=-n; ZernIFromNL(n, l) != i; ++l);
+  }
+
 
 }
 
