@@ -12,6 +12,7 @@
 #include "../src/telgeo/gbtgeo.hxx"
 #include "../src/telgeo/primefoc.hxx"
 #include "../src/telgeo/telswitch.hxx"
+#include "../src/telgeo/paramgeo.hxx"
 
 #include "../src/aperture/phasemod.hxx"
 #include "../src/aperture/zernmodel.hxx"
@@ -52,6 +53,7 @@
 %include "../src/telgeo/gbtgeo.hxx"
 %include "../src/telgeo/primefoc.hxx"
 %include "../src/telgeo/telswitch.hxx"
+%include "../src/telgeo/paramgeo.hxx"
 
 %include "../src/aperture/phasemod.hxx"
 %include "../src/aperture/zernmodel.hxx"
