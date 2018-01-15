@@ -13,6 +13,7 @@
 #include "../aperture/zernmodel.hxx"
 #include "minim.hxx"
 #include <mapset.hxx>
+#include <astromap.hxx>
 
 namespace OOF {
 
@@ -25,6 +26,8 @@ namespace OOF {
 
   void ParamGeo::MkDefocus( double dz , AstroMap::Map & Phase) const
   {
+    RasterizeZern(_zpars, Phase, _R);
+    Phase*=dz;
   }
 
   void ParamGeo::DishMask (AstroMap::Map &Dish) const
@@ -75,7 +78,7 @@ namespace OOF {
       {
 	int nn; int l;
 	BNLib::ZernNLFromI(ZernToInt(i->first), nn, l);
-	if (nn> n) n=nn;
+	if (((size_t)(nn))> n) n=nn;
       }
     return n;
   }
