@@ -10,6 +10,8 @@
 #include <boost/regex.hpp>
 
 #include "zernikepoly.hxx"
+#include "../aperture/zernmodel.hxx"
+#include "minim.hxx"
 
 namespace OOF {
 
@@ -34,7 +36,7 @@ namespace OOF {
 	i != zpars.end();
 	++i)
       {
-	size_t nn; size_t l;
+	int nn; int l;
 	BNLib::ZernNLFromI(ZernToInt(i->name), nn, l);
 	if (nn> n) n=nn;
       }
@@ -48,10 +50,24 @@ namespace OOF {
     PrimeFocusGeo t;
     t.PrimRadius=R;
 
+    size_t maxo=maxZOrder(zpars);
 
-//    RZernModel zernm(unsigned n, 
-//		     AstroMap::Map & msample,
-//		     TelGeometry * telgeo);
+
+    RZernModel zernm(maxo, 
+		     m,
+		     &t);
+    
+    Minim::ModelDesc md(zernm);
+
+    for(std::vector< Minim::DParamCtr >::const_iterator i= zpars.begin();
+	i != zpars.end();
+	++i)
+      {
+	*(md[i->name]->p)=*(i->p);
+      }
+
+    zernm.Calc(m);
+    
   }
 
 }
