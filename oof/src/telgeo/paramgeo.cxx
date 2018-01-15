@@ -63,7 +63,7 @@ namespace OOF {
     boost::regex r("z(\\d+)");
     boost::smatch m;
     boost::regex_match(zname, m, r);
-    return boost::lexical_cast<size_t>(m[0]);
+    return boost::lexical_cast<size_t>(m[1]);
   }
 
   size_t maxZOrder(const parset &zpars)
