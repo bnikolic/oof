@@ -1,6 +1,6 @@
 
-include $(top_srcdir)/config/swig.am
-EXTRA_DIST = config/swig.am
+include $(top_srcdir)/swig.am
+EXTRA_DIST = swig.am
 
 
 BUILT_SOURCES = pyoof.py pyoof.cxx 
