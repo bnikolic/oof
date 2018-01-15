@@ -2,6 +2,7 @@
 include $(top_srcdir)/swig.am
 EXTRA_DIST = swig.am
 
+CLEANFILES = pyoof.py pyoof.cxx 
 
 BUILT_SOURCES = pyoof.py pyoof.cxx 
 nodist_bin_SCRIPTS = pyoof.py 
