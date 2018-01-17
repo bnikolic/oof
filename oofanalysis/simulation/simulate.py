@@ -87,16 +87,16 @@ def DefocModelMaps(apmod, dz, telgeo):
 
 
 def MkApModel(znmax,
-              npix=512):
+              npix=1024):
 
-    npix = 512
+    npix = npix
     tel1 = MkTalkTel()
     
     apmod = pyoof.MkSimpleAp( tel1,
                               1e-3,
                               npix,
                               znmax,
-                              4)
+                              16)
     return apmod
     
     
@@ -130,7 +130,11 @@ def RandomSurface( znmax , stddev=0.5,
     #Set taper to -12 db @edge
     amm.getbyname("sigma").setp(0.36)
 
-    v=numpy.random.normal(0,stddev, n-2)
+    if stddev >0:
+        v=numpy.random.normal( 0,stddev, n-4)
+    else:
+        v=numpy.zeros( n-4)
+        
     for i,x in enumerate(v) :
         print i
         amm.getbyname("z%i" % i).setp(x)
@@ -264,7 +268,12 @@ def PlotMapsSet(r,
                        bbox=[x * s for x in [-1,1,-1,1]] ,
                        fout=pref+mid+post,
                        colmap="heat",
-                       valrange=valrange)
+                       valrange=valrange,
+                       transf=2,
+                       #contours=r[i].max() * (numpy.array([1.0, 0.8, 0.4, 0.1]))
+                       
+         )
+        print list(r[i].max() * 2**(-1*numpy.arange(8)))
         
 
 def PlotAperture(apmod,
@@ -280,19 +289,22 @@ def PlotAperture(apmod,
     else:
         contours=None    
 
+    box= [-0.6,0.6,-0.6,0.6]
     implot.plotmap(pyplot.Map(apmod.getphase()),
-                   bbox=[x * s for x in [-1,1,-1,1]] ,
+                   bbox=[x * s for x in box] ,
                    fout=pref+"-phase"+post ,
                    colmap="heat",
                    valrange=None,
                    contours=contours,
-                   contcolour=0)
+                   contcolour=0,
+                   plotbox=False)
 
     implot.plotmap(pyplot.Map(apmod.getamp()),
-                   bbox=[x * s for x in [-1,1,-1,1]] ,
+                   bbox=[x * s for x in box] ,
                    fout=pref+"-amp"+post ,
                    colmap="heat",
-                   valrange=None)
+                   valrange=None,
+                   plotbox=False)
 
 def IllustratePerfectAp():
 
@@ -344,7 +356,7 @@ def MPIfRIllus():
 
     r0, apmod=RandomSurface(5,0,3)
     PlotMapsSet(r0, pref="plots/mpifr-pfctsfc",
-                eqrange=True)
+                eqrange=True, s=4e-4)
 
     r, apmod=RandomSurface(5,0.2,3)
     PlotMapsSet(r, pref="plots/mpifr-rsfc",
@@ -410,6 +422,24 @@ def PlotCorrelationMatrix(dirin):
     pylab.savefig(fnameout)
 
 
+def IntroTalkIntro():
+
+    r0, apmod=RandomSurface(5, 0, dzlist=list(numpy.linspace(0, 3.0, 10)) )
+    for i,rr in enumerate(r0):
+        PlotMapsSet(rr, pref="plots/intro/introtalk-%i" % i,
+                    eqrange=True, s=4e-4)
+
+    r, apmod=RandomSurface(5,0.2, dzlist=list(numpy.linspace(0, 3, 10)) )
+    PlotAperture(apmod ,
+                 "plots/intro/impfc-aperture",
+                 contour=True)    
+    for i,rr in enumerate(r):    
+        PlotMapsSet(rr, pref="plots/intro/impfc-%i" % i, 
+                    eqrange=True)
+    NoisyfySet(r[-1], 0.01)
+    PlotMapsSet(r[-1], pref="plots/intro/impfc-noisy",
+                eqrange=False)
+        
 
     
 
