@@ -93,7 +93,7 @@ def plotmap(mapp,
         pyplot.cpgtbox("ZYHBCINT",0,0,
                        "ZDBCINT",0,0)
     else:
-        pyplot.cpgtbox("BC",0,0,"BC",0,0)
+        pyplot.cpgbox("BCINTS",0,0,"BCINTS",0,0)
 
     pyplot.cpgsitf(transf)
 
@@ -114,11 +114,18 @@ def plotmap(mapp,
                     valrange[0],
                     valrange[1],
                     *abox)
-    
+
     if title != None :
         pyplot.cpglab("","", title )
 
+    if plotwedge:
+        pyplot.cpgwedg("RI", 1, 3,
+                       valrange[0] ,
+                       valrange[1],
+                       wedgelabel)
+
     if contcolour != None:
+        pyplot.cpgslw(3)
         pyplot.cpgsci(contcolour)
 
     if contours != None and contourmap :
@@ -126,18 +133,14 @@ def plotmap(mapp,
 
     if contours != None:
         if abox is None:
-            pyplot.Contour(mapp, 
+            pyplot.Contour(mapp,
                            ConvVect(contours))
         else:
             pyplot.Contour(mapp,
                            ConvVect(contours),
                            *abox)
 
-    if plotwedge:
-        pyplot.cpgwedg("RI", 1, 3, 
-                       valrange[0] , 
-                       valrange[1], 
-                       wedgelabel)
+
         
 
 
