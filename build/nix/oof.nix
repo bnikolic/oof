@@ -15,7 +15,12 @@ let
 
   oofenv = pkgs.stdenv.mkDerivation rec {
      name = "oofenv";
-     buildInputs = [ oof pkgs.python27] ;
+     buildInputs = [ oof pkgs.python27
+     pkgs.python27Packages.numpy
+     pkgs.python27Packages.scipy
+           pkgs.python27Packages.pandas
+	   pkgs.python27Packages.matplotlib
+	  ] ;
   };
 
   pyfits = pkgs.python27Packages.buildPythonPackage rec {
