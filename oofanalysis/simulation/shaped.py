@@ -11,6 +11,10 @@ from matplotlib import pylab
 import matplotlib.pyplot as plt
 from matplotlib import cm
 
+from mpl_toolkits import mplot3d
+
+import os
+
 def evalZern(n, l, a):
     """Evaluate zernike polynomial (n,l)
     
@@ -85,10 +89,10 @@ def plotQuiverN(d, m):
     """Plot the angle arrival direction cosines as a quiver"""
     fig = plt.figure()
     ax = fig.gca(projection='3d')
-    surf = ax.quiver(d.AX[mm], d.AY[mm], 0,
-                     d.IL[mm], d.IM[mm], d.IN[mm])
+    surf = ax.quiver(d.AX[m], d.AY[m], 0,
+                     d.IL[m], d.IM[m], d.IN[m])
     
-    ax.set_zlim(-1, 1)    
+    ax.set_zlim(-1, 2)    
     plt.show()    
 
 def zernIFromNL(n, l):
@@ -119,3 +123,20 @@ def plotZernsWithC(cl, nw=4, npix=128):
         ax.set_title("Z(%i, %i)= %3.2g" % (n, l, c))
         #plt.imshow(c)
     plt.show()
+
+def plotIncomingRays(fnamein, FM, FL):
+    fnameout="plots/%s-%g-%g.png" % (os.path.splitext(os.path.basename(fnamein))[0],
+                                     FM, FL)
+    d=loadZemaxDC(fnamein)
+    mm=numpy.logical_and(d.FM==FM , d.FL==FL)
+    plotQuiverN(d, mm)
+    plt.savefig(fnameout)
+    plt.close()
+    
+if 0:
+    plotIncomingRays("/home/user/QubesIncoming/DocStore/CORRECT3.TXT", 0, 0)
+    plotIncomingRays("/home/user/QubesIncoming/DocStore/CORRECT3.TXT", 2.0, 2.0)
+    plotIncomingRays("/home/user/QubesIncoming/DocStore/CLASSIC3.TXT", 0, 0)
+
+
+    
