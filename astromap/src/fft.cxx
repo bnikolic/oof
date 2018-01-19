@@ -124,7 +124,7 @@ namespace AstroMap {
 				     fin,
 				     fout,
 				     direction,
-				     FFTW_MEASURE));
+				     FFTW_ESTIMATE));
     }
 
     ~iFFTFact() 
