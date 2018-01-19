@@ -1,4 +1,5 @@
 # Simulations and tools for shaped reflector telescopes
+# nix-shell  /home/user/n/oof/build/nix/oof.nix -A oofenv -j 2 --cores 6 --run "python  -i"
 
 from math import factorial as fact
 
@@ -15,11 +16,13 @@ def evalZern(n, l, a):
     
     :param a: The array over which to evaluate, of form [ [x,y] ]
     
+    Example: evalZern(2,0, numpy.moveaxis(numpy.mgrid[-1:1:64j, -1:1:64j], 0, -1) )
+    
     """
     m=abs(l)
     nradterms= 1+ (n-m)/2
     radpowers= n - 2*numpy.arange(nradterms)
-    radcoeffs= numpy.array(map(lambda s: -1**s * fact(n-s) / ( fact(s) * fact ( (n+m)/2 -s ) * fact( (n-m)/2 -s )),
+    radcoeffs= numpy.array(map(lambda s: (-1)**s * fact(n-s) / ( fact(s) * fact ( (n+m)/2 -s ) * fact( (n-m)/2 -s )),
                          numpy.arange(nradterms)))
     r=numpy.hypot(a[...,0], a[...,1])
     phi=numpy.arctan2(a[...,1], a[...,0])
@@ -88,4 +91,31 @@ def plotQuiverN(d, m):
     ax.set_zlim(-1, 1)    
     plt.show()    
 
+def zernIFromNL(n, l):
+    return (n*(n+1) + n+ l)/2
+
+def zernNLFromI(i):
+    n=0
+    while zernIFromNL(n,-n) <=i:
+        n+=1
+    n-=1
+    l=-n
+    while zernIFromNL(n, l) != i:
+        l+=1
+    return n,l
     
+def plotZernsWithC(cl, nw=4, npix=128):
+    "Plot Zernikes and their coefficients"
+    fig=plt.figure(figsize=(12,12))
+    n=len(cl)
+    for i, c in enumerate(cl[1:]):
+        ax=fig.add_subplot(nw, nw, i+1)
+        n,l=zernNLFromI(i+1)
+        g=numpy.moveaxis(numpy.mgrid[-1:1:npix*1j, -1:1:npix*1j], 0, -1)
+        zz=evalZern(n,l,g)
+        mask=(g**2).sum(axis=2) > 1.0
+        zz[mask]=0
+        ax.imshow(zz)
+        ax.set_title("Z(%i, %i)= %3.2g" % (n, l, c))
+        #plt.imshow(c)
+    plt.show()
