@@ -120,23 +120,42 @@ def plotZernsWithC(cl, nw=4, npix=128):
         mask=(g**2).sum(axis=2) > 1.0
         zz[mask]=0
         ax.imshow(zz)
-        ax.set_title("Z(%i, %i)= %3.2g" % (n, l, c))
+        ax.set_title("Z(%i, %i)= %4f" % (n, l, c))
         #plt.imshow(c)
     plt.show()
+
+def selectData(fnamein, FM, FL):
+    d=loadZemaxDC(fnamein)
+    mm=numpy.logical_and(d.FM==FM , d.FL==FL)
+    return d, mm
 
 def plotIncomingRays(fnamein, FM, FL):
     fnameout="plots/%s-%g-%g.png" % (os.path.splitext(os.path.basename(fnamein))[0],
                                      FM, FL)
-    d=loadZemaxDC(fnamein)
-    mm=numpy.logical_and(d.FM==FM , d.FL==FL)
+    d, mm=selectData(fnamein, FM, FL)
     plotQuiverN(d, mm)
     plt.savefig(fnameout)
     plt.close()
+
+def plotZernFit(fnamein, FM, FL):
+    fnameout="plots/%s-fit-%g-%g.png" % (os.path.splitext(os.path.basename(fnamein))[0],
+                                         FM, FL)
+    d, mm=selectData(fnamein, FM, FL)
+    dd=numpy.vstack( [d.AX[mm], d.AY[mm], d.IN[mm] ])    
+    x=fitZerns(4, numpy.moveaxis(dd[0:2],0,-1), dd[2] )
+    plotZernsWithC(x[0])
+    plt.savefig(fnameout)
+    plt.close()    
     
 if 0:
     plotIncomingRays("/home/user/QubesIncoming/DocStore/CORRECT3.TXT", 0, 0)
     plotIncomingRays("/home/user/QubesIncoming/DocStore/CORRECT3.TXT", 2.0, 2.0)
     plotIncomingRays("/home/user/QubesIncoming/DocStore/CLASSIC3.TXT", 0, 0)
 
-
+if 0:
+    plotZernFit("/home/user/QubesIncoming/DocStore/CORRECT3.TXT", 0.0, 0.0)    
+    plotZernFit("/home/user/QubesIncoming/DocStore/CORRECT3.TXT", 2.0, 2.0)
+    plotZernFit("/home/user/QubesIncoming/DocStore/CLASSIC3.TXT", 0.0, 0.0)    
+    plotZernFit("/home/user/QubesIncoming/DocStore/CLASSIC3.TXT", 2.0, 2.0)
+    
     
