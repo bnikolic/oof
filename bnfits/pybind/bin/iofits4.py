@@ -23,13 +23,11 @@ def PrepFitsOut (cvsid):
     phdu=pyfits.PrimaryHDU()
     fout.append(phdu)
     
-    phdu.header.update("author", "BNikolic")
-    phdu.header.update("DateOut",
-                       "%s" %  datetime.datetime.today() ,
-                       comment="Date and time when file was produced")
+    phdu.header.update([ ("author", "BNikolic"),
+                         ("DateOut",
+                          "%s" %  datetime.datetime.today() ,
+                          "Date and time when file was produced")])
 
-    phdu.header.add_comment("CVSVer: %s" % cvsid)
-                            
     
     return fout
 
@@ -74,15 +72,15 @@ def WriteOut(coldefs, foutname, cvsid,
     Prep(foutname, overwrite, 1)
 
     fout=PrepFitsOut(cvsid)
-    fout[0].header.update("iofits4" ,
-                          "$Id: iofits4.py,v 1.11 2006/04/18 10:37:19 bnikolic Exp $",
-                          "Version of iofits3 script" )
+    fout[0].header.update([ ("iofits4" ,
+                             "$Id: iofits4.py,v 1.11 2006/04/18 10:37:19 bnikolic Exp $",
+                             "Version of iofits3 script")] )
     
     tabout = pyfits.new_table( coldefs )
 
     if keydict != None:
         for k in keydict:
-                tabout.header.update(k, keydict[k][0] , keydict[k][1])
+                tabout.header.update([(k, keydict[k][0] , keydict[k][1])])
 
     
     fout.append(tabout)
@@ -95,7 +93,7 @@ def FnParTable(d, cvsid):
                pyfits.Column( "Value" , "80A" ) ]
 
     tabout=pyfits.new_table( coldefs , nrows=len(d) )
-    tabout.header.update("cvsid", cvsid)
+    tabout.header.update([("cvsid", cvsid)])
 
     for x,rowout in izip(d, tabout.data ):
         rowout.setfield("Parameter", x )
@@ -130,8 +128,8 @@ def Select(dirin, filein , selfn, dirout,
         else:
             fin=pyfits.open(os.path.join(dirin,fnamein))
 
-            newtab=pyfits.new_table( fin[1].get_coldefs() , nrows= nrows)
-            for cname in fin[1].get_coldefs().names:
+            newtab=pyfits.new_table( fin[1].columns , nrows= nrows)
+            for cname in fin[1].columns.names:
                 newtab.data.field(cname)._copyFrom( fin[1].data.field(cname)[ mind] )
 
         
@@ -144,7 +142,7 @@ def CopyColDefs( tabin , prefix =""):
 
     "Make a copy of table column definitions with optional prefix"
 
-    tabcds= tabin.get_coldefs()
+    tabcds= tabin.columns
     
     coldefs = [ pyfits.Column( prefix+name ,
                                format ,
@@ -165,7 +163,7 @@ def Combine( flist , fout,
 
     coldefs = []
     for tab,prefix in tabins:
-        tabcds=tab.get_coldefs()
+        tabcds=tab.columns
         print tabcds.formats
         coldefs.extend( CopyColDefs( tab, prefix))
 
@@ -173,7 +171,7 @@ def Combine( flist , fout,
     tabout= pyfits.new_table( coldefs , nrows=len(tabins[0][0].data))
 
     for tab,prefix in tabins:
-        tabcds=tab.get_coldefs()
+        tabcds=tab.columns
         for cname in tabcds.names:
             tabout.data.field(prefix+cname)._copyFrom(tab.data.field(cname))
 
@@ -195,7 +193,7 @@ def RepPHDU ( phin):
     phout= pyfits.PrimaryHDU()
 
     for k in keycopylist:
-        phout.header.update(k, phin.header[k])
+        phout.header.update([(k, phin.header[k])])
 
     return phout
 
@@ -220,15 +218,15 @@ def RepTable ( tabin ,
                              nrows=nrowsout)
 
     for k in keycopylist:
-        if tabin.header.has_key(k):
+        if k in tabin.header.keys():
             tabout.header.update ( k , tabin.header[k] )
 
     if colsel == None:
-        colsel = tabin.get_coldefs().names
+        colsel = tabin.columns.names
 
     if nrowsout > 0 :
         for cname in colsel:
-            tabout.data.field(cname)._copyFrom( tabin.data.field(cname)[ rowmask] )
+            tabout.data[cname]=tabin.data.field(cname)[ rowmask]
 
     return tabout
                                 
@@ -319,7 +317,7 @@ def AddKeyword(fname,
 
     fin=pyfits.open(fname)
     
-    fin[0].header.update(kname,kval)
+    fin[0].header.update([(kname,kval)])
 
     Write( fin, fname, overwrite=1)
     
