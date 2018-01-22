@@ -25,20 +25,19 @@ import oofplot
 
 
 def MkTalkTel():
-
-    """
-    Toy telescope for use in talks
-    """
-    
-    return pyoof.MkALMA()
+    "Make a telescope geometry"
+    tel=pyoof.PrimeFocusGeo()
+    tel.PrimRadius=3.0
+    tel.PrimF=14.4
+    return tel
 
 
 def ModelMaps(apmod,
               dz):
-    
-    "Generate de-focussed maps from an aperture model"
-
     """
+    Generate de-focussed maps from an aperture model
+    
+    :param dz: Note this is coefficient of z4. Actual defocus is 2x this!
 
     """
 
@@ -61,12 +60,13 @@ def ModelMaps(apmod,
     
     return res
 
-def DefocModelMaps(apmod, dz, telgeo):
+def DefocModelMaps(apmod, dz, telgeo,
+                   wl=1e-3):
 
     "Generate defocus model maps with proper defocus"
 
-    farf= pyoof.FarF ( apmod.getphase(),
-                       1e-3)
+    farf= pyoof.FarF (apmod.getphase(),
+                      wl)
 
     res = []
     for cdz in [ 0 , dz, -1* dz]:
@@ -75,7 +75,7 @@ def DefocModelMaps(apmod, dz, telgeo):
         mp=pyplot.Map( apmod.getphase() )
 
         od=pyoof.ObsDefocus(telgeo, apmod.getamp(), cdz,
-                            1e-3)
+                            wl)
         od.DePhase(mp)
                             
         farf.Power( apmod.getamp(), mp,
@@ -87,16 +87,17 @@ def DefocModelMaps(apmod, dz, telgeo):
 
 
 def MkApModel(znmax,
-              npix=1024):
+              npix=256,
+              wl=1e-3):
 
     npix = npix
     tel1 = MkTalkTel()
     
     apmod = pyoof.MkSimpleAp( tel1,
-                              1e-3,
+                              wl,
                               npix,
                               znmax,
-                              16)
+                              4)
     return apmod
     
     
@@ -114,9 +115,10 @@ def ZernPower(zn , dz):
 
     return modmaps
 
-def RandomSurface( znmax , stddev=0.5,
+def RandomSurface( znmax ,
+                   stddev=0.5,
                    dzlist=[1.0],
-                   propdefoc=False):
+                   propdefoc=True):
 
     if type(dzlist ) != list:
         dzlist = [dzlist]
@@ -173,11 +175,11 @@ def SaveSet( rlist, dzlist,
         me=pyplot.MapDSNearest(ds, r)
         me.Calc(r, ds)
         tabs.append( oofdataio.DataSeriesToOOFTable(ds))
-        tabs[-1].header.update("dz",dz)
+        tabs[-1].header.update([("dz",dz, "Defocus distance")])
 
     fout=iofits4.PrepFitsOut("")
-    fout[0].header.update("telesc", "ALMA")
-    fout[0].header.update("freq", 3e8/1e-3)    
+    fout[0].header.update([("telesc", "ALMA"),
+                           ("freq", 3e8/1e-3)])
     fout.extend(tabs)
     iofits4.Write( fout,
                    fnameout ,
