@@ -38,12 +38,12 @@ def mkCFn(nmax, a):
     :param nmax: Maximum Zernike order to include
 
     example: 
-    x=mkZernLCFn(2, numpy.moveaxis(numpy.mgrid[-1:1:64j, -1:1:64j], 0, -1) )
+    x=mkCFn(2, numpy.moveaxis(numpy.mgrid[-1:1:64j, -1:1:64j], 0, -1) )
     """
     zz=[]
     for n in range(nmax+1):
         for l in range(-n, n+1, 2):
-            zz.append(evalZern(n, l, a))
+            zz.append(ev(n, l, a))
     zz=numpy.array(zz)
     def lcfn(c):
         return (c*numpy.moveaxis(zz, 0, -1)).sum(axis=-1)
