@@ -23,6 +23,16 @@ let
 	  ] ;
   };
 
+  oofpyenv = pkgs.stdenv.mkDerivation rec {
+     name = "oofpyenv";
+     buildInputs = [ pkgs.python36
+     pkgs.python36Packages.numpy
+     pkgs.python36Packages.scipy
+           pkgs.python36Packages.pandas
+	   pkgs.python36Packages.matplotlib
+	  ] ;
+  };  
+
   pyfits = pkgs.python27Packages.buildPythonPackage rec {
     name = "pyfits-${version}";
     version = "3.5";

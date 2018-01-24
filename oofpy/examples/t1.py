@@ -28,6 +28,10 @@ x=oof.toskyDz(a, z, dzl)
 f=oof.mkPredFn(2, g, dzl)
 
 zz=numpy.array([0]*6 + [0,0,1,0.3, 0, 0])
+
+bclean=f(zz)
+# Factor noise /beam -> /pixel  bclean[0].sum()/(bclean[0]**2).sum()**0.5
+
 zz[5]=1.0
 borig=f(zz)
 bnoise=borig+numpy.random.normal(0, borig.max()*0.05, borig.shape)
@@ -35,8 +39,11 @@ bnoise=borig+numpy.random.normal(0, borig.max()*0.05, borig.shape)
 def fitfn(pars):
     return (bnoise-f(pars)).flatten()
 
-x=scipy.optimize.leastsq(fitfn,
-                         numpy.array([0]*6 + [0,0,1,0.3, 0, 0]),
-                         full_output=True)
+if 0:
+    x=scipy.optimize.leastsq(fitfn,
+                             numpy.array([0]*6 + [0,0,1,0.3, 0, 0]),
+                             full_output=True)
+
+    
 
 #plot.beams(f(numpy.array([0]*6 + [0,0,1,0.3, 0, 0])))
