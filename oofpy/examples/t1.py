@@ -25,7 +25,7 @@ dzl=numpy.array([dz*0,
 
 x=oof.toskyDz(a, z, dzl)
 
-f=oof.mkPredFn(2, g, dzl)
+f,pl=oof.mkPredFn(2, g, dzl, numpy.array([0]*6 + [0,0,1,0.3, 0, 0]))
 
 zz=numpy.array([0]*6 + [0,0,1,0.3, 0, 0])
 
@@ -36,12 +36,15 @@ zz[5]=1.0
 borig=f(zz)
 bnoise=borig+numpy.random.normal(0, borig.max()*0.05, borig.shape)
 
+f,pl=oof.mkPredFn(2, g, dzl, numpy.array([0]*6 + [0,0,1,0.3, 0, 0]),
+                  omitp=["z0", "x0", "y0"])
+
 def fitfn(pars):
     return (bnoise-f(pars)).flatten()
 
-if 0:
+if 1:
     x=scipy.optimize.leastsq(fitfn,
-                             numpy.array([0]*6 + [0,0,1,0.3, 0, 0]),
+                             numpy.array([0]*5 + [1,0.3, 0, 0]),
                              full_output=True)
 
     

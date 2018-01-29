@@ -47,5 +47,6 @@ def mkCFn(nmax, a):
     zz=numpy.array(zz)
     def lcfn(c):
         return (c*numpy.moveaxis(zz, 0, -1)).sum(axis=-1)
+    lcfn.parnames=["z%i"%i for i in range(zz.shape[0])]
     return lcfn
 
