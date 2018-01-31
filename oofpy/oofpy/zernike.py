@@ -13,10 +13,10 @@ def ev(n, l, a):
     
     """
     m=abs(l)
-    nradterms= 1+ (n-m)/2
+    nradterms= 1+ (n-m)//2
     radpowers= n - 2*numpy.arange(nradterms)
-    radcoeffs= numpy.array(map(lambda s: (-1)**s * fact(n-s) / ( fact(s) * fact ( (n+m)/2 -s ) * fact( (n-m)/2 -s )),
-                         numpy.arange(nradterms)))
+    radcoeffs= numpy.array(list(map(lambda s: (-1)**s * fact(n-s) / ( fact(s) * fact ( (n+m)/2 -s ) * fact( (n-m)/2 -s )),
+                                    numpy.arange(nradterms))))
     r=numpy.hypot(a[...,0], a[...,1])
     phi=numpy.arctan2(a[...,1], a[...,0])
     v=numpy.zeros_like(r)
@@ -30,7 +30,7 @@ def ev(n, l, a):
 
 def N(nmax):
     "Number of polynomials up to and including order nmax"
-    return nmax*(nmax+3)/2 +1 
+    return nmax*(nmax+3)//2 +1
 
 def mkCFn(nmax, a):
     """Make a function which evaluates linear combinations of Zernike polynomials

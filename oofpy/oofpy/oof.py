@@ -3,7 +3,7 @@ import re
 
 import numpy
 
-import zernike, amp
+from . import zernike, amp
 
 def tosky(a,p):
     """FFT to sky"""
