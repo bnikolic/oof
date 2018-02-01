@@ -26,10 +26,10 @@ let
   oofpyenv = pkgs.stdenv.mkDerivation rec {
      name = "oofpyenv";
      buildInputs = [ pkgs.python36
-     pkgs.python36Packages.numpy
-     pkgs.python36Packages.scipy
-           pkgs.python36Packages.pandas
-	   pkgs.python36Packages.matplotlib
+          pkgs.python36Packages.numpy
+          pkgs.python36Packages.scipy
+          pkgs.python36Packages.pandas
+          pkgs.python36Packages.matplotlib
 	  ] ;
   };  
 

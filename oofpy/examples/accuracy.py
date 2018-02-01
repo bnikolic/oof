@@ -47,6 +47,14 @@ def retErr(dz,
         res.append( x[0])
     return numpy.vstack(res)
 
-if 1:
+if 0:
     xx=retErr(50e-3, nsim=500)
     numpy.savez("simaccbasic.npz", xx)
+
+def plotParDist(xx):
+    for j in range(xx.shape[0]):
+        pylab.clf()
+        pylab.hist(xx[:,j])
+        pylab.savefig(("par-%i-dist.png" % j))
+    
+        
