@@ -30,6 +30,7 @@ let
           pkgs.python36Packages.scipy
           pkgs.python36Packages.pandas
           pkgs.python36Packages.matplotlib
+	  pymp
 	  ] ;
   };  
 
@@ -45,6 +46,20 @@ let
     doCheck = false;
       installCheckPhase = " " ;
     propagatedBuildInputs = [ pkgs.python27Packages.numpy ];
+
+  };
+
+  pymp = pkgs.python36Packages.buildPythonPackage rec {
+      pname = "pymp-pypi";
+      name = "pymp-pypi-${version}";
+      version = "0.4.0";
+
+    src = pkgs.python36Packages.fetchPypi {
+      inherit pname version;
+      sha256 = "1pcrq84rmd1sg6wi7wfrzwyzpzxz2qf37kwxsy9rlqvrgwqf5pam";
+    };
+
+         propagatedBuildInputs = [ pkgs.python36Packages.numpy ];
 
   };
 
