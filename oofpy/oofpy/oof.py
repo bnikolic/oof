@@ -22,7 +22,8 @@ def toskyDz(a, p, dz):
 
 def mkPredFn(nzern, g, dzl,
              initv,
-             omitp=[]):
+             omitp=[],
+             dish=None):
     """Make a predictor function which takes a perameter array and returns the beam maps
     
     :param nzern: Maximum order of Zernike to use
@@ -45,9 +46,11 @@ def mkPredFn(nzern, g, dzl,
     parl=zlc.parnames+inspect.getargspec(amp.gauss).args[:-1]
     # Indices of params we will fit for
     fiti=numpy.array([i for i,xz in enumerate(parl) if  xz not in omitp])
+    if dish is None:
+        dish=amp.dish(1, 0, g)
     def f(pars):
         initv[fiti]=pars
         p=zlc(initv[0:nzpoly])
-        a=amp.gauss(* (list(initv[nzpoly:]) +[g]))
+        a=amp.gauss(* (list(initv[nzpoly:]) +[g])) * dish
         return toskyDz(a, p, dzl)
     return f, numpy.array(parl)[fiti]
