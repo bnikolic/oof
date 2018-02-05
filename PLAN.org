@@ -2,3 +2,11 @@
 * S/W Engineering 
 
 ** TODO Use autoconf macros for boost regex 
+
+* Notes 
+
+** Runnin python on Nix
+
+e.g.
+
+nix-shell  /home/user/n/oof/build/nix/oof.nix -A oofpyenv -j 2 --cores 6 --run "env PYTHONPATH=$PYTHONPATH:/home/user/n/oof/oofpy/ python -i"

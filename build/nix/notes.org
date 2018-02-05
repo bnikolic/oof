@@ -7,8 +7,13 @@ nix-env -p /home/user/temp/oofenv -f /home/user/n/oof/build/nix/oof.nix -Ai oof 
 nix-env -p /home/user/temp/oofenv -f /home/user/.nix-defexpr/channels/nixpkgs/  -Ai python27 python27Packages.numpy
 
 Need to add numpy: 
-sys.path.append("/nix/store/0z14l2hs8l4ny8z04i2jarqny8iz5r7h-python2.7-numpy-1.11.1/lib/python2.7/site-packages/")
+import sys; sys.path.append("/nix/store/0z14l2hs8l4ny8z04i2jarqny8iz5r7h-python2.7-numpy-1.11.1/lib/python2.7/site-packages/")
 
 Invoke with:
 
 env PGPLOT_FONT=/nix/store/g9zdp9xhzx8q4kfpvphz5gwiq77pzc65-pgplot5.2/lib/grfont.dat BNDEVEL=/home/user/temp/oofenv /home/user/temp/oofenv/bin/python -i
+
+
+To run Python
+
+nix-shell  /home/user/n/oof/build/nix/oof.nix -A oofenv --run "python -i"
