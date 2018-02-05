@@ -1,6 +1,8 @@
 import imp # for reload
+import json
 
 import numpy
+import pandas
 import scipy.optimize, scipy.stats
 import pymp
 
@@ -65,9 +67,9 @@ def retErr(dz,
                      NN=NN,
                      oversamp=oversamp)
 
-    # Use bclean to compute size of beam for ideal telescope
-    bclean=f(p0)
-    # Factor noise /beam -> /pixel  bclean[0].sum()/(bclean[0]**2).sum()**0.5
+    noisesn *= noiseF(wl=wl,
+                      oversamp=oversamp,
+                      NN=NN)    
 
     borig=f(p0)
 
@@ -131,14 +133,44 @@ def wrms(xx):
     return numpy.array(res)
 
 
+def dosim():
+    dirout="sim"
+    i=0
+    pars= { "dz" : 50e-3,
+            "wl" : 1.1e-3,
+            "nsim": 20,
+            "oversamp": 2.0}
+    for nzern in range(4, 9):
+        pars["nzern"]= nzern
+        for sn in (1e-4, 3e-4, 6e-4, 1e-3, 3e-3, 6e-3, 1e-2, 3e-2, 6e-2):
+            pars["noisesn"]=sn
+            xx=retErr(**pars)
+            numpy.savez("sim/sn%i-ret.npz" %i, xx)
+            open(os.path.join("sim/sn%i.json" %i), "w").write(json.dumps(pars))
+            i+=1
+            
+def wrmssim():
+    i=0
+    res=[]
+    while os.path.exists("sim/sn%i.json" %i):
+        p=json.load(open("sim/sn%i.json" %i))
+        xx=numpy.load("sim/sn%i-ret.npz" %i)['arr_0']
+        zz=wrms (xx)
+        p["wrms"]=zz.mean()
+        p["wrmserr"]=zz.std()/zz.shape[0]**0.5
+        res.append(p)
+        i+=1
+    return pandas.DataFrame(res)
     
+            
+            
 
 if 0:
-    xx=retErr(50e-3, nsim=100, oversamp=1.0, noisesn=0.05*noiseF(oversamp=1.0))
+    xx=retErr(50e-3, nsim=100, oversamp=1.0, noisesn=0.05)
     numpy.savez("simaccbasic3.npz", xx)
 
-if 1:
-    xx=retErr(50e-3, nsim=100, oversamp=2.0, noisesn=0.05*noiseF(oversamp=2.0))
+if 0:
+    xx=retErr(50e-3, nsim=100, oversamp=2.0, noisesn=0.05)
     numpy.savez("simaccbasic4.npz", xx)
 
 def plotParDist(xx):
