@@ -158,13 +158,13 @@ def dosim2():
             "nsim": 20,
             "oversamp": 2.0,
             "nzern":6 }
-    for dz in numpy.array([3, 10, 30, 50, 80, 100, 300])*1e-3:
+    for dz in numpy.array([3, 10, 30, 50, 80, 100, 300, 1000, 3000])*1e-3:
         pars["dz"]=dz
         for sn in (1e-3, 5e-3, 1e-2):
             pars["noisesn"]=sn
             xx=retErr(**pars)
-            numpy.savez("sim/sn%i-ret.npz" %i, xx)
-            open(os.path.join("sim/sn%i.json" %i), "w").write(json.dumps(pars))
+            numpy.savez("%s/sn%i-ret.npz" %(dirout, i), xx)
+            open(os.path.join("%s/sn%i.json" %(dirout,i)), "w").write(json.dumps(pars))
             i+=1            
             
     
