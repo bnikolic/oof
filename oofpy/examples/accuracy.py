@@ -11,7 +11,7 @@ from oofpy import zernike, amp, oof, telgeo, plot
 
 from matplotlib import pylab
 
-NTHREAD=20
+NTHREAD=10
 SIGMAIL=0.72
 
 def mkPredFn(dz,
@@ -125,10 +125,12 @@ def weightedRMS(a, p):
     return ( p**2*a/a.sum() ).sum()**0.5
 
 
-def wrms(xx):
+def wrms(xx,
+         nzern):
     res=[]
     for i in range(xx.shape[0]):
-        p, a = calcAp(xx[i])
+        p, a = calcAp(xx[i],
+                      nzern=nzern)
         res.append(weightedRMS(a, p))
     return numpy.array(res)
 
@@ -148,19 +150,23 @@ def dosim():
             numpy.savez("sim/sn%i-ret.npz" %i, xx)
             open(os.path.join("sim/sn%i.json" %i), "w").write(json.dumps(pars))
             i+=1
-            
-def wrmssim():
+
+def dosim2():
+    dirout="sim2"
     i=0
-    res=[]
-    while os.path.exists("sim/sn%i.json" %i):
-        p=json.load(open("sim/sn%i.json" %i))
-        xx=numpy.load("sim/sn%i-ret.npz" %i)['arr_0']
-        zz=wrms (xx)
-        p["wrms"]=zz.mean()
-        p["wrmserr"]=zz.std()/zz.shape[0]**0.5
-        res.append(p)
-        i+=1
-    return pandas.DataFrame(res)
+    pars= { "wl" : 1.1e-3,
+            "nsim": 20,
+            "oversamp": 2.0,
+            "nzern":6 }
+    for dz in numpy.array([3, 10, 30, 50, 80, 100, 300])*1e-3:
+        pars["dz"]=dz
+        for sn in (1e-3, 5e-3, 1e-2):
+            pars["noisesn"]=sn
+            xx=retErr(**pars)
+            numpy.savez("sim/sn%i-ret.npz" %i, xx)
+            open(os.path.join("sim/sn%i.json" %i), "w").write(json.dumps(pars))
+            i+=1            
+            
     
             
             
