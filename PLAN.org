@@ -10,3 +10,5 @@
 e.g.
 
 nix-shell  /home/user/n/oof/build/nix/oof.nix -A oofpyenv -j 2 --cores 6 --run "env PYTHONPATH=$PYTHONPATH:/home/user/n/oof/oofpy/ python -i"
+
+nix-shell  /home/bnikolic/n/oof/build/nix/oof.nix -A oofpyenv -j 2 --cores 6 --run "env PYTHONPATH=$PYTHONPATH:/home/bnikolic/n/oof/oofpy/ python -i"

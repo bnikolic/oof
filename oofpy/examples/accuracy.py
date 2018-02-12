@@ -87,7 +87,8 @@ def retErr(dz,
                                         bmax*noisesn,
                                         borig.shape)
             def fitfn(pars):
-                return (bnoise-f(pars)).flatten()
+                # Inner quarter of the map only
+                return plot.extract_mid((bnoise-f(pars)), NN//4).flatten()
 
             x=scipy.optimize.leastsq(fitfn,
                                      p0,
@@ -140,7 +141,7 @@ def dosim():
     i=0
     pars= { "dz" : 50e-3,
             "wl" : 1.1e-3,
-            "nsim": 20,
+            "nsim": 50,
             "oversamp": 2.0}
     for nzern in range(4, 9):
         pars["nzern"]= nzern
@@ -155,10 +156,10 @@ def dosim2():
     dirout="sim2"
     i=0
     pars= { "wl" : 1.1e-3,
-            "nsim": 20,
+            "nsim": 50,
             "oversamp": 2.0,
             "nzern":6 }
-    for dz in numpy.array([3, 10, 30, 50, 80, 100, 300, 1000, 3000])*1e-3:
+    for dz in numpy.array([3, 10, 30, 50, 80, 100, 300, 1000])*1e-3:
         pars["dz"]=dz
         for sn in (1e-3, 5e-3, 1e-2):
             pars["noisesn"]=sn
