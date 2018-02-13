@@ -4,6 +4,11 @@ import json
 import numpy
 import pandas
 import scipy.optimize, scipy.stats
+
+# NB. This script uses pymp for parallelisation. However, scipy uses
+# OpenMP in non-fork() safe way so nested scipy parallelisation should
+# be disabled with MP_NUM_THREADS=1. Degree of parallelisation in
+# scipy is trivial to what pymp can achieve
 import pymp
 
 import oofpy
@@ -11,7 +16,7 @@ from oofpy import zernike, amp, oof, telgeo, plot
 
 from matplotlib import pylab
 
-NTHREAD=10
+NTHREAD=50
 SIGMAIL=0.72
 
 def mkPredFn(dz,
@@ -73,7 +78,7 @@ def retErr(dz,
 
     borig=f(p0)
 
-    res=pymp.shared.list()
+    res=pymp.shared.array( (nsim,) + p0.shape )
     with pymp.Parallel(NTHREAD) as p:
         numpy.random.seed()
         for i in p.range(nsim):
@@ -93,8 +98,8 @@ def retErr(dz,
             x=scipy.optimize.leastsq(fitfn,
                                      p0,
                                      full_output=True)
-            res.append( x[0])
-    return numpy.vstack(res)
+            res[i]=x[0]
+    return res
 
 def noiseF(wl=1.1e-3,
            NN=256,
@@ -139,7 +144,7 @@ def wrms(xx,
 def dosim():
     dirout="sim"
     i=0
-    pars= { "dz" : 50e-3,
+    pars= { "dz" : 100e-3,
             "wl" : 1.1e-3,
             "nsim": 50,
             "oversamp": 2.0}
