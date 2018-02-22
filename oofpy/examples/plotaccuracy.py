@@ -53,10 +53,32 @@ def plotvsnoise(df):
     plt.ylabel("$\epsilon\,$(rad)")
     plt.xlabel("(Noise per beam) / (Peak signal)")    
     plt.savefig("plots/errvsnoise.png")
-    plt.close()
+    plt.close() 
+
+def plotvsdecim(df):
+    fig=plt.figure(figsize=(7,5), dpi=150)
+    ax=fig.add_subplot(1, 1, 1)
+    for d in [False, 2, 3, 4, 5]:
+        m=(df["decimate"]==d)
+        dfm=df[m]
+        dfm.plot(x='noisesn',
+                 y='wrms',
+                 yerr='wrmserr',
+                 loglog=True,
+                 label=("decimate %s" % d),
+                 ax=ax)
+    ax.xaxis.set_ticks_position('both')
+    ax.yaxis.set_ticks_position('both')    
+    for tax in [ax.get_xaxis(), ax.get_yaxis()]:
+        tax.set_major_formatter(matplotlib.ticker.ScalarFormatter())
+    ax.set_title("Accuracy for decimated observation")
+    plt.ylabel("$\epsilon\,$(rad)")
+    plt.xlabel("(Noise per beam) / (Peak signal)")    
+    plt.savefig("plots/errvsdecim.png")
+    plt.close()    
 
 
-def plotvsdz(df):
+def plotvsdz(df, dzmax=None):
     fig=plt.figure(figsize=(7,5), dpi=150)
     ax=fig.add_subplot(1, 1, 1)
     for sn in (1e-3, 5e-3, 1e-2):
@@ -68,6 +90,8 @@ def plotvsdz(df):
                  loglog=True,
                  label=("sn=%g"%sn),
                  ax=ax)
+    if dzmax:
+        ax.set_xlim(3e-3, dzmax)
     ax.xaxis.set_ticks_position('both')
     ax.yaxis.set_ticks_position('both')
     #for tax in [ax.get_xaxis(), ax.get_yaxis()]:

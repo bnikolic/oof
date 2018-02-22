@@ -51,7 +51,9 @@ def retErr(dz,
            NN=256,
            oversamp=2.0,
            noisesn=0.05,
-           noisemult=0.05):
+           noisemult=0.05,
+           noisedz=0,
+           decimate=False):
     """Compute retrieval error
 
     :param nzern: Maximum order of zernikes to include
@@ -65,24 +67,40 @@ def retErr(dz,
     
     :param dz: Defocus
 
+    :param noisedz: Error in the defocus position: the simulated beams
+    are additionally offset in focus by a random number drawn from
+    normal distribution with this standard deviation
+
     """
-    f,pl,p0=mkPredFn(dz=dz,
-                     nzern=nzern,
-                     wl=wl,
-                     NN=NN,
-                     oversamp=oversamp)
+    def mkBeams(noisedz):
+        dzp=numpy.array(dz)
+        if noisedz:
+            dzp+=numpy.random.normal(0, noisedz,
+                                     dzp.shape)
+        f,pl,p0=mkPredFn(dz=dzp,
+                         nzern=nzern,
+                         wl=wl,
+                         NN=NN,
+                         oversamp=oversamp)
+        return f, p0
 
     noisesn *= noiseF(wl=wl,
                       oversamp=oversamp,
                       NN=NN)    
-
-    borig=f(p0)
-
+    #f0 is the predict function without a defocus error
+    f0, p0=mkBeams(0)
+    borig=f0(p0)
     res=pymp.shared.array( (nsim,) + p0.shape )
     with pymp.Parallel(NTHREAD) as p:
         numpy.random.seed()
         for i in p.range(nsim):
+            if noisedz:
+                # Make a predictor function with error in defocus and
+                # simulate the observed beams using that
+                f, _=mkBeams(noisedz)
+                borig=f(p0)
             bmax=borig.max()
+            
             # Multiplicative noise
             bnoise=borig*(1+numpy.random.normal(0,
                                                 noisemult,
@@ -92,8 +110,13 @@ def retErr(dz,
                                         bmax*noisesn,
                                         borig.shape)
             def fitfn(pars):
-                # Inner quarter of the map only
-                return plot.extract_mid((bnoise-f(pars)), NN//4).flatten()
+                # Inner quarter of the map only. NB the fitting
+                # function is f0, no focus error
+                res=plot.extract_mid((bnoise-f0(pars)), NN//4)
+                if decimate:
+                    return res[::decimate, ::decimate].flatten()
+                else:
+                    return res.flatten()
 
             x=scipy.optimize.leastsq(fitfn,
                                      p0,
@@ -141,10 +164,10 @@ def wrms(xx,
     return numpy.array(res)
 
 
-def dosim():
-    dirout="sim"
+def dosim(dirout="sim",
+          dz=100e-3):
     i=0
-    pars= { "dz" : 100e-3,
+    pars= { "dz" : dz,
             "wl" : 1.1e-3,
             "nsim": 50,
             "oversamp": 2.0}
@@ -153,14 +176,14 @@ def dosim():
         for sn in (1e-4, 3e-4, 6e-4, 1e-3, 3e-3, 6e-3, 1e-2, 3e-2, 6e-2):
             pars["noisesn"]=sn
             xx=retErr(**pars)
-            numpy.savez("sim/sn%i-ret.npz" %i, xx)
-            open(os.path.join("sim/sn%i.json" %i), "w").write(json.dumps(pars))
+            numpy.savez("%s/sn%i-ret.npz" % (dirout, i), xx)
+            open(os.path.join("%s/sn%i.json" % (dirout, i)), "w").write(json.dumps(pars))
             i+=1
 
-def dosim2():
-    dirout="sim2"
+def dosim2(dirout="sim2",
+           wl=1.1e-3):
     i=0
-    pars= { "wl" : 1.1e-3,
+    pars= { "wl" : wl,
             "nsim": 50,
             "oversamp": 2.0,
             "nzern":6 }
@@ -172,8 +195,41 @@ def dosim2():
             numpy.savez("%s/sn%i-ret.npz" %(dirout, i), xx)
             open(os.path.join("%s/sn%i.json" %(dirout,i)), "w").write(json.dumps(pars))
             i+=1            
+
+def dosimdecim(dirout="simdecim",
+               dz=100e-3):
+    i=0
+    pars= { "dz" : dz,
+            "wl" : 1.1e-3,
+            "nsim": 50,
+            "oversamp": 2.0,
+            "nzern": 6}
+    for sn in (1e-4, 3e-4, 6e-4, 1e-3, 3e-3, 6e-3, 1e-2, 3e-2, 6e-2):
+        pars["noisesn"]=sn
+        for d in [False, 2, 3, 4, 5, 6 ]:
+            pars["decimate"]=d
+            xx=retErr(**pars)
+            numpy.savez("%s/sn%i-ret.npz" % (dirout, i), xx)
+            open(os.path.join("%s/sn%i.json" % (dirout, i)), "w").write(json.dumps(pars))
+            i+=1
+        
+def dodznoisesim(dirout="simdznoise",
+                 dz=50e-3):
+    i=0
+    pars= { "dz" : dz,
+            "wl" : 1.1e-3,
+            "nsim": 50,
+            "oversamp": 2.0,
+            "nzern": 6         }
+    for sn in (1e-4, 3e-4, 6e-4, 1e-3, 3e-3, 6e-3):
+        pars["noisesn"]=sn
+        for dznoise in [0, 0.3e-3, 1e-3, 3e-3, 10e-3]:
+            pars["noisedz"]=dznoise
+            xx=retErr(**pars)
+            numpy.savez("%s/sn%i-ret.npz" % (dirout, i), xx)
+            open(os.path.join("%s/sn%i.json" % (dirout, i)), "w").write(json.dumps(pars))
+            i+=1
             
-    
             
             
 
@@ -184,6 +240,18 @@ if 0:
 if 0:
     xx=retErr(50e-3, nsim=100, oversamp=2.0, noisesn=0.05)
     numpy.savez("simaccbasic4.npz", xx)
+
+if 0:
+    dosim(dirout="sim3", dz=10e-3)
+    dosim2(dirout="sim4",  wl=0.35e-3)
+
+if 0:
+    dosimdecim()
+
+if 0:
+    dosimdecim("simdecimdz10", dz=10e-3)
+if 1:
+    dodznoisesim()
 
 def plotParDist(xx):
     for j in range(xx.shape[1]):
