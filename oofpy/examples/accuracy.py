@@ -18,6 +18,10 @@ from matplotlib import pylab
 
 NTHREAD=50
 SIGMAIL=0.72
+# The primayr/secondary radius is 3m but the Lyot cold stop means only
+# about 2.8m is illuminated
+R=2.8
+
 
 def mkPredFn(dz,
              nzern,
@@ -25,7 +29,6 @@ def mkPredFn(dz,
              NN,
              oversamp):
     "Wrap the predictor fn"
-    R=3.0
     g=numpy.moveaxis(numpy.mgrid[-2*oversamp:2*oversamp:NN*1j,
                                  -2*oversamp:2*oversamp:NN*1j], 0, -1)
     dztemp=telgeo.primeF(14.4, g*R)
@@ -140,7 +143,6 @@ def calcAp(p,
            nzern=4,
            NN=256,
            oversamp=2.0):
-    R=3.0
     g=numpy.moveaxis(numpy.mgrid[-2*oversamp:2*oversamp:NN*1j,
                                  -2*oversamp:2*oversamp:NN*1j],
                      0,
@@ -243,15 +245,22 @@ if 0:
 
 if 0:
     dosim(dirout="sim3", dz=10e-3)
-    dosim2(dirout="sim4",  wl=0.35e-3)
+
+
 
 if 0:
-    dosimdecim()
-
-if 0:
-    dosimdecim("simdecimdz10", dz=10e-3)
+    #ver 1
+    dosim(dirout="v1-snsim-100",  dz=100e-3)
+    dosim(dirout="v1-snsim-50",   dz=50e-3)
+    dosim(dirout="v1-snsim-10",   dz=10e-3)
 if 1:
-    dodznoisesim()
+    dosim2(dirout="v1-dz")
+    dosim2(dirout="v1-dz035",  wl=0.35e-3)        
+    dosimdecim("v1-simdecim", dz=100e-3)
+    dosimdecim("v1-simdecimdz10", dz=10e-3)
+    dodznoisesim("v1-simdznoise")
+    dodznoisesim("v1-simnoisedz10", dz=10e-3)
+    
 
 def plotParDist(xx):
     for j in range(xx.shape[1]):
