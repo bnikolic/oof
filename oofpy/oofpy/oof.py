@@ -7,7 +7,8 @@ from . import zernike, amp
 
 def tosky(a,p):
     """FFT to sky"""
-    return numpy.fft.fftshift(numpy.fft.ifft2(numpy.fft.ifftshift(a * numpy.exp(1j*p)))).real
+    s=numpy.fft.fftshift(numpy.fft.ifft2(numpy.fft.ifftshift(a * numpy.exp(1j*p))))
+    return s.real**2 + s.imag**2
 
 def toskyDz(a, p, dz):
     """Predict beam maps including a defocus
