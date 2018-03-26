@@ -2,7 +2,8 @@
 
 import numpy
 
-def cfftshift(x, axes=None):
+def cfftshift(x, axes=None,
+              invert=False):
     """
     Like numpy.fft.fftshift, but pyTorch
     """
@@ -13,11 +14,17 @@ def cfftshift(x, axes=None):
     elif isinstance(axes, integer_types):
         axes = (axes,)
     y = x
-    # Rewrite in terms of torch.cat and torch.split
     for k in axes:
         n = shape[k]
-        pp = (n+1)//2
-        p1,p2 = torch.split( y, pp, dim=k)
-        y=torch.cat((p2,p1,), dim=k)
+        if invert:
+            pp = n-(n+1)//2
+        else:
+            pp = (n+1)//2
+        pl= torch.split( y, pp, dim=k)
+        y= torch.cat(pl[1:]+(pl[0], ),
+                    dim=k)
     return y
+
+def cifftshift(*args, **kwargs):
+    return cfftshift(*args, invert=True, **kwargs)
     
