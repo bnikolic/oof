@@ -58,6 +58,27 @@ def toskyDz(a, p, dz):
         res.append(tosky(a, p+dz[i]))
     return torch.stack(res)
 
+
+def toskyDzF(a, p, dz):
+    """Like See toskyDz but faster by batching.
+
+    Big saving, presumably due to the overhead of creating the cufft
+    plan?
+    """
+    Ft=fft.Ifft2d()    
+    res=[]
+    RR, II = [], []
+    for i in range(dz.shape[0]):
+        pp=p+dz[i]
+        RR.append(a*torch.cos(pp))
+        II.append(a*torch.sin(pp))
+    R=Ft(torch.stack(RR), torch.stack(II))
+    for i in range(dz.shape[0]):
+        S=map(cfftshift, (R[0][i], R[1][i]))
+        res.append(S[0]**2 + S[1]**2)    
+    return torch.stack(res)
+
+
 def mkCFn(nmax, a):
     """see oof.mkCFn
     """
@@ -120,7 +141,7 @@ def mkPredFn(nzern, g, dzl,
                         requires_grad=True)
         p=zlc(initvv[0:nzpoly])
         a=gauss(* (list(initvv[nzpoly:]) +[g])) * pdish
-        return toskyDz(a, p, dzl), initvv
+        return toskyDzF(a, p, dzl), initvv
     return f, numpy.array(parl)[fiti]
 
 
