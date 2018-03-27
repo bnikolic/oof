@@ -8,7 +8,12 @@ import pytorch_fft.fft.autograd as fft
 import numpy
 
 import oofpy
-from oofpy import oof, zernike
+from oofpy import oof, zernike, oofacc, telgeo
+
+SIGMAIL=0.72
+R=2.8
+
+
 
 if 0:
     # Toy examples
@@ -71,3 +76,72 @@ def time_setup(nzmax,
     
     
     
+def mkPredFnT(dz,
+              nzern,
+              wl,
+              NN,
+              oversamp):
+    "Wrap the predictor fn"
+    g=numpy.moveaxis(numpy.mgrid[-2*oversamp:2*oversamp:NN*1j,
+                                 -2*oversamp:2*oversamp:NN*1j], 0, -1)
+    dztemp=telgeo.primeF(14.4, g*R)
+    dzl=numpy.array([dztemp*0,
+                     dztemp*-1.0*dz/wl * 2 *numpy.pi,
+                     dztemp*dz/wl * 2 *numpy.pi])
+    dzl=Variable(torch.from_numpy(dzl).float().cuda())
+
+    nzpoly=zernike.N(nzern)
+    initv=[0]*nzpoly + [0,0,1, SIGMAIL, 0, 0]
+
+    f,pl=oofacc.mkPredFn(nzern,
+                         g,
+                         dzl,
+                         numpy.array(initv),
+                         omitp=["z0", "rho", "diff"])
+    p0=numpy.array([0]*(nzpoly-1) + [0,0, 1, SIGMAIL])
+    return f, pl, p0
+
+def mkPredFn(dz,
+             nzern,
+             wl,
+             NN,
+             oversamp):
+    "Wrap the predictor fn"
+    g=numpy.moveaxis(numpy.mgrid[-2*oversamp:2*oversamp:NN*1j,
+                                 -2*oversamp:2*oversamp:NN*1j], 0, -1)
+    dztemp=telgeo.primeF(14.4, g*R)
+    dzl=numpy.array([dztemp*0,
+                     dztemp*-1.0*dz/wl * 2 *numpy.pi,
+                     dztemp*dz/wl * 2 *numpy.pi])
+
+    nzpoly=zernike.N(nzern)
+    initv=[0]*nzpoly + [0,0,1, SIGMAIL, 0, 0]
+
+    f,pl=oof.mkPredFn(nzern,
+                      g,
+                      dzl,
+                      numpy.array(initv),
+                      omitp=["z0", "rho", "diff"])
+    p0=numpy.array([0]*(nzpoly-1) + [0,0, 1, SIGMAIL])
+    return f, pl, p0
+
+
+if 1:
+    f, p, i=mkPredFnT(50e-3, 2,  1.1e-3, 128, 2.0)    
+    with torch.autograd.profiler.profile() as prof:
+        yy, x=f(i)
+        zz=(yy**2).sum()
+        zz.backward()
+    print(prof)
+
+if 0:
+    f, p, i=mkPredFnT(50e-3, 7,  1.1e-3, 512, 2.0)    
+    with torch.cuda.profiler.profile():
+        yy, x=f(i)
+        zz=(yy**2).sum()
+        zz.backward()
+        with torch.autograd.profiler.emit_nvtx():
+            yy, x=f(i)
+            zz=(yy**2).sum()
+            zz.backward()
+
