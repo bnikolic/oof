@@ -1,5 +1,6 @@
 # Plotting of retrieval error results
 
+import os
 import math
 import imp # for reload
 import json
@@ -112,6 +113,7 @@ def plotvsdz(df, dzmax=None, postf=""):
                  **plotstyle)
     if dzmax:
         ax.set_xlim(3e-3, dzmax)
+    ax.set_ylim(1e-6, 50e-6)
     ax.xaxis.set_ticks_position('both')
     ax.yaxis.set_ticks_position('both')
     plt.ylabel(r"$\epsilon_{\mathrm{HWFE}}\,$(m)")
@@ -120,7 +122,7 @@ def plotvsdz(df, dzmax=None, postf=""):
     plt.close()
 
 
-def plotvsnoisedz(df):
+def plotvsnoisedz(df, postf=""):
     fig=plt.figure(figsize=(7,5), dpi=150)
     ax=fig.add_subplot(1, 1, 1)
     for sn in (1e-4, 3e-4, 6e-4, 1e-3, 3e-3, 6e-3):
@@ -139,25 +141,39 @@ def plotvsnoisedz(df):
     #tax.set_major_formatter(matplotlib.ticker.ScalarFormatter())    
     plt.ylabel(r"$\epsilon_{\mathrm{HWFE}}\,$(m)")
     plt.xlabel("Normal error in defocus (m)")    
-    plt.savefig("plots/errvsnoisedz.png")
+    plt.savefig("plots/errvsnoisedz%s.png" % postf)
     plt.close()
     
 
 if 0:
-    df=wrmssim("v1-snsim-100")
-    plotvsnoise(df, "100dz")
-    df2=wrmssim("v1-snsim-10")
-    plotvsnoise(df2, "10dz")    
-    df3=wrmssim("v1-snsim-50")
-    plotvsnoise(df3, "50dz")
+    df=wrmssim("v2-snsim-100")
+    plotvsnoise(df, "100dz-v2")
+    df2=wrmssim("v2-snsim-10")
+    plotvsnoise(df2, "10dz-v2")    
+    df3=wrmssim("v2-snsim-50")
+    plotvsnoise(df3, "50dz-v2")
 
-    df4=wrmssim("v1-dz")
-    df5=wrmssim("v1-dz035")
-    plotvsdz(df4, postf="11")
-    plotvsdz(df5, 0.3, postf="035")
+if 0:    
+    df4=wrmssim("v2-dz")
+    df5=wrmssim("v2-dz035")
+    plotvsdz(df4, postf="11-v2")
+    plotvsdz(df5, 0.1, postf="035-v2")
 
-    df6=wrmssim("v1-simdecim")
-    df7=wrmssim("v1-simdecimdz10")
+if 1:
+    df51=wrmssim("v2-dz073")
+    plotvsdz(df51, postf="073-v2")
 
-    plotvsdecim(df6)
-    plotvsdecim(df7, "dz10")
+if 0:    
+    df6=wrmssim("v2-simdecim")
+    df7=wrmssim("v2-simdecimdz10")
+
+    plotvsdecim(df6, "v2")
+    plotvsdecim(df7, "dz10-v2")
+
+if 0:
+    df77=wrmssim("v2-simdecim-50")
+    plotvsdecim(df77, "dz50-v2")    
+
+if 0:
+    df8=wrmssim("v2-simdznoise")
+    plotvsnoisedz(df8, "-v2")

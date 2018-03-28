@@ -1,5 +1,6 @@
 import imp # for reload
 import json
+import os
 
 import numpy
 import pandas
@@ -124,7 +125,11 @@ def retErr(dz,
             x=scipy.optimize.leastsq(fitfn,
                                      p0,
                                      full_output=True)
-            res[i]=x[0]
+            if x[-1] not in range(1,5):
+                print ("Solution not converged!")
+                res[i]=numpy.nan
+            else:
+                res[i]=x[0]
     return res
 
 def noiseF(wl=1.1e-3,
@@ -167,10 +172,13 @@ def wrms(xx,
 
 
 def dosim(dirout="sim",
-          dz=100e-3):
+          dz=100e-3,
+          wl=1.1e-3):
+    if not os.path.exists(dirout):
+        os.makedirs(dirout)
     i=0
     pars= { "dz" : dz,
-            "wl" : 1.1e-3,
+            "wl" : wl,
             "nsim": 50,
             "oversamp": 2.0}
     for nzern in range(4, 9):
@@ -184,12 +192,14 @@ def dosim(dirout="sim",
 
 def dosim2(dirout="sim2",
            wl=1.1e-3):
+    if not os.path.exists(dirout):
+        os.makedirs(dirout)    
     i=0
     pars= { "wl" : wl,
             "nsim": 50,
             "oversamp": 2.0,
             "nzern":6 }
-    for dz in numpy.array([3, 10, 30, 50, 80, 100, 300, 1000])*1e-3:
+    for dz in numpy.array([3, 10, 15, 30, 50, 80, 100, 300])*1e-3:
         pars["dz"]=dz
         for sn in (1e-3, 5e-3, 1e-2):
             pars["noisesn"]=sn
@@ -200,13 +210,15 @@ def dosim2(dirout="sim2",
 
 def dosimdecim(dirout="simdecim",
                dz=100e-3):
+    if not os.path.exists(dirout):
+        os.makedirs(dirout)    
     i=0
     pars= { "dz" : dz,
             "wl" : 1.1e-3,
             "nsim": 50,
             "oversamp": 2.0,
             "nzern": 6}
-    for sn in (1e-4, 3e-4, 6e-4, 1e-3, 3e-3, 6e-3, 1e-2, 3e-2, 6e-2):
+    for sn in (1e-4, 3e-4, 6e-4, 1e-3, 3e-3, 6e-3, 1e-2):
         pars["noisesn"]=sn
         for d in [False, 2, 3, 4, 5, 6 ]:
             pars["decimate"]=d
@@ -217,6 +229,8 @@ def dosimdecim(dirout="simdecim",
         
 def dodznoisesim(dirout="simdznoise",
                  dz=50e-3):
+    if not os.path.exists(dirout):
+        os.makedirs(dirout)
     i=0
     pars= { "dz" : dz,
             "wl" : 1.1e-3,
@@ -249,17 +263,39 @@ if 0:
 
 
 if 0:
-    #ver 1
-    dosim(dirout="v1-snsim-100",  dz=100e-3)
-    dosim(dirout="v1-snsim-50",   dz=50e-3)
-    dosim(dirout="v1-snsim-10",   dz=10e-3)
-if 1:
-    dosim2(dirout="v1-dz")
-    dosim2(dirout="v1-dz035",  wl=0.35e-3)        
-    dosimdecim("v1-simdecim", dz=100e-3)
-    dosimdecim("v1-simdecimdz10", dz=10e-3)
-    dodznoisesim("v1-simdznoise")
-    dodznoisesim("v1-simnoisedz10", dz=10e-3)
+    #ver 2. Checking for bug in oof.py. 
+    dosim(dirout="v2-snsim-100",  dz=100e-3)
+    dosim(dirout="v2-snsim-50",   dz=50e-3)
+    dosim(dirout="v2-snsim-10",   dz=10e-3)
+if 0:
+    dosim2(dirout="v2-dz")
+    dosim2(dirout="v2-dz035",  wl=0.35e-3)
+if 0:    
+    dosim2(dirout="v2-dz073",  wl=0.73e-3)    
+
+if 0:
+    dosimdecim("v2-simdecim-50", dz=50e-3)
+if 0:
+    dodznoisesim("v2-simnoisedz50", dz=50e-3)    
+
+if 0:    
+    dosimdecim("v2-simdecimdz10", dz=10e-3)
+    dodznoisesim("v2-simdznoise")
+
+
+if 0:
+    dodznoisesim("v2-simnoisedz50", dz=50e-3)
+
+
+if 0:
+    dosim(dirout="v2-snsim-50-073",
+          dz=50e-3,
+          wl=0.73e-3)
+if 0:
+    dosim(dirout="v2-snsim-30-073",
+          dz=30e-3,
+          wl=0.73e-3)
+    
     
 
 def plotParDist(xx):
