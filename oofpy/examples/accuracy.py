@@ -57,7 +57,8 @@ def retErr(dz,
            noisesn=0.05,
            noisemult=0.05,
            noisedz=0,
-           decimate=False):
+           decimate=False,
+           decimshift=0):
     """Compute retrieval error
 
     :param nzern: Maximum order of zernikes to include
@@ -118,7 +119,9 @@ def retErr(dz,
                 # function is f0, no focus error
                 res=plot.extract_mid((bnoise-f0(pars)), NN//4)
                 if decimate:
-                    return res[::decimate, ::decimate].flatten()
+                    # NB: The first dimension is the defocuses, which
+                    # are not decimated
+                    return res[:, decimshift::decimate, decimshift::decimate].flatten()
                 else:
                     return res.flatten()
 
@@ -226,6 +229,29 @@ def dosimdecim(dirout="simdecim",
             numpy.savez("%s/sn%i-ret.npz" % (dirout, i), xx)
             open(os.path.join("%s/sn%i.json" % (dirout, i)), "w").write(json.dumps(pars))
             i+=1
+
+def dosimdecimcheck(dirout="simdecimcheck",
+                    dz=50e-3):
+    if not os.path.exists(dirout):
+        os.makedirs(dirout)    
+    i=0
+    pars= { "dz" : dz,
+            "wl" : 1.1e-3,
+            "nsim": 50,
+            "oversamp": 2.0,
+            "nzern": 6}
+    for sn in (1e-4, ):
+        pars["noisesn"]=sn
+        for d in [3, 4, 5, 6 ]:
+            for s in [0, 1, 2, 3, 4, 5]:
+                pars["decimate"]=d
+                pars["decimshift"]=s               
+                xx=retErr(**pars)
+                numpy.savez("%s/sn%i-ret.npz" % (dirout, i), xx)
+                open(os.path.join("%s/sn%i.json" % (dirout, i)), "w").write(json.dumps(pars))
+                i+=1
+            
+        
         
 def dodznoisesim(dirout="simdznoise",
                  dz=50e-3):
@@ -275,6 +301,10 @@ if 0:
 
 if 0:
     dosimdecim("v2-simdecim-50", dz=50e-3)
+
+if 1:
+    dosimdecimcheck("v2-simdecimcheck")
+    
 if 0:
     dodznoisesim("v2-simnoisedz50", dz=50e-3)    
 
