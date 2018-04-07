@@ -1,3 +1,4 @@
+# run with nix-shell  /home/bnikolic/n/oof/build/nix/oof.nix -A oofpyenv -j 2 --cores 6 --run "env OMP_NUM_THREADS=1 PYTHONPATH=$PYTHONPATH:/home/bnikolic/n/oof/oofpy/ python -i"
 import imp # for reload
 import json
 import os
@@ -302,7 +303,7 @@ if 0:
 if 0:
     dosimdecim("v2-simdecim-50", dz=50e-3)
 
-if 1:
+if 0:
     dosimdecimcheck("v2-simdecimcheck")
     
 if 0:

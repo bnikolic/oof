@@ -46,6 +46,9 @@ def plotQuiverN(d, m):
     ax = fig.gca(projection='3d')
     surf = ax.quiver(d.AX[m], d.AY[m], 0,
                      d.IL[m], d.IM[m], d.IN[m])
+    ax.set_xlabel("Normalised aperture plane X")
+    ax.set_ylabel("Normalised aperture plane Y")
+    ax.set_zlabel("Axial direction Z")    
     
     ax.set_zlim(-1, 2)    
     plt.show()    

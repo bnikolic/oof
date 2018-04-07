@@ -1,7 +1,7 @@
 { system ? builtins.currentSystem }:
 let
 
-  pkgs = (import <nixpkgs1803> ) { inherit system; };
+  pkgs = (import <nixpkgs1703> ) { inherit system; };
   callPackage = pkgs.lib.callPackageWith (pkgs  // self);
 
   self = rec {
