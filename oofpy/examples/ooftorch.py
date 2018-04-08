@@ -126,7 +126,7 @@ def mkPredFn(dz,
     return f, pl, p0
 
 
-if 1:
+if 0:
     f, p, i=mkPredFnT(50e-3, 2,  1.1e-3, 128, 2.0)    
     with torch.autograd.profiler.profile() as prof:
         yy, x=f(i)
@@ -134,14 +134,20 @@ if 1:
         zz.backward()
     print(prof)
 
-if 0:
+if 1:
     f, p, i=mkPredFnT(50e-3, 7,  1.1e-3, 512, 2.0)    
     with torch.cuda.profiler.profile():
         yy, x=f(i)
         zz=(yy**2).sum()
         zz.backward()
         with torch.autograd.profiler.emit_nvtx():
-            yy, x=f(i)
-            zz=(yy**2).sum()
-            zz.backward()
+            for i in range(1000):
+                yy, x=f(i)
+                zz=(yy**2).sum()
+                zz.backward()
 
+
+# pip install --upgrade --upgrade-strategy "only-if-needed" --force-reinstall --no-binary :all: /home/bnikolic/work/pytorch_fft/dist/pytorch_fft-0.14-cp27-cp27mu-linux_x86_64.whl
+# (cd /home/bnikolic/work/pytorch_fft/; rm -r build && python setup.py build_ext && python setup.py bdist_wheel)                
+# PYTHONPATH=$PYTHONPATH:/home/bnikolic/work/oof/oofpy/:/home/bnikolic/pytorch/lib/python2.7/site-packages/ nvprof --profile-from-start off -o trace11.prof -- python  /home/bnikolic/work/oof/oofpy/examples/ooftorch.py                
+# e.g. PYTHONPATH=$PYTHONPATH:/home/bnikolic/work/oof/oofpy/:/home/bnikolic/pytorch/lib/python2.7/site-packages/ perf record  -- python  /home/bnikolic/work/oof/oofpy/examples/ooftorch.py                
