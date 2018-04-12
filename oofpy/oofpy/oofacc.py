@@ -141,7 +141,7 @@ def mkPredFn(nzern, g, dzl,
                         requires_grad=True)
         p=zlc(initvv[0:nzpoly])
         a=gauss(* (list(initvv[nzpoly:]) +[g])) * pdish
-        return toskyDzF(a, p, dzl), initvv
+        return toskyDzF(a, p, dzl), initvv, fiti
     return f, numpy.array(parl)[fiti]
 
 
