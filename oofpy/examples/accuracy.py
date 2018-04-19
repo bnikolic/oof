@@ -98,9 +98,13 @@ def retErr(dz,
     #f0 is the predict function without a defocus error
     f0, p0=mkBeams(0)
     borig=f0(p0)
-    res=pymp.shared.array( (nsim,) + p0.shape )
 
-    def dosim(p=False):
+    if usepymp:
+        res=pymp.shared.array( (nsim,) + p0.shape )
+    else:
+        res=numpy.zeros( (nsim,) + p0.shape )
+
+    def dosim(borig, p=False):
         numpy.random.seed()
         if p:
             prange=p.range(nsim)
@@ -143,9 +147,9 @@ def retErr(dz,
                 res[i]=x[0]
     if usepymp:
         with pymp.Parallel(NTHREAD) as p:
-            dosim(p)
+            dosim(borig, p)
     else:
-        dosim()
+        dosim(borig)
 
     return res
 
