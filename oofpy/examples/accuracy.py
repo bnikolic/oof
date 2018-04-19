@@ -7,11 +7,13 @@ import numpy
 import pandas
 import scipy.optimize, scipy.stats
 
+usepymp = False
 # NB. This script uses pymp for parallelisation. However, scipy uses
 # OpenMP in non-fork() safe way so nested scipy parallelisation should
 # be disabled with MP_NUM_THREADS=1. Degree of parallelisation in
 # scipy is trivial to what pymp can achieve
-import pymp
+if usepymp:
+    import pymp
 
 import oofpy
 from oofpy import zernike, amp, oof, telgeo, plot
@@ -97,9 +99,14 @@ def retErr(dz,
     f0, p0=mkBeams(0)
     borig=f0(p0)
     res=pymp.shared.array( (nsim,) + p0.shape )
-    with pymp.Parallel(NTHREAD) as p:
+
+    def dosim(p=False):
         numpy.random.seed()
-        for i in p.range(nsim):
+        if p:
+            prange=p.range(nsim)
+        else:
+            prange=range(nsim)
+        for i in prange:
             if noisedz:
                 # Make a predictor function with error in defocus and
                 # simulate the observed beams using that
@@ -118,13 +125,13 @@ def retErr(dz,
             def fitfn(pars):
                 # Inner quarter of the map only. NB the fitting
                 # function is f0, no focus error
-                res=plot.extract_mid((bnoise-f0(pars)), NN//4)
+                rres=plot.extract_mid((bnoise-f0(pars)), NN//4)
                 if decimate:
                     # NB: The first dimension is the defocuses, which
                     # are not decimated
-                    return res[:, decimshift::decimate, decimshift::decimate].flatten()
+                    return rres[:, decimshift::decimate, decimshift::decimate].flatten()
                 else:
-                    return res.flatten()
+                    return rres.flatten()
 
             x=scipy.optimize.leastsq(fitfn,
                                      p0,
@@ -134,6 +141,12 @@ def retErr(dz,
                 res[i]=numpy.nan
             else:
                 res[i]=x[0]
+    if usepymp:
+        with pymp.Parallel(NTHREAD) as p:
+            dosim(p)
+    else:
+        dosim()
+
     return res
 
 def noiseF(wl=1.1e-3,
