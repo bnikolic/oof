@@ -25,7 +25,7 @@ if 0:
 
 def mkCFnT(nmax, a):
     """
-    equivalent of zernike.mkCFn
+    equivalent of zernike.mkCFn, but uses PyTORCH
     """
     zz=[]
     for n in range(nmax+1):
@@ -144,6 +144,7 @@ bnoise+=numpy.random.normal(0,
 
 
 def dofit(dotorch,
+          doLM,
           tol=1e-5):
     f0, p0=mkBeams(dotorch)
     if dotorch:
@@ -158,21 +159,28 @@ def dofit(dotorch,
             res.backward()            
             return res.data.cpu().numpy(), x.grad[fi].data.cpu().numpy()
         else:
-            res=(bnoisep-f0(pars))
-            res=(res**2).sum()
+            res=(bnoisep-f0(pars)).flatten()
+            if not doLM:
+                res=(res**2).sum()
             return res
     if dotorch:
         res=scipy.optimize.minimize(fitfn,
                                     p0,
                                     method="BFGS",
                                     jac=True,
-                                    tol=tol,
-                                    options={'eps': 0.001})    
+                                    tol=tol)    
     else:
-        res=scipy.optimize.minimize(fitfn, p0,
-                                    method='BFGS',
-                                    jac=False,
-                                    tol=tol)
+        if not doLM:
+            res=scipy.optimize.minimize(fitfn,
+                                        p0,
+                                        method='BFGS',
+                                        jac=False,
+                                        tol=tol)
+        else:
+            res=scipy.optimize.leastsq(fitfn,
+                                       p0,
+                                       ftol=tol,
+                                       full_output=True)
     return res
     
 
