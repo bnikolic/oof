@@ -69,6 +69,7 @@ def toskyDzF(a, p, dz):
     res=[]
     RR, II = [], []
     for i in range(dz.shape[0]):
+
         pp=p+dz[i]
         RR.append(a*torch.cos(pp))
         II.append(a*torch.sin(pp))
@@ -88,7 +89,7 @@ def mkCFn(nmax, a):
             zz.append(zernike.ev(n, l, a))
     N=len(zz)
     zz=numpy.moveaxis(numpy.array(zz), 0, -1)
-    zz=Variable(torch.from_numpy(zz).float().cuda())
+    zz=Variable(torch.from_numpy(zz).double().cuda())
     def lcfn(c):
         #c=torch.from_numpy(c).float().cuda()
         return (c*zz).sum(-1)
@@ -133,11 +134,11 @@ def mkPredFn(nzern, g, dzl,
     # Indices of params we will fit for
     fiti=numpy.array([i for i,xz in enumerate(parl) if  xz not in omitp])
     if pdish is None:
-        pdish=Variable(torch.from_numpy(amp.dish(1, 0, g)*1.0).float().cuda())
-    g=Variable(torch.from_numpy(g).float().cuda())
+        pdish=Variable(torch.from_numpy(amp.dish(1, 0, g)*1.0).double().cuda())
+    g=Variable(torch.from_numpy(g).double().cuda())
     def f(pars):
         initv[fiti]=pars
-        initvv=Variable(torch.from_numpy(numpy.array(initv)).float().cuda(),
+        initvv=Variable(torch.from_numpy(numpy.array(initv)).double().cuda(),
                         requires_grad=True)
         p=zlc(initvv[0:nzpoly])
         a=gauss(* (list(initvv[nzpoly:]) +[g])) * pdish

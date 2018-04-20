@@ -81,32 +81,8 @@ def mkPredFnT(dz,
               nzern,
               wl,
               NN,
-              oversamp):
-    "Wrap the predictor fn"
-    g=numpy.moveaxis(numpy.mgrid[-2*oversamp:2*oversamp:NN*1j,
-                                 -2*oversamp:2*oversamp:NN*1j], 0, -1)
-    dztemp=telgeo.primeF(14.4, g*R)
-    dzl=numpy.array([dztemp*0,
-                     dztemp*-1.0*dz/wl * 2 *numpy.pi,
-                     dztemp*dz/wl * 2 *numpy.pi])
-    dzl=Variable(torch.from_numpy(dzl).float().cuda())
-
-    nzpoly=zernike.N(nzern)
-    initv=[0]*nzpoly + [0,0,1, SIGMAIL, 0, 0]
-
-    f,pl=oofacc.mkPredFn(nzern,
-                         g,
-                         dzl,
-                         numpy.array(initv),
-                         omitp=["z0", "rho", "diff", "sigma"])
-    p0=numpy.array([0]*(nzpoly-1) + [0,0, 1])
-    return f, pl, p0
-
-def mkPredFn(dz,
-             nzern,
-             wl,
-             NN,
-             oversamp):
+              oversamp,
+              dotorch=False):
     "Wrap the predictor fn"
     g=numpy.moveaxis(numpy.mgrid[-2*oversamp:2*oversamp:NN*1j,
                                  -2*oversamp:2*oversamp:NN*1j], 0, -1)
@@ -118,13 +94,89 @@ def mkPredFn(dz,
     nzpoly=zernike.N(nzern)
     initv=[0]*nzpoly + [0,0,1, SIGMAIL, 0, 0]
 
-    f,pl=oof.mkPredFn(nzern,
-                      g,
-                      dzl,
-                      numpy.array(initv),
-                      omitp=["z0", "rho", "diff", "sigma"])
+    if dotorch:
+        dzl=Variable(torch.from_numpy(dzl).double().cuda())
+        f,pl=oofacc.mkPredFn(nzern,
+                             g,
+                             dzl,
+                             numpy.array(initv),
+                             omitp=["z0", "rho", "diff", "sigma"])
+    else:
+        f,pl=oof.mkPredFn(nzern,
+                          g,
+                          dzl,
+                          numpy.array(initv),
+                          omitp=["z0", "rho", "diff", "sigma"])
     p0=numpy.array([0]*(nzpoly-1) + [0,0, 1])
     return f, pl, p0
+
+
+dz=50e-3
+nzern=5
+wl=1.1e-3
+NN=512
+oversamp=2
+
+def mkBeams(dotorch=False):
+    dzp=numpy.array(dz)
+    f,pl,p0=mkPredFnT(dz=dz,
+                      nzern=nzern,
+                      wl=wl,
+                      NN=NN,
+                      oversamp=oversamp,
+                      dotorch=dotorch)
+    return f, p0
+
+f0, p0=mkBeams()
+borig=f0(p0)
+noisesn =0.003
+noisemult=0.01
+noisesn *= 8.0
+bmax=borig.max()
+# Multiplicative noise
+bnoise=borig*(1+numpy.random.normal(0,
+                                    noisemult,
+                                    borig.shape))
+# Additive noise
+bnoise+=numpy.random.normal(0,
+                            bmax*noisesn,
+                            borig.shape)
+
+
+def dofit(dotorch,
+          tol=1e-5):
+    f0, p0=mkBeams(dotorch)
+    if dotorch:
+        bnoisep=Variable(torch.from_numpy(bnoise).double().cuda())
+    else:
+        bnoisep=bnoise
+    def fitfn(pars):
+        if dotorch:
+            xx, x, fi=f0(pars)
+            res=(bnoisep-xx)
+            res=(res**2).sum()
+            res.backward()            
+            return res.data.cpu().numpy(), x.grad[fi].data.cpu().numpy()
+        else:
+            res=(bnoisep-f0(pars))
+            res=(res**2).sum()
+            return res
+    if dotorch:
+        res=scipy.optimize.minimize(fitfn,
+                                    p0,
+                                    method="BFGS",
+                                    jac=True,
+                                    tol=tol,
+                                    options={'eps': 0.001})    
+    else:
+        res=scipy.optimize.minimize(fitfn, p0,
+                                    method='BFGS',
+                                    jac=False,
+                                    tol=tol)
+    return res
+    
+
+
 
 
 if 0:
@@ -154,7 +206,7 @@ if 0:
 # e.g. PYTHONPATH=$PYTHONPATH:/home/bnikolic/work/oof/oofpy/:/home/bnikolic/pytorch/lib/python2.7/site-packages/ perf record  -- python  /home/bnikolic/work/oof/oofpy/examples/ooftorch.py                
 
 
-if 1:
+if 0:
     f, p, i=mkPredFnT(50e-3, 3,  1.1e-3, 512, 2.0)
     def sfn(pp):
         yy, x, fi=f(pp)
