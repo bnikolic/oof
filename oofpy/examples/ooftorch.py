@@ -1,27 +1,21 @@
+import imp
+
 import timeit
 
 import torch
 
-from torch.autograd import Function, Variable
-
-import pytorch_fft.fft.autograd as fft
 import numpy
 
 import oofpy
 from oofpy import oof, zernike, oofacc, telgeo
+
+from oofpy.oofacc import OO
 
 SIGMAIL=0.72
 R=2.8
 
 import scipy
 import scipy.optimize
-
-if 0:
-    # Toy examples
-    Ft=fft.Fft2d()
-    X = Variable(torch.randn(3, 3, 3).double().cuda(), requires_grad=True)
-    Y = Ft(X, X)
-    Z = (Y[0])**2
 
 def mkCFnT(nmax, a):
     """
@@ -33,7 +27,7 @@ def mkCFnT(nmax, a):
             zz.append(zernike.ev(n, l, a))
     zz=numpy.array(zz)
     zz=numpy.moveaxis(zz, 0, -1)
-    zz=torch.from_numpy(zz).double().cuda()
+    zz=OO(torch.from_numpy(zz).double())
     def lcfn(c):
         return (c*zz).sum(-1)
     lcfn.parnames=["z%i"%i for i in range(zz.shape[0])]
@@ -68,7 +62,7 @@ def time_setup(nzmax,
     global z
     if dotorch:
         cfn=mkCFnT(nzmax, numpy.moveaxis(numpy.mgrid[-1:1:1024j, -1:1:1024j], 0, -1) )
-        z=torch.from_numpy(numpy.arange(zernike.N(nzmax))).double().cuda()
+        z=OO(torch.from_numpy(numpy.arange(zernike.N(nzmax))).double())
     else:
         cfn=mkCFnN(nzmax, numpy.moveaxis(numpy.mgrid[-1:1:1024j, -1:1:1024j], 0, -1) )
         z=(numpy.arange(zernike.N(nzmax)))
@@ -95,7 +89,7 @@ def mkPredFnT(dz,
     initv=[0]*nzpoly + [0,0,1, SIGMAIL, 0, 0]
 
     if dotorch:
-        dzl=Variable(torch.from_numpy(dzl).double().cuda())
+        dzl=OO(torch.from_numpy(dzl).double())
         f,pl=oofacc.mkPredFn(nzern,
                              g,
                              dzl,
@@ -147,7 +141,7 @@ def dofit(dotorch,
           tol=1e-5):
     f0, p0=mkBeams(dotorch)
     if dotorch:
-        bnoisep=Variable(torch.from_numpy(bnoise).double().cuda())
+        bnoisep=OO(torch.from_numpy(bnoise).double())
     else:
         bnoisep=bnoise
     def fitfn(pars):
