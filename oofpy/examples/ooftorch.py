@@ -149,7 +149,7 @@ def dofit(dotorch,
             xx, x, fi=f0(pars)
             res=(bnoisep-xx)
             res=(res**2).sum()
-            res.backward()            
+            res.backward()
             return res.data.cpu().numpy(), x.grad[fi].data.cpu().numpy()
         else:
             res=(bnoisep-f0(pars))

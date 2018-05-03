@@ -50,8 +50,9 @@ def tosky(a, p):
     """
     s=a*torch.cos(p)
     c=a*torch.sin(p)
-    S=torch.fft(torch.stack([s,p], dim=-1),
-                signal_ndim=2)
+    S=torch.ifft(torch.stack([s,p], dim=-1),
+                 signal_ndim=2,
+                 normalized=False)
     return cfftshift(abs2(S))
 
 def toskyDz(a, p, dz):
@@ -76,8 +77,9 @@ def toskyDzF(a, p, dz):
         pp=p+dz[i]
         RR.append(a*torch.cos(pp))
         II.append(a*torch.sin(pp))
-    R=torch.fft(torch.stack([torch.stack(RR), torch.stack(II)], dim=-1),
-                signal_ndim=2)
+    R=torch.ifft(torch.stack([torch.stack(RR), torch.stack(II)], dim=-1),
+                 signal_ndim=2,
+                 normalized=False)
     for i in range(dz.shape[0]):
         res.append( cfftshift( abs2(R[i])))
     return torch.stack(res)
