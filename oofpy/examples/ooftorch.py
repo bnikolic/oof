@@ -1,4 +1,5 @@
 import timeit
+import math
 
 import torch
 
@@ -142,10 +143,12 @@ bnoise+=numpy.random.normal(0,
                             bmax*noisesn,
                             borig.shape)
 
+def cauchy(x, g, x0):
+    return 1.0/(math.pi * g) * g**2/((x-x0)**2+g**2)
 
 def dofit(dotorch,
-          doLM,
-          tol=1e-5):
+          tol=1e-5,
+          gamma=0.0001):
     f0, p0=mkBeams(dotorch)
     if dotorch:
         bnoisep=Variable(torch.from_numpy(bnoise).double().cuda())
@@ -155,13 +158,12 @@ def dofit(dotorch,
         if dotorch:
             xx, x, fi=f0(pars)
             res=(bnoisep-xx)
-            res=(res**2).sum()
+            res=-1*torch.log(cauchy(res, gamma, 0)).sum()
             res.backward()            
             return res.data.cpu().numpy(), x.grad[fi].data.cpu().numpy()
         else:
             res=(bnoisep-f0(pars)).flatten()
-            if not doLM:
-                res=(res**2).sum()
+            res=-1*numpy.log(cauchy(res, gamma, 0 )).sum()
             return res
     if dotorch:
         res=scipy.optimize.minimize(fitfn,
@@ -170,17 +172,11 @@ def dofit(dotorch,
                                     jac=True,
                                     tol=tol)    
     else:
-        if not doLM:
-            res=scipy.optimize.minimize(fitfn,
-                                        p0,
-                                        method='BFGS',
-                                        jac=False,
-                                        tol=tol)
-        else:
-            res=scipy.optimize.leastsq(fitfn,
-                                       p0,
-                                       ftol=tol,
-                                       full_output=True)
+        res=scipy.optimize.minimize(fitfn,
+                                    p0,
+                                    method='BFGS',
+                                    jac=False,
+                                    tol=tol)
     return res
     
 
