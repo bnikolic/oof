@@ -105,13 +105,36 @@ def mkPredFnT(dz,
     return f, pl, p0
 
 
+
 dz=50e-3
-nzern=5
+_nzern=False
 wl=1.1e-3
-NN=512
+_NN=False
 oversamp=2
 
-def mkBeams(dotorch=False):
+def setupfortime(NN, nzern):
+    global bnoise, _NN, _nzern
+    _NN=NN
+    _nzern=nzern
+    f0, p0=mkBeams(dotorch=False, NN=NN, nzern=_nzern)
+    borig=f0(p0)
+    noisesn =0.003
+    noisemult=0.01
+    noisesn *= 8.0
+    bmax=borig.max()
+    # Multiplicative noise
+    bnoise=borig*(1+numpy.random.normal(0,
+                                        noisemult,
+                                        borig.shape))
+    # Additive noise
+    bnoise+=numpy.random.normal(0,
+                                bmax*noisesn,
+                                borig.shape)
+
+    
+    
+
+def mkBeams(dotorch, NN, nzern):
     dzp=numpy.array(dz)
     f,pl,p0=mkPredFnT(dz=dz,
                       nzern=nzern,
@@ -121,25 +144,10 @@ def mkBeams(dotorch=False):
                       dotorch=dotorch)
     return f, p0
 
-f0, p0=mkBeams()
-borig=f0(p0)
-noisesn =0.003
-noisemult=0.01
-noisesn *= 8.0
-bmax=borig.max()
-# Multiplicative noise
-bnoise=borig*(1+numpy.random.normal(0,
-                                    noisemult,
-                                    borig.shape))
-# Additive noise
-bnoise+=numpy.random.normal(0,
-                            bmax*noisesn,
-                            borig.shape)
-
 
 def dofit(dotorch,
           tol=1e-5):
-    f0, p0=mkBeams(dotorch)
+    f0, p0=mkBeams(dotorch, _NN, _nzern)
     if dotorch:
         bnoisep=OO(torch.from_numpy(bnoise).double())
     else:
