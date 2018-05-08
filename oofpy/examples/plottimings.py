@@ -5,6 +5,7 @@ from itertools import cycle
 from cycler import cycler
 
 import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
 import numpy
@@ -42,7 +43,7 @@ def loadtimings(d):
     return pandas.DataFrame(res)
 
 def plot(df):
-    for nzern in (2,3,4):
+    for nzern in range(2,8):
         m=(df["nzern"]==nzern)        
         fig=plt.figure(figsize=(5,4.0), dpi=200)
         ax=fig.add_subplot(1, 1, 1)
@@ -70,7 +71,7 @@ def plotvsz(df, NN):
         dfm=df[numpy.logical_and(m, m2)]
         dfm.plot(x='nzern',
                  y='time',
-                 loglog=True,
+                 logy=True,
                  label=("pyTorch == %s"% str(dotorch)),
                  ax=ax)
     ax.xaxis.set_ticks_position('both')

@@ -1,6 +1,7 @@
 import imp
 
 import timeit
+import math
 
 import torch
 
@@ -19,7 +20,7 @@ import scipy.optimize
 
 def mkCFnT(nmax, a):
     """
-    equivalent of zernike.mkCFn
+    equivalent of zernike.mkCFn, but uses PyTORCH
     """
     zz=[]
     for n in range(nmax+1):
@@ -160,18 +161,18 @@ def dofit(dotorch,
             res.backward()
             return res.data.cpu().numpy(), x.grad[fi].data.cpu().numpy()
         else:
-            res=(bnoisep-f0(pars))
-            res=(res**2).sum()
+            res=(bnoisep-f0(pars)).flatten()
+            res=-1*numpy.log(cauchy(res, gamma, 0 )).sum()
             return res
     if dotorch:
         res=scipy.optimize.minimize(fitfn,
                                     p0,
                                     method="BFGS",
                                     jac=True,
-                                    tol=tol,
-                                    options={'eps': 0.001})    
+                                    tol=tol)    
     else:
-        res=scipy.optimize.minimize(fitfn, p0,
+        res=scipy.optimize.minimize(fitfn,
+                                    p0,
                                     method='BFGS',
                                     jac=False,
                                     tol=tol)
