@@ -60,3 +60,23 @@ def plot(df):
         plt.xlabel("NN (pixels)")    
         plt.savefig("plots/timingnogpu-nz%i.png"%nzern)
         plt.close()
+
+def plotvsz(df, NN):
+    fig=plt.figure(figsize=(5,4.0), dpi=200)
+    ax=fig.add_subplot(1, 1, 1)
+    m=(df["NN"]==NN)        
+    for dotorch in [True, False]:
+        m2=(df["dotorch"]==dotorch)
+        dfm=df[numpy.logical_and(m, m2)]
+        dfm.plot(x='nzern',
+                 y='time',
+                 loglog=True,
+                 label=("pyTorch == %s"% str(dotorch)),
+                 ax=ax)
+    ax.xaxis.set_ticks_position('both')
+    ax.yaxis.set_ticks_position('both')
+    plt.ylabel(r"$t\,$(s)")
+    plt.xlabel("nzern")    
+    plt.savefig("plots/timingnogpu-NN%i.png"% NN)
+    plt.close()
+        
