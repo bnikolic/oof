@@ -1,7 +1,7 @@
 { system ? builtins.currentSystem }:
 let
 
-  pkgs = (import <nixpkgs> ) { inherit system; };
+  pkgs = (import <nixpkgs1703> ) { inherit system; };
   callPackage = pkgs.lib.callPackageWith (pkgs  // self);
 
   self = rec {
@@ -25,11 +25,11 @@ let
 
   oofpyenv = pkgs.stdenv.mkDerivation rec {
      name = "oofpyenv";
-     buildInputs = [ pkgs.python36
-          pkgs.python36Packages.numpy
-          pkgs.python36Packages.scipy
-          pkgs.python36Packages.pandas
-          pkgs.python36Packages.matplotlib
+     buildInputs = [ pkgs.python35
+          pkgs.python35Packages.numpy
+          pkgs.python35Packages.scipy
+          pkgs.python35Packages.pandas
+          matplotlib
 	  pymp
 	  ] ;
   };  
@@ -49,19 +49,39 @@ let
 
   };
 
-  pymp = pkgs.python36Packages.buildPythonPackage rec {
+  pymp = pkgs.python35Packages.buildPythonPackage rec {
       pname = "pymp-pypi";
       name = "pymp-pypi-${version}";
       version = "0.4.0";
 
-    src = pkgs.python36Packages.fetchPypi {
+    src = pkgs.python35Packages.fetchPypi {
       inherit pname version;
       sha256 = "1pcrq84rmd1sg6wi7wfrzwyzpzxz2qf37kwxsy9rlqvrgwqf5pam";
     };
 
-         propagatedBuildInputs = [ pkgs.python36Packages.numpy ];
+         propagatedBuildInputs = [ pkgs.python35Packages.numpy ];
 
   };
+
+  kiwisolver = pkgs.python35Packages.buildPythonPackage rec {
+      pname = "kiwisolver";
+      name = "kiwisolver-${version}";
+      version = "1.0.1";
+
+    src = pkgs.python35Packages.fetchPypi {
+      inherit pname version;
+      sha256 = "0y22ci86znwwwfhbmvbgdfnbi6lv5gv2xkdlxvjw7lml43ayafyf";
+    };
+
+  };
+  
+
+  matplotlib = callPackage pkgs/matplotlib {
+  buildPythonPackage=pkgs.python35Packages.buildPythonPackage ;
+  inherit (pkgs.python35Packages) pycairo
+  backports_functools_lru_cache  cycler dateutil nose numpy
+  pyparsing sphinx tornado mock pytz
+  pygobject3 functools32  pyqt4 pythonOlder ;     inherit (pkgs.darwin.apple_sdk.frameworks) Cocoa;  } ;
 
 
   };

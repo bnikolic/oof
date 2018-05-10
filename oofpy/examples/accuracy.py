@@ -1,15 +1,19 @@
+# run with nix-shell  /home/bnikolic/n/oof/build/nix/oof.nix -A oofpyenv -j 2 --cores 6 --run "env OMP_NUM_THREADS=1 PYTHONPATH=$PYTHONPATH:/home/bnikolic/n/oof/oofpy/ python -i"
 import imp # for reload
 import json
+import os
 
 import numpy
 import pandas
 import scipy.optimize, scipy.stats
 
+usepymp = False
 # NB. This script uses pymp for parallelisation. However, scipy uses
 # OpenMP in non-fork() safe way so nested scipy parallelisation should
 # be disabled with MP_NUM_THREADS=1. Degree of parallelisation in
 # scipy is trivial to what pymp can achieve
-import pymp
+if usepymp:
+    import pymp
 
 import oofpy
 from oofpy import zernike, amp, oof, telgeo, plot
@@ -56,7 +60,8 @@ def retErr(dz,
            noisesn=0.05,
            noisemult=0.05,
            noisedz=0,
-           decimate=False):
+           decimate=False,
+           decimshift=0):
     """Compute retrieval error
 
     :param nzern: Maximum order of zernikes to include
@@ -93,10 +98,19 @@ def retErr(dz,
     #f0 is the predict function without a defocus error
     f0, p0=mkBeams(0)
     borig=f0(p0)
-    res=pymp.shared.array( (nsim,) + p0.shape )
-    with pymp.Parallel(NTHREAD) as p:
+
+    if usepymp:
+        res=pymp.shared.array( (nsim,) + p0.shape )
+    else:
+        res=numpy.zeros( (nsim,) + p0.shape )
+
+    def dosim(borig, p=False):
         numpy.random.seed()
-        for i in p.range(nsim):
+        if p:
+            prange=p.range(nsim)
+        else:
+            prange=range(nsim)
+        for i in prange:
             if noisedz:
                 # Make a predictor function with error in defocus and
                 # simulate the observed beams using that
@@ -115,16 +129,28 @@ def retErr(dz,
             def fitfn(pars):
                 # Inner quarter of the map only. NB the fitting
                 # function is f0, no focus error
-                res=plot.extract_mid((bnoise-f0(pars)), NN//4)
+                rres=plot.extract_mid((bnoise-f0(pars)), NN//4)
                 if decimate:
-                    return res[::decimate, ::decimate].flatten()
+                    # NB: The first dimension is the defocuses, which
+                    # are not decimated
+                    return rres[:, decimshift::decimate, decimshift::decimate].flatten()
                 else:
-                    return res.flatten()
+                    return rres.flatten()
 
             x=scipy.optimize.leastsq(fitfn,
                                      p0,
                                      full_output=True)
-            res[i]=x[0]
+            if x[-1] not in range(1,5):
+                print ("Solution not converged!")
+                res[i]=numpy.nan
+            else:
+                res[i]=x[0]
+    if usepymp:
+        with pymp.Parallel(NTHREAD) as p:
+            dosim(borig, p)
+    else:
+        dosim(borig)
+
     return res
 
 def noiseF(wl=1.1e-3,
@@ -167,10 +193,13 @@ def wrms(xx,
 
 
 def dosim(dirout="sim",
-          dz=100e-3):
+          dz=100e-3,
+          wl=1.1e-3):
+    if not os.path.exists(dirout):
+        os.makedirs(dirout)
     i=0
     pars= { "dz" : dz,
-            "wl" : 1.1e-3,
+            "wl" : wl,
             "nsim": 50,
             "oversamp": 2.0}
     for nzern in range(4, 9):
@@ -184,12 +213,14 @@ def dosim(dirout="sim",
 
 def dosim2(dirout="sim2",
            wl=1.1e-3):
+    if not os.path.exists(dirout):
+        os.makedirs(dirout)    
     i=0
     pars= { "wl" : wl,
             "nsim": 50,
             "oversamp": 2.0,
             "nzern":6 }
-    for dz in numpy.array([3, 10, 30, 50, 80, 100, 300, 1000])*1e-3:
+    for dz in numpy.array([3, 10, 15, 30, 50, 80, 100, 300])*1e-3:
         pars["dz"]=dz
         for sn in (1e-3, 5e-3, 1e-2):
             pars["noisesn"]=sn
@@ -200,13 +231,15 @@ def dosim2(dirout="sim2",
 
 def dosimdecim(dirout="simdecim",
                dz=100e-3):
+    if not os.path.exists(dirout):
+        os.makedirs(dirout)    
     i=0
     pars= { "dz" : dz,
             "wl" : 1.1e-3,
             "nsim": 50,
             "oversamp": 2.0,
             "nzern": 6}
-    for sn in (1e-4, 3e-4, 6e-4, 1e-3, 3e-3, 6e-3, 1e-2, 3e-2, 6e-2):
+    for sn in (1e-4, 3e-4, 6e-4, 1e-3, 3e-3, 6e-3, 1e-2):
         pars["noisesn"]=sn
         for d in [False, 2, 3, 4, 5, 6 ]:
             pars["decimate"]=d
@@ -214,9 +247,34 @@ def dosimdecim(dirout="simdecim",
             numpy.savez("%s/sn%i-ret.npz" % (dirout, i), xx)
             open(os.path.join("%s/sn%i.json" % (dirout, i)), "w").write(json.dumps(pars))
             i+=1
+
+def dosimdecimcheck(dirout="simdecimcheck",
+                    dz=50e-3):
+    if not os.path.exists(dirout):
+        os.makedirs(dirout)    
+    i=0
+    pars= { "dz" : dz,
+            "wl" : 1.1e-3,
+            "nsim": 50,
+            "oversamp": 2.0,
+            "nzern": 6}
+    for sn in (1e-4, ):
+        pars["noisesn"]=sn
+        for d in [3, 4, 5, 6 ]:
+            for s in [0, 1, 2, 3, 4, 5]:
+                pars["decimate"]=d
+                pars["decimshift"]=s               
+                xx=retErr(**pars)
+                numpy.savez("%s/sn%i-ret.npz" % (dirout, i), xx)
+                open(os.path.join("%s/sn%i.json" % (dirout, i)), "w").write(json.dumps(pars))
+                i+=1
+            
+        
         
 def dodznoisesim(dirout="simdznoise",
                  dz=50e-3):
+    if not os.path.exists(dirout):
+        os.makedirs(dirout)
     i=0
     pars= { "dz" : dz,
             "wl" : 1.1e-3,
@@ -249,17 +307,43 @@ if 0:
 
 
 if 0:
-    #ver 1
-    dosim(dirout="v1-snsim-100",  dz=100e-3)
-    dosim(dirout="v1-snsim-50",   dz=50e-3)
-    dosim(dirout="v1-snsim-10",   dz=10e-3)
-if 1:
-    dosim2(dirout="v1-dz")
-    dosim2(dirout="v1-dz035",  wl=0.35e-3)        
-    dosimdecim("v1-simdecim", dz=100e-3)
-    dosimdecim("v1-simdecimdz10", dz=10e-3)
-    dodznoisesim("v1-simdznoise")
-    dodznoisesim("v1-simnoisedz10", dz=10e-3)
+    #ver 2. Checking for bug in oof.py. 
+    dosim(dirout="v2-snsim-100",  dz=100e-3)
+    dosim(dirout="v2-snsim-50",   dz=50e-3)
+    dosim(dirout="v2-snsim-10",   dz=10e-3)
+if 0:
+    dosim2(dirout="v2-dz")
+    dosim2(dirout="v2-dz035",  wl=0.35e-3)
+if 0:    
+    dosim2(dirout="v2-dz073",  wl=0.73e-3)    
+
+if 0:
+    dosimdecim("v2-simdecim-50", dz=50e-3)
+
+if 0:
+    dosimdecimcheck("v2-simdecimcheck")
+    
+if 0:
+    dodznoisesim("v2-simnoisedz50", dz=50e-3)    
+
+if 0:    
+    dosimdecim("v2-simdecimdz10", dz=10e-3)
+    dodznoisesim("v2-simdznoise")
+
+
+if 0:
+    dodznoisesim("v2-simnoisedz50", dz=50e-3)
+
+
+if 0:
+    dosim(dirout="v2-snsim-50-073",
+          dz=50e-3,
+          wl=0.73e-3)
+if 0:
+    dosim(dirout="v2-snsim-30-073",
+          dz=30e-3,
+          wl=0.73e-3)
+    
     
 
 def plotParDist(xx):
